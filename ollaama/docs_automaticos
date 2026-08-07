@@ -1,0 +1,28 @@
+import os
+
+# Pasta onde estão os documentos
+PASTA_BASE = "base_conhecimento"
+
+documentos = []
+
+# Percorre todos os arquivos da pasta
+for raiz, _, arquivos in os.walk(PASTA_BASE):
+    for arquivo in arquivos:
+        if arquivo.endswith((".txt", ".md")):
+            caminho = os.path.join(raiz, arquivo)
+
+            with open(caminho, "r", encoding="utf-8") as f:
+                texto = f.read()
+
+            documentos.append({
+                "arquivo": arquivo,
+                "texto": texto
+            })
+
+# Exibe os documentos carregados
+print(f"Foram carregados {len(documentos)} documentos.\n")
+
+for doc in documentos:
+    print(f"Arquivo: {doc['arquivo']}")
+    print(doc["texto"][:200])  # Mostra os primeiros 200 caracteres
+    print("-" * 50)
