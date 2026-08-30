@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educa Inclui</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+
+*{
+   margin:0;
+   padding:0;
+   box-sizing:border-box;
+   font-family:'Poppins',sans-serif;
+}
+
+
+body{
+   background:#f3f7fb;
+   color:#333;
+}
+
+
+/* Barra superior */
+
+
+header{
+   background:#1565C0;
+   color:white;
+   padding:18px 30px;
+   display:flex;
+   justify-content:space-between;
+   align-items:center;
+   box-shadow:0 3px 10px rgba(0,0,0,.15);
+}Home
+
+
+.logo{
+   font-size:28px;
+   font-weight:bold;
+}
+
+
+nav ul{
+   display:flex;
+   list-style:none;
+   gap:20px;
+}
+
+
+nav li{
+   cursor:pointer;
+   transition:.3s;
+   font-weight:500;
+}
+
+
+nav li:hover{
+   color:#FFE082;
+}
+
+
+/* Conteúdo */
+Home
+.container{
+   width:90%;
+   max-width:1200px;
+   margin:auto;
+   padding:40px 0;
+}
+
+
+/* Banner */
+
+
+.banner{
+   background:linear-gradient(135deg,#1976D2,#42A5F5);
+   color:white;
+   padding:40px;
+   border-radius:20px;
+   margin-bottom:40px;
+   box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+
+.banner h2{
+   font-size:34px;
+   margin-bottom:10px;
+}
+
+
+.banner p{
+   font-size:18px;
+   opacity:.9;
+}
+
+
+/* Cards */
+
+
+.cards{Home
+   display:grid;
+   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+   gap:25px;
+}
+
+
+.card{
+   background:white;
+   border-radius:18px;
+   padding:30px;
+   text-align:center;
+   box-shadow:0 8px 18px rgba(0,0,0,.08);
+   transition:.3s;
+   cursor:pointer;
+}
+
+
+.card:hover{
+   transform:translateY(-8px);
+}
+
+
+.card h3{
+   color:#1565C0;
+   margin:15px 0;
+}
+
+
+.card p{
+   color:#666;
+   fontHome-size:14px;
+}
+
+
+/* Ícones */
+
+
+.icone{
+   font-size:55px;
+}
+
+
+/* Rodapé */
+
+
+footer{
+   text-align:center;
+   padding:20px;
+   margin-top:50px;
+   background:#1565C0;
+   color:white;
+}
+
+
+</style>
+
+
+</head>
+<body>
+
+
+<header>
+
+
+<div class="logo">
+📘 EDUCA INCLUI
+</div>
+
+
+<nav>
+<ul>
+<li>🏠 Home</li>
+<li>📝 Cadastros</li>
+<li>📊 Dashboard</li>
+<li>🤖 Chatbot</li>
+<li>ℹ️ Sobre</li>
+</ul>
+</nav>
+
+
+</header>
+
+
+<div class="container">
+
+
+<div class="banner">
+
+
+<h2>Bem-vindo ao Educa Inclui</h2>
+
+
+<p>
+Uma plataforma para promover inclusão, organização e acompanhamento educacional.
+</p>
+
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+<div class="icone">🏠</div>
+<h3>Home</h3>
+<p>Acesse a página principal do sistema.</p>
+</div>
+
+
+<div class="card">
+<div class="icone">📝</div>
+<h3>Cadastros</h3>
+<p>Cadastre alunos, professores e responsáveis.</p>
+</div>
+
+
+<div class="card">
+<div class="icone">📊</div>
+<h3>Dashboard</h3>
+<p>Visualize indicadores e informações importantes.</p>
+</div>
+
+
+<div class="card">
+<div class="icone">🤖</div>
+<h3>Chatbot</h3>
+<p>Tire dúvidas e receba orientações automaticamente.</p>
+</div>
+
+
+<div class="card">
+<div class="icone">ℹ️</div>
+<h3>Sobre</h3>
+<p>Conheça o projeto Educa Inclui.</p>
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+© 2026 • Educa Inclui
+</footer>
+
+
+</body>
+</html>
