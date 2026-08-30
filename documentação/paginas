@@ -1,0 +1,43 @@
+Perfil: Aluno
+
+Tela de Login: Autenticação e carregamento inicial do tema de acessibilidade.
+
+Tela Inicial (Dashboard do Aluno): Painel central com atividades pendentes e avisos do dia.
+
+Tela de Configurações: Ajuste de preferências de interface (fonte, cores e síntese de voz).
+
+Tela de Perfil: Dados cadastrais do aluno e histórico de gamificação (pontos e medalhas).
+
+Tela de Atividade / Quiz: Execução de tarefas e provas adaptadas com controle de tempo.
+
+Tela de Dashboard: Acompanhamento de notas, rendimento e frequência ao longo do tempo.
+
+Perfil: Professor
+
+Tela de Login: Autenticação restrita com trava de segurança contra tentativas inválidas.
+
+Tela Inicial: Resumo diário de aulas, tarefas pendentes de correção e avisos.
+
+Tela de Configurações: Edição de dados de contato, foto e alertas do sistema.
+
+Tela de Turmas (Visão Geral): Listagem das turmas sob responsabilidade do docente.
+
+Tela Detalhada da Turma: Mural de recados, lista de alunos e cronograma de conteúdos.
+
+Tela de Dashboard da Turma: Monitoramento de rendimento, médias e alertas de alunos em risco.
+
+Tela de Cadastro e Gestão de Tarefas: Criação de atividades e quizzes com recursos de acessibilidade.
+
+Tela do Perfil do Aluno (Visão do Professor): Histórico de notas, plano de acessibilidade e notas pedagógicas privadas.
+
+Perfil: Secretaria (Administrativo)
+
+Tela de Login: Autenticação de perfil administrativo de alto nível.
+
+Tela Inicial: Panorama diário das operações escolares, pendências e atalhos rápidos.
+
+Tela de Configurações: Parâmetros globais do sistema, ano letivo e gestão de permissões.
+
+Tela de Gestão Global de Turmas: Criação, edição e enturmação de alunos e professores.
+
+Tela de Dashboard da Secretaria: Consolidação de métricas globais, relatórios institucionais e índices de acessibilidade.
