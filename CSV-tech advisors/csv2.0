@@ -1,1 +1,44 @@
-ID;Perfil_Neurodivergente;Necessidade_Estudo;Estrategia_Personalizacao
+id_config;tamanho_fonte;sin­teze_voz;contraste_cores;velocidade_audio
+1;16;true;alto;1.00
+2;18;true;escuro;0.85
+3;14;false;padrao;1.00
+4;20;true;amarelo_preto;0.75
+5;18;false;alto;1.15
+email_usuario;senha;nome_operador;papel_permissao
+secretaria1@escola.com;senha123;Ana Souza;administrador
+secretaria2@escola.com;senha456;Carlos Lima;coordenador
+secretaria3@escola.com;senha789;Marina Oliveira;secretaria
+email_usuario;senha;nome_operador;papel_permissao
+secretaria1@escola.com;senha123;Ana Souza;administrador
+secretaria2@escola.com;senha456;Carlos Lima;coordenador
+secretaria3@escola.com;senha789;Marina Oliveira;secretaria
+email;senha;telefone;foto_perfil;tema_exibicao
+joao@escola.com;prof123;41999990001;joao.jpg;claro
+mariana@escola.com;prof456;41999990002;mariana.jpg;escuro
+lucas@escola.com;prof789;41999990003;lucas.jpg;azul
+codigo_turma;nome_turma;serie_ano;disciplina;turno;ano_letivo;capacidade_maxima;status_turma;email_professor
+TURMA001;Matemática A;9º Ano;Matemática;Manhã;2026;30;ativa;joao@escola.com
+TURMA002;Português A;9º Ano;Língua Portuguesa;Manhã;2026;30;ativa;mariana@escola.com
+TURMA003;Ciências A;9º Ano;Ciências;Tarde;2026;25;ativa;lucas@escola.com
+cpf_aluno;codigo_turma
+12345678901;TURMA001
+12345678901;TURMA002
+23456789012;TURMA001
+23456789012;TURMA003
+34567890123;TURMA002
+34567890123;TURMA003
+45678901234;TURMA001
+56789012345;TURMA002
+56789012345;TURMA003
+id_atividade;titulo;descricao;opcao;data_hora_abertura;data_hora_entrega;nota_maxima;recursos_acessibilidade;anexos;codigo_turma
+1;Operações Matemáticas;Resolva exercícios de adição subtração multiplicação e divisão;individual;2026-09-01 08:00:00;2026-09-05 23:59:00;10.00;leitor_de_tela;atividade_matematica.pdf;TURMA001
+2;Equações do Primeiro Grau;Resolva as equações apresentadas utilizando o método aprendido em aula;individual;2026-09-02 08:00:00;2026-09-08 23:59:00;10.00;fonte_ampliada;equacoes.pdf;TURMA001
+3;Interpretação de Texto;Leia o texto e responda às perguntas de interpretação;individual;2026-09-01 08:00:00;2026-09-06 23:59:00;10.00;alto_contraste;texto_interpretacao.pdf;TURMA002
+4;Produção Textual;Produza um pequeno texto sobre tecnologia e educação;individual;2026-09-03 08:00:00;2026-09-10 23:59:00;10.00;tempo_extra;producao_textual.pdf;TURMA002
+5;Sistema Solar;Identifique os principais planetas do Sistema Solar;individual;2026-09-02 13:00:00;2026-09-07 23:59:00;10.00;leitura_em_voz_alta;sistema_solar.pdf;TURMA003
+id_resposta;data_hora_inicio;data_hora_entrega;resposta_selecionada;nota_obtida;cpf_aluno;id_atividade
+1;2026-09-01 09:00:00;2026-09-01 09:35:00;Resposta enviada pelo aluno;9.50;12345678901;1
+2;2026-09-02 09:15:00;2026-09-02 10:00:00;Resposta enviada pelo aluno;8.00;23456789012;1
+3;2026-09-03 14:00:00;2026-09-03 14:45:00;Resposta enviada pelo aluno;7.50;34567890123;3
+4;2026-09-04 08:30:00;2026-09-04 09:10:00;Resposta enviada pelo aluno;9.00;45678901234;2
+5;2026-09-04 15:00:00;2026-09-04 15:30:00;Resposta enviada pelo aluno;10.00;56789012345;5
