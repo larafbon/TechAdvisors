@@ -1,44 +1,1010 @@
-id_config;tamanho_fonte;sin­teze_voz;contraste_cores;velocidade_audio
-1;16;true;alto;1.00
-2;18;true;escuro;0.85
-3;14;false;padrao;1.00
-4;20;true;amarelo_preto;0.75
-5;18;false;alto;1.15
-email_usuario;senha;nome_operador;papel_permissao
-secretaria1@escola.com;senha123;Ana Souza;administrador
-secretaria2@escola.com;senha456;Carlos Lima;coordenador
-secretaria3@escola.com;senha789;Marina Oliveira;secretaria
-email_usuario;senha;nome_operador;papel_permissao
-secretaria1@escola.com;senha123;Ana Souza;administrador
-secretaria2@escola.com;senha456;Carlos Lima;coordenador
-secretaria3@escola.com;senha789;Marina Oliveira;secretaria
-email;senha;telefone;foto_perfil;tema_exibicao
-joao@escola.com;prof123;41999990001;joao.jpg;claro
-mariana@escola.com;prof456;41999990002;mariana.jpg;escuro
-lucas@escola.com;prof789;41999990003;lucas.jpg;azul
+tamanho_fonte;sintese_voz;contraste_cores;velocidade_audio;fonte_dislexia;reducao_estimulo
+14;true;padrao;1.00;false;false
+16;false;padrao;1.00;false;false
+18;true;alto_contraste;0.90;true;false
+20;true;alto_contraste;1.00;false;true
+12;false;padrao;1.10;true;true
+16;true;baixo_contraste;0.80;true;false
+18;false;alto_contraste;1.20;false;true
+20;true;padrao;0.70;true;true
+22;false;alto_contraste;1.30;false;false
+14;true;padrao;1.00;true;false
+16;false;baixo_contraste;0.90;false;true
+18;true;padrao;1.20;true;false
+20;false;alto_contraste;1.00;true;true
+22;true;padrao;0.80;false;true
+12;false;baixo_contraste;1.10;true;false
+14;true;alto_contraste;1.00;false;false
+16;false;padrao;1.30;true;true
+18;true;baixo_contraste;0.90;false;true
+20;false;padrao;1.10;true;false
+22;true;alto_contraste;1.00;false;true
+14;false;baixo_contraste;0.80;true;true
+16;true;padrao;1.20;false;false
+18;false;alto_contraste;0.90;true;false
+20;true;baixo_contraste;1.30;true;true
+12;false;padrao;1.00;false;false
+14;true;padrao;0.90;true;false
+16;false;alto_contraste;1.10;false;true
+18;true;baixo_contraste;1.00;true;true
+20;false;padrao;0.80;false;false
+22;true;alto_contraste;1.20;true;false
+14;false;padrao;1.00;false;true
+16;true;baixo_contraste;1.10;true;false
+18;false;alto_contraste;0.70;false;true
+20;true;padrao;1.30;true;true
+22;false;baixo_contraste;0.90;false;false
+12;true;alto_contraste;1.00;true;true
+14;false;padrao;1.20;false;false
+16;true;alto_contraste;0.80;true;false
+18;false;baixo_contraste;1.10;false;true
+20;true;padrao;1.00;true;false
+22;false;alto_contraste;1.30;false;true
+14;true;baixo_contraste;0.90;true;true
+16;false;padrao;1.00;false;false
+18;true;alto_contraste;1.20;true;false
+20;false;baixo_contraste;0.80;false;true
+12;true;padrao;1.10;true;true
+14;false;alto_contraste;1.00;false;false
+16;true;baixo_contraste;1.30;true;false
+18;false;padrao;0.90;false;true
+20;true;alto_contraste;1.10;true;true
+22;false;padrao;1.00;false;false
+14;true;baixo_contraste;0.80;true;false
+16;false;alto_contraste;1.20;false;true
+18;true;padrao;1.00;true;false
+20;false;baixo_contraste;0.70;false;true
+22;true;alto_contraste;1.30;true;true
+12;false;padrao;0.90;false;false
+14;true;alto_contraste;1.10;true;false
+16;false;baixo_contraste;1.00;false;true
+18;true;padrao;1.20;true;true
+20;false;alto_contraste;0.80;false;false
+22;true;baixo_contraste;1.00;true;false
+14;false;padrao;1.30;false;true
+16;true;alto_contraste;0.90;true;true
+18;false;baixo_contraste;1.10;false;false
+20;true;padrao;1.00;true;false
+12;false;alto_contraste;0.80;false;true
+14;true;baixo_contraste;1.20;true;true
+16;false;padrao;0.90;false;false
+18;true;alto_contraste;1.30;true;false
+20;false;baixo_contraste;1.00;false;true
+22;true;padrao;1.10;true;true
+14;false;alto_contraste;1.00;false;false
+16;true;baixo_contraste;0.80;true;false
+18;false;padrao;1.20;false;true
+20;true;alto_contraste;0.90;true;true
+12;false;baixo_contraste;1.10;false;false
+14;true;padrao;1.00;true;false
+16;false;alto_contraste;1.30;false;true
+18;true;baixo_contraste;0.80;true;true
+20;false;padrao;1.10;false;false
+22;true;alto_contraste;1.00;true;false
+14;false;baixo_contraste;0.90;false;true
+16;true;padrao;1.20;true;true
+18;false;alto_contraste;1.00;false;false
+20;true;baixo_contraste;0.70;true;false
+22;false;padrao;1.30;false;true
+12;true;alto_contraste;1.00;true;true
+14;false;baixo_contraste;1.10;false;false
+16;true;padrao;0.80;true;false
+18;false;alto_contraste;1.20;false;true
+20;true;baixo_contraste;0.90;true;true
+22;false;padrao;1.00;false;false
+14;true;alto_contraste;1.10;true;false
+16;false;baixo_contraste;1.30;false;true
+18;true;padrao;0.90;true;true
+20;false;alto_contraste;1.20;false;false
+22;true;baixo_contraste;1.00;true;true
+id_config INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+email;senha;nome;telefone;foto_perfil;tema_exibicao
+professor01@escola.com.br;Senha@123;Ana Paula Silva;(11) 99999-0001;foto01.jpg;claro
+professor02@escola.com.br;Senha@123;Bruno Henrique Santos;(11) 99999-0002;foto02.jpg;escuro
+professor03@escola.com.br;Senha@123;Carla Mendes Oliveira;(11) 99999-0003;foto03.jpg;claro
+professor04@escola.com.br;Senha@123;Daniel Ferreira Costa;(11) 99999-0004;foto04.jpg;escuro
+professor05@escola.com.br;Senha@123;Eduarda Martins Souza;(11) 99999-0005;foto05.jpg;claro
+professor06@escola.com.br;Senha@123;Felipe Almeida Rocha;(11) 99999-0006;foto06.jpg;escuro
+professor07@escola.com.br;Senha@123;Gabriela Rodrigues Lima;(11) 99999-0007;foto07.jpg;claro
+professor08@escola.com.br;Senha@123;Henrique Barbosa Alves;(11) 99999-0008;foto08.jpg;escuro
+professor09@escola.com.br;Senha@123;Isabela Carvalho Pereira;(11) 99999-0009;foto09.jpg;claro
+professor10@escola.com.br;Senha@123;João Victor Martins;(11) 99999-0010;foto10.jpg;escuro
+professor11@escola.com.br;Senha@123;Juliana Ribeiro Santos;(11) 99999-0011;foto11.jpg;claro
+professor12@escola.com.br;Senha@123;Lucas Oliveira Mendes;(11) 99999-0012;foto12.jpg;escuro
+professor13@escola.com.br;Senha@123;Mariana Costa Ferreira;(11) 99999-0013;foto13.jpg;claro
+professor14@escola.com.br;Senha@123;Nicolas Souza Almeida;(11) 99999-0014;foto14.jpg;escuro
+professor15@escola.com.br;Senha@123;Patricia Lima Rocha;(11) 99999-0015;foto15.jpg;claro
+professor16@escola.com.br;Senha@123;Rafael Gomes Silva;(11) 99999-0016;foto16.jpg;escuro
+professor17@escola.com.br;Senha@123;Sabrina Alves Martins;(11) 99999-0017;foto17.jpg;claro
+professor18@escola.com.br;Senha@123;Thiago Pereira Costa;(11) 99999-0018;foto18.jpg;escuro
+professor19@escola.com.br;Senha@123;Vanessa Fernandes Lima;(11) 99999-0019;foto19.jpg;claro
+professor20@escola.com.br;Senha@123;William Santos Oliveira;(11) 99999-0020;foto20.jpg;escuro
+professor21@escola.com.br;Senha@123;Amanda Martins Silva;(11) 99999-0021;foto21.jpg;claro
+professor22@escola.com.br;Senha@123;André Carvalho Souza;(11) 99999-0022;foto22.jpg;escuro
+professor23@escola.com.br;Senha@123;Beatriz Ferreira Lima;(11) 99999-0023;foto23.jpg;claro
+professor24@escola.com.br;Senha@123;Caio Rodrigues Alves;(11) 99999-0024;foto24.jpg;escuro
+professor25@escola.com.br;Senha@123;Camila Barbosa Santos;(11) 99999-0025;foto25.jpg;claro
+professor26@escola.com.br;Senha@123;Diego Martins Oliveira;(11) 99999-0026;foto26.jpg;escuro
+professor27@escola.com.br;Senha@123;Elisa Costa Pereira;(11) 99999-0027;foto27.jpg;claro
+professor28@escola.com.br;Senha@123;Fábio Mendes Rocha;(11) 99999-0028;foto28.jpg;escuro
+professor29@escola.com.br;Senha@123;Giovana Almeida Santos;(11) 99999-0029;foto29.jpg;claro
+professor30@escola.com.br;Senha@123;Gustavo Ribeiro Lima;(11) 99999-0030;foto30.jpg;escuro
+professor31@escola.com.br;Senha@123;Helena Souza Martins;(11) 99999-0031;foto31.jpg;claro
+professor32@escola.com.br;Senha@123;Igor Ferreira Alves;(11) 99999-0032;foto32.jpg;escuro
+professor33@escola.com.br;Senha@123;Jéssica Oliveira Costa;(11) 99999-0033;foto33.jpg;claro
+professor34@escola.com.br;Senha@123;Leandro Silva Mendes;(11) 99999-0034;foto34.jpg;escuro
+professor35@escola.com.br;Senha@123;Larissa Santos Pereira;(11) 99999-0035;foto35.jpg;claro
+professor36@escola.com.br;Senha@123;Marcelo Gomes Rocha;(11) 99999-0036;foto36.jpg;escuro
+professor37@escola.com.br;Senha@123;Natalia Carvalho Lima;(11) 99999-0037;foto37.jpg;claro
+professor38@escola.com.br;Senha@123;Otávio Martins Silva;(11) 99999-0038;foto38.jpg;escuro
+professor39@escola.com.br;Senha@123;Priscila Almeida Costa;(11) 99999-0039;foto39.jpg;claro
+professor40@escola.com.br;Senha@123;Rodrigo Fernandes Santos;(11) 99999-0040;foto40.jpg;escuro
+professor41@escola.com.br;Senha@123;Simone Pereira Lima;(11) 99999-0041;foto41.jpg;claro
+professor42@escola.com.br;Senha@123;Vinicius Oliveira Rocha;(11) 99999-0042;foto42.jpg;escuro
+professor43@escola.com.br;Senha@123;Aline Mendes Silva;(11) 99999-0043;foto43.jpg;claro
+professor44@escola.com.br;Senha@123;Carlos Henrique Souza;(11) 99999-0044;foto44.jpg;escuro
+professor45@escola.com.br;Senha@123;Denise Martins Alves;(11) 99999-0045;foto45.jpg;claro
+professor46@escola.com.br;Senha@123;Eduardo Santos Costa;(11) 99999-0046;foto46.jpg;escuro
+professor47@escola.com.br;Senha@123;Fernanda Ribeiro Lima;(11) 99999-0047;foto47.jpg;claro
+professor48@escola.com.br;Senha@123;Guilherme Carvalho Rocha;(11) 99999-0048;foto48.jpg;escuro
+professor49@escola.com.br;Senha@123;Heloisa Ferreira Silva;(11) 99999-0049;foto49.jpg;claro
+professor50@escola.com.br;Senha@123;Marcelo Oliveira Santos;(11) 99999-0050;foto50.jpg;escuro
+professor51@escola.com.br;Senha@123;Adriana Costa Mendes;(11) 99999-0051;foto51.jpg;claro
+professor52@escola.com.br;Senha@123;Alexandre Lima Pereira;(11) 99999-0052;foto52.jpg;escuro
+professor53@escola.com.br;Senha@123;Bruna Martins Rocha;(11) 99999-0053;foto53.jpg;claro
+professor54@escola.com.br;Senha@123;César Almeida Silva;(11) 99999-0054;foto54.jpg;escuro
+professor55@escola.com.br;Senha@123;Cristina Santos Lima;(11) 99999-0055;foto55.jpg;claro
+professor56@escola.com.br;Senha@123;Douglas Ferreira Costa;(11) 99999-0056;foto56.jpg;escuro
+professor57@escola.com.br;Senha@123;Elaine Rodrigues Santos;(11) 99999-0057;foto57.jpg;claro
+professor58@escola.com.br;Senha@123;Fernando Martins Oliveira;(11) 99999-0058;foto58.jpg;escuro
+professor59@escola.com.br;Senha@123;Isadora Carvalho Lima;(11) 99999-0059;foto59.jpg;claro
+professor60@escola.com.br;Senha@123;Jorge Mendes Alves;(11) 99999-0060;foto60.jpg;escuro
+professor61@escola.com.br;Senha@123;Karen Souza Pereira;(11) 99999-0061;foto61.jpg;claro
+professor62@escola.com.br;Senha@123;Leonardo Gomes Silva;(11) 99999-0062;foto62.jpg;escuro
+professor63@escola.com.br;Senha@123;Luciana Ferreira Santos;(11) 99999-0063;foto63.jpg;claro
+professor64@escola.com.br;Senha@123;Matheus Oliveira Costa;(11) 99999-0064;foto64.jpg;escuro
+professor65@escola.com.br;Senha@123;Monique Almeida Lima;(11) 99999-0065;foto65.jpg;claro
+professor66@escola.com.br;Senha@123;Paulo Ribeiro Rocha;(11) 99999-0066;foto66.jpg;escuro
+professor67@escola.com.br;Senha@123;Renata Martins Silva;(11) 99999-0067;foto67.jpg;claro
+professor68@escola.com.br;Senha@123;Ricardo Santos Pereira;(11) 99999-0068;foto68.jpg;escuro
+professor69@escola.com.br;Senha@123;Sara Costa Mendes;(11) 99999-0069;foto69.jpg;claro
+professor70@escola.com.br;Senha@123;Victor Hugo Alves;(11) 99999-0070;foto70.jpg;escuro
+professor71@escola.com.br;Senha@123;Alice Rodrigues Silva;(11) 99999-0071;foto71.jpg;claro
+professor72@escola.com.br;Senha@123;Bernardo Ferreira Santos;(11) 99999-0072;foto72.jpg;escuro
+professor73@escola.com.br;Senha@123;Claudia Martins Costa;(11) 99999-0073;foto73.jpg;claro
+professor74@escola.com.br;Senha@123;Davi Oliveira Lima;(11) 99999-0074;foto74.jpg;escuro
+professor75@escola.com.br;Senha@123;Estela Carvalho Rocha;(11) 99999-0075;foto75.jpg;claro
+professor76@escola.com.br;Senha@123;Flavio Almeida Santos;(11) 99999-0076;foto76.jpg;escuro
+professor77@escola.com.br;Senha@123;Isis Pereira Silva;(11) 99999-0077;foto77.jpg;claro
+professor78@escola.com.br;Senha@123;Jonas Mendes Costa;(11) 99999-0078;foto78.jpg;escuro
+professor79@escola.com.br;Senha@123;Livia Santos Lima;(11) 99999-0079;foto79.jpg;claro
+professor80@escola.com.br;Senha@123;Murilo Ferreira Rocha;(11) 99999-0080;foto80.jpg;escuro
+professor81@escola.com.br;Senha@123;Nathalia Souza Alves;(11) 99999-0081;foto81.jpg;claro
+professor82@escola.com.br;Senha@123;Oscar Martins Pereira;(11) 99999-0082;foto82.jpg;escuro
+professor83@escola.com.br;Senha@123;Rafaela Costa Silva;(11) 99999-0083;foto83.jpg;claro
+professor84@escola.com.br;Senha@123;Samuel Oliveira Mendes;(11) 99999-0084;foto84.jpg;escuro
+professor85@escola.com.br;Senha@123;Tania Rodrigues Lima;(11) 99999-0085;foto85.jpg;claro
+professor86@escola.com.br;Senha@123;Ulisses Carvalho Santos;(11) 99999-0086;foto86.jpg;escuro
+professor87@escola.com.br;Senha@123;Valeria Ferreira Costa;(11) 99999-0087;foto87.jpg;claro
+professor88@escola.com.br;Senha@123;Wesley Almeida Rocha;(11) 99999-0088;foto88.jpg;escuro
+professor89@escola.com.br;Senha@123;Yasmin Martins Silva;(11) 99999-0089;foto89.jpg;claro
+professor90@escola.com.br;Senha@123;Zeca Santos Pereira;(11) 99999-0090;foto90.jpg;escuro
+professor91@escola.com.br;Senha@123;Amanda Ferreira Lima;(11) 99999-0091;foto91.jpg;claro
+professor92@escola.com.br;Senha@123;Bianca Oliveira Costa;(11) 99999-0092;foto92.jpg;escuro
+professor93@escola.com.br;Senha@123;Cristiano Mendes Silva;(11) 99999-0093;foto93.jpg;claro
+professor94@escola.com.br;Senha@123;Débora Santos Rocha;(11) 99999-0094;foto94.jpg;escuro
+professor95@escola.com.br;Senha@123;Elias Carvalho Lima;(11) 99999-0095;foto95.jpg;claro
+professor96@escola.com.br;Senha@123;Fabiana Martins Alves;(11) 99999-0096;foto96.jpg;escuro
+professor97@escola.com.br;Senha@123;Gabriel Souza Pereira;(11) 99999-0097;foto97.jpg;claro
+professor98@escola.com.br;Senha@123;Irene Almeida Costa;(11) 99999-0098;foto98.jpg;escuro
+professor99@escola.com.br;Senha@123;José Fernandes Silva;(11) 99999-0099;foto99.jpg;claro
+professor100@escola.com.br;Senha@123;Leticia Ribeiro Santos;(11) 99999-0100;foto100.jpg;escuro
+cpf_aluno;email_matricula;senha;nome_completo;data_nascimento;matricula;foto_avatar_url;tipo_deficiencia;historico_pontos;id_config
+10000000001;aluno01@escola.com.br;Senha@123;Ana Beatriz Silva;2008-03-15;MAT2026001;avatar01.jpg;visual;120;1
+10000000002;aluno02@escola.com.br;Senha@123;Bruno Henrique Santos;2009-07-22;MAT2026002;avatar02.jpg;auditiva;85;2
+10000000003;aluno03@escola.com.br;Senha@123;Carla Mendes Oliveira;2007-11-08;MAT2026003;avatar03.jpg;motora;210;3
+10000000004;aluno04@escola.com.br;Senha@123;Daniel Ferreira Costa;2010-01-19;MAT2026004;avatar04.jpg;intelectual;65;4
+10000000005;aluno05@escola.com.br;Senha@123;Eduarda Martins Souza;2008-05-27;MAT2026005;avatar05.jpg;visual;175;5
+10000000006;aluno06@escola.com.br;Senha@123;Felipe Almeida Rocha;2009-09-13;MAT2026006;avatar06.jpg;auditiva;95;6
+10000000007;aluno07@escola.com.br;Senha@123;Gabriela Rodrigues Lima;2007-02-04;MAT2026007;avatar07.jpg;motora;240;7
+10000000008;aluno08@escola.com.br;Senha@123;Henrique Barbosa Alves;2010-06-18;MAT2026008;avatar08.jpg;visual;130;8
+10000000009;aluno09@escola.com.br;Senha@123;Isabela Carvalho Pereira;2008-12-30;MAT2026009;avatar09.jpg;intelectual;155;9
+10000000010;aluno10@escola.com.br;Senha@123;Joao Victor Martins;2009-04-11;MAT2026010;avatar10.jpg;auditiva;75;10
+10000000011;aluno11@escola.com.br;Senha@123;Juliana Ribeiro Santos;2007-08-25;MAT2026011;avatar11.jpg;visual;190;11
+10000000012;aluno12@escola.com.br;Senha@123;Lucas Oliveira Mendes;2010-10-02;MAT2026012;avatar12.jpg;motora;110;12
+10000000013;aluno13@escola.com.br;Senha@123;Mariana Costa Ferreira;2008-01-14;MAT2026013;avatar13.jpg;visual;225;13
+10000000014;aluno14@escola.com.br;Senha@123;Nicolas Souza Almeida;2009-03-29;MAT2026014;avatar14.jpg;intelectual;80;14
+10000000015;aluno15@escola.com.br;Senha@123;Patricia Lima Rocha;2007-06-17;MAT2026015;avatar15.jpg;auditiva;145;15
+10000000016;aluno16@escola.com.br;Senha@123;Rafael Gomes Silva;2010-09-06;MAT2026016;avatar16.jpg;motora;260;16
+10000000017;aluno17@escola.com.br;Senha@123;Sabrina Alves Martins;2008-11-21;MAT2026017;avatar17.jpg;visual;170;17
+10000000018;aluno18@escola.com.br;Senha@123;Thiago Pereira Costa;2009-01-09;MAT2026018;avatar18.jpg;auditiva;100;18
+10000000019;aluno19@escola.com.br;Senha@123;Vanessa Fernandes Lima;2007-04-26;MAT2026019;avatar19.jpg;intelectual;135;19
+10000000020;aluno20@escola.com.br;Senha@123;William Santos Oliveira;2010-12-12;MAT2026020;avatar20.jpg;visual;205;20
+10000000021;aluno21@escola.com.br;Senha@123;Amanda Martins Silva;2008-02-16;MAT2026021;avatar21.jpg;motora;150;21
+10000000022;aluno22@escola.com.br;Senha@123;Andre Carvalho Souza;2009-05-03;MAT2026022;avatar22.jpg;auditiva;90;22
+10000000023;aluno23@escola.com.br;Senha@123;Beatriz Ferreira Lima;2007-09-19;MAT2026023;avatar23.jpg;visual;185;23
+10000000024;aluno24@escola.com.br;Senha@123;Caio Rodrigues Alves;2010-02-28;MAT2026024;avatar24.jpg;intelectual;70;24
+10000000025;aluno25@escola.com.br;Senha@123;Camila Barbosa Santos;2008-07-07;MAT2026025;avatar25.jpg;motora;230;25
+10000000026;aluno26@escola.com.br;Senha@123;Diego Martins Oliveira;2009-10-15;MAT2026026;avatar26.jpg;visual;125;26
+10000000027;aluno27@escola.com.br;Senha@123;Elisa Costa Pereira;2007-12-01;MAT2026027;avatar27.jpg;auditiva;160;27
+10000000028;aluno28@escola.com.br;Senha@123;Fabio Mendes Rocha;2010-04-23;MAT2026028;avatar28.jpg;motora;200;28
+10000000029;aluno29@escola.com.br;Senha@123;Giovana Almeida Santos;2008-09-10;MAT2026029;avatar29.jpg;visual;95;29
+10000000030;aluno30@escola.com.br;Senha@123;Gustavo Ribeiro Lima;2009-06-05;MAT2026030;avatar30.jpg;intelectual;145;30
+10000000031;aluno31@escola.com.br;Senha@123;Helena Souza Martins;2007-01-27;MAT2026031;avatar31.jpg;auditiva;115;31
+10000000032;aluno32@escola.com.br;Senha@123;Igor Ferreira Alves;2010-08-14;MAT2026032;avatar32.jpg;visual;175;32
+10000000033;aluno33@escola.com.br;Senha@123;Jessica Oliveira Costa;2008-03-31;MAT2026033;avatar33.jpg;motora;250;33
+10000000034;aluno34@escola.com.br;Senha@123;Leandro Silva Mendes;2009-11-18;MAT2026034;avatar34.jpg;intelectual;60;34
+10000000035;aluno35@escola.com.br;Senha@123;Larissa Santos Pereira;2007-05-09;MAT2026035;avatar35.jpg;visual;215;35
+10000000036;aluno36@escola.com.br;Senha@123;Marcelo Gomes Rocha;2010-01-30;MAT2026036;avatar36.jpg;auditiva;105;36
+10000000037;aluno37@escola.com.br;Senha@123;Natalia Carvalho Lima;2008-10-20;MAT2026037;avatar37.jpg;motora;185;37
+10000000038;aluno38@escola.com.br;Senha@123;Otavio Martins Silva;2009-02-07;MAT2026038;avatar38.jpg;visual;140;38
+10000000039;aluno39@escola.com.br;Senha@123;Priscila Almeida Costa;2007-07-24;MAT2026039;avatar39.jpg;intelectual;95;39
+10000000040;aluno40@escola.com.br;Senha@123;Rodrigo Fernandes Santos;2010-11-11;MAT2026040;avatar40.jpg;auditiva;165;40
+10000000041;aluno41@escola.com.br;Senha@123;Simone Pereira Lima;2008-04-18;MAT2026041;avatar41.jpg;visual;120;41
+10000000042;aluno42@escola.com.br;Senha@123;Vinicius Oliveira Rocha;2009-08-29;MAT2026042;avatar42.jpg;motora;220;42
+10000000043;aluno43@escola.com.br;Senha@123;Aline Mendes Silva;2007-10-06;MAT2026043;avatar43.jpg;intelectual;75;43
+10000000044;aluno44@escola.com.br;Senha@123;Carlos Henrique Souza;2010-03-12;MAT2026044;avatar44.jpg;auditiva;155;44
+10000000045;aluno45@escola.com.br;Senha@123;Denise Martins Alves;2008-06-26;MAT2026045;avatar45.jpg;visual;195;45
+10000000046;aluno46@escola.com.br;Senha@123;Eduardo Santos Costa;2009-12-09;MAT2026046;avatar46.jpg;motora;135;46
+10000000047;aluno47@escola.com.br;Senha@123;Fernanda Ribeiro Lima;2007-03-17;MAT2026047;avatar47.jpg;visual;180;47
+10000000048;aluno48@escola.com.br;Senha@123;Guilherme Carvalho Rocha;2010-07-02;MAT2026048;avatar48.jpg;intelectual;85;48
+10000000049;aluno49@escola.com.br;Senha@123;Heloisa Ferreira Silva;2008-11-14;MAT2026049;avatar49.jpg;auditiva;125;49
+10000000050;aluno50@escola.com.br;Senha@123;Marcelo Oliveira Santos;2009-05-21;MAT2026050;avatar50.jpg;visual;235;50
+10000000051;aluno51@escola.com.br;Senha@123;Adriana Costa Mendes;2007-08-03;MAT2026051;avatar51.jpg;motora;100;51
+10000000052;aluno52@escola.com.br;Senha@123;Alexandre Lima Pereira;2010-10-27;MAT2026052;avatar52.jpg;visual;165;52
+10000000053;aluno53@escola.com.br;Senha@123;Bruna Martins Rocha;2008-01-08;MAT2026053;avatar53.jpg;auditiva;140;53
+10000000054;aluno54@escola.com.br;Senha@123;Cesar Almeida Silva;2009-03-16;MAT2026054;avatar54.jpg;intelectual;90;54
+10000000055;aluno55@escola.com.br;Senha@123;Cristina Santos Lima;2007-06-28;MAT2026055;avatar55.jpg;visual;205;55
+10000000056;aluno56@escola.com.br;Senha@123;Douglas Ferreira Costa;2010-09-19;MAT2026056;avatar56.jpg;motora;175;56
+10000000057;aluno57@escola.com.br;Senha@123;Elaine Rodrigues Santos;2008-12-05;MAT2026057;avatar57.jpg;auditiva;115;57
+10000000058;aluno58@escola.com.br;Senha@123;Fernando Martins Oliveira;2009-04-24;MAT2026058;avatar58.jpg;visual;190;58
+10000000059;aluno59@escola.com.br;Senha@123;Isadora Carvalho Lima;2007-09-13;MAT2026059;avatar59.jpg;intelectual;130;59
+10000000060;aluno60@escola.com.br;Senha@123;Jorge Mendes Alves;2010-02-06;MAT2026060;avatar60.jpg;motora;245;60
+10000000061;aluno61@escola.com.br;Senha@123;Karen Souza Pereira;2008-05-15;MAT2026061;avatar61.jpg;visual;155;61
+10000000062;aluno62@escola.com.br;Senha@123;Leonardo Gomes Silva;2009-07-30;MAT2026062;avatar62.jpg;auditiva;105;62
+10000000063;aluno63@escola.com.br;Senha@123;Luciana Ferreira Santos;2007-11-22;MAT2026063;avatar63.jpg;motora;215;63
+10000000064;aluno64@escola.com.br;Senha@123;Matheus Oliveira Costa;2010-01-13;MAT2026064;avatar64.jpg;visual;170;64
+10000000065;aluno65@escola.com.br;Senha@123;Monique Almeida Lima;2008-08-08;MAT2026065;avatar65.jpg;intelectual;80;65
+10000000066;aluno66@escola.com.br;Senha@123;Paulo Ribeiro Rocha;2009-10-25;MAT2026066;avatar66.jpg;auditiva;150;66
+10000000067;aluno67@escola.com.br;Senha@123;Renata Martins Silva;2007-02-11;MAT2026067;avatar67.jpg;visual;225;67
+10000000068;aluno68@escola.com.br;Senha@123;Ricardo Santos Pereira;2010-06-29;MAT2026068;avatar68.jpg;motora;190;68
+10000000069;aluno69@escola.com.br;Senha@123;Sara Costa Mendes;2008-04-07;MAT2026069;avatar69.jpg;auditiva;95;69
+10000000070;aluno70@escola.com.br;Senha@123;Victor Hugo Alves;2009-12-18;MAT2026070;avatar70.jpg;visual;160;70
+10000000071;aluno71@escola.com.br;Senha@123;Alice Rodrigues Silva;2007-05-31;MAT2026071;avatar71.jpg;intelectual;70;71
+10000000072;aluno72@escola.com.br;Senha@123;Bernardo Ferreira Santos;2010-03-25;MAT2026072;avatar72.jpg;motora;235;72
+10000000073;aluno73@escola.com.br;Senha@123;Claudia Martins Costa;2008-09-17;MAT2026073;avatar73.jpg;visual;145;73
+10000000074;aluno74@escola.com.br;Senha@123;Davi Oliveira Lima;2009-01-28;MAT2026074;avatar74.jpg;auditiva;120;74
+10000000075;aluno75@escola.com.br;Senha@123;Estela Carvalho Rocha;2007-07-12;MAT2026075;avatar75.jpg;motora;205;75
+10000000076;aluno76@escola.com.br;Senha@123;Flavio Almeida Santos;2010-11-04;MAT2026076;avatar76.jpg;visual;180;76
+10000000077;aluno77@escola.com.br;Senha@123;Isis Pereira Silva;2008-02-22;MAT2026077;avatar77.jpg;intelectual;100;77
+10000000078;aluno78@escola.com.br;Senha@123;Jonas Mendes Costa;2009-06-16;MAT2026078;avatar78.jpg;auditiva;135;78
+10000000079;aluno79@escola.com.br;Senha@123;Livia Santos Lima;2007-10-29;MAT2026079;avatar79.jpg;visual;210;79
+10000000080;aluno80@escola.com.br;Senha@123;Murilo Ferreira Rocha;2010-04-10;MAT2026080;avatar80.jpg;motora;165;80
+10000000081;aluno81@escola.com.br;Senha@123;Nathalia Souza Alves;2008-06-19;MAT2026081;avatar81.jpg;auditiva;90;81
+10000000082;aluno82@escola.com.br;Senha@123;Oscar Martins Pereira;2009-08-02;MAT2026082;avatar82.jpg;visual;150;82
+10000000083;aluno83@escola.com.br;Senha@123;Rafaela Costa Silva;2007-12-14;MAT2026083;avatar83.jpg;motora;225;83
+10000000084;aluno84@escola.com.br;Senha@123;Samuel Oliveira Mendes;2010-05-27;MAT2026084;avatar84.jpg;intelectual;110;84
+10000000085;aluno85@escola.com.br;Senha@123;Tania Rodrigues Lima;2008-03-06;MAT2026085;avatar85.jpg;visual;195;85
+10000000086;aluno86@escola.com.br;Senha@123;Ulisses Carvalho Santos;2009-09-23;MAT2026086;avatar86.jpg;auditiva;125;86
+10000000087;aluno87@escola.com.br;Senha@123;Valeria Ferreira Costa;2007-01-18;MAT2026087;avatar87.jpg;motora;240;87
+10000000088;aluno88@escola.com.br;Senha@123;Wesley Almeida Rocha;2010-07-15;MAT2026088;avatar88.jpg;visual;175;88
+10000000089;aluno89@escola.com.br;Senha@123;Yasmin Martins Silva;2008-10-09;MAT2026089;avatar89.jpg;intelectual;85;89
+10000000090;aluno90@escola.com.br;Senha@123;Zeca Santos Pereira;2009-02-26;MAT2026090;avatar90.jpg;auditiva;140;90
+10000000091;aluno91@escola.com.br;Senha@123;Amanda Ferreira Lima;2007-04-13;MAT2026091;avatar91.jpg;visual;220;91
+10000000092;aluno92@escola.com.br;Senha@123;Bianca Oliveira Costa;2010-08-21;MAT2026092;avatar92.jpg;motora;155;92
+10000000093;aluno93@escola.com.br;Senha@123;Cristiano Mendes Silva;2008-11-03;MAT2026093;avatar93.jpg;intelectual;75;93
+10000000094;aluno94@escola.com.br;Senha@123;Debora Santos Rocha;2009-05-12;MAT2026094;avatar94.jpg;auditiva;165;94
+10000000095;aluno95@escola.com.br;Senha@123;Elias Carvalho Lima;2007-09-27;MAT2026095;avatar95.jpg;visual;185;95
+10000000096;aluno96@escola.com.br;Senha@123;Fabiana Martins Alves;2010-01-06;MAT2026096;avatar96.jpg;motora;200;96
+10000000097;aluno97@escola.com.br;Senha@123;Gabriel Souza Pereira;2008-07-20;MAT2026097;avatar97.jpg;visual;135;97
+10000000098;aluno98@escola.com.br;Senha@123;Irene Almeida Costa;2009-11-29;MAT2026098;avatar98.jpg;intelectual;105;98
+10000000099;aluno99@escola.com.br;Senha@123;Jose Fernandes Silva;2007-03-08;MAT2026099;avatar99.jpg;auditiva;145;99
+10000000100;aluno100@escola.com.br;Senha@123;Leticia Ribeiro Santos;2010-06-11;MAT2026100;avatar100.jpg;visual;230;100
 codigo_turma;nome_turma;serie_ano;disciplina;turno;ano_letivo;capacidade_maxima;status_turma;email_professor
-TURMA001;Matemática A;9º Ano;Matemática;Manhã;2026;30;ativa;joao@escola.com
-TURMA002;Português A;9º Ano;Língua Portuguesa;Manhã;2026;30;ativa;mariana@escola.com
-TURMA003;Ciências A;9º Ano;Ciências;Tarde;2026;25;ativa;lucas@escola.com
+TURMA001;Turma A - Matemática;6º Ano;Matemática;matutino;2026;30;ativa;professor01@escola.com.br
+TURMA002;Turma B - Português;6º Ano;Português;vespertino;2026;30;ativa;professor02@escola.com.br
+TURMA003;Turma A - Ciências;7º Ano;Ciências;matutino;2026;32;ativa;professor03@escola.com.br
+TURMA004;Turma B - História;7º Ano;História;vespertino;2026;28;ativa;professor04@escola.com.br
+TURMA005;Turma A - Geografia;8º Ano;Geografia;matutino;2026;30;ativa;professor05@escola.com.br
+TURMA006;Turma B - Matemática;8º Ano;Matemática;vespertino;2026;32;ativa;professor06@escola.com.br
+TURMA007;Turma A - Português;9º Ano;Português;matutino;2026;30;ativa;professor07@escola.com.br
+TURMA008;Turma B - Ciências;9º Ano;Ciências;vespertino;2026;28;ativa;professor08@escola.com.br
+TURMA009;Turma A - Matemática;1º Ano EM;Matemática;matutino;2026;35;ativa;professor09@escola.com.br
+TURMA010;Turma B - Física;1º Ano EM;Física;vespertino;2026;32;ativa;professor10@escola.com.br
+TURMA011;Turma A - Química;1º Ano EM;Química;matutino;2026;30;ativa;professor11@escola.com.br
+TURMA012;Turma B - Biologia;1º Ano EM;Biologia;vespertino;2026;30;ativa;professor12@escola.com.br
+TURMA013;Turma A - História;2º Ano EM;História;matutino;2026;35;ativa;professor13@escola.com.br
+TURMA014;Turma B - Geografia;2º Ano EM;Geografia;vespertino;2026;32;ativa;professor14@escola.com.br
+TURMA015;Turma A - Matemática;2º Ano EM;Matemática;matutino;2026;35;ativa;professor15@escola.com.br
+TURMA016;Turma B - Português;2º Ano EM;Português;vespertino;2026;30;ativa;professor16@escola.com.br
+TURMA017;Turma A - Física;3º Ano EM;Física;matutino;2026;32;ativa;professor17@escola.com.br
+TURMA018;Turma B - Química;3º Ano EM;Química;vespertino;2026;30;ativa;professor18@escola.com.br
+TURMA019;Turma A - Biologia;3º Ano EM;Biologia;matutino;2026;35;ativa;professor19@escola.com.br
+TURMA020;Turma B - História;3º Ano EM;História;vespertino;2026;30;ativa;professor20@escola.com.br
+TURMA021;Turma A - Matemática;6º Ano;Matemática;matutino;2026;28;ativa;professor21@escola.com.br
+TURMA022;Turma B - Português;6º Ano;Português;vespertino;2026;32;ativa;professor22@escola.com.br
+TURMA023;Turma A - Ciências;7º Ano;Ciências;matutino;2026;30;ativa;professor23@escola.com.br
+TURMA024;Turma B - História;7º Ano;História;vespertino;2026;30;ativa;professor24@escola.com.br
+TURMA025;Turma A - Geografia;8º Ano;Geografia;matutino;2026;32;ativa;professor25@escola.com.br
+TURMA026;Turma B - Matemática;8º Ano;Matemática;vespertino;2026;30;ativa;professor26@escola.com.br
+TURMA027;Turma A - Português;9º Ano;Português;matutino;2026;28;ativa;professor27@escola.com.br
+TURMA028;Turma B - Ciências;9º Ano;Ciências;vespertino;2026;32;ativa;professor28@escola.com.br
+TURMA029;Turma A - Matemática;1º Ano EM;Matemática;matutino;2026;35;ativa;professor29@escola.com.br
+TURMA030;Turma B - Física;1º Ano EM;Física;vespertino;2026;30;ativa;professor30@escola.com.br
+TURMA031;Turma A - Química;1º Ano EM;Química;matutino;2026;32;ativa;professor31@escola.com.br
+TURMA032;Turma B - Biologia;1º Ano EM;Biologia;vespertino;2026;30;ativa;professor32@escola.com.br
+TURMA033;Turma A - História;2º Ano EM;História;matutino;2026;35;ativa;professor33@escola.com.br
+TURMA034;Turma B - Geografia;2º Ano EM;Geografia;vespertino;2026;30;ativa;professor34@escola.com.br
+TURMA035;Turma A - Matemática;2º Ano EM;Matemática;matutino;2026;32;ativa;professor35@escola.com.br
+TURMA036;Turma B - Português;2º Ano EM;Português;vespertino;2026;35;ativa;professor36@escola.com.br
+TURMA037;Turma A - Física;3º Ano EM;Física;matutino;2026;30;ativa;professor37@escola.com.br
+TURMA038;Turma B - Química;3º Ano EM;Química;vespertino;2026;32;ativa;professor38@escola.com.br
+TURMA039;Turma A - Biologia;3º Ano EM;Biologia;matutino;2026;30;ativa;professor39@escola.com.br
+TURMA040;Turma B - História;3º Ano EM;História;vespertino;2026;35;ativa;professor40@escola.com.br
+TURMA041;Turma A - Matemática;6º Ano;Matemática;matutino;2026;30;ativa;professor41@escola.com.br
+TURMA042;Turma B - Português;6º Ano;Português;vespertino;2026;28;ativa;professor42@escola.com.br
+TURMA043;Turma A - Ciências;7º Ano;Ciências;matutino;2026;32;ativa;professor43@escola.com.br
+TURMA044;Turma B - História;7º Ano;História;vespertino;2026;30;ativa;professor44@escola.com.br
+TURMA045;Turma A - Geografia;8º Ano;Geografia;matutino;2026;30;ativa;professor45@escola.com.br
+TURMA046;Turma B - Matemática;8º Ano;Matemática;vespertino;2026;32;ativa;professor46@escola.com.br
+TURMA047;Turma A - Português;9º Ano;Português;matutino;2026;30;ativa;professor47@escola.com.br
+TURMA048;Turma B - Ciências;9º Ano;Ciências;vespertino;2026;28;ativa;professor48@escola.com.br
+TURMA049;Turma A - Matemática;1º Ano EM;Matemática;matutino;2026;35;ativa;professor49@escola.com.br
+TURMA050;Turma B - Física;1º Ano EM;Física;vespertino;2026;32;ativa;professor50@escola.com.br
+TURMA051;Turma A - Química;1º Ano EM;Química;matutino;2026;30;ativa;professor51@escola.com.br
+TURMA052;Turma B - Biologia;1º Ano EM;Biologia;vespertino;2026;30;ativa;professor52@escola.com.br
+TURMA053;Turma A - História;2º Ano EM;História;matutino;2026;35;ativa;professor53@escola.com.br
+TURMA054;Turma B - Geografia;2º Ano EM;Geografia;vespertino;2026;32;ativa;professor54@escola.com.br
+TURMA055;Turma A - Matemática;2º Ano EM;Matemática;matutino;2026;35;ativa;professor55@escola.com.br
+TURMA056;Turma B - Português;2º Ano EM;Português;vespertino;2026;30;ativa;professor56@escola.com.br
+TURMA057;Turma A - Física;3º Ano EM;Física;matutino;2026;32;ativa;professor57@escola.com.br
+TURMA058;Turma B - Química;3º Ano EM;Química;vespertino;2026;30;ativa;professor58@escola.com.br
+TURMA059;Turma A - Biologia;3º Ano EM;Biologia;matutino;2026;35;ativa;professor59@escola.com.br
+TURMA060;Turma B - História;3º Ano EM;História;vespertino;2026;30;ativa;professor60@escola.com.br
+TURMA061;Turma A - Matemática;6º Ano;Matemática;matutino;2026;28;ativa;professor61@escola.com.br
+TURMA062;Turma B - Português;6º Ano;Português;vespertino;2026;32;ativa;professor62@escola.com.br
+TURMA063;Turma A - Ciências;7º Ano;Ciências;matutino;2026;30;ativa;professor63@escola.com.br
+TURMA064;Turma B - História;7º Ano;História;vespertino;2026;30;ativa;professor64@escola.com.br
+TURMA065;Turma A - Geografia;8º Ano;Geografia;matutino;2026;32;ativa;professor65@escola.com.br
+TURMA066;Turma B - Matemática;8º Ano;Matemática;vespertino;2026;30;ativa;professor66@escola.com.br
+TURMA067;Turma A - Português;9º Ano;Português;matutino;2026;28;ativa;professor67@escola.com.br
+TURMA068;Turma B - Ciências;9º Ano;Ciências;vespertino;2026;32;ativa;professor68@escola.com.br
+TURMA069;Turma A - Matemática;1º Ano EM;Matemática;matutino;2026;35;ativa;professor69@escola.com.br
+TURMA070;Turma B - Física;1º Ano EM;Física;vespertino;2026;30;ativa;professor70@escola.com.br
+TURMA071;Turma A - Química;1º Ano EM;Química;matutino;2026;32;ativa;professor71@escola.com.br
+TURMA072;Turma B - Biologia;1º Ano EM;Biologia;vespertino;2026;30;ativa;professor72@escola.com.br
+TURMA073;Turma A - História;2º Ano EM;História;matutino;2026;35;ativa;professor73@escola.com.br
+TURMA074;Turma B - Geografia;2º Ano EM;Geografia;vespertino;2026;30;ativa;professor74@escola.com.br
+TURMA075;Turma A - Matemática;2º Ano EM;Matemática;matutino;2026;32;ativa;professor75@escola.com.br
+TURMA076;Turma B - Português;2º Ano EM;Português;vespertino;2026;35;ativa;professor76@escola.com.br
+TURMA077;Turma A - Física;3º Ano EM;Física;matutino;2026;30;ativa;professor77@escola.com.br
+TURMA078;Turma B - Química;3º Ano EM;Química;vespertino;2026;32;ativa;professor78@escola.com.br
+TURMA079;Turma A - Biologia;3º Ano EM;Biologia;matutino;2026;30;ativa;professor79@escola.com.br
+TURMA080;Turma B - História;3º Ano EM;História;vespertino;2026;35;ativa;professor80@escola.com.br
+TURMA081;Turma A - Matemática;6º Ano;Matemática;matutino;2026;30;ativa;professor81@escola.com.br
+TURMA082;Turma B - Português;6º Ano;Português;vespertino;2026;28;ativa;professor82@escola.com.br
+TURMA083;Turma A - Ciências;7º Ano;Ciências;matutino;2026;32;ativa;professor83@escola.com.br
+TURMA084;Turma B - História;7º Ano;História;vespertino;2026;30;ativa;professor84@escola.com.br
+TURMA085;Turma A - Geografia;8º Ano;Geografia;matutino;2026;30;ativa;professor85@escola.com.br
+TURMA086;Turma B - Matemática;8º Ano;Matemática;vespertino;2026;32;ativa;professor86@escola.com.br
+TURMA087;Turma A - Português;9º Ano;Português;matutino;2026;30;ativa;professor87@escola.com.br
+TURMA088;Turma B - Ciências;9º Ano;Ciências;vespertino;2026;28;ativa;professor88@escola.com.br
+TURMA089;Turma A - Matemática;1º Ano EM;Matemática;matutino;2026;35;ativa;professor89@escola.com.br
+TURMA090;Turma B - Física;1º Ano EM;Física;vespertino;2026;32;ativa;professor90@escola.com.br
+TURMA091;Turma A - Química;1º Ano EM;Química;matutino;2026;30;ativa;professor91@escola.com.br
+TURMA092;Turma B - Biologia;1º Ano EM;Biologia;vespertino;2026;30;ativa;professor92@escola.com.br
+TURMA093;Turma A - História;2º Ano EM;História;matutino;2026;35;ativa;professor93@escola.com.br
+TURMA094;Turma B - Geografia;2º Ano EM;Geografia;vespertino;2026;32;ativa;professor94@escola.com.br
+TURMA095;Turma A - Matemática;2º Ano EM;Matemática;matutino;2026;35;ativa;professor95@escola.com.br
+TURMA096;Turma B - Português;2º Ano EM;Português;vespertino;2026;30;ativa;professor96@escola.com.br
+TURMA097;Turma A - Física;3º Ano EM;Física;matutino;2026;32;ativa;professor97@escola.com.br
+TURMA098;Turma B - Química;3º Ano EM;Química;vespertino;2026;30;ativa;professor98@escola.com.br
+TURMA099;Turma A - Biologia;3º Ano EM;Biologia;matutino;2026;35;ativa;professor99@escola.com.br
+TURMA100;Turma B - História;3º Ano EM;História;vespertino;2026;30;ativa;professor100@escola.com.br
 cpf_aluno;codigo_turma
-12345678901;TURMA001
-12345678901;TURMA002
-23456789012;TURMA001
-23456789012;TURMA003
-34567890123;TURMA002
-34567890123;TURMA003
-45678901234;TURMA001
-56789012345;TURMA002
-56789012345;TURMA003
-id_atividade;titulo;descricao;opcao;data_hora_abertura;data_hora_entrega;nota_maxima;recursos_acessibilidade;anexos;codigo_turma
-1;Operações Matemáticas;Resolva exercícios de adição subtração multiplicação e divisão;individual;2026-09-01 08:00:00;2026-09-05 23:59:00;10.00;leitor_de_tela;atividade_matematica.pdf;TURMA001
-2;Equações do Primeiro Grau;Resolva as equações apresentadas utilizando o método aprendido em aula;individual;2026-09-02 08:00:00;2026-09-08 23:59:00;10.00;fonte_ampliada;equacoes.pdf;TURMA001
-3;Interpretação de Texto;Leia o texto e responda às perguntas de interpretação;individual;2026-09-01 08:00:00;2026-09-06 23:59:00;10.00;alto_contraste;texto_interpretacao.pdf;TURMA002
-4;Produção Textual;Produza um pequeno texto sobre tecnologia e educação;individual;2026-09-03 08:00:00;2026-09-10 23:59:00;10.00;tempo_extra;producao_textual.pdf;TURMA002
-5;Sistema Solar;Identifique os principais planetas do Sistema Solar;individual;2026-09-02 13:00:00;2026-09-07 23:59:00;10.00;leitura_em_voz_alta;sistema_solar.pdf;TURMA003
-id_resposta;data_hora_inicio;data_hora_entrega;resposta_selecionada;nota_obtida;cpf_aluno;id_atividade
-1;2026-09-01 09:00:00;2026-09-01 09:35:00;Resposta enviada pelo aluno;9.50;12345678901;1
-2;2026-09-02 09:15:00;2026-09-02 10:00:00;Resposta enviada pelo aluno;8.00;23456789012;1
-3;2026-09-03 14:00:00;2026-09-03 14:45:00;Resposta enviada pelo aluno;7.50;34567890123;3
-4;2026-09-04 08:30:00;2026-09-04 09:10:00;Resposta enviada pelo aluno;9.00;45678901234;2
-5;2026-09-04 15:00:00;2026-09-04 15:30:00;Resposta enviada pelo aluno;10.00;56789012345;5
+10000000001;TURMA001
+10000000002;TURMA002
+10000000003;TURMA003
+10000000004;TURMA004
+10000000005;TURMA005
+10000000006;TURMA006
+10000000007;TURMA007
+10000000008;TURMA008
+10000000009;TURMA009
+10000000010;TURMA010
+10000000011;TURMA011
+10000000012;TURMA012
+10000000013;TURMA013
+10000000014;TURMA014
+10000000015;TURMA015
+10000000016;TURMA016
+10000000017;TURMA017
+10000000018;TURMA018
+10000000019;TURMA019
+10000000020;TURMA020
+10000000021;TURMA021
+10000000022;TURMA022
+10000000023;TURMA023
+10000000024;TURMA024
+10000000025;TURMA025
+10000000026;TURMA026
+10000000027;TURMA027
+10000000028;TURMA028
+10000000029;TURMA029
+10000000030;TURMA030
+10000000031;TURMA031
+10000000032;TURMA032
+10000000033;TURMA033
+10000000034;TURMA034
+10000000035;TURMA035
+10000000036;TURMA036
+10000000037;TURMA037
+10000000038;TURMA038
+10000000039;TURMA039
+10000000040;TURMA040
+10000000041;TURMA041
+10000000042;TURMA042
+10000000043;TURMA043
+10000000044;TURMA044
+10000000045;TURMA045
+10000000046;TURMA046
+10000000047;TURMA047
+10000000048;TURMA048
+10000000049;TURMA049
+10000000050;TURMA050
+10000000051;TURMA051
+10000000052;TURMA052
+10000000053;TURMA053
+10000000054;TURMA054
+10000000055;TURMA055
+10000000056;TURMA056
+10000000057;TURMA057
+10000000058;TURMA058
+10000000059;TURMA059
+10000000060;TURMA060
+10000000061;TURMA061
+10000000062;TURMA062
+10000000063;TURMA063
+10000000064;TURMA064
+10000000065;TURMA065
+10000000066;TURMA066
+10000000067;TURMA067
+10000000068;TURMA068
+10000000069;TURMA069
+10000000070;TURMA070
+10000000071;TURMA071
+10000000072;TURMA072
+10000000073;TURMA073
+10000000074;TURMA074
+10000000075;TURMA075
+10000000076;TURMA076
+10000000077;TURMA077
+10000000078;TURMA078
+10000000079;TURMA079
+10000000080;TURMA080
+10000000081;TURMA081
+10000000082;TURMA082
+10000000083;TURMA083
+10000000084;TURMA084
+10000000085;TURMA085
+10000000086;TURMA086
+10000000087;TURMA087
+10000000088;TURMA088
+10000000089;TURMA089
+10000000090;TURMA090
+10000000091;TURMA091
+10000000092;TURMA092
+10000000093;TURMA093
+10000000094;TURMA094
+10000000095;TURMA095
+10000000096;TURMA096
+10000000097;TURMA097
+10000000098;TURMA098
+10000000099;TURMA099
+10000000100;TURMA100
+cpf_aluno;objetivos_pedagogicos;atendimentos_especializados;data_criacao;data_revisao;status_pei
+10000000001;Desenvolver autonomia na leitura e interpretação de textos;Atendimento educacional especializado;2026-02-03;2026-06-03;em_andamento
+10000000002;Aprimorar a comunicação e compreensão de conteúdos escolares;Acompanhamento com profissional de apoio;2026-02-04;2026-06-04;em_andamento
+10000000003;Desenvolver estratégias para resolução de problemas matemáticos;Atendimento educacional especializado;2026-02-05;2026-06-05;em_andamento
+10000000004;Ampliar a autonomia nas atividades pedagógicas;Acompanhamento pedagógico individualizado;2026-02-06;2026-06-06;em_andamento
+10000000005;Desenvolver habilidades de leitura, escrita e interpretação;Atendimento educacional especializado;2026-02-07;2026-06-07;em_andamento
+10000000006;Aprimorar a comunicação durante as atividades em sala;Profissional de apoio educacional;2026-02-08;2026-06-08;em_andamento
+10000000007;Desenvolver autonomia e participação nas atividades coletivas;Atendimento educacional especializado;2026-02-09;2026-06-09;em_andamento
+10000000008;Aprimorar habilidades de leitura e produção textual;Recursos pedagógicos acessíveis;2026-02-10;2026-06-10;em_andamento
+10000000009;Desenvolver estratégias de organização e estudo;Acompanhamento pedagógico individualizado;2026-02-11;2026-06-11;em_andamento
+10000000010;Ampliar a compreensão dos conteúdos apresentados em aula;Profissional de apoio educacional;2026-02-12;2026-06-12;em_andamento
+10000000011;Desenvolver autonomia na produção escrita;Atendimento educacional especializado;2026-02-13;2026-06-13;em_andamento
+10000000012;Aprimorar habilidades de raciocínio lógico e resolução de problemas;Acompanhamento pedagógico individualizado;2026-02-14;2026-06-14;em_andamento
+10000000013;Desenvolver habilidades de comunicação e expressão;Atendimento educacional especializado;2026-02-15;2026-06-15;em_andamento
+10000000014;Ampliar a participação nas atividades pedagógicas;Profissional de apoio educacional;2026-02-16;2026-06-16;em_andamento
+10000000015;Desenvolver estratégias para compreensão de textos;Atendimento educacional especializado;2026-02-17;2026-06-17;em_andamento
+10000000016;Aprimorar autonomia na realização das tarefas escolares;Acompanhamento pedagógico individualizado;2026-02-18;2026-06-18;em_andamento
+10000000017;Desenvolver habilidades de leitura e interpretação;Recursos pedagógicos acessíveis;2026-02-19;2026-06-19;em_andamento
+10000000018;Ampliar a comunicação e interação durante as aulas;Profissional de apoio educacional;2026-02-20;2026-06-20;em_andamento
+10000000019;Desenvolver organização e autonomia nos estudos;Atendimento educacional especializado;2026-02-21;2026-06-21;em_andamento
+10000000020;Aprimorar o desempenho em atividades de matemática;Acompanhamento pedagógico individualizado;2026-02-22;2026-06-22;em_andamento
+10000000021;Desenvolver habilidades de leitura e produção textual;Atendimento educacional especializado;2026-02-23;2026-06-23;em_andamento
+10000000022;Aprimorar a compreensão das instruções pedagógicas;Profissional de apoio educacional;2026-02-24;2026-06-24;em_andamento
+10000000023;Desenvolver autonomia nas atividades escolares;Atendimento educacional especializado;2026-02-25;2026-06-25;em_andamento
+10000000024;Ampliar habilidades de raciocínio e resolução de problemas;Acompanhamento pedagógico individualizado;2026-02-26;2026-06-26;em_andamento
+10000000025;Desenvolver estratégias de comunicação e participação;Profissional de apoio educacional;2026-02-27;2026-06-27;em_andamento
+10000000026;Aprimorar a leitura e interpretação de textos;Atendimento educacional especializado;2026-02-28;2026-06-28;em_andamento
+10000000027;Desenvolver autonomia para organização das tarefas;Acompanhamento pedagógico individualizado;2026-03-01;2026-07-01;em_andamento
+10000000028;Aprimorar habilidades de escrita e expressão;Recursos pedagógicos acessíveis;2026-03-02;2026-07-02;em_andamento
+10000000029;Desenvolver estratégias para compreensão dos conteúdos;Atendimento educacional especializado;2026-03-03;2026-07-03;em_andamento
+10000000030;Ampliar a participação nas atividades de sala de aula;Profissional de apoio educacional;2026-03-04;2026-07-04;em_andamento
+10000000031;Desenvolver habilidades de leitura e interpretação;Atendimento educacional especializado;2026-03-05;2026-07-05;em_andamento
+10000000032;Aprimorar autonomia e organização dos estudos;Acompanhamento pedagógico individualizado;2026-03-06;2026-07-06;em_andamento
+10000000033;Desenvolver habilidades de comunicação e interação social;Profissional de apoio educacional;2026-03-07;2026-07-07;em_andamento
+10000000034;Aprimorar estratégias para resolução de problemas;Atendimento educacional especializado;2026-03-08;2026-07-08;em_andamento
+10000000035;Desenvolver competências de leitura e escrita;Recursos pedagógicos acessíveis;2026-03-09;2026-07-09;em_andamento
+10000000036;Ampliar autonomia durante as atividades escolares;Acompanhamento pedagógico individualizado;2026-03-10;2026-07-10;em_andamento
+10000000037;Desenvolver estratégias de aprendizagem e organização;Atendimento educacional especializado;2026-03-11;2026-07-11;em_andamento
+10000000038;Aprimorar compreensão de textos e instruções;Profissional de apoio educacional;2026-03-12;2026-07-12;em_andamento
+10000000039;Desenvolver habilidades matemáticas e raciocínio lógico;Acompanhamento pedagógico individualizado;2026-03-13;2026-07-13;em_andamento
+10000000040;Ampliar a participação e autonomia em sala;Atendimento educacional especializado;2026-03-14;2026-07-14;em_andamento
+10000000041;Desenvolver habilidades de leitura e produção escrita;Recursos pedagógicos acessíveis;2026-03-15;2026-07-15;em_andamento
+10000000042;Aprimorar comunicação e compreensão das atividades;Profissional de apoio educacional;2026-03-16;2026-07-16;em_andamento
+10000000043;Desenvolver autonomia na execução das tarefas;Atendimento educacional especializado;2026-03-17;2026-07-17;em_andamento
+10000000044;Aprimorar habilidades de raciocínio lógico;Acompanhamento pedagógico individualizado;2026-03-18;2026-07-18;em_andamento
+10000000045;Desenvolver estratégias de leitura e interpretação;Atendimento educacional especializado;2026-03-19;2026-07-19;em_andamento
+10000000046;Ampliar a autonomia e organização escolar;Profissional de apoio educacional;2026-03-20;2026-07-20;em_andamento
+10000000047;Desenvolver habilidades de comunicação e expressão;Recursos pedagógicos acessíveis;2026-03-21;2026-07-21;em_andamento
+10000000048;Aprimorar participação nas atividades pedagógicas;Acompanhamento pedagógico individualizado;2026-03-22;2026-07-22;em_andamento
+10000000049;Desenvolver habilidades de leitura e escrita;Atendimento educacional especializado;2026-03-23;2026-07-23;em_andamento
+10000000050;Aprimorar estratégias de aprendizagem autônoma;Profissional de apoio educacional;2026-03-24;2026-07-24;em_andamento
+10000000051;Desenvolver autonomia na organização das atividades;Atendimento educacional especializado;2026-03-25;2026-07-25;em_andamento
+10000000052;Aprimorar compreensão e interpretação textual;Acompanhamento pedagógico individualizado;2026-03-26;2026-07-26;em_andamento
+10000000053;Desenvolver habilidades de comunicação e interação;Profissional de apoio educacional;2026-03-27;2026-07-27;em_andamento
+10000000054;Aprimorar raciocínio lógico e resolução de problemas;Atendimento educacional especializado;2026-03-28;2026-07-28;em_andamento
+10000000055;Desenvolver competências de leitura e escrita;Recursos pedagógicos acessíveis;2026-03-29;2026-07-29;em_andamento
+10000000056;Ampliar autonomia nas tarefas escolares;Acompanhamento pedagógico individualizado;2026-03-30;2026-07-30;em_andamento
+10000000057;Desenvolver estratégias de aprendizagem;Atendimento educacional especializado;2026-03-31;2026-07-31;em_andamento
+10000000058;Aprimorar comunicação durante as atividades;Profissional de apoio educacional;2026-04-01;2026-08-01;em_andamento
+10000000059;Desenvolver organização e autonomia nos estudos;Atendimento educacional especializado;2026-04-02;2026-08-02;em_andamento
+10000000060;Aprimorar desempenho em resolução de problemas;Acompanhamento pedagógico individualizado;2026-04-03;2026-08-03;em_andamento
+10000000061;Desenvolver habilidades de leitura e interpretação;Recursos pedagógicos acessíveis;2026-04-04;2026-08-04;em_andamento
+10000000062;Ampliar compreensão das orientações pedagógicas;Profissional de apoio educacional;2026-04-05;2026-08-05;em_andamento
+10000000063;Desenvolver autonomia nas atividades coletivas;Atendimento educacional especializado;2026-04-06;2026-08-06;em_andamento
+10000000064;Aprimorar habilidades de raciocínio lógico;Acompanhamento pedagógico individualizado;2026-04-07;2026-08-07;em_andamento
+10000000065;Desenvolver estratégias de leitura e escrita;Atendimento educacional especializado;2026-04-08;2026-08-08;em_andamento
+10000000066;Ampliar autonomia e participação escolar;Profissional de apoio educacional;2026-04-09;2026-08-09;em_andamento
+10000000067;Desenvolver habilidades de comunicação e expressão;Recursos pedagógicos acessíveis;2026-04-10;2026-08-10;em_andamento
+10000000068;Aprimorar organização e planejamento dos estudos;Acompanhamento pedagógico individualizado;2026-04-11;2026-08-11;em_andamento
+10000000069;Desenvolver competências de leitura e interpretação;Atendimento educacional especializado;2026-04-12;2026-08-12;em_andamento
+10000000070;Aprimorar estratégias de aprendizagem;Profissional de apoio educacional;2026-04-13;2026-08-13;em_andamento
+10000000071;Desenvolver autonomia nas tarefas escolares;Atendimento educacional especializado;2026-04-14;2026-08-14;em_andamento
+10000000072;Aprimorar habilidades matemáticas;Acompanhamento pedagógico individualizado;2026-04-15;2026-08-15;em_andamento
+10000000073;Desenvolver habilidades de leitura e escrita;Recursos pedagógicos acessíveis;2026-04-16;2026-08-16;em_andamento
+10000000074;Ampliar comunicação e participação em sala;Profissional de apoio educacional;2026-04-17;2026-08-17;em_andamento
+10000000075;Desenvolver autonomia e organização escolar;Atendimento educacional especializado;2026-04-18;2026-08-18;em_andamento
+10000000076;Aprimorar compreensão dos conteúdos escolares;Acompanhamento pedagógico individualizado;2026-04-19;2026-08-19;em_andamento
+10000000077;Desenvolver estratégias de comunicação;Profissional de apoio educacional;2026-04-20;2026-08-20;em_andamento
+10000000078;Aprimorar habilidades de resolução de problemas;Atendimento educacional especializado;2026-04-21;2026-08-21;em_andamento
+10000000079;Desenvolver competências de leitura e interpretação;Recursos pedagógicos acessíveis;2026-04-22;2026-08-22;em_andamento
+10000000080;Ampliar autonomia na realização das atividades;Acompanhamento pedagógico individualizado;2026-04-23;2026-08-23;em_andamento
+10000000081;Desenvolver habilidades de organização e estudo;Atendimento educacional especializado;2026-04-24;2026-08-24;em_andamento
+10000000082;Aprimorar comunicação e compreensão textual;Profissional de apoio educacional;2026-04-25;2026-08-25;em_andamento
+10000000083;Desenvolver autonomia e participação pedagógica;Atendimento educacional especializado;2026-04-26;2026-08-26;em_andamento
+10000000084;Aprimorar raciocínio lógico e estratégias de aprendizagem;Acompanhamento pedagógico individualizado;2026-04-27;2026-08-27;em_andamento
+10000000085;Desenvolver habilidades de leitura e produção textual;Recursos pedagógicos acessíveis;2026-04-28;2026-08-28;em_andamento
+10000000086;Ampliar comunicação e interação nas atividades;Profissional de apoio educacional;2026-04-29;2026-08-29;em_andamento
+10000000087;Desenvolver autonomia na realização das tarefas;Atendimento educacional especializado;2026-04-30;2026-08-30;em_andamento
+10000000088;Aprimorar estratégias para resolução de problemas;Acompanhamento pedagógico individualizado;2026-05-01;2026-09-01;em_andamento
+10000000089;Desenvolver competências de leitura e escrita;Atendimento educacional especializado;2026-05-02;2026-09-02;em_andamento
+10000000090;Ampliar autonomia e participação em sala;Profissional de apoio educacional;2026-05-03;2026-09-03;em_andamento
+10000000091;Desenvolver habilidades de organização e estudo;Atendimento educacional especializado;2026-05-04;2026-09-04;em_andamento
+10000000092;Aprimorar compreensão dos conteúdos escolares;Acompanhamento pedagógico individualizado;2026-05-05;2026-09-05;em_andamento
+10000000093;Desenvolver habilidades de comunicação e expressão;Recursos pedagógicos acessíveis;2026-05-06;2026-09-06;em_andamento
+10000000094;Aprimorar raciocínio lógico e resolução de problemas;Atendimento educacional especializado;2026-05-07;2026-09-07;em_andamento
+10000000095;Desenvolver habilidades de leitura e interpretação;Acompanhamento pedagógico individualizado;2026-05-08;2026-09-08;em_andamento
+10000000096;Ampliar autonomia nas atividades pedagógicas;Profissional de apoio educacional;2026-05-09;2026-09-09;em_andamento
+10000000097;Desenvolver estratégias de aprendizagem e organização;Atendimento educacional especializado;2026-05-10;2026-09-10;em_andamento
+10000000098;Aprimorar comunicação e compreensão das atividades;Recursos pedagógicos acessíveis;2026-05-11;2026-09-11;em_andamento
+10000000099;Desenvolver competências de leitura e escrita;Atendimento educacional especializado;2026-05-12;2026-09-12;em_andamento
+10000000100;Aprimorar autonomia e participação nas atividades escolares;Acompanhamento pedagógico individualizado;2026-05-13;2026-09-13;em_andamento
+titulo;descricao;tipo_atividade;data_hora_abertura;data_hora_entrega;nota_maxima;recursos_acessibilidade;anexos;codigo_turma
+Introdução à Matemática;Atividade de revisão sobre operações básicas;exercicio;2026-02-02 08:00:00;2026-02-06 23:59:00;10.00;fonte_ampliada;atividade01.pdf;TURMA001
+Leitura e Interpretação;Interpretação de texto e identificação das ideias principais;questionario;2026-02-03 13:00:00;2026-02-07 23:59:00;10.00;leitor_de_tela;texto02.pdf;TURMA002
+Conhecendo as Ciências;Questionário sobre conceitos básicos de ciências;questionario;2026-02-04 08:00:00;2026-02-08 23:59:00;10.00;alto_contraste;atividade03.pdf;TURMA003
+Brasil Colonial;Atividade sobre os principais acontecimentos do período colonial;pesquisa;2026-02-05 13:00:00;2026-02-12 23:59:00;10.00;fonte_ampliada;pesquisa04.pdf;TURMA004
+Espaço Geográfico;Exercícios sobre espaço e território;exercicio;2026-02-06 08:00:00;2026-02-13 23:59:00;10.00;leitor_de_tela;mapa05.pdf;TURMA005
+Operações Matemáticas;Lista de exercícios de operações fundamentais;exercicio;2026-02-07 13:00:00;2026-02-14 23:59:00;10.00;fonte_ampliada;lista06.pdf;TURMA006
+Produção Textual;Produção de um pequeno texto narrativo;trabalho;2026-02-09 08:00:00;2026-02-16 23:59:00;10.00;leitor_de_tela;modelo07.pdf;TURMA007
+Sistema Solar;Atividade sobre planetas e características do sistema solar;pesquisa;2026-02-10 13:00:00;2026-02-17 23:59:00;10.00;alto_contraste;sistema_solar08.pdf;TURMA008
+Equações do Primeiro Grau;Resolução de equações simples;exercicio;2026-02-11 08:00:00;2026-02-18 23:59:00;10.00;fonte_ampliada;equacoes09.pdf;TURMA009
+Movimento e Velocidade;Exercícios introdutórios sobre movimento;exercicio;2026-02-12 13:00:00;2026-02-19 23:59:00;10.00;leitor_de_tela;fisica10.pdf;TURMA010
+Elementos Químicos;Pesquisa sobre elementos da tabela periódica;pesquisa;2026-02-13 08:00:00;2026-02-20 23:59:00;10.00;alto_contraste;tabela11.pdf;TURMA011
+Células e Organismos;Questionário sobre células e organismos vivos;questionario;2026-02-14 13:00:00;2026-02-21 23:59:00;10.00;fonte_ampliada;celulas12.pdf;TURMA012
+Revolução Industrial;Pesquisa sobre causas e consequências da Revolução Industrial;pesquisa;2026-02-16 08:00:00;2026-02-23 23:59:00;10.00;leitor_de_tela;historia13.pdf;TURMA013
+Globalização;Atividade sobre globalização e seus impactos;trabalho;2026-02-17 13:00:00;2026-02-24 23:59:00;10.00;alto_contraste;globalizacao14.pdf;TURMA014
+Funções Matemáticas;Exercícios sobre funções e representação gráfica;exercicio;2026-02-18 08:00:00;2026-02-25 23:59:00;10.00;fonte_ampliada;funcoes15.pdf;TURMA015
+Gêneros Textuais;Identificação e produção de diferentes gêneros textuais;trabalho;2026-02-19 13:00:00;2026-02-26 23:59:00;10.00;leitor_de_tela;generos16.pdf;TURMA016
+Leis de Newton;Exercícios sobre as leis fundamentais do movimento;exercicio;2026-02-20 08:00:00;2026-02-27 23:59:00;10.00;fonte_ampliada;newton17.pdf;TURMA017
+Reações Químicas;Atividade sobre tipos de reações químicas;questionario;2026-02-21 13:00:00;2026-02-28 23:59:00;10.00;alto_contraste;reacoes18.pdf;TURMA018
+Genética Básica;Questionário sobre conceitos básicos de genética;questionario;2026-02-23 08:00:00;2026-03-02 23:59:00;10.00;leitor_de_tela;genetica19.pdf;TURMA019
+República Brasileira;Atividade sobre a formação da República brasileira;pesquisa;2026-02-24 13:00:00;2026-03-03 23:59:00;10.00;fonte_ampliada;republica20.pdf;TURMA020
+Frações;Exercícios de operações com frações;exercicio;2026-02-25 08:00:00;2026-03-04 23:59:00;10.00;fonte_ampliada;fracoes21.pdf;TURMA021
+Classes Gramaticais;Identificação das principais classes gramaticais;questionario;2026-02-26 13:00:00;2026-03-05 23:59:00;10.00;leitor_de_tela;gramatica22.pdf;TURMA022
+Ecossistemas;Pesquisa sobre diferentes tipos de ecossistemas;pesquisa;2026-02-27 08:00:00;2026-03-06 23:59:00;10.00;alto_contraste;ecossistemas23.pdf;TURMA023
+Idade Média;Atividade sobre sociedade e cultura medieval;trabalho;2026-02-28 13:00:00;2026-03-07 23:59:00;10.00;fonte_ampliada;idade_media24.pdf;TURMA024
+Clima e Vegetação;Exercícios sobre tipos de clima e vegetação;exercicio;2026-03-02 08:00:00;2026-03-09 23:59:00;10.00;leitor_de_tela;clima25.pdf;TURMA025
+Porcentagem;Problemas envolvendo porcentagem no cotidiano;exercicio;2026-03-03 13:00:00;2026-03-10 23:59:00;10.00;fonte_ampliada;porcentagem26.pdf;TURMA026
+Literatura Brasileira;Pesquisa sobre autores da literatura brasileira;pesquisa;2026-03-04 08:00:00;2026-03-11 23:59:00;10.00;leitor_de_tela;literatura27.pdf;TURMA027
+Matéria e Energia;Questionário sobre propriedades da matéria e energia;questionario;2026-03-05 13:00:00;2026-03-12 23:59:00;10.00;alto_contraste;materia28.pdf;TURMA028
+Geometria Plana;Exercícios de áreas e perímetros;exercicio;2026-03-06 08:00:00;2026-03-13 23:59:00;10.00;fonte_ampliada;geometria29.pdf;TURMA029
+Cinemática;Lista de exercícios sobre cinemática;exercicio;2026-03-07 13:00:00;2026-03-14 23:59:00;10.00;leitor_de_tela;cinematica30.pdf;TURMA030
+Ligações Químicas;Atividade sobre ligações químicas;questionario;2026-03-09 08:00:00;2026-03-16 23:59:00;10.00;alto_contraste;ligacoes31.pdf;TURMA031
+Reprodução Humana;Questionário sobre reprodução humana;questionario;2026-03-10 13:00:00;2026-03-17 23:59:00;10.00;fonte_ampliada;reproducao32.pdf;TURMA032
+Era Vargas;Pesquisa sobre o período Vargas;pesquisa;2026-03-11 08:00:00;2026-03-18 23:59:00;10.00;leitor_de_tela;vargas33.pdf;TURMA033
+Urbanização;Atividade sobre crescimento das cidades;trabalho;2026-03-12 13:00:00;2026-03-19 23:59:00;10.00;alto_contraste;urbanizacao34.pdf;TURMA034
+Progressões;Exercícios sobre progressões aritméticas e geométricas;exercicio;2026-03-13 08:00:00;2026-03-20 23:59:00;10.00;fonte_ampliada;progressoes35.pdf;TURMA035
+Redação Argumentativa;Produção de texto argumentativo;trabalho;2026-03-14 13:00:00;2026-03-21 23:59:00;10.00;leitor_de_tela;redacao36.pdf;TURMA036
+Energia Mecânica;Exercícios sobre energia mecânica;exercicio;2026-03-16 08:00:00;2026-03-23 23:59:00;10.00;fonte_ampliada;energia37.pdf;TURMA037
+Estequiometria;Exercícios introdutórios de estequiometria;exercicio;2026-03-17 13:00:00;2026-03-24 23:59:00;10.00;alto_contraste;estequiometria38.pdf;TURMA038
+Evolução;Pesquisa sobre teorias da evolução;pesquisa;2026-03-18 08:00:00;2026-03-25 23:59:00;10.00;leitor_de_tela;evolucao39.pdf;TURMA039
+Ditadura Militar;Pesquisa sobre o período da ditadura militar;pesquisa;2026-03-19 13:00:00;2026-03-26 23:59:00;10.00;fonte_ampliada;ditadura40.pdf;TURMA040
+Números Decimais;Exercícios com números decimais;exercicio;2026-03-20 08:00:00;2026-03-27 23:59:00;10.00;fonte_ampliada;decimais41.pdf;TURMA041
+Ortografia;Atividade de revisão ortográfica;questionario;2026-03-21 13:00:00;2026-03-28 23:59:00;10.00;leitor_de_tela;ortografia42.pdf;TURMA042
+Cadeias Alimentares;Exercícios sobre cadeias alimentares;exercicio;2026-03-23 08:00:00;2026-03-30 23:59:00;10.00;alto_contraste;cadeias43.pdf;TURMA043
+Segunda Guerra Mundial;Pesquisa sobre os principais acontecimentos da guerra;pesquisa;2026-03-24 13:00:00;2026-03-31 23:59:00;10.00;fonte_ampliada;guerra44.pdf;TURMA044
+Relevo Brasileiro;Atividade sobre formas de relevo do Brasil;questionario;2026-03-25 08:00:00;2026-04-01 23:59:00;10.00;leitor_de_tela;relevo45.pdf;TURMA045
+Razão e Proporção;Exercícios de razão e proporção;exercicio;2026-03-26 13:00:00;2026-04-02 23:59:00;10.00;fonte_ampliada;razao46.pdf;TURMA046
+Literatura Modernista;Pesquisa sobre o modernismo brasileiro;pesquisa;2026-03-27 08:00:00;2026-04-03 23:59:00;10.00;leitor_de_tela;modernismo47.pdf;TURMA047
+Sistema Respiratório;Questionário sobre o sistema respiratório;questionario;2026-03-28 13:00:00;2026-04-04 23:59:00;10.00;alto_contraste;respiratorio48.pdf;TURMA048
+Matrizes;Exercícios de operações com matrizes;exercicio;2026-03-30 08:00:00;2026-04-06 23:59:00;10.00;fonte_ampliada;matrizes49.pdf;TURMA049
+Termodinâmica;Atividade sobre princípios da termodinâmica;exercicio;2026-03-31 13:00:00;2026-04-07 23:59:00;10.00;leitor_de_tela;termodinamica50.pdf;TURMA050
+pH e Soluções;Questionário sobre pH e soluções químicas;questionario;2026-04-01 08:00:00;2026-04-08 23:59:00;10.00;alto_contraste;ph51.pdf;TURMA051
+Sistema Circulatório;Pesquisa sobre o sistema circulatório;pesquisa;2026-04-02 13:00:00;2026-04-09 23:59:00;10.00;fonte_ampliada;circulatorio52.pdf;TURMA052
+Ditadura e Redemocratização;Atividade comparativa sobre períodos políticos;trabalho;2026-04-03 08:00:00;2026-04-10 23:59:00;10.00;leitor_de_tela;redemocratizacao53.pdf;TURMA053
+Migrações;Pesquisa sobre movimentos migratórios;pesquisa;2026-04-04 13:00:00;2026-04-11 23:59:00;10.00;alto_contraste;migracoes54.pdf;TURMA054
+Estatística Básica;Exercícios de média, moda e mediana;exercicio;2026-04-06 08:00:00;2026-04-13 23:59:00;10.00;fonte_ampliada;estatistica55.pdf;TURMA055
+Coesão e Coerência;Atividade sobre construção textual;questionario;2026-04-07 13:00:00;2026-04-14 23:59:00;10.00;leitor_de_tela;coesao56.pdf;TURMA056
+Ondas;Exercícios sobre características das ondas;exercicio;2026-04-08 08:00:00;2026-04-15 23:59:00;10.00;fonte_ampliada;ondas57.pdf;TURMA057
+Química Orgânica;Atividade introdutória sobre compostos orgânicos;questionario;2026-04-09 13:00:00;2026-04-16 23:59:00;10.00;alto_contraste;organica58.pdf;TURMA058
+Ecologia;Pesquisa sobre relações ecológicas;pesquisa;2026-04-10 08:00:00;2026-04-17 23:59:00;10.00;leitor_de_tela;ecologia59.pdf;TURMA059
+Constituição Brasileira;Pesquisa sobre a Constituição de 1988;pesquisa;2026-04-11 13:00:00;2026-04-18 23:59:00;10.00;fonte_ampliada;constituicao60.pdf;TURMA060
+Expressões Numéricas;Exercícios com expressões numéricas;exercicio;2026-04-13 08:00:00;2026-04-20 23:59:00;10.00;fonte_ampliada;expressoes61.pdf;TURMA061
+Interpretação Textual;Questionário de interpretação textual;questionario;2026-04-14 13:00:00;2026-04-21 23:59:00;10.00;leitor_de_tela;interpretacao62.pdf;TURMA062
+Sistema Digestório;Atividade sobre órgãos e funções do sistema digestório;questionario;2026-04-15 08:00:00;2026-04-22 23:59:00;10.00;alto_contraste;digestorio63.pdf;TURMA063
+Antiguidade Clássica;Pesquisa sobre Grécia e Roma antigas;pesquisa;2026-04-16 13:00:00;2026-04-23 23:59:00;10.00;fonte_ampliada;antiguidade64.pdf;TURMA064
+Recursos Naturais;Atividade sobre utilização dos recursos naturais;trabalho;2026-04-17 08:00:00;2026-04-24 23:59:00;10.00;leitor_de_tela;recursos65.pdf;TURMA065
+Equações Quadráticas;Exercícios de equações do segundo grau;exercicio;2026-04-18 13:00:00;2026-04-25 23:59:00;10.00;fonte_ampliada;equacoes66.pdf;TURMA066
+Figuras de Linguagem;Atividade de identificação de figuras de linguagem;questionario;2026-04-20 08:00:00;2026-04-27 23:59:00;10.00;leitor_de_tela;figuras67.pdf;TURMA067
+Genética e Hereditariedade;Exercícios sobre hereditariedade;exercicio;2026-04-21 13:00:00;2026-04-28 23:59:00;10.00;alto_contraste;hereditariedade68.pdf;TURMA068
+Logaritmos;Exercícios introdutórios de logaritmos;exercicio;2026-04-22 08:00:00;2026-04-29 23:59:00;10.00;fonte_ampliada;logaritmos69.pdf;TURMA069
+Eletricidade;Atividade sobre conceitos básicos de eletricidade;exercicio;2026-04-23 13:00:00;2026-04-30 23:59:00;10.00;leitor_de_tela;eletricidade70.pdf;TURMA070
+Química Ambiental;Pesquisa sobre impactos ambientais da química;pesquisa;2026-04-24 08:00:00;2026-05-01 23:59:00;10.00;alto_contraste;ambiental71.pdf;TURMA071
+Biotecnologia;Pesquisa sobre aplicações da biotecnologia;pesquisa;2026-04-25 13:00:00;2026-05-02 23:59:00;10.00;fonte_ampliada;biotecnologia72.pdf;TURMA072
+Movimentos Sociais;Trabalho sobre movimentos sociais brasileiros;trabalho;2026-04-27 08:00:00;2026-05-04 23:59:00;10.00;leitor_de_tela;movimentos73.pdf;TURMA073
+Geopolítica Mundial;Atividade sobre relações geopolíticas atuais;questionario;2026-04-28 13:00:00;2026-05-05 23:59:00;10.00;alto_contraste;geopolitica74.pdf;TURMA074
+Probabilidade;Exercícios de probabilidade básica;exercicio;2026-04-29 08:00:00;2026-05-06 23:59:00;10.00;fonte_ampliada;probabilidade75.pdf;TURMA075
+Literatura Contemporânea;Pesquisa sobre autores contemporâneos;pesquisa;2026-04-30 13:00:00;2026-05-07 23:59:00;10.00;leitor_de_tela;contemporanea76.pdf;TURMA076
+Óptica;Exercícios sobre reflexão e refração da luz;exercicio;2026-05-01 08:00:00;2026-05-08 23:59:00;10.00;fonte_ampliada;optica77.pdf;TURMA077
+Reações Orgânicas;Questionário sobre reações orgânicas;questionario;2026-05-02 13:00:00;2026-05-09 23:59:00;10.00;alto_contraste;reacoes78.pdf;TURMA078
+Fisiologia Humana;Atividade sobre sistemas do corpo humano;questionario;2026-05-04 08:00:00;2026-05-11 23:59:00;10.00;leitor_de_tela;fisiologia79.pdf;TURMA079
+Brasil Atual;Pesquisa sobre acontecimentos históricos recentes;pesquisa;2026-05-05 13:00:00;2026-05-12 23:59:00;10.00;fonte_ampliada;brasil80.pdf;TURMA080
+Múltiplos e Divisores;Exercícios sobre múltiplos e divisores;exercicio;2026-05-06 08:00:00;2026-05-13 23:59:00;10.00;fonte_ampliada;divisores81.pdf;TURMA081
+Pontuação;Atividade de revisão sobre sinais de pontuação;questionario;2026-05-07 13:00:00;2026-05-14 23:59:00;10.00;leitor_de_tela;pontuacao82.pdf;TURMA082
+Meio Ambiente;Trabalho sobre preservação ambiental;trabalho;2026-05-08 08:00:00;2026-05-15 23:59:00;10.00;alto_contraste;ambiente83.pdf;TURMA083
+Guerra Fria;Pesquisa sobre a Guerra Fria;pesquisa;2026-05-09 13:00:00;2026-05-16 23:59:00;10.00;fonte_ampliada;guerra_fria84.pdf;TURMA084
+População Brasileira;Atividade sobre características demográficas;questionario;2026-05-11 08:00:00;2026-05-18 23:59:00;10.00;leitor_de_tela;populacao85.pdf;TURMA085
+Sistemas Lineares;Exercícios sobre sistemas de equações;exercicio;2026-05-12 13:00:00;2026-05-19 23:59:00;10.00;fonte_ampliada;sistemas86.pdf;TURMA086
+Variação Linguística;Atividade sobre diversidade linguística;trabalho;2026-05-13 08:00:00;2026-05-20 23:59:00;10.00;leitor_de_tela;linguistica87.pdf;TURMA087
+Evolução Biológica;Questionário sobre evolução biológica;questionario;2026-05-14 13:00:00;2026-05-21 23:59:00;10.00;alto_contraste;evolucao88.pdf;TURMA088
+Análise Combinatória;Exercícios de análise combinatória;exercicio;2026-05-15 08:00:00;2026-05-22 23:59:00;10.00;fonte_ampliada;combinatoria89.pdf;TURMA089
+Campo Magnético;Atividade sobre campos magnéticos;exercicio;2026-05-16 13:00:00;2026-05-23 23:59:00;10.00;leitor_de_tela;magnetismo90.pdf;TURMA090
+Cinética Química;Exercícios sobre velocidade das reações químicas;exercicio;2026-05-18 08:00:00;2026-05-25 23:59:00;10.00;alto_contraste;cinetica91.pdf;TURMA091
+Microbiologia;Pesquisa sobre microrganismos e saúde;pesquisa;2026-05-19 13:00:00;2026-05-26 23:59:00;10.00;fonte_ampliada;microbiologia92.pdf;TURMA092
+República Velha;Atividade sobre a República Velha;questionario;2026-05-20 08:00:00;2026-05-27 23:59:00;10.00;leitor_de_tela;republica93.pdf;TURMA093
+Questões Ambientais;Pesquisa sobre problemas ambientais urbanos;pesquisa;2026-05-21 13:00:00;2026-05-28 23:59:00;10.00;alto_contraste;ambientais94.pdf;TURMA094
+Geometria Espacial;Exercícios de volume e área de sólidos;exercicio;2026-05-22 08:00:00;2026-05-29 23:59:00;10.00;fonte_ampliada;espacial95.pdf;TURMA095
+Redação ENEM;Produção de redação no modelo dissertativo-argumentativo;trabalho;2026-05-23 13:00:00;2026-05-30 23:59:00;10.00;leitor_de_tela;redacao96.pdf;TURMA096
+Relatividade;Atividade introdutória sobre conceitos de relatividade;pesquisa;2026-05-25 08:00:00;2026-06-01 23:59:00;10.00;fonte_ampliada;relatividade97.pdf;TURMA097
+Equilíbrio Químico;Exercícios sobre equilíbrio químico;exercicio;2026-05-26 13:00:00;2026-06-02 23:59:00;10.00;alto_contraste;equilibrio98.pdf;TURMA098
+Saúde e Qualidade de Vida;Pesquisa sobre hábitos saudáveis e qualidade de vida;pesquisa;2026-05-27 08:00:00;2026-06-03 23:59:00;10.00;leitor_de_tela;saude99.pdf;TURMA099
+Brasil no Século XXI;Trabalho sobre transformações recentes da sociedade brasileira;trabalho;2026-05-28 13:00:00;2026-06-04 23:59:00;10.00;fonte_ampliada;brasil100.pdf;TURMA100
+data_hora_inicio;data_hora_entrega;resposta_selecionada;nota_obtida;cpf_aluno;id_atividade
+2026-02-03 09:15:00;2026-02-03 09:42:00;Resposta A;9.00;10000000001;1
+2026-02-04 14:10:00;2026-02-04 14:38:00;Resposta B;8.50;10000000002;2
+2026-02-05 09:20:00;2026-02-05 09:55:00;Resposta C;10.00;10000000003;3
+2026-02-06 14:05:00;2026-02-06 14:40:00;Resposta A;8.00;10000000004;4
+2026-02-07 09:30:00;2026-02-07 10:05:00;Resposta D;9.50;10000000005;5
+2026-02-08 14:15:00;2026-02-08 14:52:00;Resposta B;7.50;10000000006;6
+2026-02-09 09:10:00;2026-02-09 09:48:00;Resposta C;9.00;10000000007;7
+2026-02-10 14:20:00;2026-02-10 14:55:00;Resposta A;10.00;10000000008;8
+2026-02-11 09:25:00;2026-02-11 10:00:00;Resposta B;8.50;10000000009;9
+2026-02-12 14:10:00;2026-02-12 14:46:00;Resposta D;9.00;10000000010;10
+2026-02-13 09:15:00;2026-02-13 09:50:00;Resposta A;8.00;10000000011;11
+2026-02-14 14:05:00;2026-02-14 14:40:00;Resposta C;9.50;10000000012;12
+2026-02-16 09:20:00;2026-02-16 09:58:00;Resposta B;10.00;10000000013;13
+2026-02-17 14:15:00;2026-02-17 14:52:00;Resposta D;7.00;10000000014;14
+2026-02-18 09:30:00;2026-02-18 10:05:00;Resposta A;9.00;10000000015;15
+2026-02-19 14:10:00;2026-02-19 14:45:00;Resposta C;8.50;10000000016;16
+2026-02-20 09:15:00;2026-02-20 09:50:00;Resposta B;9.50;10000000017;17
+2026-02-21 14:20:00;2026-02-21 14:55:00;Resposta A;8.00;10000000018;18
+2026-02-23 09:10:00;2026-02-23 09:48:00;Resposta D;9.00;10000000019;19
+2026-02-24 14:05:00;2026-02-24 14:42:00;Resposta C;10.00;10000000020;20
+2026-02-25 09:25:00;2026-02-25 10:00:00;Resposta A;8.50;10000000021;21
+2026-02-26 14:15:00;2026-02-26 14:50:00;Resposta B;7.50;10000000022;22
+2026-02-27 09:20:00;2026-02-27 09:55:00;Resposta D;9.50;10000000023;23
+2026-02-28 14:10:00;2026-02-28 14:48:00;Resposta C;8.00;10000000024;24
+2026-03-02 09:15:00;2026-03-02 09:50:00;Resposta A;9.00;10000000025;25
+2026-03-03 14:20:00;2026-03-03 14:58:00;Resposta B;10.00;10000000026;26
+2026-03-04 09:10:00;2026-03-04 09:45:00;Resposta C;8.50;10000000027;27
+2026-03-05 14:05:00;2026-03-05 14:42:00;Resposta D;9.00;10000000028;28
+2026-03-06 09:25:00;2026-03-06 10:00:00;Resposta A;7.50;10000000029;29
+2026-03-07 14:15:00;2026-03-07 14:50:00;Resposta C;9.50;10000000030;30
+2026-03-09 09:20:00;2026-03-09 09:55:00;Resposta B;8.00;10000000031;31
+2026-03-10 14:10:00;2026-03-10 14:46:00;Resposta A;9.00;10000000032;32
+2026-03-11 09:15:00;2026-03-11 09:52:00;Resposta D;10.00;10000000033;33
+2026-03-12 14:20:00;2026-03-12 14:58:00;Resposta B;8.50;10000000034;34
+2026-03-13 09:10:00;2026-03-13 09:45:00;Resposta C;9.00;10000000035;35
+2026-03-14 14:05:00;2026-03-14 14:40:00;Resposta A;8.00;10000000036;36
+2026-03-16 09:25:00;2026-03-16 10:00:00;Resposta D;9.50;10000000037;37
+2026-03-17 14:15:00;2026-03-17 14:52:00;Resposta B;7.50;10000000038;38
+2026-03-18 09:20:00;2026-03-18 09:55:00;Resposta A;10.00;10000000039;39
+2026-03-19 14:10:00;2026-03-19 14:48:00;Resposta C;8.50;10000000040;40
+2026-03-20 09:15:00;2026-03-20 09:50:00;Resposta B;9.00;10000000041;41
+2026-03-21 14:20:00;2026-03-21 14:55:00;Resposta D;8.00;10000000042;42
+2026-03-23 09:10:00;2026-03-23 09:45:00;Resposta A;9.50;10000000043;43
+2026-03-24 14:05:00;2026-03-24 14:42:00;Resposta C;10.00;10000000044;44
+2026-03-25 09:25:00;2026-03-25 10:00:00;Resposta B;8.50;10000000045;45
+2026-03-26 14:15:00;2026-03-26 14:50:00;Resposta A;9.00;10000000046;46
+2026-03-27 09:20:00;2026-03-27 09:58:00;Resposta D;7.00;10000000047;47
+2026-03-28 14:10:00;2026-03-28 14:45:00;Resposta C;9.50;10000000048;48
+2026-03-30 09:15:00;2026-03-30 09:52:00;Resposta A;8.00;10000000049;49
+2026-03-31 14:20:00;2026-03-31 14:55:00;Resposta B;9.00;10000000050;50
+2026-04-01 09:10:00;2026-04-01 09:45:00;Resposta C;10.00;10000000051;51
+2026-04-02 14:05:00;2026-04-02 14:40:00;Resposta D;8.50;10000000052;52
+2026-04-03 09:25:00;2026-04-03 10:00:00;Resposta A;9.00;10000000053;53
+2026-04-04 14:15:00;2026-04-04 14:52:00;Resposta B;8.00;10000000054;54
+2026-04-06 09:20:00;2026-04-06 09:55:00;Resposta C;9.50;10000000055;55
+2026-04-07 14:10:00;2026-04-07 14:48:00;Resposta A;10.00;10000000056;56
+2026-04-08 09:15:00;2026-04-08 09:50:00;Resposta D;8.50;10000000057;57
+2026-04-09 14:20:00;2026-04-09 14:55:00;Resposta B;9.00;10000000058;58
+2026-04-10 09:10:00;2026-04-10 09:45:00;Resposta A;7.50;10000000059;59
+2026-04-11 14:05:00;2026-04-11 14:42:00;Resposta C;9.50;10000000060;60
+2026-04-13 09:25:00;2026-04-13 10:00:00;Resposta B;8.00;10000000061;61
+2026-04-14 14:15:00;2026-04-14 14:50:00;Resposta D;9.00;10000000062;62
+2026-04-15 09:20:00;2026-04-15 09:55:00;Resposta A;10.00;10000000063;63
+2026-04-16 14:10:00;2026-04-16 14:48:00;Resposta C;8.50;10000000064;64
+2026-04-17 09:15:00;2026-04-17 09:50:00;Resposta B;9.00;10000000065;65
+2026-04-18 14:20:00;2026-04-18 14:55:00;Resposta A;8.00;10000000066;66
+2026-04-20 09:10:00;2026-04-20 09:45:00;Resposta D;9.50;10000000067;67
+2026-04-21 14:05:00;2026-04-21 14:42:00;Resposta C;10.00;10000000068;68
+2026-04-22 09:25:00;2026-04-22 10:00:00;Resposta A;8.50;10000000069;69
+2026-04-23 14:15:00;2026-04-23 14:50:00;Resposta B;9.00;10000000070;70
+2026-04-24 09:20:00;2026-04-24 09:55:00;Resposta D;7.50;10000000071;71
+2026-04-25 14:10:00;2026-04-25 14:48:00;Resposta C;9.50;10000000072;72
+2026-04-27 09:15:00;2026-04-27 09:50:00;Resposta A;8.00;10000000073;73
+2026-04-28 14:20:00;2026-04-28 14:55:00;Resposta B;9.00;10000000074;74
+2026-04-29 09:10:00;2026-04-29 09:45:00;Resposta C;10.00;10000000075;75
+2026-04-30 14:05:00;2026-04-30 14:42:00;Resposta D;8.50;10000000076;76
+2026-05-01 09:25:00;2026-05-01 10:00:00;Resposta A;9.00;10000000077;77
+2026-05-02 14:15:00;2026-05-02 14:50:00;Resposta C;8.00;10000000078;78
+2026-05-04 09:20:00;2026-05-04 09:55:00;Resposta B;9.50;10000000079;79
+2026-05-05 14:10:00;2026-05-05 14:48:00;Resposta A;10.00;10000000080;80
+2026-05-06 09:15:00;2026-05-06 09:50:00;Resposta D;8.50;10000000081;81
+2026-05-07 14:20:00;2026-05-07 14:55:00;Resposta C;9.00;10000000082;82
+2026-05-08 09:10:00;2026-05-08 09:45:00;Resposta B;7.50;10000000083;83
+2026-05-09 14:05:00;2026-05-09 14:42:00;Resposta A;9.50;10000000084;84
+2026-05-11 09:25:00;2026-05-11 10:00:00;Resposta D;8.00;10000000085;85
+2026-05-12 14:15:00;2026-05-12 14:50:00;Resposta C;9.00;10000000086;86
+2026-05-13 09:20:00;2026-05-13 09:55:00;Resposta A;10.00;10000000087;87
+2026-05-14 14:10:00;2026-05-14 14:48:00;Resposta B;8.50;10000000088;88
+2026-05-15 09:15:00;2026-05-15 09:50:00;Resposta D;9.00;10000000089;89
+2026-05-16 14:20:00;2026-05-16 14:55:00;Resposta C;8.00;10000000090;90
+2026-05-18 09:10:00;2026-05-18 09:45:00;Resposta A;9.50;10000000091;91
+2026-05-19 14:05:00;2026-05-19 14:42:00;Resposta B;10.00;10000000092;92
+2026-05-20 09:25:00;2026-05-20 10:00:00;Resposta C;8.50;10000000093;93
+2026-05-21 14:15:00;2026-05-21 14:50:00;Resposta D;9.00;10000000094;94
+2026-05-22 09:20:00;2026-05-22 09:55:00;Resposta A;7.50;10000000095;95
+2026-05-23 14:10:00;2026-05-23 14:48:00;Resposta C;9.50;10000000096;96
+2026-05-25 09:15:00;2026-05-25 09:50:00;Resposta B;8.00;10000000097;97
+2026-05-26 14:20:00;2026-05-26 14:55:00;Resposta A;9.00;10000000098;98
+2026-05-27 09:10:00;2026-05-27 09:45:00;Resposta D;10.00;10000000099;99
+2026-05-28 14:05:00;2026-05-28 14:42:00;Resposta C;8.50;10000000100;100
+cpf_aluno;email_professor;diagnostico_desempenho;sugestao_conduta;alerta_risco;data_geracao
+10000000001;professor01@escola.edu.br;Bom desempenho nas atividades de matemática, com pequenas dificuldades em operações básicas.;Propor exercícios graduais de operações fundamentais e acompanhamento individual.;baixo;2026-02-03 10:00:00
+10000000002;professor02@escola.edu.br;Apresenta dificuldade na interpretação de textos e identificação das ideias principais.;Utilizar textos curtos, leitura orientada e atividades de interpretação progressiva.;medio;2026-02-04 15:00:00
+10000000003;professor03@escola.edu.br;Desempenho satisfatório em conteúdos introdutórios de ciências.;Manter atividades práticas e utilizar recursos visuais para reforçar os conceitos.;baixo;2026-02-05 10:20:00
+10000000004;professor04@escola.edu.br;Apresenta bom domínio dos conteúdos históricos trabalhados.;Estimular pesquisas complementares e produção de resumos sobre os períodos estudados.;baixo;2026-02-06 15:00:00
+10000000005;professor05@escola.edu.br;Demonstra dificuldade na compreensão de conceitos geográficos.;Utilizar mapas adaptados, exemplos do cotidiano e atividades práticas de localização.;medio;2026-02-07 11:00:00
+10000000006;professor06@escola.edu.br;Apresenta desempenho regular em operações matemáticas.;Reforçar conceitos fundamentais por meio de exercícios contextualizados.;medio;2026-02-08 15:30:00
+10000000007;professor07@escola.edu.br;Bom desempenho em produção textual, apresentando organização das ideias.;Incentivar produção de textos maiores e revisão colaborativa.;baixo;2026-02-09 10:10:00
+10000000008;professor08@escola.edu.br;Demonstra excelente compreensão dos conteúdos relacionados ao sistema solar.;Propor atividades de pesquisa e aprofundamento sobre astronomia.;baixo;2026-02-10 15:20:00
+10000000009;professor09@escola.edu.br;Apresenta dificuldade na resolução de equações de primeiro grau.;Retomar operações inversas e utilizar exemplos passo a passo.;medio;2026-02-11 10:30:00
+10000000010;professor10@escola.edu.br;Apresenta bom desempenho nos exercícios introdutórios de física.;Avançar gradualmente para problemas envolvendo diferentes situações de movimento.;baixo;2026-02-12 15:10:00
+10000000011;professor11@escola.edu.br;Demonstra dificuldade na identificação e classificação de elementos químicos.;Utilizar tabela periódica adaptada e atividades de associação.;medio;2026-02-13 10:15:00
+10000000012;professor12@escola.edu.br;Apresenta bom desempenho na compreensão dos conceitos de células.;Incentivar atividades de comparação entre células animais e vegetais.;baixo;2026-02-14 15:00:00
+10000000013;professor13@escola.edu.br;Apresenta excelente compreensão dos conteúdos históricos estudados.;Propor pesquisa complementar sobre diferentes perspectivas históricas.;baixo;2026-02-16 10:20:00
+10000000014;professor14@escola.edu.br;Demonstra dificuldade em compreender os impactos da globalização.;Utilizar exemplos atuais e mapas conceituais para facilitar a compreensão.;medio;2026-02-17 15:15:00
+10000000015;professor15@escola.edu.br;Bom desempenho em funções matemáticas, com dificuldade pontual na interpretação gráfica.;Utilizar gráficos simples e exercícios progressivos de interpretação.;baixo;2026-02-18 10:10:00
+10000000016;professor16@escola.edu.br;Apresenta dificuldade na diferenciação entre gêneros textuais.;Trabalhar exemplos reais de diferentes gêneros e suas características.;medio;2026-02-19 15:20:00
+10000000017;professor17@escola.edu.br;Demonstra bom domínio das leis de Newton.;Propor problemas contextualizados envolvendo força e movimento.;baixo;2026-02-20 10:30:00
+10000000018;professor18@escola.edu.br;Apresenta dificuldade na identificação dos tipos de reações químicas.;Utilizar esquemas visuais e exemplos de reações do cotidiano.;medio;2026-02-21 15:10:00
+10000000019;professor19@escola.edu.br;Bom desempenho nos conceitos básicos de genética.;Estimular atividades envolvendo heredogramas e situações práticas.;baixo;2026-02-23 10:15:00
+10000000020;professor20@escola.edu.br;Apresenta excelente compreensão do processo de formação da República brasileira.;Propor pesquisa sobre diferentes fases da República.;baixo;2026-02-24 15:00:00
+10000000021;professor01@escola.edu.br;Apresenta dificuldade em operações envolvendo frações.;Retomar equivalência de frações e utilizar materiais visuais.;medio;2026-02-25 10:20:00
+10000000022;professor02@escola.edu.br;Demonstra dificuldade na identificação das classes gramaticais.;Utilizar atividades de classificação e exemplos contextualizados.;medio;2026-02-26 15:10:00
+10000000023;professor03@escola.edu.br;Bom desempenho na compreensão dos conceitos relacionados aos ecossistemas.;Propor estudo de diferentes biomas e relações ecológicas.;baixo;2026-02-27 10:30:00
+10000000024;professor04@escola.edu.br;Apresenta desempenho regular nos conteúdos sobre Idade Média.;Utilizar linhas do tempo e recursos visuais para organizar os acontecimentos.;medio;2026-02-28 15:20:00
+10000000025;professor05@escola.edu.br;Demonstra dificuldade em diferenciar tipos de clima e vegetação.;Utilizar mapas temáticos e exemplos de diferentes regiões.;medio;2026-03-02 10:15:00
+10000000026;professor06@escola.edu.br;Excelente desempenho em problemas envolvendo porcentagem.;Propor desafios contextualizados envolvendo situações financeiras.;baixo;2026-03-03 15:30:00
+10000000027;professor07@escola.edu.br;Apresenta dificuldade na identificação de características da literatura brasileira.;Trabalhar autores e obras por meio de linhas do tempo e mapas mentais.;medio;2026-03-04 10:10:00
+10000000028;professor08@escola.edu.br;Demonstra dificuldade na diferenciação entre matéria e energia.;Utilizar experimentos simples e exemplos do cotidiano.;medio;2026-03-05 15:15:00
+10000000029;professor09@escola.edu.br;Apresenta bom desempenho em geometria, com dificuldade em alguns cálculos de perímetro.;Reforçar fórmulas por meio de atividades práticas de medição.;baixo;2026-03-06 10:20:00
+10000000030;professor10@escola.edu.br;Demonstra dificuldade na interpretação de problemas de cinemática.;Trabalhar leitura dos enunciados e representação gráfica dos movimentos.;medio;2026-03-07 15:10:00
+10000000031;professor11@escola.edu.br;Apresenta desempenho regular em ligações químicas.;Utilizar modelos visuais para representar ligações entre átomos.;medio;2026-03-09 10:30:00
+10000000032;professor12@escola.edu.br;Bom desempenho nos conteúdos sobre reprodução humana.;Aprofundar os conceitos por meio de esquemas e atividades de revisão.;baixo;2026-03-10 15:20:00
+10000000033;professor13@escola.edu.br;Excelente desempenho na compreensão do período Vargas.;Estimular pesquisa sobre diferentes aspectos políticos e sociais do período.;baixo;2026-03-11 10:15:00
+10000000034;professor14@escola.edu.br;Apresenta dificuldade na compreensão dos processos de urbanização.;Utilizar imagens, mapas e estudos de caso sobre cidades.;medio;2026-03-12 15:30:00
+10000000035;professor15@escola.edu.br;Demonstra dificuldade na diferenciação entre progressões aritméticas e geométricas.;Utilizar tabelas comparativas e exercícios graduais.;medio;2026-03-13 10:20:00
+10000000036;professor16@escola.edu.br;Bom desempenho na produção de textos argumentativos.;Estimular revisão textual e ampliação do repertório argumentativo.;baixo;2026-03-14 15:10:00
+10000000037;professor17@escola.edu.br;Apresenta dificuldade nos conceitos de energia mecânica.;Utilizar exemplos cotidianos e representações visuais dos tipos de energia.;medio;2026-03-16 10:30:00
+10000000038;professor18@escola.edu.br;Demonstra dificuldade na resolução de problemas de estequiometria.;Reforçar proporções e balanceamento antes de avançar nos cálculos.;alto;2026-03-17 15:20:00
+10000000039;professor19@escola.edu.br;Excelente desempenho nos conteúdos relacionados à evolução.;Propor pesquisa sobre evidências científicas da evolução.;baixo;2026-03-18 10:15:00
+10000000040;professor20@escola.edu.br;Apresenta dificuldade na compreensão do período da ditadura militar.;Utilizar linha do tempo e fontes históricas adaptadas.;medio;2026-03-19 15:10:00
+10000000041;professor01@escola.edu.br;Bom desempenho em números decimais, com erros pontuais em operações.;Realizar exercícios de revisão e situações-problema.;baixo;2026-03-20 10:20:00
+10000000042;professor02@escola.edu.br;Apresenta dificuldade na aplicação das regras ortográficas.;Utilizar atividades de escrita e revisão de palavras frequentes.;medio;2026-03-21 15:15:00
+10000000043;professor03@escola.edu.br;Demonstra bom entendimento sobre cadeias alimentares.;Propor construção de cadeias e teias alimentares.;baixo;2026-03-23 10:30:00
+10000000044;professor04@escola.edu.br;Excelente desempenho nos conteúdos sobre Segunda Guerra Mundial.;Estimular pesquisa sobre diferentes frentes e consequências do conflito.;baixo;2026-03-24 15:20:00
+10000000045;professor05@escola.edu.br;Apresenta dificuldade na identificação das formas de relevo.;Utilizar imagens e mapas físicos para reforçar a aprendizagem.;medio;2026-03-25 10:15:00
+10000000046;professor06@escola.edu.br;Bom desempenho em razão e proporção.;Propor situações-problema relacionadas ao cotidiano.;baixo;2026-03-26 15:10:00
+10000000047;professor07@escola.edu.br;Apresenta dificuldade na compreensão das características do modernismo.;Trabalhar obras representativas e recursos visuais.;medio;2026-03-27 10:20:00
+10000000048;professor08@escola.edu.br;Demonstra bom desempenho sobre o sistema respiratório.;Reforçar os conhecimentos com esquemas anatômicos acessíveis.;baixo;2026-03-28 15:30:00
+10000000049;professor09@escola.edu.br;Apresenta dificuldade nas operações com matrizes.;Utilizar tabelas e exercícios com complexidade crescente.;medio;2026-03-30 10:15:00
+10000000050;professor10@escola.edu.br;Bom desempenho nos conceitos básicos de termodinâmica.;Propor problemas envolvendo situações práticas.;baixo;2026-03-31 15:20:00
+10000000051;professor11@escola.edu.br;Apresenta dificuldade na interpretação da escala de pH.;Utilizar exemplos de substâncias do cotidiano e escalas visuais.;medio;2026-04-01 10:30:00
+10000000052;professor12@escola.edu.br;Demonstra bom domínio dos conteúdos sobre sistema circulatório.;Estimular atividades sobre prevenção e hábitos saudáveis.;baixo;2026-04-02 15:10:00
+10000000053;professor13@escola.edu.br;Excelente desempenho na análise do processo de redemocratização.;Propor pesquisa sobre acontecimentos políticos posteriores.;baixo;2026-04-03 10:20:00
+10000000054;professor14@escola.edu.br;Apresenta dificuldade na compreensão das causas das migrações.;Utilizar mapas e estudos de caso sobre movimentos migratórios.;medio;2026-04-04 15:15:00
+10000000055;professor15@escola.edu.br;Bom desempenho em média, moda e mediana.;Propor atividades com dados reais e gráficos.;baixo;2026-04-06 10:30:00
+10000000056;professor16@escola.edu.br;Apresenta dificuldade na identificação de elementos de coesão textual.;Utilizar exercícios de ligação entre frases e parágrafos.;medio;2026-04-07 15:20:00
+10000000057;professor17@escola.edu.br;Demonstra dificuldade na compreensão das características das ondas.;Utilizar animações e exemplos sonoros para facilitar a compreensão.;medio;2026-04-08 10:15:00
+10000000058;professor18@escola.edu.br;Bom desempenho em conceitos introdutórios de química orgânica.;Propor identificação de compostos presentes no cotidiano.;baixo;2026-04-09 15:10:00
+10000000059;professor19@escola.edu.br;Apresenta dificuldade na diferenciação das relações ecológicas.;Utilizar exemplos de espécies e atividades de associação.;medio;2026-04-10 10:20:00
+10000000060;professor20@escola.edu.br;Excelente desempenho na compreensão da Constituição de 1988.;Estimular pesquisa sobre direitos fundamentais e cidadania.;baixo;2026-04-11 15:30:00
+10000000061;professor01@escola.edu.br;Apresenta dificuldade na resolução de expressões numéricas.;Reforçar ordem das operações com exercícios graduais.;medio;2026-04-13 10:15:00
+10000000062;professor02@escola.edu.br;Demonstra desempenho regular em interpretação textual.;Trabalhar textos curtos com perguntas objetivas e progressivas.;medio;2026-04-14 15:20:00
+10000000063;professor03@escola.edu.br;Bom desempenho na identificação das funções dos órgãos do sistema digestório.;Utilizar esquemas e atividades de associação.;baixo;2026-04-15 10:30:00
+10000000064;professor04@escola.edu.br;Apresenta dificuldade na diferenciação entre características da Grécia e Roma antigas.;Utilizar tabelas comparativas e linhas do tempo.;medio;2026-04-16 15:10:00
+10000000065;professor05@escola.edu.br;Demonstra bom entendimento sobre recursos naturais.;Propor atividades sobre sustentabilidade e preservação.;baixo;2026-04-17 10:20:00
+10000000066;professor06@escola.edu.br;Apresenta dificuldade na resolução de equações quadráticas.;Reforçar fatoração e fórmula de Bhaskara com exercícios guiados.;alto;2026-04-18 15:15:00
+10000000067;professor07@escola.edu.br;Bom desempenho na identificação de figuras de linguagem.;Propor produção textual utilizando diferentes recursos linguísticos.;baixo;2026-04-20 10:30:00
+10000000068;professor08@escola.edu.br;Apresenta dificuldade na compreensão dos mecanismos de hereditariedade.;Utilizar heredogramas simples e atividades visuais.;medio;2026-04-21 15:20:00
+10000000069;professor09@escola.edu.br;Demonstra dificuldade na resolução de problemas envolvendo logaritmos.;Retomar propriedades dos logaritmos e realizar exercícios graduais.;alto;2026-04-22 10:15:00
+10000000070;professor10@escola.edu.br;Bom desempenho nos conceitos básicos de eletricidade.;Propor experimentos simples e problemas contextualizados.;baixo;2026-04-23 15:10:00
+10000000071;professor11@escola.edu.br;Apresenta dificuldade em relacionar química e impactos ambientais.;Utilizar estudos de caso sobre poluição e sustentabilidade.;medio;2026-04-24 10:20:00
+10000000072;professor12@escola.edu.br;Excelente desempenho na pesquisa sobre biotecnologia.;Estimular aprofundamento em aplicações da biotecnologia.;baixo;2026-04-25 15:30:00
+10000000073;professor13@escola.edu.br;Apresenta dificuldade na análise dos movimentos sociais brasileiros.;Utilizar exemplos históricos e atuais para contextualização.;medio;2026-04-27 10:15:00
+10000000074;professor14@escola.edu.br;Demonstra dificuldade na compreensão de conceitos geopolíticos.;Utilizar mapas e notícias contextualizadas para discussão.;medio;2026-04-28 15:20:00
+10000000075;professor15@escola.edu.br;Bom desempenho em exercícios de probabilidade básica.;Propor desafios envolvendo situações reais e jogos.;baixo;2026-04-29 10:30:00
+10000000076;professor16@escola.edu.br;Apresenta dificuldade em reconhecer características da literatura contemporânea.;Utilizar textos atuais e comparação com obras anteriores.;medio;2026-04-30 15:10:00
+10000000077;professor17@escola.edu.br;Demonstra bom desempenho nos conceitos de reflexão e refração.;Propor experimentos simples envolvendo luz e espelhos.;baixo;2026-05-01 10:20:00
+10000000078;professor18@escola.edu.br;Apresenta dificuldade na compreensão das reações orgânicas.;Utilizar representações moleculares simplificadas e exemplos cotidianos.;medio;2026-05-02 15:15:00
+10000000079;professor19@escola.edu.br;Bom desempenho na compreensão dos sistemas do corpo humano.;Estimular atividades integradas sobre fisiologia.;baixo;2026-05-04 10:30:00
+10000000080;professor20@escola.edu.br;Excelente desempenho na análise dos acontecimentos históricos recentes do Brasil.;Propor debates e pesquisas sobre diferentes perspectivas.;baixo;2026-05-05 15:20:00
+10000000081;professor01@escola.edu.br;Apresenta dificuldade na identificação de múltiplos e divisores.;Utilizar tabelas e exercícios de classificação numérica.;medio;2026-05-06 10:15:00
+10000000082;professor02@escola.edu.br;Demonstra dificuldade no uso correto dos sinais de pontuação.;Utilizar textos curtos para revisão e correção coletiva.;medio;2026-05-07 15:10:00
+10000000083;professor03@escola.edu.br;Apresenta desempenho regular em temas relacionados à preservação ambiental.;Realizar atividades práticas sobre reciclagem e sustentabilidade.;medio;2026-05-08 10:20:00
+10000000084;professor04@escola.edu.br;Bom desempenho nos conteúdos relacionados à Guerra Fria.;Propor pesquisa sobre os impactos políticos do período.;baixo;2026-05-09 15:30:00
+10000000085;professor05@escola.edu.br;Apresenta dificuldade na interpretação de dados demográficos.;Utilizar gráficos simples e exercícios de leitura de dados.;medio;2026-05-11 10:15:00
+10000000086;professor06@escola.edu.br;Demonstra dificuldade na resolução de sistemas lineares.;Retomar métodos de resolução utilizando exemplos passo a passo.;alto;2026-05-12 15:20:00
+10000000087;professor07@escola.edu.br;Bom desempenho na compreensão da variação linguística.;Propor análise de diferentes formas de expressão linguística.;baixo;2026-05-13 10:30:00
+10000000088;professor08@escola.edu.br;Apresenta dificuldade na compreensão dos mecanismos da evolução biológica.;Utilizar esquemas e exemplos de seleção natural.;medio;2026-05-14 15:10:00
+10000000089;professor09@escola.edu.br;Demonstra dificuldade em problemas de análise combinatória.;Utilizar árvores de possibilidades e exercícios graduais.;alto;2026-05-15 10:20:00
+10000000090;professor10@escola.edu.br;Bom desempenho na compreensão de campos magnéticos.;Propor experimentos e problemas contextualizados.;baixo;2026-05-16 15:15:00
+10000000091;professor11@escola.edu.br;Apresenta dificuldade na compreensão dos fatores que alteram a velocidade das reações.;Utilizar exemplos práticos e gráficos explicativos.;medio;2026-05-18 10:30:00
+10000000092;professor12@escola.edu.br;Excelente desempenho em conteúdos relacionados à microbiologia.;Estimular pesquisa sobre microrganismos e saúde pública.;baixo;2026-05-19 15:20:00
+10000000093;professor13@escola.edu.br;Apresenta dificuldade na compreensão dos acontecimentos da República Velha.;Utilizar linha do tempo e mapas conceituais.;medio;2026-05-20 10:15:00
+10000000094;professor14@escola.edu.br;Demonstra dificuldade na identificação de problemas ambientais urbanos.;Utilizar estudos de caso e atividades de análise ambiental.;medio;2026-05-21 15:10:00
+10000000095;professor15@escola.edu.br;Apresenta dificuldade em cálculos envolvendo volume e área de sólidos.;Utilizar modelos tridimensionais e exercícios graduais.;alto;2026-05-22 10:20:00
+10000000096;professor16@escola.edu.br;Bom desempenho na produção de textos dissertativo-argumentativos.;Estimular revisão da estrutura e ampliação dos argumentos.;baixo;2026-05-23 15:30:00
+10000000097;professor17@escola.edu.br;Apresenta dificuldade na compreensão dos conceitos básicos de relatividade.;Utilizar exemplos cotidianos e materiais introdutórios simplificados.;medio;2026-05-25 10:15:00
+10000000098;professor18@escola.edu.br;Demonstra dificuldade na compreensão do equilíbrio químico.;Utilizar gráficos e exemplos de reações reversíveis.;alto;2026-05-26 15:20:00
+10000000099;professor19@escola.edu.br;Bom desempenho na compreensão de hábitos relacionados à saúde.;Estimular criação de um plano pessoal de hábitos saudáveis.;baixo;2026-05-27 10:30:00
+10000000100;professor20@escola.edu.br;Apresenta bom desempenho na análise das transformações recentes da sociedade brasileira.;Propor pesquisa complementar e discussão em grupo.;baixo;2026-05-28 15:10:00
+cpf_aluno;email_professor;texto_observacao;data_registro
+10000000001;professor01@escola.edu.br;Apresenta boa participação nas atividades e demonstra interesse pelos conteúdos trabalhados.;2026-02-03 10:30:00
+10000000002;professor02@escola.edu.br;Necessita de maior acompanhamento durante atividades de interpretação textual.;2026-02-04 15:20:00
+10000000003;professor03@escola.edu.br;Participa ativamente das aulas práticas e demonstra curiosidade científica.;2026-02-05 10:40:00
+10000000004;professor04@escola.edu.br;Demonstra facilidade na compreensão de acontecimentos históricos e boa participação nas discussões.;2026-02-06 15:30:00
+10000000005;professor05@escola.edu.br;Apresenta dificuldade pontual na leitura e interpretação de mapas.;2026-02-07 11:15:00
+10000000006;professor06@escola.edu.br;Necessita de reforço nos conteúdos matemáticos básicos.;2026-02-08 15:40:00
+10000000007;professor07@escola.edu.br;Demonstra criatividade e boa organização durante as produções textuais.;2026-02-09 10:25:00
+10000000008;professor08@escola.edu.br;Apresenta excelente desempenho e grande interesse pelos conteúdos de ciências.;2026-02-10 15:35:00
+10000000009;professor09@escola.edu.br;Necessita de orientação adicional para resolver equações matemáticas.;2026-02-11 10:45:00
+10000000010;professor10@escola.edu.br;Participa das atividades e demonstra evolução na resolução de problemas.;2026-02-12 15:30:00
+10000000011;professor11@escola.edu.br;Apresenta dificuldade na identificação de elementos químicos, mas demonstra esforço.;2026-02-13 10:35:00
+10000000012;professor12@escola.edu.br;Demonstra bom desempenho e participação constante nas aulas.;2026-02-14 15:25:00
+10000000013;professor13@escola.edu.br;Apresenta excelente desempenho nas atividades de história.;2026-02-16 10:40:00
+10000000014;professor14@escola.edu.br;Necessita de recursos visuais para melhor compreensão dos conteúdos geográficos.;2026-02-17 15:35:00
+10000000015;professor15@escola.edu.br;Demonstra facilidade em matemática e boa capacidade de raciocínio lógico.;2026-02-18 10:30:00
+10000000016;professor16@escola.edu.br;Apresenta dificuldade na diferenciação dos gêneros textuais.;2026-02-19 15:40:00
+10000000017;professor17@escola.edu.br;Demonstra domínio dos conceitos de física e participa das atividades propostas.;2026-02-20 10:45:00
+10000000018;professor18@escola.edu.br;Necessita de acompanhamento adicional durante atividades de química.;2026-02-21 15:35:00
+10000000019;professor19@escola.edu.br;Apresenta boa compreensão dos conceitos de biologia e participa das discussões.;2026-02-23 10:30:00
+10000000020;professor20@escola.edu.br;Demonstra interesse pelos conteúdos históricos e realiza as atividades com autonomia.;2026-02-24 15:40:00
+10000000021;professor01@escola.edu.br;Apresenta dificuldade em operações com frações e necessita de exercícios de reforço.;2026-02-25 10:35:00
+10000000022;professor02@escola.edu.br;Necessita de apoio para identificar corretamente as classes gramaticais.;2026-02-26 15:30:00
+10000000023;professor03@escola.edu.br;Demonstra bom conhecimento sobre ecossistemas e participa das atividades práticas.;2026-02-27 10:45:00
+10000000024;professor04@escola.edu.br;Apresenta desempenho regular e necessita de reforço nos conteúdos históricos.;2026-02-28 15:35:00
+10000000025;professor05@escola.edu.br;Apresenta dificuldade na identificação de diferentes tipos de clima e vegetação.;2026-03-02 10:30:00
+10000000026;professor06@escola.edu.br;Demonstra excelente desempenho em matemática e resolve problemas com autonomia.;2026-03-03 15:45:00
+10000000027;professor07@escola.edu.br;Necessita de maior contato com obras literárias para ampliar o repertório.;2026-03-04 10:35:00
+10000000028;professor08@escola.edu.br;Apresenta dificuldade em conceitos científicos abstratos e se beneficia de exemplos práticos.;2026-03-05 15:40:00
+10000000029;professor09@escola.edu.br;Demonstra bom desempenho em geometria e interesse pelas atividades práticas.;2026-03-06 10:30:00
+10000000030;professor10@escola.edu.br;Necessita de apoio na interpretação de problemas de física.;2026-03-07 15:35:00
+10000000031;professor11@escola.edu.br;Apresenta desempenho regular em química e demonstra interesse em melhorar.;2026-03-09 10:45:00
+10000000032;professor12@escola.edu.br;Demonstra boa participação e compreensão dos conteúdos de biologia.;2026-03-10 15:30:00
+10000000033;professor13@escola.edu.br;Apresenta excelente desempenho nas atividades históricas propostas.;2026-03-11 10:40:00
+10000000034;professor14@escola.edu.br;Necessita de recursos visuais para compreender processos de urbanização.;2026-03-12 15:35:00
+10000000035;professor15@escola.edu.br;Apresenta dificuldade em diferenciar progressões matemáticas.;2026-03-13 10:30:00
+10000000036;professor16@escola.edu.br;Demonstra criatividade e organização em suas produções textuais.;2026-03-14 15:45:00
+10000000037;professor17@escola.edu.br;Necessita de reforço nos conteúdos relacionados à energia mecânica.;2026-03-16 10:35:00
+10000000038;professor18@escola.edu.br;Apresenta dificuldade significativa em cálculos de estequiometria.;2026-03-17 15:40:00
+10000000039;professor19@escola.edu.br;Demonstra excelente desempenho nas atividades relacionadas à evolução.;2026-03-18 10:30:00
+10000000040;professor20@escola.edu.br;Necessita de apoio para compreender acontecimentos históricos complexos.;2026-03-19 15:35:00
+10000000041;professor01@escola.edu.br;Apresenta boa evolução em matemática e necessita apenas de reforços pontuais.;2026-03-20 10:45:00
+10000000042;professor02@escola.edu.br;Demonstra dificuldade em algumas regras ortográficas e necessita de revisão.;2026-03-21 15:30:00
+10000000043;professor03@escola.edu.br;Apresenta boa compreensão das relações entre os seres vivos.;2026-03-23 10:35:00
+10000000044;professor04@escola.edu.br;Demonstra excelente desempenho em história e participa dos debates.;2026-03-24 15:45:00
+10000000045;professor05@escola.edu.br;Apresenta dificuldade na identificação das formas de relevo.;2026-03-25 10:40:00
+10000000046;professor06@escola.edu.br;Demonstra facilidade em razão e proporção e boa capacidade de raciocínio.;2026-03-26 15:35:00
+10000000047;professor07@escola.edu.br;Necessita de apoio na compreensão das características do modernismo.;2026-03-27 10:30:00
+10000000048;professor08@escola.edu.br;Apresenta bom desempenho nas atividades de biologia.;2026-03-28 15:40:00
+10000000049;professor09@escola.edu.br;Demonstra dificuldade em operações com matrizes e necessita de reforço.;2026-03-30 10:45:00
+10000000050;professor10@escola.edu.br;Apresenta bom desempenho em física e participa das atividades práticas.;2026-03-31 15:30:00
+10000000051;professor11@escola.edu.br;Necessita de apoio para interpretar corretamente a escala de pH.;2026-04-01 10:35:00
+10000000052;professor12@escola.edu.br;Demonstra boa compreensão dos conteúdos sobre o corpo humano.;2026-04-02 15:45:00
+10000000053;professor13@escola.edu.br;Apresenta excelente desempenho nas atividades de história contemporânea.;2026-04-03 10:40:00
+10000000054;professor14@escola.edu.br;Apresenta dificuldade em compreender causas e consequências das migrações.;2026-04-04 15:35:00
+10000000055;professor15@escola.edu.br;Demonstra bom desempenho na análise de dados estatísticos.;2026-04-06 10:30:00
+10000000056;professor16@escola.edu.br;Necessita de reforço nos mecanismos de coesão textual.;2026-04-07 15:40:00
+10000000057;professor17@escola.edu.br;Apresenta dificuldade na compreensão de conceitos relacionados às ondas.;2026-04-08 10:45:00
+10000000058;professor18@escola.edu.br;Demonstra bom desempenho nos conteúdos introdutórios de química orgânica.;2026-04-09 15:30:00
+10000000059;professor19@escola.edu.br;Necessita de reforço na identificação das relações ecológicas.;2026-04-10 10:35:00
+10000000060;professor20@escola.edu.br;Apresenta excelente compreensão dos conteúdos relacionados à cidadania.;2026-04-11 15:45:00
+10000000061;professor01@escola.edu.br;Apresenta dificuldade na resolução de expressões numéricas.;2026-04-13 10:40:00
+10000000062;professor02@escola.edu.br;Demonstra desempenho regular em interpretação de textos.;2026-04-14 15:35:00
+10000000063;professor03@escola.edu.br;Apresenta bom desempenho nos conteúdos de anatomia humana.;2026-04-15 10:30:00
+10000000064;professor04@escola.edu.br;Necessita de reforço na comparação entre civilizações antigas.;2026-04-16 15:40:00
+10000000065;professor05@escola.edu.br;Demonstra boa compreensão dos conceitos relacionados à sustentabilidade.;2026-04-17 10:45:00
+10000000066;professor06@escola.edu.br;Apresenta dificuldade significativa na resolução de equações quadráticas.;2026-04-18 15:30:00
+10000000067;professor07@escola.edu.br;Demonstra bom desempenho na identificação de figuras de linguagem.;2026-04-20 10:35:00
+10000000068;professor08@escola.edu.br;Necessita de apoio para compreender os mecanismos de hereditariedade.;2026-04-21 15:45:00
+10000000069;professor09@escola.edu.br;Apresenta dificuldade em problemas envolvendo logaritmos.;2026-04-22 10:40:00
+10000000070;professor10@escola.edu.br;Demonstra bom desempenho nos conteúdos de eletricidade.;2026-04-23 15:35:00
+10000000071;professor11@escola.edu.br;Apresenta dificuldade em relacionar conceitos químicos aos impactos ambientais.;2026-04-24 10:30:00
+10000000072;professor12@escola.edu.br;Demonstra excelente desempenho nas atividades de biotecnologia.;2026-04-25 15:40:00
+10000000073;professor13@escola.edu.br;Necessita de apoio para analisar diferentes movimentos sociais.;2026-04-27 10:45:00
+10000000074;professor14@escola.edu.br;Apresenta dificuldade na compreensão de conceitos geopolíticos.;2026-04-28 15:30:00
+10000000075;professor15@escola.edu.br;Demonstra bom desempenho em probabilidade e raciocínio lógico.;2026-04-29 10:35:00
+10000000076;professor16@escola.edu.br;Necessita de maior contato com textos da literatura contemporânea.;2026-04-30 15:45:00
+10000000077;professor17@escola.edu.br;Demonstra bom desempenho nos conteúdos de óptica.;2026-05-01 10:40:00
+10000000078;professor18@escola.edu.br;Apresenta dificuldade na compreensão de reações químicas orgânicas.;2026-05-02 15:35:00
+10000000079;professor19@escola.edu.br;Demonstra boa compreensão dos sistemas do corpo humano.;2026-05-04 10:30:00
+10000000080;professor20@escola.edu.br;Apresenta excelente desempenho nas atividades de história do Brasil.;2026-05-05 15:40:00
+10000000081;professor01@escola.edu.br;Apresenta dificuldade na identificação de múltiplos e divisores.;2026-05-06 10:45:00
+10000000082;professor02@escola.edu.br;Necessita de reforço no uso adequado da pontuação.;2026-05-07 15:30:00
+10000000083;professor03@escola.edu.br;Apresenta desempenho regular em conteúdos ambientais.;2026-05-08 10:35:00
+10000000084;professor04@escola.edu.br;Demonstra bom desempenho nos conteúdos relacionados à Guerra Fria.;2026-05-09 15:45:00
+10000000085;professor05@escola.edu.br;Apresenta dificuldade na interpretação de dados demográficos.;2026-05-11 10:40:00
+10000000086;professor06@escola.edu.br;Necessita de acompanhamento adicional na resolução de sistemas lineares.;2026-05-12 15:35:00
+10000000087;professor07@escola.edu.br;Demonstra boa compreensão sobre variações linguísticas.;2026-05-13 10:30:00
+10000000088;professor08@escola.edu.br;Apresenta dificuldade na compreensão dos mecanismos de evolução.;2026-05-14 15:40:00
+10000000089;professor09@escola.edu.br;Necessita de reforço em problemas de análise combinatória.;2026-05-15 10:45:00
+10000000090;professor10@escola.edu.br;Demonstra bom desempenho nos conteúdos de magnetismo.;2026-05-16 15:30:00
+10000000091;professor11@escola.edu.br;Apresenta dificuldade na compreensão de fatores que influenciam reações químicas.;2026-05-18 10:35:00
+10000000092;professor12@escola.edu.br;Demonstra excelente desempenho nas atividades de microbiologia.;2026-05-19 15:45:00
+10000000093;professor13@escola.edu.br;Necessita de reforço nos conteúdos relacionados à República Velha.;2026-05-20 10:40:00
+10000000094;professor14@escola.edu.br;Apresenta dificuldade na identificação de problemas ambientais urbanos.;2026-05-21 15:35:00
+10000000095;professor15@escola.edu.br;Necessita de acompanhamento em cálculos envolvendo áreas e volumes.;2026-05-22 10:30:00
+10000000096;professor16@escola.edu.br;Demonstra bom desempenho na produção de textos dissertativos.;2026-05-23 15:40:00
+10000000097;professor17@escola.edu.br;Apresenta dificuldade na compreensão de conceitos introdutórios de relatividade.;2026-05-25 10:45:00
+10000000098;professor18@escola.edu.br;Necessita de reforço nos conteúdos de equilíbrio químico.;2026-05-26 15:30:00
+10000000099;professor19@escola.edu.br;Demonstra boa compreensão dos conteúdos relacionados à saúde.;2026-05-27 10:35:00
+10000000100;professor20@escola.edu.br;Apresenta bom desempenho e participação nas discussões sobre sociedade brasileira.;2026-05-28 15:45:00
+
