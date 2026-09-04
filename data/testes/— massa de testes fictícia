@@ -1,0 +1,56 @@
+Para testar a nossa aplicação de forma segura e realista, utilizamos inteligência artificial para gerar dados fictícios (dados inventados). Nenhum dado pessoal real foi utilizado, garantindo a privacidade dos usuários e a conformidade com as regras de proteção de dados.
+1. Validação dos Dados Gerados Após a geração dos dados pela IA, a equipe revisou e organizou todas as informações para garantir que o sistema funcionasse perfeitamente. Foram validados:
+Tipos e Formatos: Confirmamos se os e-mails tinham o formato correto, se os CPFs continham 11 dígitos e se as notas estavam em números decimais (ex: 9.50).
+Chaves e Ligação de Dados: Garantimos que o código das turmas (ex: TURMA001) e os CPFs dos alunos fossem exatamente os mesmos em todas as tabelas relacionadas.
+Datas e Categorias: Verificamos se as datas das entregas e avaliações estavam dentro do ano letivo de 2026 e se os campos de múltipla escolha (como turnos Manhã/Tarde) estavam corretos.
+2. Nota sobre a Execução do Modelo de IA Durante os testes do projeto, a equipe tentou utilizar o Ollama para rodar o modelo de IA localmente. Porém, devido a falhas na execução e erros nos comandos de configuração durante as tentativas, não foi possível colocar o Ollama para rodar de forma funcional.
+Para não travar o andamento do projeto, mantivemos a massa de testes totalmente estruturada no arquivo CSV e simulamos as respostas do contexto do chatbot, garantindo que o histórico do aluno (como notas, preferências de acessibilidade e metas do PEI) continuasse pronto para alimentar a IA no fluxo final do sistema.
+
+Amostra da Massa de Testes (CSV)
+aluno_cpf
+aluno_nome
+aluno_deficiencia
+config_fonte_dislexia
+turma_codigo
+atividade_titulo
+resposta_nota
+12345678901
+João Souza
+TDAH, Baixa Visão
+false
+TURMA001
+Operações Matemáticas
+9.50
+23456789012
+Maria Silva
+Dislexia
+true
+TURMA001
+Operações Matemáticas
+8.00
+34567890123
+Pedro Santos
+Autismo Nível 1
+false
+TURMA002
+Interpretação de Texto
+7.50
+
+
+Dicionário de Dados do CSV
+aluno_cpf: Texto — Número do CPF do estudante (identificador principal).
+aluno_nome: Texto — Nome completo do aluno.
+aluno_deficiencia: Texto — Registro de necessidade especial ou neurodivergência.
+config_fonte_dislexia: Verdadeiro/Falso — Indica se o perfil ativa a fonte para dislexia.
+turma_codigo: Texto — Identificador único da turma (ex: TURMA001).
+atividade_titulo: Texto — Nome do exercício ou tarefa avaliativa.
+resposta_nota: Número Decimal — Nota obtida pelo aluno na atividade.
+
+Exemplos de Interação com o Chatbot (Prompts de Teste)
+Exemplo 1 — Adaptação por Dislexia
+Pergunta do Aluno: "Quais são as minhas tarefas de Português dessa semana?"
+Resposta Esperada da IA: Identifica no CSV que o aluno possui config_fonte_dislexia = true e entrega a lista de atividades com textos curtos, frases diretas e espaçamento ampliado.
+Exemplo 2 — Consulta de Apoio Pedagógico (PEI)
+Pergunta do Aluno: "Qual é o meu objetivo na aula de matemática hoje?"
+Resposta Esperada da IA: Localiza as metas do PEI do aluno no histórico e responde com orientações adaptadas e suporte visua
+
