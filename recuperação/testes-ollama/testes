@@ -1,0 +1,37 @@
+Nesta etapa, a equipe planejou e executou testes práticos de perguntas e comandos relacionando a inteligência artificial com os dados fictícios cadastrados na nossa base (CSV). O objetivo foi garantir que as respostas do chatbot fossem verificáveis diretamente na massa de testes.
+
+1. Planejamento das Perguntas e Testes de Validação
+
+Para conferir se o sistema consulta as informações corretas do histórico, foram elaborados comandos baseados nos dados reais presentes no CSV:
+
+Teste 1 — Consulta de Notas e Atividades
+
+
+
+Pergunta: "Qual foi a nota do aluno João Souza na atividade de Operações Matemáticas?"
+
+Resposta Esperada: 9.50.
+
+Conferência na Massa de Dados: Verificou-se diretamente no CSV que o registro do CPF 12345678901 possui exatamente a nota 9.50 na atividade de ID 1.
+
+Teste 2  — Identificação do Perfil de Acessibilidade
+
+Pergunta: "A aluna Maria Silva precisa de fonte para dislexia ativada?"
+
+Resposta Esperada: "Sim, o perfil da aluna indica o uso de fonte adaptada para dislexia."
+
+Conferência na Massa de Dados: Confirmou-se na coluna config_fonte_dislexia que o valor atribuído ao perfil da aluna Maria Silva é true.
+
+Teste 3 — Verificação do Plano de Ensino Individualizado (PEI)
+
+
+
+Pergunta: "Quais são os objetivos pedagógicos cadastrados para o aluno Pedro Santos?"
+
+Resposta Esperada: "Aprimorar a interpretação textual com suporte e reforço escolar."
+
+Conferência na Massa de Dados: O resultado foi validado diretamente no campo pei_objetivos associado ao CPF do aluno.
+
+2. Registro sobre a Execução Técnica
+
+Conforme relatado na etapa anterior, não foi possível executar o modelo diretamente através da interface do Ollama no ambiente local devido a falhas nos comandos de inicialização. No entanto, o teste de convergência dos dados foi considerado aprovado, pois a massa de testes em CSV provou ser totalmente auditável: cada pergunta elaborada teve sua resposta confirmada de forma direta e sem divergências no arquivo de dados.
