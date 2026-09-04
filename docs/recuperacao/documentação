@@ -1,0 +1,43 @@
+Inicialmente, a base de dados apresentava inconsistências estruturais, como duplicidade de informações de usuários e a ausência de tabelas fundamentais para o suporte pedagógico. Durante a reestruturação, a equipe integrou os dados e unificou o CSV desnormalizado, garantindo que as informações do aluno estivessem conectadas às suas configurações de acessibilidade, notas e ao seu Plano de Ensino Individualizado (PEI).
+Ajustes Principais Realizados:
+Criação e Vinculação de Entidades: Adição oficial das tabelas aluno e pei_plano_individual.
+Garantia de Integridade Referencial: Inclusão dos CPFs dos alunos como chaves de ligação (aluno_turma, resposta_atividade e pei_plano_individual).
+Inclusão de Atributos Acessíveis: Adição dos campos fonte_dislexia e reducao_estimulo na tabela de configurações.
+Limpeza da Base: Remoção de colunas sobressalentes e correção do nome dos docentes na tabela de professores.
+
+Etapa 6 — Geração e Validação da Massa de Testes
+Com o auxílio de inteligência artificial, foram gerados dados fictícios e realistas para simular a rotina escolar de 5 alunos, garantindo a privacidade dos usuários.
+Validações Efetuadas:
+Formatos: Confirmação de e-mails válidos, CPFs formatados em 11 dígitos e notas padronizadas com casas decimais.
+Coerência de Relações: Verificação das chaves relacionais entre alunos, turmas e entregas de atividades.
+Nota Técnica de Execução: Durante os testes, a equipe tentou rodar o modelo localmente via Ollama. Como ocorreram erros nos comandos e na configuração do ambiente local, optou-se por documentar essa tentativa e realizar a simulação de contexto do chatbot consultando diretamente a base em CSV.
+
+Etapa 7 — Testes de Convergência das Perguntas
+Para conferir se o histórico atende às perguntas dos usuários, a equipe estruturou 3 comandos principais e os validou diretamente no arquivo CSV:
+Consulta de Desempenho:
+Pergunta: "Qual foi a nota do aluno João Souza na atividade de Operações Matemáticas?"
+Resposta Conferida no CSV: 9.50 (Validação positiva no registro de aluno_cpf = 12345678901).
+Perfil de Acessibilidade:
+Pergunta: "A aluna Maria Silva precisa de fonte para dislexia?"
+Resposta Conferida no CSV: true (Confirmado no campo config_fonte_dislexia).
+Plano de Ensino (PEI):
+Pergunta: "Quais são as metas pedagógicas do aluno Pedro Santos?"
+Resposta Conferida no CSV: Confirmação direta dos dados preenchidos na coluna pei_objetivos.
+ETAPA 8
+Antes da análise: O CSV, dicionário de dados DER e DDL continha dados soltos, sem padronização de nomes, tabelas faltando e nomes duplicados para entidades distintas, banco de dados incoerente e com falta de dados que atendam a proposta do projeto.
+O que descobrimos: A IA necessita de prefixos explícitos para diferenciar campos homônimos e o Ollama não executou localmente devido a falhas de comando, e o banco e o pilar de tudo ja que a partir dele se gera o CSV e as outras coisas que são responsáveis por serem os pilares do projeto
+Decisão da equipe: Aplicou-se snake_case com prefixos contextuais, organizou-se o dicionário de dados, validamos o DER e geramos o DDL com base nisso foi reajustado o CSV  e manteve-se a consulta via massa de testes auditável.
+Artefato alterado: Atualização do CSV integrado, Dicionário de Dados, DER, DDL  e documentação da massa de testes no relatório.
+
+Antes da análise
+O banco de dados e o CSV inicial apresentavam colunas com nomes ambíguos (como nome para alunos e professores), ausência de tabelas fundamentais (aluno e pei_plano_individual) e falta de integração entre os dados de acessibilidade e o histórico escolar. 
+
+O que descobrimos
+A Inteligência Artificial precisa de prefixos explícitos para diferenciar entidades no contexto. Além disso, no teste com o Ollama, identificamos erros de inicialização no ambiente local, o que nos levou a validar as perguntas diretamente na massa de testes do CSV. 
+
+Decisão da equipe
+Padronizar todo o Dicionário de Dados e o CSV no padrão snake_case com prefixos por entidade (aluno_, config_, turma_, resposta_), estruturar o DER/DDL com chaves relacionais (aluno_cpf) e realizar a validação auditável das respostas da IA diretamente no arquivo de dados. 
+
+Artefato alterado / evidência
+Script DDL (educainclui.sql), Dicionário de Dados revisado, Matriz de Padronização Banco × CSV e a tabela de testes de perguntas e respostas verificáveis na massa do CSV. 
+
