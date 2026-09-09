@@ -1,0 +1,1958 @@
+# Código HTML — tech advisors
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Tech Advisors</title>
+
+
+    <style>
+
+        /* =========================
+           CONFIGURAÇÕES GERAIS
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --verde-principal: #75ad65;
+            --verde-escuro: #477844;
+            --verde-claro: #e6f4dc;
+            --verde-fundo: #f6fbf2;
+
+            --texto: #30362f;
+
+            --branco: #ffffff;
+
+        }
+
+
+        body {
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--verde-fundo);
+
+            color: var(--texto);
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================
+           ESTRUTURA PRINCIPAL
+        ========================= */
+
+        .app {
+
+            display: flex;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================
+           MENU LATERAL
+        ========================= */
+
+        .sidebar {
+
+            width: 250px;
+
+            min-height: 100vh;
+
+            background: #e8f4df;
+
+            padding: 30px 18px;
+
+            border-right: 1px solid #d4e5cb;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .logo-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 50%;
+
+            background: #d2ebc5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+        }
+
+
+        .logo h1 {
+
+            color: var(--verde-escuro);
+
+            font-size: 23px;
+
+            line-height: 1;
+
+        }
+
+
+        .subtitle {
+
+            color: #5e8258;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin: 12px 8px 25px;
+
+        }
+
+
+        /* MENU */
+
+        .menu {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+
+        .menu button {
+
+            border: none;
+
+            background: transparent;
+
+            border-radius: 20px;
+
+            padding: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #3e493c;
+
+            text-align: left;
+
+            transition: 0.2s;
+
+        }
+
+
+        .menu button:hover {
+
+            background: #dceecf;
+
+            transform: translateX(3px);
+
+        }
+
+
+        .menu button.active {
+
+            background: #d4eac5;
+
+            color: #386834;
+
+        }
+
+
+        .menu-icon {
+
+            font-size: 21px;
+
+            width: 25px;
+
+            text-align: center;
+
+        }
+
+
+        /* CARTÃO LATERAL */
+
+        .sidebar-card {
+
+            margin-top: auto;
+
+            background: white;
+
+            border: 1px solid #d7e7d0;
+
+            border-radius: 20px;
+
+            padding: 20px 10px;
+
+            text-align: center;
+
+            color: #547650;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .sidebar-card .hearts {
+
+            font-size: 24px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
+
+        .main {
+
+            flex: 1;
+
+            padding: 20px 30px;
+
+            max-width: 1400px;
+
+        }
+
+
+        /* TOPO */
+
+        .topbar {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .calm-button {
+
+            background: #edf7e8;
+
+            border: 1px solid #d2e6ca;
+
+            color: #4f7c49;
+
+            padding: 11px 18px;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .top-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            border: 1px solid #d5e4cf;
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+        }
+
+
+        /* =========================
+           ASSISTENTE
+        ========================= */
+
+        .assistant {
+
+            background: white;
+
+            border: 1px solid #d4e5cb;
+
+            border-radius: 28px;
+
+            padding: 28px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 35px;
+
+            box-shadow: 0 8px 30px rgba(70, 110, 60, 0.06);
+
+        }
+
+
+        .assistant-picture {
+
+            width: 290px;
+
+            height: 270px;
+
+            border-radius: 50%;
+
+            background: #dff0d2;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .assistant-picture span {
+
+            font-size: 145px;
+
+        }
+
+
+        .assistant-text {
+
+            flex: 1;
+
+        }
+
+
+        .assistant-label {
+
+            display: inline-block;
+
+            background: #e3f2da;
+
+            color: #4d7948;
+
+            padding: 9px 16px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .assistant-text h2 {
+
+            font-size: 30px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .assistant-text > p {
+
+            color: #60695c;
+
+            font-size: 16px;
+
+            line-height: 1.6;
+
+            max-width: 700px;
+
+        }
+
+
+        /* BENEFÍCIOS */
+
+        .beneficios {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .beneficio {
+
+            border: 1px solid #e0eadb;
+
+            background: #fbfdf9;
+
+            padding: 10px 14px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        .beneficio span {
+
+            font-size: 22px;
+
+        }
+
+
+        /* =========================
+           TÍTULO DA PERGUNTA
+        ========================= */
+
+        .question-header {
+
+            margin-top: 20px;
+
+            background: white;
+
+            border: 1px solid #dbe8d5;
+
+            border-radius: 20px;
+
+            padding: 17px 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .question-circle {
+
+            width: 45px;
+
+            height: 45px;
+
+            border: 3px solid #79aa6c;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            color: #64945b;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+        }
+
+
+        .question-header h3 {
+
+            font-size: 21px;
+
+        }
+
+
+        .question-header p {
+
+            margin-top: 3px;
+
+            color: #6b7368;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================
+           LOUSA
+        ========================= */
+
+        .lousa {
+
+            margin-top: 18px;
+
+            position: relative;
+
+            min-height: 340px;
+
+            padding: 45px 55px;
+
+            border: 12px solid #9a6a3b;
+
+            border-radius: 20px;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255,255,255,0.05),
+                    transparent 25%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #164b37,
+                    #125139
+                );
+
+            box-shadow:
+
+                inset 0 0 30px rgba(0,0,0,0.35),
+
+                0 7px 0 #704622;
+
+            overflow: hidden;
+
+        }
+
+
+        /* TEXTO DA LOUSA */
+
+        .lousa h2 {
+
+            color: white;
+
+            text-align: center;
+
+            font-family: "Comic Sans MS",
+                         "Segoe Print",
+                         cursive;
+
+            font-size: 32px;
+
+            line-height: 1.2;
+
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.15);
+
+        }
+
+
+        .linha-giz {
+
+            width: 50%;
+
+            height: 3px;
+
+            background: #e98abb;
+
+            border-radius: 50%;
+
+            margin: 20px auto 25px;
+
+        }
+
+
+        /* DECORAÇÕES */
+
+        .desenho {
+
+            position: absolute;
+
+            font-family: cursive;
+
+            font-size: 40px;
+
+            opacity: 0.85;
+
+        }
+
+
+        .lampada {
+
+            top: 25px;
+
+            left: 30px;
+
+        }
+
+
+        .coracao {
+
+            top: 25px;
+
+            right: 35px;
+
+            color: #ed8eb8;
+
+        }
+
+
+        .estrela {
+
+            bottom: 30px;
+
+            right: 40px;
+
+            color: #f3ca55;
+
+        }
+
+
+        .quebra {
+
+            bottom: 30px;
+
+            left: 35px;
+
+        }
+
+
+        /* =========================
+           CAMPO DE PERGUNTA
+        ========================= */
+
+        .input-area {
+
+            max-width: 850px;
+
+            height: 80px;
+
+            margin: auto;
+
+            border: 3px solid rgba(255,255,255,0.7);
+
+            border-radius: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding-left: 25px;
+
+            background: rgba(0,0,0,0.08);
+
+        }
+
+
+        #pergunta {
+
+            flex: 1;
+
+            height: 100%;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            color: white;
+
+            font-family: "Comic Sans MS",
+                         "Segoe Print",
+                         cursive;
+
+            font-size: 20px;
+
+        }
+
+
+        #pergunta::placeholder {
+
+            color: rgba(255,255,255,0.75);
+
+        }
+
+
+        #enviar {
+
+            width: 70px;
+
+            height: 60px;
+
+            background: transparent;
+
+            color: white;
+
+            border: none;
+
+            font-size: 38px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        #enviar:hover {
+
+            transform: translateX(5px);
+
+        }
+
+
+        /* GIZES */
+
+        .gizes {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .giz {
+
+            width: 45px;
+
+            height: 8px;
+
+            border-radius: 10px;
+
+        }
+
+
+        .azul {
+            background: #5bb0df;
+        }
+
+
+        .rosa {
+            background: #eb83b4;
+        }
+
+
+        .amarelo {
+            background: #f1c94d;
+        }
+
+
+        .branco {
+            background: #eeeeea;
+        }
+
+
+        .verde {
+            background: #a7cf7e;
+        }
+
+
+        /* =========================
+           RESPOSTA
+        ========================= */
+
+        .resposta {
+
+            margin-top: 18px;
+
+            background: white;
+
+            border: 1px solid #dbe8d5;
+
+            border-radius: 20px;
+
+            padding: 17px;
+
+            display: flex;
+
+            gap: 12px;
+
+            align-items: flex-start;
+
+        }
+
+
+        .avatar {
+
+            width: 45px;
+
+            height: 45px;
+
+            background: #def0d2;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .resposta strong {
+
+            color: #4b7845;
+
+        }
+
+
+        #textoResposta {
+
+            margin-top: 5px;
+
+            line-height: 1.5;
+
+            color: #596157;
+
+        }
+
+
+        /* =========================
+           PERGUNTAS RÁPIDAS
+        ========================= */
+
+        .perguntas {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-top: 18px;
+
+        }
+
+
+        .pergunta-btn {
+
+            background: white;
+
+            border: 1px solid #dbe8d5;
+
+            border-radius: 20px;
+
+            padding: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition: 0.2s;
+
+        }
+
+
+        .pergunta-btn:hover {
+
+            transform: translateY(-3px);
+
+            border-color: #9ec68e;
+
+            box-shadow: 0 7px 18px rgba(80,120,70,0.08);
+
+        }
+
+
+        .pergunta-btn .emoji {
+
+            font-size: 25px;
+
+        }
+
+
+        .pergunta-btn span:last-child {
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            line-height: 1.3;
+
+        }
+
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        footer {
+
+            text-align: center;
+
+            color: #557650;
+
+            font-size: 13px;
+
+            padding: 20px;
+
+        }
+
+
+        /* =========================
+           MODO CALMO
+        ========================= */
+
+        body.modo-calmo {
+
+            --verde-fundo: #eef8e9;
+
+        }
+
+
+        body.modo-calmo .lousa {
+
+            filter: saturate(0.8);
+
+        }
+
+
+        body.modo-calmo * {
+
+            animation: none !important;
+
+            transition: none !important;
+
+        }
+
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+
+                width: 210px;
+
+            }
+
+
+            .assistant-picture {
+
+                width: 220px;
+
+                height: 220px;
+
+            }
+
+
+            .assistant-picture span {
+
+                font-size: 110px;
+
+            }
+
+
+            .assistant-text h2 {
+
+                font-size: 25px;
+
+            }
+
+
+            .perguntas {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .app {
+
+                flex-direction: column;
+
+            }
+
+
+            .sidebar {
+
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 18px;
+
+            }
+
+
+            .menu {
+
+                flex-direction: row;
+
+                overflow-x: auto;
+
+            }
+
+
+            .menu button {
+
+                flex-shrink: 0;
+
+            }
+
+
+            .sidebar-card {
+
+                display: none;
+
+            }
+
+
+            .main {
+
+                width: 100%;
+
+                padding: 15px;
+
+            }
+
+
+            .assistant {
+
+                flex-direction: column;
+
+                text-align: center;
+
+            }
+
+
+            .assistant-picture {
+
+                width: 200px;
+
+                height: 200px;
+
+            }
+
+
+            .assistant-picture span {
+
+                font-size: 100px;
+
+            }
+
+
+            .beneficios {
+
+                justify-content: center;
+
+            }
+
+
+            .lousa {
+
+                padding: 40px 20px;
+
+            }
+
+
+            .lousa h2 {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .perguntas {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .topbar {
+
+                justify-content: center;
+
+            }
+
+
+            .question-header h3 {
+
+                font-size: 18px;
+
+            }
+
+
+            .input-area {
+
+                height: 70px;
+
+                padding-left: 15px;
+
+            }
+
+
+            #pergunta {
+
+                font-size: 16px;
+
+            }
+
+
+            #enviar {
+
+                font-size: 30px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================
+         MENU
+    ========================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🧩
+            </div>
+
+            <h1>
+                Tech<br>
+                adivisors
+            </h1>
+
+        </div>
+
+
+        <p class="subtitle">
+
+            Seu aprendizado,<br>
+            do seu jeito.
+
+        </p>
+
+
+        <nav class="menu">
+
+
+            <button class="active">
+
+                <span class="menu-icon">⌂</span>
+
+                Início
+
+            </button>
+
+
+            <button>
+
+                <span class="menu-icon">📅</span>
+
+                Plano de Estudos
+
+            </button>
+
+
+            <button>
+
+                <span class="menu-icon">📚</span>
+
+                Atividades
+
+            </button>
+
+
+            <button>
+
+                <span class="menu-icon">🎯</span>
+
+                Foco & Rotina
+
+            </button>
+
+
+            <button>
+
+                <span class="menu-icon">📊</span>
+
+                Progresso
+
+            </button>
+
+
+            <button>
+
+                <span class="menu-icon">♡</span>
+
+                Recursos
+
+            </button>
+
+
+            <button>
+
+                <span class="menu-icon">ⓘ</span>
+
+                Sobre o Projeto
+
+            </button>
+
+
+        </nav>
+
+
+        <div class="sidebar-card">
+
+            <div class="hearts">
+                💚 💗
+            </div>
+
+            Feito para você,<br>
+            respeitando seu ritmo.
+
+            <br><br>
+
+            ❤️ ⭐ 🧩
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         CONTEÚDO
+    ========================= -->
+
+    <main class="main">
+
+
+        <!-- TOPO -->
+
+        <header class="topbar">
+
+
+            <button
+                class="calm-button"
+                id="modoCalmo">
+
+                🌿 Modo calmo
+
+            </button>
+
+
+            <button class="top-icon">
+                ☼
+            </button>
+
+
+            <button class="top-icon">
+                ♙
+            </button>
+
+
+        </header>
+
+
+
+        <!-- =========================
+             ASSISTENTE
+        ========================= -->
+
+        <section class="assistant">
+
+
+            <div class="assistant-picture">
+
+                <span>
+                    👩🏻‍🏫
+                </span>
+
+            </div>
+
+
+            <div class="assistant-text">
+
+
+                <div class="assistant-label">
+
+                    Seu Assistente de Estudos ♡
+
+                </div>
+
+
+                <h2>
+
+                    Olá! Eu sou sua assistente
+                    de estudos.
+
+                </h2>
+
+
+                <p>
+
+                    Estou aqui para te ajudar a aprender
+                    no seu ritmo, tirar dúvidas e organizar
+                    seus estudos de uma maneira mais tranquila.
+
+                </p>
+
+
+                <div class="beneficios">
+
+
+                    <div class="beneficio">
+
+                        <span>🧠</span>
+
+                        Respeito seu ritmo
+
+                    </div>
+
+
+                    <div class="beneficio">
+
+                        <span>🧩</span>
+
+                        Aprendizado adaptável
+
+                    </div>
+
+
+                    <div class="beneficio">
+
+                        <span>⭐</span>
+
+                        Estudo inclusivo
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             PERGUNTA
+        ========================= -->
+
+        <section class="question-header">
+
+
+            <div class="question-circle">
+                ?
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Sobre o que você quer falar hoje?
+                </h3>
+
+                <p>
+                    Faça sua pergunta ou conte o que você precisa.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             LOUSA
+        ========================= -->
+
+        <section class="lousa">
+
+
+            <div class="desenho lampada">
+                💡
+            </div>
+
+
+            <div class="desenho coracao">
+                ♡
+            </div>
+
+
+            <div class="desenho estrela">
+                ☆
+            </div>
+
+
+            <div class="desenho quebra">
+                🧩
+            </div>
+
+
+            <h2>
+
+                Qual é a sua dúvida ou<br>
+                o que você precisa hoje?
+
+            </h2>
+
+
+            <div class="linha-giz"></div>
+
+
+
+            <div class="input-area">
+
+
+                <input
+                    id="pergunta"
+                    type="text"
+                    placeholder="Escreva aqui sua pergunta..."
+                    autocomplete="off"
+                >
+
+
+                <button id="enviar">
+
+                    ➜
+
+                </button>
+
+
+            </div>
+
+
+
+            <div class="gizes">
+
+                <span class="giz azul"></span>
+
+                <span class="giz rosa"></span>
+
+                <span class="giz amarelo"></span>
+
+                <span class="giz branco"></span>
+
+                <span class="giz verde"></span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             RESPOSTA
+        ========================= -->
+
+        <section class="resposta">
+
+
+            <div class="avatar">
+
+                👩🏻‍🏫
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Assistente
+                </strong>
+
+
+                <p id="textoResposta">
+
+                    Oi! Estou aqui para ajudar você. 💚
+
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             PERGUNTAS PRONTAS
+        ========================= -->
+
+        <section class="perguntas">
+
+
+            <button
+                class="pergunta-btn"
+                data-pergunta="Me explica esse assunto">
+
+                <span class="emoji">❔</span>
+
+                <span>
+                    Me explica<br>
+                    esse assunto
+                </span>
+
+            </button>
+
+
+            <button
+                class="pergunta-btn"
+                data-pergunta="Quero criar um plano de estudos">
+
+                <span class="emoji">📅</span>
+
+                <span>
+                    Criar um<br>
+                    plano de estudos
+                </span>
+
+            </button>
+
+
+            <button
+                class="pergunta-btn"
+                data-pergunta="Como posso melhorar meu foco?">
+
+                <span class="emoji">🎯</span>
+
+                <span>
+                    Como melhorar<br>
+                    meu foco?
+                </span>
+
+            </button>
+
+
+            <button
+                class="pergunta-btn"
+                data-pergunta="Estou me sentindo sobrecarregado">
+
+                <span class="emoji">💜</span>
+
+                <span>
+                    Estou me sentindo<br>
+                    sobrecarregado(a)
+                </span>
+
+            </button>
+
+
+        </section>
+
+
+
+        <footer>
+
+            ♡ Você não está sozinho(a).
+            Respeite seu tempo e siga no seu ritmo. 💚
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+    /* =========================
+       CHATBOT
+    ========================= */
+
+
+    const campoPergunta =
+        document.getElementById("pergunta");
+
+
+    const botaoEnviar =
+        document.getElementById("enviar");
+
+
+    const textoResposta =
+        document.getElementById("textoResposta");
+
+
+
+    function responder(pergunta) {
+
+
+        const texto =
+            pergunta.toLowerCase();
+
+
+
+        /* MATEMÁTICA */
+
+        if (
+            texto.includes("matemática") ||
+            texto.includes("matematica")
+        ) {
+
+            return `
+                Posso te ajudar com matemática! 🧮
+                Me diga qual assunto você está estudando,
+                como frações, porcentagem, equações ou geometria.
+            `;
+
+        }
+
+
+
+        /* PLANO DE ESTUDOS */
+
+        if (
+            texto.includes("plano") ||
+            texto.includes("estudar")
+        ) {
+
+            return `
+                Claro! 📚 Podemos montar um plano de estudos
+                simples, dividindo o conteúdo em pequenas etapas
+                e colocando pausas entre elas. Você não precisa
+                estudar tudo de uma vez. 💚
+            `;
+
+        }
+
+
+
+        /* FOCO */
+
+        if (
+            texto.includes("foco") ||
+            texto.includes("concentrar")
+        ) {
+
+            return `
+                Vamos começar pequeno. 🎯 Escolha apenas uma tarefa,
+                deixe as distrações de lado e estude por um período
+                curto. Depois faça uma pausa. O importante é avançar
+                no seu ritmo.
+            `;
+
+        }
+
+
+
+        /* SOBRECARGA */
+
+        if (
+            texto.includes("sobrecarregado") ||
+            texto.includes("cansado") ||
+            texto.includes("ansioso")
+        ) {
+
+            return `
+                Tudo bem fazer uma pausa. 💜 Você não precisa
+                conseguir tudo de uma vez. Respire, descanse um
+                pouco e, quando estiver pronto(a), podemos dividir
+                a tarefa em passos menores.
+            `;
+
+        }
+
+
+
+        /* PORTUGUÊS */
+
+        if (
+            texto.includes("português") ||
+            texto.includes("portugues")
+        ) {
+
+            return `
+                Claro! 📖 Posso explicar português de forma simples,
+                usando exemplos e dividindo o conteúdo em pequenas
+                partes. Me diga qual assunto você está estudando.
+            `;
+
+        }
+
+
+
+        /* RESPOSTA PADRÃO */
+
+        return `
+            Entendi! 💚 Vou tentar explicar isso de uma maneira
+            simples e organizada. Me conte um pouco mais sobre
+            sua dúvida para que possamos começar juntos.
+        `;
+
+    }
+
+
+
+    /* ENVIAR */
+
+    function enviarPergunta() {
+
+
+        const pergunta =
+            campoPergunta.value.trim();
+
+
+
+        if (pergunta === "") {
+
+            textoResposta.innerHTML =
+                "Digite uma pergunta para eu poder ajudar você. 🌱";
+
+            return;
+
+        }
+
+
+
+        textoResposta.innerHTML =
+            "Estou pensando em uma forma simples de explicar isso... 💭";
+
+
+
+        setTimeout(function() {
+
+            textoResposta.innerHTML =
+                responder(pergunta);
+
+        }, 500);
+
+
+
+        campoPergunta.value = "";
+
+    }
+
+
+
+    botaoEnviar.addEventListener(
+        "click",
+        enviarPergunta
+    );
+
+
+
+    /* ENTER */
+
+    campoPergunta.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                enviarPergunta();
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       PERGUNTAS PRONTAS
+    ========================= */
+
+
+    const botoes =
+        document.querySelectorAll(".pergunta-btn");
+
+
+    botoes.forEach(function(botao) {
+
+
+        botao.addEventListener(
+            "click",
+            function() {
+
+
+                const pergunta =
+                    botao.getAttribute("data-pergunta");
+
+
+                campoPergunta.value =
+                    pergunta;
+
+
+                enviarPergunta();
+
+            }
+        );
+
+    });
+
+
+
+    /* =========================
+       MODO CALMO
+    ========================= */
+
+
+    const modoCalmo =
+        document.getElementById("modoCalmo");
+
+
+    modoCalmo.addEventListener(
+        "click",
+        function() {
+
+            document.body.classList.toggle("modo-calmo");
+
+
+            if (
+                document.body.classList.contains("modo-calmo")
+            ) {
+
+                modoCalmo.innerHTML =
+                    "🌿 Modo calmo: ligado";
+
+            } else {
+
+                modoCalmo.innerHTML =
+                    "🌿 Modo calmo";
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       MENU
+    ========================= */
+
+
+    const botoesMenu =
+        document.querySelectorAll(".menu button");
+
+
+    botoesMenu.forEach(function(botao) {
+
+
+        botao.addEventListener(
+            "click",
+            function() {
+
+
+                botoesMenu.forEach(function(item) {
+
+                    item.classList.remove("active");
+
+                });
+
+
+                botao.classList.add("active");
+
+            }
+        );
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>
+```
