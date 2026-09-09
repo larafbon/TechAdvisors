@@ -1,0 +1,29 @@
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Vetor da pergunta do usuário
+vetor_pergunta = np.array([[0.2, 0.8, 0.4]])
+
+# Vetores dos documentos
+vetores_documentos = np.array([
+    [0.1, 0.7, 0.3],
+    [0.9, 0.2, 0.1],
+    [0.3, 0.9, 0.5]
+])
+
+# Textos correspondentes
+documentos = [
+    "Documento sobre neurodivergência.",
+    "Documento sobre programação.",
+    "Documento sobre técnicas de estudo."
+]
+
+# Calcula a similaridade
+similaridades = cosine_similarity(vetor_pergunta, vetores_documentos)[0]
+
+# Encontra o documento mais parecido
+indice = np.argmax(similaridades)
+
+print("Documento mais relevante:")
+print(documentos[indice])
+print("Similaridade:", similaridades[indice])
