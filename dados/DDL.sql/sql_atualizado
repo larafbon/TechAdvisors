@@ -1,0 +1,159 @@
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+
+
+
+
+CREATE TABLE public.configuracoes_acessibilidade (
+    id_config INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tamanho_fonte INT DEFAULT 16 NOT NULL,
+    sintese_voz BOOLEAN DEFAULT FALSE NOT NULL,
+    contraste_cores VARCHAR(30) DEFAULT 'padrao' NOT NULL,
+    velocidade_audio NUMERIC(3,2) DEFAULT 1.00 NOT NULL,
+    fonte_dislexia BOOLEAN DEFAULT FALSE NOT NULL,
+    reducao_estimulo BOOLEAN DEFAULT FALSE NOT NULL
+);
+
+
+
+
+CREATE TABLE public.secretaria_usuario (
+    email_usuario VARCHAR(100) PRIMARY KEY,
+    senha VARCHAR(255) NOT NULL,
+    nome_operador VARCHAR(150) NOT NULL,
+    papel_permissao VARCHAR(30) NOT NULL
+);
+
+
+
+
+CREATE TABLE public.professor (
+    email VARCHAR(100) PRIMARY KEY,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(150) NOT NULL,
+    telefone VARCHAR(20),
+    foto_perfil VARCHAR(255),
+    tema_exibicao VARCHAR(20) DEFAULT 'claro' NOT NULL
+);
+
+
+
+
+CREATE TABLE public.aluno (
+    cpf_aluno VARCHAR(11) PRIMARY KEY,
+    email_matricula VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    nome_completo VARCHAR(150) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    matricula VARCHAR(30) NOT NULL UNIQUE,
+    foto_avatar_url VARCHAR(255),
+    tipo_deficiencia VARCHAR(100),
+    historico_pontos INT DEFAULT 0 NOT NULL,
+    id_config INT NOT NULL REFERENCES public.configuracoes_acessibilidade(id_config) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+
+
+CREATE TABLE public.turma (
+    codigo_turma VARCHAR(20) PRIMARY KEY,
+    nome_turma VARCHAR(100) NOT NULL,
+    serie_ano VARCHAR(30) NOT NULL,
+    disciplina VARCHAR(50) NOT NULL,
+    turno VARCHAR(20) NOT NULL,
+    ano_letivo INT NOT NULL,
+    capacidade_maxima INT NOT NULL,
+    status_turma VARCHAR(20) DEFAULT 'ativa' NOT NULL,
+    email_professor VARCHAR(100) NOT NULL REFERENCES public.professor(email) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+
+
+CREATE TABLE public.aluno_turma (
+    cpf_aluno VARCHAR(11) REFERENCES public.aluno(cpf_aluno) ON UPDATE CASCADE ON DELETE CASCADE,
+    codigo_turma VARCHAR(20) REFERENCES public.turma(codigo_turma) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (cpf_aluno, codigo_turma)
+);
+
+
+
+
+CREATE TABLE public.pei_plano_individual (
+    id_pei INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cpf_aluno VARCHAR(11) NOT NULL REFERENCES public.aluno(cpf_aluno) ON UPDATE CASCADE ON DELETE CASCADE,
+    objetivos_pedagogicos TEXT NOT NULL,
+    atendimentos_especializados TEXT,
+    data_criacao DATE NOT NULL,
+    data_revisao DATE,
+    status_pei VARCHAR(20) DEFAULT 'em_andamento' NOT NULL
+);
+
+
+
+
+CREATE TABLE public.atividade (
+    id_atividade INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT,
+    tipo_atividade VARCHAR(30) NOT NULL,
+    data_hora_abertura TIMESTAMP NOT NULL,
+    data_hora_entrega TIMESTAMP NOT NULL,
+    nota_maxima NUMERIC(4,2) NOT NULL,
+    recursos_acessibilidade VARCHAR(255),
+    anexos VARCHAR(255),
+    codigo_turma VARCHAR(20) NOT NULL REFERENCES public.turma(codigo_turma) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+
+CREATE TABLE public.resposta_atividade (
+    id_resposta INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    data_hora_inicio TIMESTAMP NOT NULL,
+    data_hora_entrega TIMESTAMP NOT NULL,
+    resposta_selecionada TEXT NOT NULL,
+    nota_obtida NUMERIC(4,2),
+    cpf_aluno VARCHAR(11) NOT NULL REFERENCES public.aluno(cpf_aluno) ON UPDATE CASCADE ON DELETE CASCADE,
+    id_atividade INT NOT NULL REFERENCES public.atividade(id_atividade) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+
+CREATE TABLE public.sugestao_ia_pedagogica (
+    id_sugestao INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cpf_aluno VARCHAR(11) NOT NULL REFERENCES public.aluno(cpf_aluno) ON UPDATE CASCADE ON DELETE CASCADE,
+    email_professor VARCHAR(100) NOT NULL REFERENCES public.professor(email) ON UPDATE CASCADE ON DELETE CASCADE,
+    diagnostico_desempenho TEXT NOT NULL,
+    sugestao_conduta TEXT NOT NULL,
+    alerta_risco VARCHAR(50),
+    data_geracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+
+
+CREATE TABLE public.observacao_pedagogica (
+    id_observacao INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cpf_aluno VARCHAR(11) NOT NULL REFERENCES public.aluno(cpf_aluno) ON UPDATE CASCADE ON DELETE CASCADE,
+    email_professor VARCHAR(100) NOT NULL REFERENCES public.professor(email) ON UPDATE CASCADE ON DELETE CASCADE,
+    texto_observacao TEXT NOT NULL,
+    data_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+
+
+CREATE TABLE public.mural_recados (
+    id_mural INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    codigo_turma VARCHAR(20) NOT NULL REFERENCES public.turma(codigo_turma) ON UPDATE CASCADE ON DELETE CASCADE,
+    titulo VARCHAR(100) NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_postagem TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
