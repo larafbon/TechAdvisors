@@ -1,0 +1,24 @@
+import os
+import pandas as pd
+
+PASTA_DADOS = "dados"
+
+def carregar_arquivos():
+    documentos = []
+
+    for arquivo in os.listdir(PASTA_DADOS):
+        caminho = os.path.join(PASTA_DADOS, arquivo)
+
+        if arquivo.endswith(".csv"):
+            dados = pd.read_csv(caminho)
+            documentos.append(dados)
+
+        elif arquivo.endswith(".txt"):
+            with open(caminho, "r", encoding="utf-8") as f:
+                documentos.append(f.read())
+
+    return documentos
+
+documentos = carregar_arquivos()
+
+print(f"{len(documentos)} arquivos carregados com sucesso!")
