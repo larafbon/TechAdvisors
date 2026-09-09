@@ -1,0 +1,20 @@
+# Lista para armazenar o histórico da conversa
+memoria = []
+
+def salvar_conversa(pergunta, resposta):
+    memoria.append({
+        "pergunta": pergunta,
+        "resposta": resposta
+    })
+
+# Exemplo de uso
+pergunta = "O que é neurodivergência?"
+resposta = "Neurodivergência refere-se às diferentes formas de funcionamento do cérebro."
+
+salvar_conversa(pergunta, resposta)
+
+# Exibir histórico
+for conversa in memoria:
+    print("Pergunta:", conversa["pergunta"])
+    print("Resposta:", conversa["resposta"])
+    print("-" * 40)
