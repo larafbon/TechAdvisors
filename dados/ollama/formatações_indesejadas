@@ -1,0 +1,25 @@
+import re
+
+def tratar_texto(texto):
+    # Remove quebras de linha e tabulações
+    texto = texto.replace("\n", " ").replace("\t", " ")
+
+    # Remove caracteres especiais (mantém letras, números e pontuação básica)
+    texto = re.sub(r"[^a-zA-ZÀ-ÿ0-9.,!?;:()\- ]", "", texto)
+
+    # Remove espaços extras
+    texto = re.sub(r"\s+", " ", texto)
+
+    # Remove espaços no início e no fim
+    return texto.strip()
+
+
+# Exemplo
+texto_bruto = """
+Olá!!!   Este é um texto.\n\nContém    espaços,
+caracteres especiais: @#$%&* e\tquebras de linha.
+"""
+
+texto_limpo = tratar_texto(texto_bruto)
+
+print(texto_limpo)
