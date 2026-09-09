@@ -1,0 +1,22 @@
+import ollama
+
+# Textos da base de conhecimento
+textos = [
+    "A neurodivergência representa diferentes formas de funcionamento do cérebro.",
+    "As pausas durante o estudo ajudam na concentração.",
+    "Flashcards são úteis para revisar conteúdos."
+]
+
+vetores = []
+
+for texto in textos:
+    resposta = ollama.embeddings(
+        model="nomic-embed-text",
+        prompt=texto
+    )
+
+    vetores.append(resposta["embedding"])
+
+print(f"Foram gerados {len(vetores)} vetores.")
+print("Primeiro vetor:")
+print(vetores[0])
