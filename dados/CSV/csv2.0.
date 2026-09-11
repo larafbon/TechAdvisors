@@ -1,8 +1,8 @@
-tamanho_fonte;sintese_voz;contraste_cores;velocidade_audio;fonte_dislexia;reducao_estimulo
-14;true;padrao;1.00;false;false
-16;false;padrao;1.00;false;false
-18;true;alto_contraste;0.90;true;false
-20;true;alto_contraste;1.00;false;true
+tamanho_fonte;sintese_voz;contraste_cores;velocidade_audio;fonte_dislexia;reducao_estimulo; email;senha;nome;telefone;foto_perfil;tema_exibicao
+14;true;padrao;1.00;false;false;professor01@escola.com.br;Senha@123;Ana Paula Silva;(11) 99999-0001;foto01.jpg;claro;
+16;false;padrao;1.00;false;false;professor02@escola.com.br;Senha@123;Bruno Henrique Santos;(11) 99999-0002;foto02.jpg;escuro;
+18;true;alto_contraste;0.90;true;false;professor03@escola.com.br;Senha@123;Carla Mendes Oliveira;(11) 99999-0003;foto03.jpg;claro;
+20;true;alto_contraste;1.00;false;true;professor04@escola.com.br;Senha@123;Daniel Ferreira Costa;(11) 99999-0004;foto04.jpg;escuro;
 12;false;padrao;1.10;true;true
 16;true;baixo_contraste;0.80;true;false
 18;false;alto_contraste;1.20;false;true
