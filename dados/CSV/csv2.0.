@@ -14,89 +14,89 @@ tamanho_fonte;sintese_voz;contraste_cores;velocidade_audio;fonte_dislexia;reduca
 20;false;alto_contraste;1.00;true;true;professor13@escola.com.br;Senha@123;Mariana Costa Ferreira;(11) 99999-0013;foto13.jpg;claro
 22;true;padrao;0.80;false;true;professor14@escola.com.br;Senha@123;Nicolas Souza Almeida;(11) 99999-0014;foto14.jpg;escuro
 12;false;baixo_contraste;1.10;true;false;professor15@escola.com.br;Senha@123;Patricia Lima Rocha;(11) 99999-0015;foto15.jpg;claro
-14;true;alto_contraste;1.00;false;false;
-16;false;padrao;1.30;true;true;
-18;true;baixo_contraste;0.90;false;true;
-20;false;padrao;1.10;true;false;
-22;true;alto_contraste;1.00;false;true;
-14;false;baixo_contraste;0.80;true;true;
-16;true;padrao;1.20;false;false;
-18;false;alto_contraste;0.90;true;false;
-20;true;baixo_contraste;1.30;true;true
-12;false;padrao;1.00;false;false
-14;true;padrao;0.90;true;false
-16;false;alto_contraste;1.10;false;true
-18;true;baixo_contraste;1.00;true;true
-20;false;padrao;0.80;false;false
-22;true;alto_contraste;1.20;true;false
-14;false;padrao;1.00;false;true
-16;true;baixo_contraste;1.10;true;false
-18;false;alto_contraste;0.70;false;true
-20;true;padrao;1.30;true;true
-22;false;baixo_contraste;0.90;false;false
-12;true;alto_contraste;1.00;true;true
-14;false;padrao;1.20;false;false
-16;true;alto_contraste;0.80;true;false
-18;false;baixo_contraste;1.10;false;true
-20;true;padrao;1.00;true;false
-22;false;alto_contraste;1.30;false;true
-14;true;baixo_contraste;0.90;true;true
-16;false;padrao;1.00;false;false
-18;true;alto_contraste;1.20;true;false
-20;false;baixo_contraste;0.80;false;true
-12;true;padrao;1.10;true;true
-14;false;alto_contraste;1.00;false;false
-16;true;baixo_contraste;1.30;true;false
-18;false;padrao;0.90;false;true
-20;true;alto_contraste;1.10;true;true
-22;false;padrao;1.00;false;false
-14;true;baixo_contraste;0.80;true;false
-16;false;alto_contraste;1.20;false;true
-18;true;padrao;1.00;true;false
-20;false;baixo_contraste;0.70;false;true
-22;true;alto_contraste;1.30;true;true
-12;false;padrao;0.90;false;false
-14;true;alto_contraste;1.10;true;false
-16;false;baixo_contraste;1.00;false;true
-18;true;padrao;1.20;true;true
-20;false;alto_contraste;0.80;false;false
-22;true;baixo_contraste;1.00;true;false
-14;false;padrao;1.30;false;true
-16;true;alto_contraste;0.90;true;true
-18;false;baixo_contraste;1.10;false;false
-20;true;padrao;1.00;true;false
-12;false;alto_contraste;0.80;false;true
-14;true;baixo_contraste;1.20;true;true
-16;false;padrao;0.90;false;false
-18;true;alto_contraste;1.30;true;false
-20;false;baixo_contraste;1.00;false;true
-22;true;padrao;1.10;true;true
-14;false;alto_contraste;1.00;false;false
-16;true;baixo_contraste;0.80;true;false
-18;false;padrao;1.20;false;true
-20;true;alto_contraste;0.90;true;true
-12;false;baixo_contraste;1.10;false;false
-14;true;padrao;1.00;true;false
-16;false;alto_contraste;1.30;false;true
-18;true;baixo_contraste;0.80;true;true
-20;false;padrao;1.10;false;false
-22;true;alto_contraste;1.00;true;false
-14;false;baixo_contraste;0.90;false;true
-16;true;padrao;1.20;true;true
-18;false;alto_contraste;1.00;false;false
-20;true;baixo_contraste;0.70;true;false
-22;false;padrao;1.30;false;true
-12;true;alto_contraste;1.00;true;true
-14;false;baixo_contraste;1.10;false;false
-16;true;padrao;0.80;true;false
-18;false;alto_contraste;1.20;false;true
-20;true;baixo_contraste;0.90;true;true
-22;false;padrao;1.00;false;false
-14;true;alto_contraste;1.10;true;false
-16;false;baixo_contraste;1.30;false;true
-18;true;padrao;0.90;true;true
-20;false;alto_contraste;1.20;false;false
-22;true;baixo_contraste;1.00;true;true
+14;true;alto_contraste;1.00;false;false;professor16@escola.com.br;Senha@123;Rafael Gomes Silva;(11) 99999-0016;foto16.jpg;escuro
+16;false;padrao;1.30;true;true;professor17@escola.com.br;Senha@123;Sabrina Alves Martins;(11) 99999-0017;foto17.jpg;claro
+18;true;baixo_contraste;0.90;false;true;professor18@escola.com.br;Senha@123;Thiago Pereira Costa;(11) 99999-0018;foto18.jpg;escuro
+20;false;padrao;1.10;true;false;professor19@escola.com.br;Senha@123;Vanessa Fernandes Lima;(11) 99999-0019;foto19.jpg;claro
+22;true;alto_contraste;1.00;false;true;professor20@escola.com.br;Senha@123;William Santos Oliveira;(11) 99999-0020;foto20.jpg;escuro
+14;false;baixo_contraste;0.80;true;true;professor21@escola.com.br;Senha@123;Amanda Martins Silva;(11) 99999-0021;foto21.jpg;claro
+16;true;padrao;1.20;false;false;professor22@escola.com.br;Senha@123;André Carvalho Souza;(11) 99999-0022;foto22.jpg;escuro
+18;false;alto_contraste;0.90;true;false;professor23@escola.com.br;Senha@123;Beatriz Ferreira Lima;(11) 99999-0023;foto23.jpg;claro
+20;true;baixo_contraste;1.30;true;true;professor24@escola.com.br;Senha@123;Caio Rodrigues Alves;(11) 99999-0024;foto24.jpg;escuro
+12;false;padrao;1.00;false;false;professor25@escola.com.br;Senha@123;Camila Barbosa Santos;(11) 99999-0025;foto25.jpg;claro
+14;true;padrao;0.90;true;false;professor26@escola.com.br;Senha@123;Diego Martins Oliveira;(11) 99999-0026;foto26.jpg;escuro
+16;false;alto_contraste;1.10;false;true;professor27@escola.com.br;Senha@123;Elisa Costa Pereira;(11) 99999-0027;foto27.jpg;claro
+18;true;baixo_contraste;1.00;true;true;professor28@escola.com.br;Senha@123;Fábio Mendes Rocha;(11) 99999-0028;foto28.jpg;escuro
+20;false;padrao;0.80;false;false;professor29@escola.com.br;Senha@123;Giovana Almeida Santos;(11) 99999-0029;foto29.jpg;claro
+22;true;alto_contraste;1.20;true;false;professor30@escola.com.br;Senha@123;Gustavo Ribeiro Lima;(11) 99999-0030;foto30.jpg;escuro
+14;false;padrao;1.00;false;true;professor31@escola.com.br;Senha@123;Helena Souza Martins;(11) 99999-0031;foto31.jpg;claro
+16;true;baixo_contraste;1.10;true;false;professor32@escola.com.br;Senha@123;Igor Ferreira Alves;(11) 99999-0032;foto32.jpg;escuro
+18;false;alto_contraste;0.70;false;true;professor33@escola.com.br;Senha@123;Jéssica Oliveira Costa;(11) 99999-0033;foto33.jpg;claro
+20;true;padrao;1.30;true;true;professor34@escola.com.br;Senha@123;Leandro Silva Mendes;(11) 99999-0034;foto34.jpg;escuro
+22;false;baixo_contraste;0.90;false;false;professor35@escola.com.br;Senha@123;Larissa Santos Pereira;(11) 99999-0035;foto35.jpg;claro
+12;true;alto_contraste;1.00;true;true;professor36@escola.com.br;Senha@123;Marcelo Gomes Rocha;(11) 99999-0036;foto36.jpg;escuro
+14;false;padrao;1.20;false;false;professor37@escola.com.br;Senha@123;Natalia Carvalho Lima;(11) 99999-0037;foto37.jpg;claro
+16;true;alto_contraste;0.80;true;false;professor38@escola.com.br;Senha@123;Otávio Martins Silva;(11) 99999-0038;foto38.jpg;escuro
+18;false;baixo_contraste;1.10;false;true;professor39@escola.com.br;Senha@123;Priscila Almeida Costa;(11) 99999-0039;foto39.jpg;claro
+20;true;padrao;1.00;true;false;professor40@escola.com.br;Senha@123;Rodrigo Fernandes Santos;(11) 99999-0040;foto40.jpg;escuro
+22;false;alto_contraste;1.30;false;true;professor41@escola.com.br;Senha@123;Simone Pereira Lima;(11) 99999-0041;foto41.jpg;claro
+14;true;baixo_contraste;0.90;true;true;professor42@escola.com.br;Senha@123;Vinicius Oliveira Rocha;(11) 99999-0042;foto42.jpg;escuro
+16;false;padrao;1.00;false;false;professor43@escola.com.br;Senha@123;Aline Mendes Silva;(11) 99999-0043;foto43.jpg;claro
+18;true;alto_contraste;1.20;true;false;professor44@escola.com.br;Senha@123;Carlos Henrique Souza;(11) 99999-0044;foto44.jpg;escuro
+20;false;baixo_contraste;0.80;false;true;professor45@escola.com.br;Senha@123;Denise Martins Alves;(11) 99999-0045;foto45.jpg;claro
+12;true;padrao;1.10;true;true;professor46@escola.com.br;Senha@123;Eduardo Santos Costa;(11) 99999-0046;foto46.jpg;escuro
+14;false;alto_contraste;1.00;false;false;professor47@escola.com.br;Senha@123;Fernanda Ribeiro Lima;(11) 99999-0047;foto47.jpg;claro
+16;true;baixo_contraste;1.30;true;false;professor48@escola.com.br;Senha@123;Guilherme Carvalho Rocha;(11) 99999-0048;foto48.jpg;escuro
+18;false;padrao;0.90;false;true;professor49@escola.com.br;Senha@123;Heloisa Ferreira Silva;(11) 99999-0049;foto49.jpg;claro
+20;true;alto_contraste;1.10;true;true;professor50@escola.com.br;Senha@123;Marcelo Oliveira Santos;(11) 99999-0050;foto50.jpg;escuro
+22;false;padrao;1.00;false;false;professor50@escola.com.br;Senha@123;Marcelo Oliveira Santos;(11) 99999-0050;foto50.jpg;escuro
+14;true;baixo_contraste;0.80;true;false;professor51@escola.com.br;Senha@123;Adriana Costa Mendes;(11) 99999-0051;foto51.jpg;claro
+16;false;alto_contraste;1.20;false;true;professor52@escola.com.br;Senha@123;Alexandre Lima Pereira;(11) 99999-0052;foto52.jpg;escuro
+18;true;padrao;1.00;true;false;professor53@escola.com.br;Senha@123;Bruna Martins Rocha;(11) 99999-0053;foto53.jpg;claro
+20;false;baixo_contraste;0.70;false;true;professor54@escola.com.br;Senha@123;César Almeida Silva;(11) 99999-0054;foto54.jpg;escuro
+22;true;alto_contraste;1.30;true;true;professor55@escola.com.br;Senha@123;Cristina Santos Lima;(11) 99999-0055;foto55.jpg;claro
+12;false;padrao;0.90;false;false;professor56@escola.com.br;Senha@123;Douglas Ferreira Costa;(11) 99999-0056;foto56.jpg;escuro
+14;true;alto_contraste;1.10;true;false;professor57@escola.com.br;Senha@123;Elaine Rodrigues Santos;(11) 99999-0057;foto57.jpg;claro
+16;false;baixo_contraste;1.00;false;true;professor58@escola.com.br;Senha@123;Fernando Martins Oliveira;(11) 99999-0058;foto58.jpg;escuro
+18;true;padrao;1.20;true;true;professor59@escola.com.br;Senha@123;Isadora Carvalho Lima;(11) 99999-0059;foto59.jpg;claro
+20;false;alto_contraste;0.80;false;false;professor60@escola.com.br;Senha@123;Jorge Mendes Alves;(11) 99999-0060;foto60.jpg;escuro
+22;true;baixo_contraste;1.00;true;false;professor61@escola.com.br;Senha@123;Karen Souza Pereira;(11) 99999-0061;foto61.jpg;claro
+14;false;padrao;1.30;false;true;professor62@escola.com.br;Senha@123;Leonardo Gomes Silva;(11) 99999-0062;foto62.jpg;escuro
+16;true;alto_contraste;0.90;true;true;professor63@escola.com.br;Senha@123;Luciana Ferreira Santos;(11) 99999-0063;foto63.jpg;claro
+18;false;baixo_contraste;1.10;false;false;professor64@escola.com.br;Senha@123;Matheus Oliveira Costa;(11) 99999-0064;foto64.jpg;escuro
+20;true;padrao;1.00;true;false;professor65@escola.com.br;Senha@123;Monique Almeida Lima;(11) 99999-0065;foto65.jpg;claro
+12;false;alto_contraste;0.80;false;true;professor66@escola.com.br;Senha@123;Paulo Ribeiro Rocha;(11) 99999-0066;foto66.jpg;escuro
+14;true;baixo_contraste;1.20;true;true;professor67@escola.com.br;Senha@123;Renata Martins Silva;(11) 99999-0067;foto67.jpg;claro
+16;false;padrao;0.90;false;false;professor68@escola.com.br;Senha@123;Ricardo Santos Pereira;(11) 99999-0068;foto68.jpg;escuro
+18;true;alto_contraste;1.30;true;false;professor69@escola.com.br;Senha@123;Sara Costa Mendes;(11) 99999-0069;foto69.jpg;claro
+20;false;baixo_contraste;1.00;false;true;professor70@escola.com.br;Senha@123;Victor Hugo Alves;(11) 99999-0070;foto70.jpg;escuro
+22;true;padrao;1.10;true;true;professor71@escola.com.br;Senha@123;Alice Rodrigues Silva;(11) 99999-0071;foto71.jpg;claro
+14;false;alto_contraste;1.00;false;false;professor72@escola.com.br;Senha@123;Bernardo Ferreira Santos;(11) 99999-0072;foto72.jpg;escuro
+16;true;baixo_contraste;0.80;true;false;professor73@escola.com.br;Senha@123;Claudia Martins Costa;(11) 99999-0073;foto73.jpg;claro
+18;false;padrao;1.20;false;true;professor74@escola.com.br;Senha@123;Davi Oliveira Lima;(11) 99999-0074;foto74.jpg;escuro
+20;true;alto_contraste;0.90;true;true;professor75@escola.com.br;Senha@123;Estela Carvalho Rocha;(11) 99999-0075;foto75.jpg;claro
+12;false;baixo_contraste;1.10;false;false;professor76@escola.com.br;Senha@123;Flavio Almeida Santos;(11) 99999-0076;foto76.jpg;escuro
+14;true;padrao;1.00;true;false;professor77@escola.com.br;Senha@123;Isis Pereira Silva;(11) 99999-0077;foto77.jpg;claro
+16;false;alto_contraste;1.30;false;true;professor78@escola.com.br;Senha@123;Jonas Mendes Costa;(11) 99999-0078;foto78.jpg;escuro
+18;true;baixo_contraste;0.80;true;true;professor79@escola.com.br;Senha@123;Livia Santos Lima;(11) 99999-0079;foto79.jpg;claro
+20;false;padrao;1.10;false;false;professor80@escola.com.br;Senha@123;Murilo Ferreira Rocha;(11) 99999-0080;foto80.jpg;escuro
+22;true;alto_contraste;1.00;true;false;professor81@escola.com.br;Senha@123;Nathalia Souza Alves;(11) 99999-0081;foto81.jpg;claro
+14;false;baixo_contraste;0.90;false;true;professor82@escola.com.br;Senha@123;Oscar Martins Pereira;(11) 99999-0082;foto82.jpg;escuro
+16;true;padrao;1.20;true;true;professor83@escola.com.br;Senha@123;Rafaela Costa Silva;(11) 99999-0083;foto83.jpg;claro
+18;false;alto_contraste;1.00;false;false;professor84@escola.com.br;Senha@123;Samuel Oliveira Mendes;(11) 99999-0084;foto84.jpg;escuro
+20;true;baixo_contraste;0.70;true;false;professor85@escola.com.br;Senha@123;Tania Rodrigues Lima;(11) 99999-0085;foto85.jpg;claro
+22;false;padrao;1.30;false;true;professor86@escola.com.br;Senha@123;Ulisses Carvalho Santos;(11) 99999-0086;foto86.jpg;escuro
+12;true;alto_contraste;1.00;true;true;professor87@escola.com.br;Senha@123;Valeria Ferreira Costa;(11) 99999-0087;foto87.jpg;claro
+14;false;baixo_contraste;1.10;false;false;professor88@escola.com.br;Senha@123;Wesley Almeida Rocha;(11) 99999-0088;foto88.jpg;escuro
+16;true;padrao;0.80;true;false;professor89@escola.com.br;Senha@123;Yasmin Martins Silva;(11) 99999-0089;foto89.jpg;claro
+18;false;alto_contraste;1.20;false;true;professor90@escola.com.br;Senha@123;Zeca Santos Pereira;(11) 99999-0090;foto90.jpg;escuro
+20;true;baixo_contraste;0.90;true;true;professor91@escola.com.br;Senha@123;Amanda Ferreira Lima;(11) 99999-0091;foto91.jpg;claro
+22;false;padrao;1.00;false;false;professor92@escola.com.br;Senha@123;Bianca Oliveira Costa;(11) 99999-0092;foto92.jpg;escuro
+14;true;alto_contraste;1.10;true;false;
+16;false;baixo_contraste;1.30;false;true;
+18;true;padrao;0.90;true;true;
+20;false;alto_contraste;1.20;false;false;
+22;true;baixo_contraste;1.00;true;true;
 id_config INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
 email;senha;nome;telefone;foto_perfil;tema_exibicao
 professor01@escola.com.br;Senha@123;Ana Paula Silva;(11) 99999-0001;foto01.jpg;claro
