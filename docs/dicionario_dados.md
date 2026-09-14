@@ -1,8 +1,4 @@
-# Dicionário de Dados Consolidado (Aula 3 - Checkpoint)
-
-**Projeto Integrador (DS + IA):** Assistente Pedagógico Inclusivo  
-**Caminho no Repositório:** `docs/dicionario_dados.md`
-
+# Dicionário de Dados Consolidado
 ---
 
 ## 1. Estrutura Oficial das Entidades e Atributos
