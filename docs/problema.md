@@ -25,8 +25,9 @@ Alunos neurodivergentes ou com deficiência enfrentam dificuldades de aprendizag
 
 ## 5. Participação das Funções da Equipe
 
-
-| **Frontend**  Mapeia os dados de entrada (a dúvida enviada no campo de texto) e os dados de saída (a resposta da IA exibida com o tamanho de fonte e estilo de texto adequados). 
-| **Backend** Conecta as ações do usuário às regras do sistema, pegando os parâmetros de perfil no banco para injetar no contexto da IA. 
-| **Banco de Dados (DS)**  Identifica e garante a persistência física das tabelas (`aluno`, `configuracoes_acessibilidade`, `pei_plano_individual`) em formato *snake_case*. 
-| **Justificativa Unificada (Todos)** A equipe inteira valida a necessidade real de cada campo armazenado, descartando dados ociosos que não alimentam o Frontend, o Backend ou a IA. 
+| Função | Atribuição na Aula 1 |
+| :--- | :--- |
+| **Frontend** | Mapeia os dados de entrada (a dúvida enviada no campo de texto) e os dados de saída (a resposta da IA exibida com o tamanho de fonte e estilo de texto adequados). |
+| **Backend** | Conecta as ações do usuário às regras do sistema, pegando os parâmetros de perfil no banco para injetar no contexto da IA. |
+| **Banco de Dados (DS)** | Identifica e garante a persistência física das tabelas (`aluno`, `configuracoes_acessibilidade`, `pei_plano_individual`) em formato *snake_case*. |
+| **Justificativa Unificada (Todos)** | A equipe inteira valida a necessidade real de cada campo armazenado, descartando dados ociosos que não alimentam o Frontend, o Backend ou a IA. |
