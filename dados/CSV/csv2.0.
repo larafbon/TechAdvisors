@@ -1,4 +1,4 @@
-tamanho_fonte;sintese_voz;contraste_cores;velocidade_audio;fonte_dislexia;reducao_estimulo; email;senha;nome;telefone;foto_perfil;tema_exibicao;cpf_aluno;email_matricula;senha;nome_completo;data_nascimento;matricula;foto_avatar_url;tipo_deficiencia;historico_pontos;1id_config;codigo_turma;nome_turma;serie_ano;disciplina;turno;ano_letivo;capacidade_maxima;status_turma;email_professor;cpf_aluno;codigo_turma;cpf_aluno;objetivos_pedagogicos;atendimentos_especializados;data_criacao;data_revisao;status_pei;titulo;descricao;tipo_atividade;data_hora_abertura;data_hora_entrega;nota_maxima;recursos_acessibilidade;anexos;codigo_turma;
+tamanho_fonte;sintese_voz;contraste_cores;velocidade_audio;fonte_dislexia;reducao_estimulo; email;senha;nome;telefone;foto_perfil;tema_exibicao;
 14;true;padrao;1.00;false;false;professor01@escola.com.br;Senha@123;Ana Paula Silva;(11) 99999-0001;foto01.jpg;claro;
 16;false;padrao;1.00;false;false;professor02@escola.com.br;Senha@123;Bruno Henrique Santos;(11) 99999-0002;foto02.jpg;escuro;
 18;true;alto_contraste;0.90;true;false;professor03@escola.com.br;Senha@123;Carla Mendes Oliveira;(11) 99999-0003;foto03.jpg;claro;
@@ -517,7 +517,7 @@ Elementos Químicos;Pesquisa sobre elementos da tabela periódica;pesquisa;2026-
 Células e Organismos;Questionário sobre células e organismos vivos;questionario;2026-02-14 13:00:00;2026-02-21 23:59:00;10.00;fonte_ampliada;celulas12.pdf;TURMA012
 Revolução Industrial;Pesquisa sobre causas e consequências da Revolução Industrial;pesquisa;2026-02-16 08:00:00;2026-02-23 23:59:00;10.00;leitor_de_tela;historia13.pdf;TURMA013
 Globalização;Atividade sobre globalização e seus impactos;trabalho;2026-02-17 13:00:00;2026-02-24 23:59:00;10.00;alto_contraste;globalizacao14.pdf;TURMA014
-Funções Matemáticas;Exercícios sobre funções e representação gráfica;exercicio;2026-02-18 08:00:00;2026-02-25 23:59:00;10.00;fonte_ampliada;funcoes15.pdf;TURMA015
+Funções Matemáticas;Exercícios sobre funções e representaçãdata_hora_inicio;data_hora_entrega;resposta_selecionada;nota_obtida;cpf_aluno;id_atividadeo gráfica;exercicio;2026-02-18 08:00:00;2026-02-25 23:59:00;10.00;fonte_ampliada;funcoes15.pdf;TURMA015
 Gêneros Textuais;Identificação e produção de diferentes gêneros textuais;trabalho;2026-02-19 13:00:00;2026-02-26 23:59:00;10.00;leitor_de_tela;generos16.pdf;TURMA016
 Leis de Newton;Exercícios sobre as leis fundamentais do movimento;exercicio;2026-02-20 08:00:00;2026-02-27 23:59:00;10.00;fonte_ampliada;newton17.pdf;TURMA017
 Reações Químicas;Atividade sobre tipos de reações químicas;questionario;2026-02-21 13:00:00;2026-02-28 23:59:00;10.00;alto_contraste;reacoes18.pdf;TURMA018
@@ -583,7 +583,7 @@ Literatura Contemporânea;Pesquisa sobre autores contemporâneos;pesquisa;2026-0
 Reações Orgânicas;Questionário sobre reações orgânicas;questionario;2026-05-02 13:00:00;2026-05-09 23:59:00;10.00;alto_contraste;reacoes78.pdf;TURMA078
 Fisiologia Humana;Atividade sobre sistemas do corpo humano;questionario;2026-05-04 08:00:00;2026-05-11 23:59:00;10.00;leitor_de_tela;fisiologia79.pdf;TURMA079
 Brasil Atual;Pesquisa sobre acontecimentos históricos recentes;pesquisa;2026-05-05 13:00:00;2026-05-12 23:59:00;10.00;fonte_ampliada;brasil80.pdf;TURMA080
-Múltiplos e Divisores;Exercícios sobre múltiplos e divisores;exercicio;2026-05-06 08:00:00;2026-05-13 23:59:00;10.00;fonte_ampliada;divisores81.pdf;TURMA081
+Múltiplos e Divisores;Exercícios sobre múltiplos e didata_hora_inicio;data_hora_entrega;resposta_selecionada;nota_obtida;cpf_aluno;id_atividadevisores;exercicio;2026-05-06 08:00:00;2026-05-13 23:59:00;10.00;fonte_ampliada;divisores81.pdf;TURMA081
 Pontuação;Atividade de revisão sobre sinais de pontuação;questionario;2026-05-07 13:00:00;2026-05-14 23:59:00;10.00;leitor_de_tela;pontuacao82.pdf;TURMA082
 Meio Ambiente;Trabalho sobre preservação ambiental;trabalho;2026-05-08 08:00:00;2026-05-15 23:59:00;10.00;alto_contraste;ambiente83.pdf;TURMA083
 Guerra Fria;Pesquisa sobre a Guerra Fria;pesquisa;2026-05-09 13:00:00;2026-05-16 23:59:00;10.00;fonte_ampliada;guerra_fria84.pdf;TURMA084
