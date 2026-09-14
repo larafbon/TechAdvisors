@@ -92,10 +92,6 @@
 ---
 # Histórico de Alterações do Dicionário de Dados e DER (Changelog)
 
-**Projeto Integrador (DS + IA):** Assistente Pedagógico Inclusivo  
-**Caminho no Repositório:** `docs/historico_alteracoes.md`
-
----
 
 ## Registro de Evolução e Revisões
 
