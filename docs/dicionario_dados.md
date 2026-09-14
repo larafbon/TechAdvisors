@@ -86,7 +86,7 @@
 | `mural_recados` | `data_postagem` | Data | Não nulo | Data de publicação no mural. | Inserção (Create) |
 
 ---
-# Histórico de Alterações do Dicionário de Dados e DER (Changelog)
+# Histórico de Alterações do Dicionário de Dados e DER 
 
 
 ## Registro de Evolução e Revisões
