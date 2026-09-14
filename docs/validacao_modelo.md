@@ -27,13 +27,8 @@ Para garantir que nenhum dado exista por acaso e que nada esteja faltando, conec
   * **Entidade:** `sugestao_ia_pedagogica` (Fonte: `docs/der_revisado.png`)
   * **Atributos:** `diagnostico_desempenho`, `sugestao_conduta`, `alerta_risco` (Fonte: `docs/dicionario_dados.md`)
  
-    ## 3. Visão Unificada da Equipe
-
-* **Frontend:** Confirmou que a tabela `configuracoes_acessibilidade` (Fonte: `docs/der_revisado.png`) fornece todos os parâmetros necessários para alterar o estilo visual da tela e da resposta emitida pela IA.
-* **Backend:** Validou que a ligação por `cpf_aluno` (Fonte: `docs/der_revisado.png`) entre as tabelas permite fazer consultas rápidas via *JOIN*, montando o contexto do prompt da IA sem lentidão.
-* **Banco de Dados (DS):** Explicou a integridade das chaves e a cardinalidade do modelo, garantindo que o histórico do aluno e as configurações não sofram com dados duplicados ou perdas.
-
-  ## 4. Ficha de Validação do Modelo
+  
+  ## 3. Ficha de Validação do Modelo
 
 * **MANTER:**
   * Entidade `aluno` (Fonte: `docs/der_revisado.png`) com a chave primária `cpf_aluno`.
