@@ -186,4 +186,3 @@ CREATE TABLE resposta_recurso (
         REFERENCES recurso_acessibilidade (id_recurso)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
-
