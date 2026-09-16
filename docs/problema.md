@@ -1,45 +1,48 @@
 
-
 ## 1. Pergunta da Aula
 > **Que dados nosso sistema precisa armazenar para resolver o problema escolhido?**
 
-Para resolver a falta de adaptação pedagógica e acessibilidade no atendimento escolar, o sistema precisa armazenar três categorias de dados:
+Para resolver a falta de adaptação pedagógica e acessibilidade no atendimento escolar, o sistema precisa armazenar quatro categorias de dados:
 
-1. **Dados de Identificação (`aluno`):** `aluno_cpf`, `aluno_nome`, `aluno_email` e `turma_codigo`. Garantem o reconhecimento do estudante e o vínculo com seu histórico.
-2. **Dados de Acessibilidade (`configuracoes_acessibilidade`):** `config_tamanho_fonte`, `config_fonte_dislexia` e `config_reducao_estimulo`. Definem as preferências de leitura e exibição na interface.
-3. **Dados Pedagógicos (`pei_plano_individual` e `resposta_atividade`):** `pei_objetivos` e `resposta_nota`. Fornecem o contexto educacional para a Inteligência Artificial ajustar o tom e o nível das explicações.
+1. **Dados de Identificação e Estrutura Escolar (`aluno`, `responsavel`, `professor`, `turma`):** Registram estudantes, responsáveis, docentes e o vínculo de matrículas em cada disciplina.
+2. **Dados de Acessibilidade e Suporte (`config_acessibilidade`, `tipo_deficiencia`, `nivel_suporte`, `recurso_acessibilidade`):** Mapeiam diagnósticos, níveis de apoio necessários, adaptações visuais/auditivas e recursos multimodais (áudios, arquivos legíveis).
+3. **Dados Pedagógicos e Avaliativos (`tipo_atividade`, `atividade`, `resposta`):** Controlam tarefas, formatos de entregas, conteúdo submetido e pontuações obtidas.
+4. **Dados de Diagnóstico da IA (`analise_ia`):** Armazenam os insights gerados pelos modelos de linguagem a partir do histórico de respostas dos alunos.
 
-
+---
 
 ## 2. O Problema em Três Frases
 Alunos neurodivergentes ou com deficiência enfrentam dificuldades de aprendizagem ao receberem conteúdos escolares genéricos sem adaptação visual e pedagógica.
-Professores e a equipe escolar encontram desafios para centralizar históricos de notas e necessidades de acessibilidade em uma única base. Nosso assistente virtual resolve essa dispersão unindo dados estruturados e Inteligência Artificial para gerar respostas personalizadas e inclusivas.
+Professores e a equipe escolar encontram desafios para centralizar históricos de notas, diagnósticos de suporte e recursos de acessibilidade em uma única base. Nosso assistente virtual resolve essa dispersão unindo um banco relacional normalizado e Inteligência Artificial para gerar diagnósticos individualizados e adaptações inclusivas.
 
-
+---
 
 ## 3. Cadeia Integrada (Problema → Pessoa → Ação → Dado → Resultado)
 
-* **PROBLEMA:** Dificuldade de acesso a explicações escolares adaptadas a necessidades visuais e pedagógicas.
-* **PESSOA:** Aluno do Ensino Médio com necessidade de acessibilidade (como dislexia, baixa visão ou TDAH).
-* **AÇÃO:** Enviar uma dúvida ou pergunta sobre uma matéria para o assistente virtual.
-* **DADO:** Recuperação de `aluno_cpf`, parâmetros de acessibilidade em `config_` e diretrizes pedagógicas em `pei_`.
-* **RESULTADO:** Resposta gerada por IA com linguagem acessível e formatação visual ajustada ao perfil do estudante.
+* **PROBLEMA:** Dificuldade de acesso a explicações e avaliações escolares adaptadas a necessidades visuais, auditivas e pedagógicas.
+* **PESSOA:** Aluno da Educação Básica com necessidade de acessibilidade (como Dislexia, Baixa Visão, TDAH ou Autismo).
+* **AÇÃO:** Submeter a resolução de uma atividade adaptada na plataforma.
+* **DADO:** Leitura de `aluno`, preferências em `config_acessibilidade`, recursos em `recurso_acessibilidade` e gravação do envio em `resposta`.
+* **RESULTADO:** Processamento da submissão pela IA com registro em `analise_ia`, fornecendo diagnósticos e recomendações pedagógicas ao professor.
 
-
+---
 
 ## 4. Teste do Dado Faltante (Atividade Desplugada)
 
-* **Dado Removido:** `config_fonte_dislexia` / `config_tamanho_fonte`.
-* **Impacto no Sistema:** A IA continua gerando a resposta pedagógica correta sobre a matéria. No entanto, sem os dados de acessibilidade, o texto é exibido no padrão comum. Para um estudante com dislexia ou baixa visão, a leitura se torna inacessível, desfazendo o objetivo principal da plataforma.
+* **Dado Removido:** `preferencia_simplificado` / `preferencia_visual` (na tabela `config_acessibilidade`).
+* **Impacto no Sistema:** A IA continua gerando o diagnóstico pedagógico sobre a resposta. No entanto, sem os parâmetros de acessibilidade, a interface exibe o conteúdo no padrão comum. Para um estudante com dislexia ou baixa visão, o texto se torna inacessível, anulando a proposta de inclusão do sistema.
 
-
+---
 
 ## 5. Participação das Funções da Equipe
 
-| Função | Atribuição na Aula 1 |
+| Função | Atribuição no Projeto |
 | :--- | :--- |
-| **Frontend** | Mapeia os dados de entrada (a dúvida enviada no campo de texto) e os dados de saída (a resposta da IA exibida com o tamanho de fonte e estilo de texto adequados). |
-| **Backend** | Conecta as ações do usuário às regras do sistema, pegando os parâmetros de perfil no banco para injetar no contexto da IA. |
-| **Banco de Dados (DS)** | Identifica e garante a persistência física das tabelas (`aluno`, `configuracoes_acessibilidade`, `pei_plano_individual`) em formato *snake_case*. |
-| **Justificativa Unificada (Todos)** | A equipe inteira valida a necessidade real de cada campo armazenado, descartando dados ociosos que não alimentam o Frontend, o Backend ou a IA. |
+| **Frontend** | Consome as preferências de `config_acessibilidade` para estilizar a interface e renderiza as sugestões geradas em `analise_ia`. |
+| **Backend** | Conecta as ações do usuário ao banco e injeta o histórico da tabela `resposta` nos prompts consumidos pela Inteligência Artificial. |
+| **Banco de Dados (DS)** | Garante a integridade e normalização em 3FN das 15 tabelas em formato *snake_case* no PostgreSQL/Supabase. |
+| **Justificativa Unificada (Todos)** | A equipe inteira valida a necessidade de cada uma das 15 tabelas, eliminando redundâncias de dados e otimizando a integração. |
+
+
+
 
