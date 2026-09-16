@@ -1,6 +1,23 @@
+- BLOCO 0: LIMPEZA PREVENTIVA
+DROP TABLE IF EXISTS resposta_recurso CASCADE;
+DROP TABLE IF EXISTS analise_ia CASCADE;
+DROP TABLE IF EXISTS resposta CASCADE;
+DROP TABLE IF EXISTS atividade_recurso CASCADE;
+DROP TABLE IF EXISTS aluno_deficiencia CASCADE;
+DROP TABLE IF EXISTS config_acessibilidade CASCADE;
+DROP TABLE IF EXISTS atividade CASCADE;
+DROP TABLE IF EXISTS aluno CASCADE;
+DROP TABLE IF EXISTS turma CASCADE;
+DROP TABLE IF EXISTS recurso_acessibilidade CASCADE;
+DROP TABLE IF EXISTS tipo_atividade CASCADE;
+DROP TABLE IF EXISTS professor CASCADE;
+DROP TABLE IF EXISTS nivel_suporte CASCADE;
+DROP TABLE IF EXISTS tipo_deficiencia CASCADE;
+DROP TABLE IF EXISTS responsavel CASCADE;
 
--- 1. Responsável
-CREATE TABLE responsavel (
+-- BLOCO 1: TABELAS BASE (SEM FK)
+
+CREATE TABLE IF NOT EXISTS responsavel (
     id_responsavel SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     telefone VARCHAR(20),
@@ -8,48 +25,42 @@ CREATE TABLE responsavel (
     cpf VARCHAR(11) UNIQUE
 );
 
--- 2. Tipo de Deficiência
-CREATE TABLE tipo_deficiencia (
+CREATE TABLE IF NOT EXISTS tipo_deficiencia (
     id_tipo_deficiencia SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
     descricao TEXT NOT NULL
 );
 
--- 3. Nível de Suporte
-CREATE TABLE nivel_suporte (
+CREATE TABLE IF NOT EXISTS nivel_suporte (
     id_nivel_suporte SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
     descricao TEXT NOT NULL
 );
 
--- 4. Professor
-CREATE TABLE professor (
+CREATE TABLE IF NOT EXISTS professor (
     id_professor SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     status VARCHAR(20) DEFAULT 'ativo' CHECK (status IN ('ativo', 'inativo', 'afastado'))
 );
 
--- 5. Tipo de Atividade
-CREATE TABLE tipo_atividade (
+CREATE TABLE IF NOT EXISTS tipo_atividade (
     id_tipo_atividade SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     descricao TEXT
 );
 
--- 6. Recurso de Acessibilidade
-CREATE TABLE recurso_acessibilidade (
+CREATE TABLE IF NOT EXISTS recurso_acessibilidade (
     id_recurso SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     descricao TEXT,
-    tipo VARCHAR(50), -- Ex: audio, texto, imagem
-    formato VARCHAR(20) -- Ex: PDF, MP3, etc.
+    tipo VARCHAR(50),
+    formato VARCHAR(20)
 );
 
+-- BLOCO 2: TABELAS DEPENDENTES
 
-
--- 7. Turma (Depende de Professor)
-CREATE TABLE turma (
+CREATE TABLE IF NOT EXISTS turma (
     id_turma SERIAL PRIMARY KEY,
     codigo_turma VARCHAR(20) UNIQUE NOT NULL,
     nome_turma VARCHAR(100) NOT NULL,
@@ -64,8 +75,7 @@ CREATE TABLE turma (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- 8. Aluno (Depende de Responsável, Turma, Nível de Suporte e Tipo de Deficiência)
-CREATE TABLE aluno (
+CREATE TABLE IF NOT EXISTS aluno (
     id_aluno SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     data_nascimento DATE NOT NULL,
@@ -89,8 +99,7 @@ CREATE TABLE aluno (
         ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- 9. Atividade (Depende de Tipo de Atividade)
-CREATE TABLE atividade (
+CREATE TABLE IF NOT EXISTS atividade (
     id_atividade SERIAL PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL,
     descricao TEXT,
@@ -101,9 +110,9 @@ CREATE TABLE atividade (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+-- BLOCO 3: VÍNCULOS E ENTIDADES DERIVADAS
 
--- 10. Configuração de Acessibilidade (Relacionamento 1:1 com Aluno)
-CREATE TABLE config_acessibilidade (
+CREATE TABLE IF NOT EXISTS config_acessibilidade (
     id_config SERIAL PRIMARY KEY,
     id_aluno INT UNIQUE NOT NULL,
     preferencia_audio BOOLEAN DEFAULT FALSE,
@@ -115,8 +124,7 @@ CREATE TABLE config_acessibilidade (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 11. Aluno Deficiência (Entidade de Associação / N:M)
-CREATE TABLE aluno_deficiencia (
+CREATE TABLE IF NOT EXISTS aluno_deficiencia (
     id_aluno_deficiencia SERIAL PRIMARY KEY,
     id_aluno INT NOT NULL,
     id_tipo_deficiencia INT NOT NULL,
@@ -132,8 +140,7 @@ CREATE TABLE aluno_deficiencia (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 12. Atividade Recurso (Tabela de Junção N:M)
-CREATE TABLE atividade_recurso (
+CREATE TABLE IF NOT EXISTS atividade_recurso (
     id_atividade INT NOT NULL,
     id_recurso INT NOT NULL,
     PRIMARY KEY (id_atividade, id_recurso),
@@ -145,14 +152,13 @@ CREATE TABLE atividade_recurso (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 13. Resposta (Depende de Aluno e Atividade)
-CREATE TABLE resposta (
+CREATE TABLE IF NOT EXISTS resposta (
     id_resposta SERIAL PRIMARY KEY,
     id_aluno INT NOT NULL,
     id_atividade INT NOT NULL,
     data_resposta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     conteudo_resposta TEXT NOT NULL,
-    nota DECIMAL(4,2) CHECK (nota >= 0),
+    nota NUMERIC(4,2) CHECK (nota >= 0),
     CONSTRAINT fk_resposta_aluno FOREIGN KEY (id_aluno)
         REFERENCES aluno (id_aluno)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -161,9 +167,9 @@ CREATE TABLE resposta (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- BLOCO 4: INTELIGÊNCIA ARTIFICIAL E JUNÇÕES
 
--- 14. Análise IA (Depende de Resposta)
-CREATE TABLE analise_ia (
+CREATE TABLE IF NOT EXISTS analise_ia (
     id_analise SERIAL PRIMARY KEY,
     id_resposta INT NOT NULL,
     data_analise TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -175,8 +181,7 @@ CREATE TABLE analise_ia (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 15. Resposta Recurso (Tabela de Junção N:M)
-CREATE TABLE resposta_recurso (
+CREATE TABLE IF NOT EXISTS resposta_recurso (
     id_resposta INT NOT NULL,
     id_recurso INT NOT NULL,
     PRIMARY KEY (id_resposta, id_recurso),
@@ -187,3 +192,4 @@ CREATE TABLE resposta_recurso (
         REFERENCES recurso_acessibilidade (id_recurso)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
