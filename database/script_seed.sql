@@ -1,4 +1,5 @@
-- 1. Responsáveis
+
+-- 1. Responsáveis
 INSERT INTO responsavel (nome, telefone, email, cpf) VALUES
 ('Carlos Eduardo Silva', '(41) 98888-1111', 'carlos.silva@email.com', '12345678901'),
 ('Mariana Lima Santos', '(41) 98888-2222', 'mariana.santos@email.com', '98765432100'),
@@ -36,7 +37,6 @@ INSERT INTO recurso_acessibilidade (nome, descricao, tipo, formato) VALUES
 ('Alto Contraste', 'Esquema de cores adaptado para baixa visao', 'imagem', 'CSS'),
 ('Linguagem Simplificada', 'Texto reescrito em frases curtas e diretas', 'texto', 'TXT');
 
-
 -- 7. Turmas
 INSERT INTO turma (codigo_turma, nome_turma, serie_ano, disciplina, turno, ano_letivo, status_turma, id_professor) VALUES
 ('TURMA9A', '9º Ano A - Lingua Portuguesa', '9º Ano', 'Lingua Portuguesa', 'Manhã', 2026, 'ativa', 1),
@@ -53,6 +53,7 @@ INSERT INTO atividade (titulo, descricao, data_criacao, id_tipo_atividade) VALUE
 ('Interpretacao de Texto Inclusiva', 'Leia o texto e responda as Questoes sobre a ideia principal.', CURRENT_DATE, 1),
 ('Raciocinio Logico e Geometria', 'Identifique as formas geometricas nas imagens apresentadas.', CURRENT_DATE, 2);
 
+
 -- 10. Configurações de Acessibilidade (1:1 com Aluno)
 INSERT INTO config_acessibilidade (id_aluno, preferencia_audio, preferencia_visual, preferencia_simplificado, outras_configuracoes) VALUES
 (1, FALSE, FALSE, TRUE, 'Tamanho de fonte: 18px'),
@@ -61,16 +62,16 @@ INSERT INTO config_acessibilidade (id_aluno, preferencia_audio, preferencia_visu
 
 -- 11. Aluno Deficiência (N:M)
 INSERT INTO aluno_deficiencia (id_aluno, id_tipo_deficiencia, id_nivel_suporte) VALUES
-(1, 1, 1), -- Lucas: TDAH Leve
-(2, 2, 2), -- Beatriz: Dislexia Moderada
-(3, 3, 2); -- Gabriel: Autismo Moderado
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 2);
 
 -- 12. Atividade Recurso (N:M)
 INSERT INTO atividade_recurso (id_atividade, id_recurso) VALUES
-(1, 2), -- Atividade 1 usa Fonte para Dislexia
-(1, 4), -- Atividade 1 usa Linguagem Simplificada
-(2, 1), -- Atividade 2 usa Sintese de Voz
-(2, 3); -- Atividade 2 usa Alto Contraste
+(1, 2),
+(1, 4),
+(2, 1),
+(2, 3);
 
 -- 13. Respostas
 INSERT INTO resposta (id_aluno, id_atividade, conteudo_resposta, nota) VALUES
@@ -86,7 +87,7 @@ INSERT INTO analise_ia (id_resposta, resultado, sugestoes, modelo_utilizado) VAL
 
 -- 15. Resposta Recurso (N:M)
 INSERT INTO resposta_recurso (id_resposta, id_recurso) VALUES
-(1, 4), -- Resposta de Lucas utilizou Linguagem Simplificada
-(2, 2), -- Resposta de Beatriz utilizou Fonte para Dislexia
-(3, 1); -- Resposta de Gabriel utilizou Sintese de Voz
+(1, 4),
+(2, 2),
+(3, 1);
 
