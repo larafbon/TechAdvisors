@@ -1,108 +1,86 @@
-# Dicionário de Dados Consolidado
----
-
 ## 1. Estrutura Oficial das Entidades e Atributos
 
-| Entidade / Tela | Campo / Atributo | Tipo de Dado | Restrições | Regra de Negócio / Tratamento | Ciclo de Vida do Dado |
+| Entidade | Campo / Atributo | Tipo de Dado | Restrições | Regra de Negócio / Tratamento | Ciclo de Vida |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `configuracoes_acessibilidade` | `id_config` | Inteiro | Chave primária (PK), Não nulo | Identificador único do perfil de acessibilidade visual e auditiva. | Inserção (Create) |
-| `configuracoes_acessibilidade` | `tamanho_fonte` | Inteiro | Não nulo | Tamanho base da fonte em pixels para adaptação de leitura. | Atualização (Update) |
-| `configuracoes_acessibilidade` | `sintese_voz` | Booleano | Não nulo | Ativa leitura em áudio/TTS da interface. | Atualização (Update) |
-| `configuracoes_acessibilidade` | `contraste_cores` | Texto | Não nulo | Tema visual (padrao, alto_contraste, escuro, amarelo_preto). | Atualização (Update) |
-| `configuracoes_acessibilidade` | `velocidade_audio` | Decimal | Não nulo | Velocidade de reprodução do áudio (ex: 0.75, 1.00, 1.25). | Atualização (Update) |
-| `configuracoes_acessibilidade` | `fonte_dislexia` | Booleano | Não nulo | Aplica tipografia OpenDyslexic/adaptada para facilitar leitura. | Atualização (Update) |
-| `configuracoes_acessibilidade` | `reducao_estimulo` | Booleano | Não nulo | Oculta elementos visuais não essenciais para manter foco. | Atualização (Update) |
-| `secretaria_usuario` | `email_usuario` | Texto | Chave primária (PK), Não nulo | E-mail de acesso e identificação da gestão/secretaria. | Consulta (Read) |
-| `secretaria_usuario` | `senha` | Texto | Não nulo | Hash seguro da senha de acesso do operador administrativo. | Consulta (Read) |
-| `secretaria_usuario` | `nome_operador` | Texto | Não nulo | Nome completo do funcionário da secretaria/coordenação. | Consulta (Read) |
-| `secretaria_usuario` | `papel_permissao` | Texto | Não nulo | Nível de permissão (administrador, coordenador, secretaria). | Consulta (Read) |
-| `professor` | `email` | Texto | Chave primária (PK), Não nulo | E-mail institucional de login do docente. | Consulta (Read) |
-| `professor` | `senha` | Texto | Não nulo | Hash seguro da senha de acesso do professor. | Consulta (Read) |
-| `professor` | `nome` | Texto | Não nulo | Nome completo do professor regente. | Consulta (Read) |
-| `professor` | `telefone` | Texto | Nulo | Telefone/WhatsApp de contato institucional. | Consulta (Read) |
-| `professor` | `foto_perfil` | Texto | Nulo | URL/Caminho do arquivo da imagem de perfil. | Consulta (Read) |
-| `professor` | `tema_exibicao` | Texto | Nulo | Preferência visual do painel do professor (claro, escuro, azul). | Atualização (Update) |
-| `aluno` | `cpf_aluno` | Texto | Chave primária (PK), Não nulo, Único | CPF do estudante (apenas dígitos). Chave de ligação central. | Consulta (Read) |
-| `aluno` | `email_matricula` | Texto | Não nulo, Único | E-mail de login/matrícula do aluno no sistema. | Consulta (Read) |
-| `aluno` | `senha` | Texto | Não nulo | Hash da senha de acesso do estudante. | Consulta (Read) |
-| `aluno` | `nome_completo` | Texto | Não nulo | Nome completo do aluno. | Consulta (Read) |
-| `aluno` | `data_nascimento` | Data | Não nulo | Data de nascimento do aluno para controle de faixa etária. | Consulta (Read) |
-| `aluno` | `matricula` | Texto | Não nulo, Único | Código de matrícula escolar. | Consulta (Read) |
-| `aluno` | `foto_avatar_url` | Texto | Nulo | URL da imagem/avatar personalizado do perfil. | Atualização (Update) |
-| `aluno` | `tipo_deficiencia` | Texto | Nulo | Diagnóstico/Condição (Autismo, TDAH, Dislexia, Baixa Visão, etc.). | Consulta (Read) |
-| `aluno` | `historico_pontos` | Inteiro | Não nulo | Pontuação gamificada por conquistas e entregas de atividades. | Atualização (Update) |
-| `aluno` | `id_config` | Inteiro | Chave estrangeira (FK), Não nulo | Vínculo com as preferências visuais/auditivas de acessibilidade. | Consulta (Read) |
-| `turma` | `codigo_turma` | Texto | Chave primária (PK), Não nulo | Código único identificador da turma (ex: TURMA001). | Consulta (Read) |
-| `turma` | `nome_turma` | Texto | Não nulo | Nome descritivo da turma/matéria (ex: Matemática A). | Consulta (Read) |
-| `turma` | `serie_ano` | Texto | Não nulo | Série escolar correspondente (ex: 9º Ano). | Consulta (Read) |
-| `turma` | `disciplina` | Texto | Não nulo | Nome da disciplina ministrada na turma. | Consulta (Read) |
-| `turma` | `turno` | Texto | Não nulo | Turno das aulas (Manhã, Tarde, Noite). | Consulta (Read) |
-| `turma` | `ano_letivo` | Inteiro | Não nulo | Ano de vigência da turma (ex: 2026). | Consulta (Read) |
-| `turma` | `capacidade_maxima` | Inteiro | Não nulo | Quantidade máxima de alunos permitidos na sala. | Consulta (Read) |
-| `turma` | `status_turma` | Texto | Não nulo | Estado operacional da turma (ativa, encerrada, suspensa). | Consulta (Read) |
-| `turma` | `email_professor` | Texto | Chave estrangeira (FK), Não nulo | E-mail do professor regente/responsável pela turma. | Consulta (Read) |
-| `aluno_turma` | `cpf_aluno` | Texto | Chave primária (PK), Chave estrangeira (FK), Não nulo | Vínculo do aluno com a turma específica. | Consulta (Read) |
-| `aluno_turma` | `codigo_turma` | Texto | Chave primária (PK), Chave estrangeira (FK), Não nulo | Vínculo da turma com os alunos matriculados. | Consulta (Read) |
-| `pei_plano_individual` | `id_pei` | Inteiro | Chave primária (PK), Não nulo | Identificador único do Plano de Ensino Individualizado. | Inserção (Create) |
-| `pei_plano_individual` | `cpf_aluno` | Texto | Chave estrangeira (FK), Não nulo | Aluno a quem o PEI pertence. | Consulta (Read) |
-| `pei_plano_individual` | `objetivos_pedagogicos` | Texto | Não nulo | Metas educacionais e adaptações necessárias descritas. | Inserção (Create) |
-| `pei_plano_individual` | `atendimentos_especializados` | Texto | Nulo | Descrição de acompanhamentos (ex: Fonoaudiologia, Psicopedagogia). | Inserção (Create) |
-| `pei_plano_individual` | `data_criacao` | Data | Não nulo | Data de homologação e abertura do PEI. | Inserção (Create) |
-| `pei_plano_individual` | `data_revisao` | Data | Nulo | Data prevista para reavaliação periódica do PEI. | Atualização (Update) |
-| `pei_plano_individual` | `status_pei` | Texto | Não nulo | Situação atual do plano (em_andamento, revisao, concluido). | Atualização (Update) |
-| `atividade` | `id_atividade` | Inteiro | Chave primária (PK), Não nulo | Identificador único da atividade/tarefa. | Inserção (Create) |
-| `atividade` | `titulo` | Texto | Não nulo | Título descritivo da atividade escolar. | Inserção (Create) |
-| `atividade` | `descricao` | Texto | Nulo | Instruções detalhadas para realização da tarefa. | Inserção (Create) |
-| `atividade` | `tipo_atividade` | Texto | Não nulo | Tipo de avaliação (multipla_escolha, discursiva, adaptada). | Inserção (Create) |
-| `atividade` | `data_hora_abertura` | Data/Hora | Não nulo | Data e horário em que a tarefa fica disponível. | Inserção (Create) |
-| `atividade` | `data_hora_entrega` | Data/Hora | Não nulo | Data e horário limite para envio da solução. | Inserção (Create) |
-| `atividade` | `nota_maxima` | Decimal | Não nulo | Pontuação total distribuída na atividade. | Inserção (Create) |
-| `atividade` | `recursos_acessibilidade` | Texto | Nulo | Adaptações específicas incluídas nesta atividade. | Inserção (Create) |
-| `atividade` | `anexos` | Texto | Nulo | URLs de arquivos/PDFs de apoio anexados. | Inserção (Create) |
-| `atividade` | `codigo_turma` | Texto | Chave estrangeira (FK), Não nulo | Turma para a qual a atividade foi cadastrada. | Consulta (Read) |
-| `resposta_atividade` | `id_resposta` | Inteiro | Chave primária (PK), Não nulo | Identificador único do envio da resposta. | Inserção (Create) |
-| `resposta_atividade` | `data_hora_inicio` | Data/Hora | Não nulo | Momento em que o estudante iniciou a resolução. | Inserção (Create) |
-| `resposta_atividade` | `data_hora_entrega` | Data/Hora | Não nulo | Momento exato do envio definitivo. | Inserção (Create) |
-| `resposta_atividade` | `resposta_selecionada` | Texto | Não nulo | Opção assinalada ou texto da resposta enviada. | Inserção (Create) |
-| `resposta_atividade` | `nota_obtida` | Decimal | Nulo | Nota atribuída pelo professor ou correção automática. | Atualização (Update) |
-| `resposta_atividade` | `cpf_aluno` | Texto | Chave estrangeira (FK), Não nulo | Estudante autor da resposta. | Consulta (Read) |
-| `resposta_atividade` | `id_atividade` | Inteiro | Chave estrangeira (FK), Não nulo | Atividade que está sendo respondida. | Consulta (Read) |
-| `sugestao_ia_pedagogica` | `id_sugestao` | Inteiro | Chave primária (PK), Não nulo | Identificador único da análise gerada pela IA. | Inserção (Create) |
-| `sugestao_ia_pedagogica` | `cpf_aluno` | Texto | Chave estrangeira (FK), Não nulo | Estudante analisado pelo algoritmo. | Consulta (Read) |
-| `sugestao_ia_pedagogica` | `email_professor` | Texto | Chave estrangeira (FK), Não nulo | Docente destinatário da sugestão da IA. | Consulta (Read) |
-| `sugestao_ia_pedagogica` | `diagnostico_desempenho` | Texto | Não nulo | Resumo do padrão de aprendizagem/dificuldades detectado. | Inserção (Create) |
-| `sugestao_ia_pedagogica` | `sugestao_conduta` | Texto | Não nulo | Recomendação de intervenção pedagógica sugerida. | Inserção (Create) |
-| `sugestao_ia_pedagogica` | `alerta_risco` | Texto | Nulo | Nível ou descrição do risco de defasagem/evasão. | Inserção (Create) |
-| `sugestao_ia_pedagogica` | `data_geracao` | Data | Não nulo | Data de processamento do insight pela IA. | Inserção (Create) |
-| `observacao_pedagogica` | `id_observacao` | Inteiro | Chave primária (PK), Não nulo | Identificador único do anotação de diário. | Inserção (Create) |
-| `observacao_pedagogica` | `cpf_aluno` | Texto | Chave estrangeira (FK), Não nulo | Aluno a respeito de quem se opina. | Consulta (Read) |
-| `observacao_pedagogica` | `email_professor` | Texto | Chave estrangeira (FK), Não nulo | Professor autor do registro qualitativo. | Consulta (Read) |
-| `observacao_pedagogica` | `texto_observacao` | Texto | Não nulo | Descrição de comportamento, avanços ou necessidades. | Inserção (Create) |
-| `observacao_pedagogica` | `data_registro` | Data | Não nulo | Data do registro da observação. | Inserção (Create) |
-| `mural_recados` | `id_mural` | Inteiro | Chave primária (PK), Não nulo | Identificador único do comunicado no mural. | Inserção (Create) |
-| `mural_recados` | `codigo_turma` | Texto | Chave estrangeira (FK), Não nulo | Turma de destino do aviso. | Consulta (Read) |
-| `mural_recados` | `titulo` | Texto | Não nulo | Assunto ou título principal do comunicado. | Inserção (Create) |
-| `mural_recados` | `mensagem` | Texto | Não nulo | Conteúdo textual completo do recado. | Inserção (Create) |
-| `mural_recados` | `data_postagem` | Data | Não nulo | Data de publicação no mural. | Inserção (Create) |
+| `responsavel` | `id_responsavel` | Inteiro | PK, Auto | Identificador único do responsável legal. | Inserção |
+| `responsavel` | `nome` | Texto (150) | Não Nulo | Nome completo do responsável legal. | Inserção |
+| `responsavel` | `telefone` | Texto (20) | Nulo | Telefone/WhatsApp para contato. | Atualização |
+| `responsavel` | `email` | Texto (150) | Nulo | E-mail do responsável. | Atualização |
+| `responsavel` | `cpf` | Texto (11) | Único | CPF do responsável legal. | Inserção |
+| `tipo_deficiencia` | `id_tipo_deficiencia` | Inteiro | PK, Auto | Identificador do tipo de deficiência. | Inserção |
+| `tipo_deficiencia` | `codigo` | Texto (50) | Único, Não Nulo | Código identificador (ex: TDAH, AUTISMO, DISLEXIA). | Inserção |
+| `tipo_deficiencia` | `descricao` | Texto | Não Nulo | Descrição detalhada da condição. | Inserção |
+| `nivel_suporte` | `id_nivel_suporte` | Inteiro | PK, Auto | Identificador do nível de suporte pedagógico. | Inserção |
+| `nivel_suporte` | `codigo` | Texto (50) | Único, Não Nulo | Graus de suporte (ex: LEVE, MODERADO, SEVERO). | Inserção |
+| `nivel_suporte` | `descricao` | Texto | Não Nulo | Descrição das adaptações necessárias para o nível. | Inserção |
+| `professor` | `id_professor` | Inteiro | PK, Auto | Identificador único do docente. | Inserção |
+| `professor` | `nome` | Texto (150) | Não Nulo | Nome completo do professor. | Inserção |
+| `professor` | `email` | Texto (150) | PK/Único, Não Nulo | E-mail institucional de acesso. | Inserção |
+| `professor` | `status` | Texto (20) | Default 'ativo', CHECK | Situação do professor (ativo, inativo, afastado). | Atualização |
+| `tipo_atividade` | `id_tipo_atividade` | Inteiro | PK, Auto | Identificador da categoria da atividade. | Inserção |
+| `tipo_atividade` | `nome` | Texto (100) | Não Nulo | Categoria da tarefa (ex: Discursiva, Objetiva, Adaptada). | Inserção |
+| `tipo_atividade` | `descricao` | Texto | Nulo | Detalhes sobre o formato de atividade. | Inserção |
+| `recurso_acessibilidade` | `id_recurso` | Inteiro | PK, Auto | Identificador do recurso multimodal. | Inserção |
+| `recurso_acessibilidade` | `nome` | Texto (150) | Não Nulo | Nome do recurso (ex: Leitura em Áudio, Formatação Especial). | Inserção |
+| `recurso_acessibilidade` | `descricao` | Texto | Nulo | Função detalhada do recurso adaptativo. | Inserção |
+| `recurso_acessibilidade` | `tipo` | Texto (50) | Nulo | Tipo de mídia (ex: audio, texto, imagem). | Inserção |
+| `recurso_acessibilidade` | `formato` | Texto (20) | Nulo | Formato digital do recurso (ex: MP3, PDF, PNG). | Inserção |
+| `turma` | `id_turma` | Inteiro | PK, Auto | Identificador único da turma. | Inserção |
+| `turma` | `codigo_turma` | Texto (20) | Único, Não Nulo | Código da turma (ex: TURMA01). | Inserção |
+| `turma` | `nome_turma` | Texto (100) | Não Nulo | Nome descritivo da turma. | Inserção |
+| `turma` | `serie_ano` | Texto (50) | Não Nulo | Ano escolar/série correspondente. | Inserção |
+| `turma` | `disciplina` | Texto (100) | Não Nulo | Nome da matéria ministrada. | Inserção |
+| `turma` | `turno` | Texto (20) | Não Nulo, CHECK | Turno das aulas (Manhã, Tarde, Noite, Integral). | Inserção |
+| `turma` | `ano_letivo` | Inteiro | Não Nulo, CHECK | Ano de exercício (>= 2020). | Inserção |
+| `turma` | `status_turma` | Texto (20) | Default 'ativa', CHECK | Estado da turma (ativa, encerrada, cancelada). | Atualização |
+| `turma` | `id_professor` | Inteiro | FK, Não Nulo | Vínculo com o professor regente em `professor`. | Inserção |
+| `aluno` | `id_aluno` | Inteiro | PK, Auto | Identificador único do estudante. | Inserção |
+| `aluno` | `nome` | Texto (150) | Não Nulo | Nome completo do aluno. | Inserção |
+| `aluno` | `data_nascimento` | Data | Não Nulo | Data de nascimento do aluno. | Inserção |
+| `aluno` | `email` | Texto (150) | Único | E-mail de acesso do aluno. | Inserção |
+| `aluno` | `matricula` | Texto (50) | Único, Não Nulo | Código de matrícula escolar. | Inserção |
+| `aluno` | `id_responsavel` | Inteiro | FK, Nulo | Vínculo com a tabela `responsavel`. | Atualização |
+| `aluno` | `id_turma` | Inteiro | FK, Nulo | Turma atual em que o estudante está matriculado. | Atualização |
+| `aluno` | `id_nivel_suporte` | Inteiro | FK, Nulo | Nível principal de suporte associado. | Atualização |
+| `aluno` | `id_tipo_deficiencia`| Inteiro | FK, Nulo | Condição principal cadastrada. | Atualização |
+| `atividade` | `id_atividade` | Inteiro | PK, Auto | Identificador único da atividade. | Inserção |
+| `atividade` | `titulo` | Texto (150) | Não Nulo | Título descritivo da atividade. | Inserção |
+| `atividade` | `descricao` | Texto | Nulo | Instruções de realização. | Inserção |
+| `atividade` | `data_criacao` | Data | Default CURRENT_DATE | Data de postagem no sistema. | Inserção |
+| `atividade` | `id_tipo_atividade` | Inteiro | FK, Não Nulo | Vínculo com a categoria em `tipo_atividade`. | Inserção |
+| `config_acessibilidade`| `id_config` | Inteiro | PK, Auto | Identificador do perfil de acessibilidade. | Inserção |
+| `config_acessibilidade`| `id_aluno` | Inteiro | FK, Único, Não Nulo | Vínculo 1:1 exclusivo com a tabela `aluno`. | Inserção |
+| `config_acessibilidade`| `preferencia_audio` | Booleano | Default FALSE | Habilita recursos e síntese de áudio. | Atualização |
+| `config_acessibilidade`| `preferencia_visual` | Booleano | Default FALSE | Habilita alto contraste e adaptações visuais. | Atualização |
+| `config_acessibilidade`| `preferencia_simplificado`| Booleano| Default FALSE | Habilita linguagem simplificada. | Atualização |
+| `config_acessibilidade`| `outras_configuracoes`| Texto | Nulo | Preferências adicionais de tela/fonte. | Atualização |
+| `aluno_deficiencia` | `id_aluno_deficiencia`| Inteiro| PK, Auto | Identificador do registro de associação. | Inserção |
+| `aluno_deficiencia` | `id_aluno` | Inteiro | FK, Não Nulo | Aluno associado. | Inserção |
+| `aluno_deficiencia` | `id_tipo_deficiencia`| Inteiro| FK, Não Nulo | Tipo de deficiência do aluno. | Inserção |
+| `aluno_deficiencia` | `id_nivel_suporte` | Inteiro | FK, Não Nulo | Grau de suporte necessário para esta deficiência. | Inserção |
+| `atividade_recurso` | `id_atividade` | Inteiro | PK, FK, Não Nulo | Atividade adaptada. | Inserção |
+| `atividade_recurso` | `id_recurso` | Inteiro | PK, FK, Não Nulo | Recurso disponibilizado para a atividade. | Inserção |
+| `resposta` | `id_resposta` | Inteiro | PK, Auto | Identificador do envio de resposta. | Inserção |
+| `resposta` | `id_aluno` | Inteiro | FK, Não Nulo | Aluno autor da submissão. | Inserção |
+| `resposta` | `id_atividade` | Inteiro | FK, Não Nulo | Atividade respondida. | Inserção |
+| `resposta` | `data_resposta` | Data/Hora | Default CURRENT_TIMESTAMP | Momento exato da submissão. | Inserção |
+| `resposta` | `conteudo_resposta` | Texto | Não Nulo | Texto ou conteúdo enviado pelo estudante. | Inserção |
+| `resposta` | `nota` | Decimal (4,2)| CHECK (nota >= 0) | Nota ou pontuação atribuída. | Atualização |
+| `analise_ia` | `id_analise` | Inteiro | PK, Auto | Identificador da análise gerada pela IA. | Inserção |
+| `analise_ia` | `id_resposta` | Inteiro | FK, Não Nulo | Resposta avaliada pelo modelo de IA. | Inserção |
+| `analise_ia` | `data_analise` | Data/Hora | Default CURRENT_TIMESTAMP | Momento em que o insight foi gerado. | Inserção |
+| `analise_ia` | `resultado` | Texto | Não Nulo | Diagnóstico sobre o desempenho do aluno. | Inserção |
+| `analise_ia` | `sugestoes` | Texto | Nulo | Recomendações pedagógicas para o professor. | Inserção |
+| `analise_ia` | `modelo_utilizado` | Texto (100) | Não Nulo | Modelo de IA empregado (ex: GPT-4, Llama-3). | Inserção |
+| `resposta_recurso` | `id_resposta` | Inteiro | PK, FK, Não Nulo | Resposta do aluno. | Inserção |
+| `resposta_recurso` | `id_recurso` | Inteiro | PK, FK, Não Nulo | Recurso de acessibilidade acionado no envio. | Inserção |
 
 ---
-# Histórico de Alterações do Dicionário de Dados e DER 
 
+## 2. Histórico de Alterações e Evolução do Modelo
 
-## Registro de Evolução e Revisões
+| Versão | Etapa / Aula | Alteração Realizada | Motivo / Impacto no Sistema |
+| :--- | :--- | :--- | :--- |
+| **v1.0** | Aulas 1 - 5 | Estrutura inicial com 12 tabelas. | Modelagem preliminar do sistema. |
+| **v3.0** | Reestruturação IA | Refatoração completa para 15 tabelas em **3ª Forma Normal (3FN)**. | Separação de responsabilidades de deficiências, suporte, recursos de mídia e logs da Inteligência Artificial. |
 
-| Versão | Etapa / Aula | Objeto / Tabela | Alteração Realizada | Motivo / Impacto no Sistema |
-| :--- | :--- | :--- | :--- | :--- |
-| **v1.0** | Aula 1 | Modelagem Inicial | Criação do DER v1 e mapeamento primário das entidades. | Levantamento inicial dos requisitos de negócio e funcionalidades. |
-| **v1.1** | Aula 2 | Matriz de Rastreabilidade | Validação da presença dos dados de IA e acessibilidade. | Garantia de suporte para prompts do Backend e acessibilidade do Frontend. |
-| **v2.0** | Aula 3 | `aluno_turma` | Remoção de duplicidades visuais e eliminação da FK `id_config`. | Correção do modelo relacional N:M mantendo apenas `cpf_aluno` e `codigo_turma`. |
-| **v2.1** | Aula 3 | Múltiplas Tabelas | Normalização de 100% das tabelas e colunas para `snake_case` minúsculo. | Padronização exigida para compatibilidade com o PostgreSQL e scripts DDL. |
-| **v2.2** | Aula 3 | `secretaria_usuario` | Alteração da restrição de `email_usuario` de FK para **PK (Chave Primária)**. | Correção de inconsistência: a secretaria é uma entidade base no sistema. |
-| **v2.3** | Aula 3 | `observacao_pedagogica` | Alteração do tipo de dado de `data_registro` de *Texto* para **Data**. | Garantia de integridade temporal e padronização com os campos de data do banco. |
-| **v2.4** | Aula 3 (Checkpoint) | DER & Dicionário | Consolidação final e geração dos arquivos `der_revisado.png` e `dicionario_dados.md`. | Conclusão oficial do Checkpoint da Aula 3 para envio do repositório. |
-
-## 2. Relação de Integridade das Chaves
-
-* **Total de Entidades:** 12 tabelas relacionais.
-* **Padronização:** 100% dos nomes em `snake_case` minúsculo.
-* **Alinhamento:** Total sincronia com a imagem `docs/der_revisado.png`.
