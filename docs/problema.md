@@ -34,15 +34,5 @@ Professores e a equipe escolar encontram desafios para centralizar históricos d
 
 ---
 
-## 5. Participação das Funções da Equipe
-
-| Função | Atribuição no Projeto |
-| :--- | :--- |
-| **Frontend** | Consome as preferências de `config_acessibilidade` para estilizar a interface e renderiza as sugestões geradas em `analise_ia`. |
-| **Backend** | Conecta as ações do usuário ao banco e injeta o histórico da tabela `resposta` nos prompts consumidos pela Inteligência Artificial. |
-| **Banco de Dados (DS)** | Garante a integridade e normalização em 3FN das 15 tabelas em formato *snake_case* no PostgreSQL/Supabase. |
-| **Justificativa Unificada (Todos)** | A equipe inteira valida a necessidade de cada uma das 15 tabelas, eliminando redundâncias de dados e otimizando a integração. |
-
-
 
 
