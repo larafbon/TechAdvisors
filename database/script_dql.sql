@@ -6,8 +6,8 @@ SELECT
     a.id_aluno,
     a.nome AS nome_aluno,
     a.matricula,
-    td.codigo AS deficiencia_principal,
-    ns.codigo AS nivel_suporte,
+    COALESCE(td.codigo, 'SEM_DIAGNOSTICO') AS deficiencia_principal,
+    COALESCE(ns.codigo, 'PADRAO') AS nivel_suporte,
     ca.preferencia_audio,
     ca.preferencia_visual,
     ca.preferencia_simplificado,
@@ -17,7 +17,6 @@ LEFT JOIN config_acessibilidade ca ON a.id_aluno = ca.id_aluno
 LEFT JOIN tipo_deficiencia td ON a.id_tipo_deficiencia = td.id_tipo_deficiencia
 LEFT JOIN nivel_suporte ns ON a.id_nivel_suporte = ns.id_nivel_suporte
 WHERE a.id_aluno = 1;
-
 
 
 -- PERGUNTA 2 (Coordenação / Gestão de Turma):
