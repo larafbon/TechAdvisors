@@ -1,15 +1,20 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, ConfigDict
 
-class RecursoBase(BaseModel):
+# --- Schemas de Aprendizagem (Categoria) ---
+class CategoriaCreate(BaseModel):
     nome: str
-    descricao: Optional[str] = None
+    descricao: str | None = None
 
-class RecursoCreate(RecursoBase):
-    pass
+class CategoriaResponse(CategoriaCreate):
+    id_categoria: int
+    model_config = ConfigDict(from_attributes=True)
 
-class RecursoResponse(RecursoBase):
-    id_recurso: int
 
-    class Config:
-        from_attributes = True
+# --- Schemas Oficiais do Projeto (ConfiguracaoAcessibilidade) ---
+class ConfiguracaoAcessibilidadeCreate(BaseModel):
+    nome: str
+    descricao: str | None = None
+
+class ConfiguracaoAcessibilidadeResponse(ConfiguracaoAcessibilidadeCreate):
+    id_configuracao: int
+    model_config = ConfigDict(from_attributes=True) 
