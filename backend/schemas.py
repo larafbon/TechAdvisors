@@ -1,20 +1,14 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
+from typing import Optional
 
-# --- Schemas de Aprendizagem (Categoria) ---
-class CategoriaCreate(BaseModel):
+class RecursoAcessibilidadeCreate(BaseModel):
     nome: str
-    descricao: str | None = None
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    formato: Optional[str] = None
 
-class CategoriaResponse(CategoriaCreate):
-    id_categoria: int
-    model_config = ConfigDict(from_attributes=True)
+class RecursoAcessibilidadeResponse(RecursoAcessibilidadeCreate):
+    id_recurso: int
 
-
-# --- Schemas Oficiais do Projeto (ConfiguracaoAcessibilidade) ---
-class ConfiguracaoAcessibilidadeCreate(BaseModel):
-    nome: str
-    descricao: str | None = None
-
-class ConfiguracaoAcessibilidadeResponse(ConfiguracaoAcessibilidadeCreate):
-    id_configuracao: int
-    model_config = ConfigDict(from_attributes=True) 
+    class Config:
+        from_attributes = True

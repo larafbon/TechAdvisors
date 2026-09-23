@@ -1,20 +1,11 @@
-from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import Column, Integer, String
 from database import Base
 
-# Exemplo de aprendizagem do roteiro de aula
-class Categoria(Base):
-    __tablename__ = "categoria"
+class RecursoAcessibilidade(Base):
+    __tablename__ = "recurso_acessibilidade"
 
-    id_categoria: Mapped[int] = mapped_column(Integer, primary_key=True)
-    nome: Mapped[str] = mapped_column(String)
-    descricao: Mapped[str | None] = mapped_column(String, nullable=True)
-
-
-# Tabela oficial do projeto TechAdvisors
-class ConfiguracaoAcessibilidade(Base):
-    __tablename__ = "configuracoes_acessibilidade"
-
-    id_configuracao: Mapped[int] = mapped_column(Integer, primary_key=True)
-    nome: Mapped[str] = mapped_column(String)
-    descricao: Mapped[str | None] = mapped_column(String, nullable=True)
+    id_recurso = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    nome = Column(String(150), nullable=False)
+    descricao = Column(String, nullable=True)
+    tipo = Column(String(50), nullable=True)
+    formato = Column(String(20), nullable=True)

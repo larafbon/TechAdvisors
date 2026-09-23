@@ -1,24 +1,31 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, status
 from sqlalchemy.orm import Session
-from database import engine, Base, get_db
 import models
 import schemas
-
-# Cria as tabelas no Supabase caso ainda não existam
-Base.metadata.create_all(bind=engine)
+from database import engine, get_db
 
 app = FastAPI(title="API TechAdvisors")
 
+# Cria as tabelas caso nao existam
+models.Base.metadata.create_all(bind=engine)
 
-# --- Rotas para ConfiguracaoAcessibilidade (Projeto Oficial) ---
+@app.get("/recursos_acessibilidade", response_model=list[schemas.RecursoAcessibilidadeResponse])
+def listar_recursos(db: Session = Depends(get_db)):
+    return db.query(models.RecursoAcessibilidade).all()
 
-@app.get("/configuracoes_acessibilidade", response_model=list[schemas.ConfiguracaoAcessibilidadeResponse])
-def listar_configuracoes(db: Session = Depends(get_db)):
-    return db.query(models.ConfiguracaoAcessibilidade).all()
-
-
-# --- Rotas de Aprendizagem (Categoria) ---
-
-@app.get("/categoria", response_model=list[schemas.CategoriaResponse])
-def listar_categorias(db: Session = Depends(get_db)):
-    return db.query(models.Categoria).all()
+@app.post(
+    "/recursos_acessibilidade",
+    response_model=schemas.RecursoAcessibilidadeResponse,
+    status_code=status.HTTP_201_CREATED
+)
+def criar_recurso(dados: schemas.RecursoAcessibilidadeCreate, db: Session = Depends(get_db)):
+    recurso = models.RecursoAcessibilidade(
+        nome=dados.nome,
+        descricao=dados.descricao,
+        tipo=dados.tipo,
+        formato=dados.formato
+    )
+    db.add(recurso)
+    db.commit()
+    db.refresh(recurso)
+    return recurso
