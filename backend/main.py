@@ -7,31 +7,9 @@ from database import engine, get_db
 
 app = FastAPI(title="API TechAdvisors")
 
-# Cria as tabelas caso ainda não existam no banco
 models.Base.metadata.create_all(bind=engine)
 
-
-# ==========================================
-# ROTAS PARA RECURSOS DE ACESSIBILIDADE
-# ==========================================
-
-@app.get("/recursos_acessibilidade", response_model=list[schemas.RecursoAcessibilidadeResponse])
-def listar_recursos(db: Session = Depends(get_db)):
-    return db.query(models.RecursoAcessibilidade).all()
-
-@app.post("/recursos_acessibilidade", response_model=schemas.RecursoAcessibilidadeResponse, status_code=status.HTTP_201_CREATED)
-def criar_recurso(dados: schemas.RecursoAcessibilidadeCreate, db: Session = Depends(get_db)):
-    recurso = models.RecursoAcessibilidade(**dados.model_dump())
-    db.add(recurso)
-    db.commit()
-    db.refresh(recurso)
-    return recurso
-
-
-# ==========================================
-# ROTAS PARA PROFESSORES (Tabela Base - PK)
-# ==========================================
-
+# --- PROFESSORES ---
 @app.get("/professores", response_model=list[schemas.ProfessorResponse])
 def listar_professores(db: Session = Depends(get_db)):
     return db.query(models.Professor).all()
@@ -47,18 +25,20 @@ def criar_professor(dados: schemas.ProfessorCreate, db: Session = Depends(get_db
     db.refresh(professor)
     return professor
 
-
-# ==========================================
-# ROTAS PARA TURMAS (Tabela Dependente - FK)
-# ==========================================
-
+# --- TURMAS ---
 @app.get("/turmas", response_model=list[schemas.TurmaResponse])
 def listar_turmas(db: Session = Depends(get_db)):
     return db.query(models.Turma).all()
 
+@app.get("/turmas/{id_turma}", response_model=schemas.TurmaResponse)
+def buscar_turma_por_id(id_turma: int, db: Session = Depends(get_db)):
+    turma = db.query(models.Turma).filter(models.Turma.id_turma == id_turma).first()
+    if not turma:
+        raise HTTPException(status_code=404, detail="Turma não encontrada.")
+    return turma
+
 @app.post("/turmas", response_model=schemas.TurmaResponse, status_code=status.HTTP_201_CREATED)
 def criar_turma(dados: schemas.TurmaCreate, db: Session = Depends(get_db)):
-    # 1. Validação da Chave Estrangeira (FK): verifica se o professor existe
     prof = db.query(models.Professor).filter(models.Professor.id_professor == dados.id_professor).first()
     if not prof:
         raise HTTPException(
@@ -66,7 +46,6 @@ def criar_turma(dados: schemas.TurmaCreate, db: Session = Depends(get_db)):
             detail=f"Não foi possível criar a turma: Professor com ID {dados.id_professor} não existe."
         )
 
-    # 2. Tenta inserir a turma e trata erros de banco de dados
     try:
         nova_turma = models.Turma(**dados.model_dump())
         db.add(nova_turma)
@@ -79,9 +58,30 @@ def criar_turma(dados: schemas.TurmaCreate, db: Session = Depends(get_db)):
             status_code=400,
             detail=f"Erro de Banco de Dados: {str(e.orig)}"
         )
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(
-            status_code=500,
-            detail=f"Erro interno: {str(e)}"
-        )
+
+@app.put("/turmas/{id_turma}", response_model=schemas.TurmaResponse)
+def atualizar_turma(id_turma: int, dados: schemas.TurmaCreate, db: Session = Depends(get_db)):
+    turma_db = db.query(models.Turma).filter(models.Turma.id_turma == id_turma).first()
+    if not turma_db:
+        raise HTTPException(status_code=404, detail="Turma não encontrada.")
+    
+    prof = db.query(models.Professor).filter(models.Professor.id_professor == dados.id_professor).first()
+    if not prof:
+        raise HTTPException(status_code=404, detail=f"Professor com ID {dados.id_professor} não existe.")
+
+    for chave, valor in dados.model_dump().items():
+        setattr(turma_db, chave, valor)
+
+    db.commit()
+    db.refresh(turma_db)
+    return turma_db
+
+@app.delete("/turmas/{id_turma}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_turma(id_turma: int, db: Session = Depends(get_db)):
+    turma_db = db.query(models.Turma).filter(models.Turma.id_turma == id_turma).first()
+    if not turma_db:
+        raise HTTPException(status_code=404, detail="Turma não encontrada.")
+    
+    db.delete(turma_db)
+    db.commit()
+    return None
