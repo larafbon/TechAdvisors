@@ -1,18 +1,44 @@
 from pydantic import BaseModel
 from typing import Optional
 
-# Esquema para REQUISIÇÃO (Dados enviados no POST pelo cliente/frontend)
+# --- SCHEMAS DE RECURSO ---
 class RecursoAcessibilidadeCreate(BaseModel):
-    nome: str                         # Campo obrigatório (Texto)
-    descricao: Optional[str] = None   # Campo opcional (pode ser Nulo)
-    tipo: Optional[str] = None        # Campo opcional (pode ser Nulo)
-    formato: Optional[str] = None     # Campo opcional (pode ser Nulo)
+    nome: str
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    formato: Optional[str] = None
 
-# Esquema para RESPOSTA (Dados retornados pela API)
-# Herda os campos de 'RecursoAcessibilidadeCreate' e adiciona o 'id_recurso'
 class RecursoAcessibilidadeResponse(RecursoAcessibilidadeCreate):
-    id_recurso: int                   # ID gerado pelo banco de dados
+    id_recurso: int
 
-    # Permite converter automaticamente objetos do SQLAlchemy (models) para JSON
+    class Config:
+        from_attributes = True
+
+# --- SCHEMAS DE PROFESSOR ---
+class ProfessorCreate(BaseModel):
+    nome: str
+    email: str
+    status: Optional[str] = "ativo"
+
+class ProfessorResponse(ProfessorCreate):
+    id_professor: int
+
+    class Config:
+        from_attributes = True
+
+# --- SCHEMAS DE TURMA ---
+class TurmaCreate(BaseModel):
+    codigo_turma: str
+    nome_turma: str
+    serie_ano: str
+    disciplina: str
+    turno: str
+    ano_letivo: int
+    id_professor: int
+
+class TurmaResponse(TurmaCreate):
+    id_turma: int
+    status_turma: str
+
     class Config:
         from_attributes = True
