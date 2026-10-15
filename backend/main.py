@@ -225,12 +225,27 @@ def vincular_aluno_deficiencia(item: schemas.AlunoDeficienciaCreate):
     resposta = supabase.table("aluno_deficiencia").insert(item.model_dump(mode="json")).execute()
     return resposta.data[0]
 
+@app.get("/aluno-deficiencia")
+def listar_aluno_deficiencia():
+    resposta = supabase.table("aluno_deficiencia").select("*").execute()
+    return resposta.data
+
 @app.post("/atividade-recurso", status_code=status.HTTP_201_CREATED)
 def vincular_atividade_recurso(item: schemas.AtividadeRecursoCreate):
     resposta = supabase.table("atividade_recurso").insert(item.model_dump(mode="json")).execute()
     return resposta.data[0]
 
+@app.get("/atividade-recurso")
+def listar_atividade_recurso():
+    resposta = supabase.table("atividade_recurso").select("*").execute()
+    return resposta.data
+
 @app.post("/resposta-recurso", status_code=status.HTTP_201_CREATED)
 def vincular_resposta_recurso(item: schemas.RespostaRecursoCreate):
     resposta = supabase.table("resposta_recurso").insert(item.model_dump(mode="json")).execute()
     return resposta.data[0]
+
+@app.get("/resposta-recurso")
+def listar_resposta_recurso():
+    resposta = supabase.table("resposta_recurso").select("*").execute()
+    return resposta.data
