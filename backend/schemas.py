@@ -1,150 +1,267 @@
-from datetime import date
+from pydantic import BaseModel
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field
+from datetime import date, datetime
 
-# --- RESPONSÁVEL ---
-class ResponsavelBase(BaseModel):
+# ==========================================
+# AUTENTICAÇÃO
+# ==========================================
+class LoginRequest(BaseModel):
+    email: str
+    senha: str
+
+
+# ==========================================
+# 1. PROFESSOR
+# ==========================================
+class ProfessorCreate(BaseModel):
     nome: str
-    telefone: Optional[str] = None
-    email: Optional[EmailStr] = None
-    cpf: Optional[str] = Field(None, max_length=11)
-
-class ResponsavelCreate(ResponsavelBase):
-    pass
-
-
-# --- TIPO DEFICIÊNCIA ---
-class TipoDeficienciaBase(BaseModel):
-    codigo: str
-    descricao: str
-
-class TipoDeficienciaCreate(TipoDeficienciaBase):
-    pass
-
-
-# --- NÍVEL DE SUPORTE ---
-class NivelSuporteBase(BaseModel):
-    codigo: str
-    descricao: str
-
-class NivelSuporteCreate(NivelSuporteBase):
-    pass
-
-
-# --- PROFESSOR ---
-class ProfessorBase(BaseModel):
-    nome: str
-    email: EmailStr
+    email: str
+    senha: str
     status: Optional[str] = "ativo"
 
-class ProfessorCreate(ProfessorBase):
-    senha: str  # Campo adicionado para a tabela professor
 
-
-# --- TIPO ATIVIDADE ---
-class TipoAtividadeBase(BaseModel):
+class ProfessorResponse(BaseModel):
+    id_professor: int
     nome: str
-    descricao: Optional[str] = None
-
-class TipoAtividadeCreate(TipoAtividadeBase):
-    pass
+    email: str
+    status: Optional[str]
 
 
-# --- RECURSO ACESSIBILIDADE ---
-class RecursoAcessibilidadeBase(BaseModel):
+# ==========================================
+# 2. RESPONSÁVEL
+# ==========================================
+class ResponsavelCreate(BaseModel):
     nome: str
-    descricao: Optional[str] = None
-    tipo: Optional[str] = None
-    formato: Optional[str] = None
-
-class RecursoAcessibilidadeCreate(RecursoAcessibilidadeBase):
-    pass
+    email: Optional[str] = None
+    telefone: Optional[str] = None
+    cpf: Optional[str] = None
+    senha: Optional[str] = None
 
 
-# --- TURMA ---
-class TurmaBase(BaseModel):
+class ResponsavelResponse(BaseModel):
+    id_responsavel: int
+    nome: str
+    email: Optional[str]
+    telefone: Optional[str]
+    cpf: Optional[str]
+
+
+# ==========================================
+# 3. TIPO DE DEFICIÊNCIA
+# ==========================================
+class TipoDeficienciaCreate(BaseModel):
+    codigo: str
+    descricao: str
+
+
+class TipoDeficienciaResponse(BaseModel):
+    id_tipo_deficiencia: int
+    codigo: str
+    descricao: str
+
+
+# ==========================================
+# 4. NÍVEL DE SUPORTE
+# ==========================================
+class NivelSuporteCreate(BaseModel):
+    codigo: str
+    descricao: str
+
+
+class NivelSuporteResponse(BaseModel):
+    id_nivel_suporte: int
+    codigo: str
+    descricao: str
+
+
+# ==========================================
+# 5. TURMA
+# ==========================================
+class TurmaCreate(BaseModel):
     codigo_turma: str
     nome_turma: str
     serie_ano: str
     disciplina: str
     turno: str
     ano_letivo: int
-    status_turma: Optional[str] = "ativa"
     id_professor: int
-
-class TurmaCreate(TurmaBase):
-    pass
+    status_turma: Optional[str] = "ativa"
 
 
-# --- ALUNO ---
-class AlunoBase(BaseModel):
+class TurmaResponse(BaseModel):
+    id_turma: int
+    codigo_turma: str
+    nome_turma: str
+    serie_ano: str
+    disciplina: str
+    turno: str
+    ano_letivo: int
+    id_professor: int
+    status_turma: Optional[str]
+
+
+# ==========================================
+# 6. ALUNO
+# ==========================================
+class AlunoCreate(BaseModel):
     nome: str
-    data_nascimento: date
-    email: Optional[EmailStr] = None
     matricula: str
-    id_responsavel: Optional[int] = None
+    data_nascimento: date
+    email: Optional[str] = None
+    senha: Optional[str] = None  # Adicionado suporte a senha no cadastro do aluno
     id_turma: Optional[int] = None
     id_nivel_suporte: Optional[int] = None
     id_tipo_deficiencia: Optional[int] = None
-
-class AlunoCreate(AlunoBase):
-    pass
+    id_responsavel: Optional[int] = None
 
 
-# --- ATIVIDADE ---
-class AtividadeBase(BaseModel):
-    titulo: str
-    descricao: Optional[str] = None
-    id_tipo_atividade: int
-
-class AtividadeCreate(AtividadeBase):
-    pass
-
-
-# --- CONFIG ACESSIBILIDADE ---
-class ConfigAcessibilidadeBase(BaseModel):
+class AlunoResponse(BaseModel):
     id_aluno: int
-    preferencia_audio: Optional[bool] = False
-    preferencia_visual: Optional[bool] = False
-    preferencia_simplificado: Optional[bool] = False
-    outras_configuracoes: Optional[str] = None
-
-class ConfigAcessibilidadeCreate(ConfigAcessibilidadeBase):
-    pass
-
-
-# --- RESPOSTA ---
-class RespostaBase(BaseModel):
-    id_aluno: int
-    id_atividade: int
-    conteudo_resposta: str
-    nota: Optional[float] = None
-
-class RespostaCreate(RespostaBase):
-    pass
+    nome: str
+    matricula: str
+    data_nascimento: date
+    email: Optional[str]
+    id_turma: Optional[int]
+    id_nivel_suporte: Optional[int]
+    id_tipo_deficiencia: Optional[int]
+    id_responsavel: Optional[int]
 
 
-# --- ANÁLISE IA ---
-class AnaliseIaBase(BaseModel):
-    id_resposta: int
-    resultado: str
-    sugestoes: Optional[str] = None
-    modelo_utilizado: str
-
-class AnaliseIaCreate(AnaliseIaBase):
-    pass
-
-
-# --- VÍNCULOS N:M ---
+# ==========================================
+# 7. ALUNO DEFICIÊNCIA
+# ==========================================
 class AlunoDeficienciaCreate(BaseModel):
     id_aluno: int
     id_tipo_deficiencia: int
     id_nivel_suporte: int
 
+
+class AlunoDeficienciaResponse(BaseModel):
+    id_aluno_deficiencia: int
+    id_aluno: int
+    id_tipo_deficiencia: int
+    id_nivel_suporte: int
+
+
+# ==========================================
+# 8. CONFIGURAÇÃO DE ACESSIBILIDADE
+# ==========================================
+class ConfigAcessibilidadeCreate(BaseModel):
+    id_aluno: int
+    preferencia_visual: Optional[bool] = False
+    preferencia_audio: Optional[bool] = False
+    preferencia_simplificado: Optional[bool] = False
+    outras_configuracoes: Optional[str] = None
+
+
+class ConfigAcessibilidadeResponse(BaseModel):
+    id_config: int
+    id_aluno: int
+    preferencia_visual: Optional[bool]
+    preferencia_audio: Optional[bool]
+    preferencia_simplificado: Optional[bool]
+    outras_configuracoes: Optional[str]
+
+
+# ==========================================
+# 9. TIPO DE ATIVIDADE
+# ==========================================
+class TipoAtividadeCreate(BaseModel):
+    nome: str
+    descricao: Optional[str] = None
+
+
+class TipoAtividadeResponse(BaseModel):
+    id_tipo_atividade: int
+    nome: str
+    descricao: Optional[str]
+
+
+# ==========================================
+# 10. ATIVIDADE
+# ==========================================
+class AtividadeCreate(BaseModel):
+    titulo: str
+    id_tipo_atividade: int
+    data_criacao: date
+    descricao: Optional[str] = None
+
+
+class AtividadeResponse(BaseModel):
+    id_atividade: int
+    titulo: str
+    id_tipo_atividade: int
+    data_criacao: date
+    descricao: Optional[str]
+
+
+# ==========================================
+# 11. RECURSO DE ACESSIBILIDADE
+# ==========================================
+class RecursoAcessibilidadeCreate(BaseModel):
+    nome: str
+    tipo: Optional[str] = None
+    formato: Optional[str] = None
+    descricao: Optional[str] = None
+
+
+class RecursoAcessibilidadeResponse(BaseModel):
+    id_recurso: int
+    nome: str
+    tipo: Optional[str]
+    formato: Optional[str]
+    descricao: Optional[str]
+
+
+# ==========================================
+# 12. ATIVIDADE RECURSO
+# ==========================================
 class AtividadeRecursoCreate(BaseModel):
     id_atividade: int
     id_recurso: int
 
+
+# ==========================================
+# 13. RESPOSTA
+# ==========================================
+class RespostaCreate(BaseModel):
+    conteudo_resposta: str
+    id_aluno: int
+    id_atividade: int
+    data_resposta: datetime
+    nota: Optional[float] = None
+
+
+class RespostaResponse(BaseModel):
+    id_resposta: int
+    conteudo_resposta: str
+    id_aluno: int
+    id_atividade: int
+    data_resposta: datetime
+    nota: Optional[float]
+
+
+# ==========================================
+# 14. RESPOSTA RECURSO
+# ==========================================
 class RespostaRecursoCreate(BaseModel):
     id_resposta: int
     id_recurso: int
+
+
+# ==========================================
+# 15. ANÁLISE IA
+# ==========================================
+class AnaliseIaCreate(BaseModel):
+    modelo_utilizado: str
+    id_resposta: int
+    resultado: str
+    sugestoes: Optional[str] = None
+    data_analise: datetime
+class AnaliseIaResponse(BaseModel):
+    id_analise: int
+    modelo_utilizado: str
+    id_resposta: int
+    resultado: str
+    sugestoes: Optional[str]
+    data_analise: datetime
