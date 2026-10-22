@@ -22,7 +22,7 @@ from controller import (
 )
 
 app = FastAPI(
-    title="Educa Inclui API",
+    title="Tech Advisors API",
     version="4.0.0",
     description="API Completa com suporte total a 15 tabelas."
 )
