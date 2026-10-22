@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techadvisors - Gestão de Turmas</title>
+
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+
+
+<!--conexão css-->
+<link rel="stylesheet" href="../css/turmas.css">
+
+
+
+
+</head>
+
+
+
+
+<body class="font-inter">
+
+
+
+
+<!-- ==================== HEADER DE NAVEGAÇÃO ==================== -->
+<header class="home-header">
+ <div class="logo" onclick="window.location.href='professor.html'">
+   📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+ </div>
+
+
+
+
+ <nav>
+   <ul>
+     <li onclick="window.location.href='professor.html'">🏠 Portal do Docente</li>
+     <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='turmas.html'">🏫 Minhas Turmas</li>
+     <li onclick="alert('Área de Chatbot em desenvolvimento')">🤖 Chatbot</li>
+   
+     <!-- PROFESSOR DROPDOWN -->
+     <li class="user-menu-container">
+       <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none">
+         <span>👨‍🏫 Olá, Professor</span>
+         <span class="text-xs">▼</span>
+       </div>
+     
+       <div id="userMenu" class="user-dropdown">
+         <ul>
+           <li onclick="minhaConta()">👤 Minha Conta</li>
+           <li onclick="configuracoes()">⚙️ Configurações</li>
+           <li onclick="logout()" class="logout-item">🚪 Sair</li>
+         </ul>
+       </div>
+     </li>
+   </ul>
+ </nav>
+</header>
+
+
+
+
+<!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+<main class="container">
+ <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+   <div>
+     <h1 class="text-3xl font-bold text-slate-800">Gestão de Turmas</h1>
+     <p class="text-slate-500 text-sm mt-1">Consulte e cadastre as turmas ativas no sistema</p>
+   </div>
+   <button onclick="toggleModalTurma(true)" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition-all shadow-md">
+     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+     </svg>
+     Nova Turma
+   </button>
+ </div>
+
+
+
+
+ <!-- Tabela de Turmas -->
+ <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+   <div class="overflow-x-auto">
+     <table class="w-full text-left border-collapse">
+       <thead>
+         <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+           <th class="p-4">Código</th>
+           <th class="p-4">Nome da Turma</th>
+           <th class="p-4">Série/Ano</th>
+           <th class="p-4">Disciplina</th>
+           <th class="p-4">Turno</th>
+           <th class="p-4">Ano Letivo</th>
+           <th class="p-4">ID Prof.</th>
+           <th class="p-4">Status</th>
+         </tr>
+       </thead>
+       <tbody id="lista-turmas-body" class="divide-y divide-slate-100 text-sm text-slate-700">
+         <tr>
+           <td colspan="8" class="p-6 text-center text-slate-500">Carregando turmas...</td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+ </div>
+</main>
+
+
+
+
+<!-- ==================== MODAL DE CADASTRO DE TURMA ==================== -->
+<div id="modal-turma" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+ <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-100 p-7 md:p-8 relative">
+ 
+   <!-- Cabeçalho do Modal -->
+   <div class="flex items-center justify-between mb-6">
+     <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Criar Minha Turma</h3>
+     <button onclick="toggleModalTurma(false)" class="text-slate-400 hover:text-slate-600 transition-colors">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+       </svg>
+     </button>
+   </div>
+
+
+
+
+   <form class="space-y-5" onsubmit="handleSalvarTurma(event)">
+   
+     <!-- Série / Ano (Apenas do 8º Ano em diante) e Turma -->
+     <div class="grid grid-cols-3 gap-3">
+       <div class="col-span-2">
+         <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">SÉRIE / ANO</label>
+         <select id="turma-serie" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+           <option value="" disabled selected>Selecionar...</option>
+           <option value="8º Ano EF">8º Ano EF</option>
+           <option value="9º Ano EF">9º Ano EF</option>
+           <option value="1º Ano EM">1º Ano EM</option>
+           <option value="2º Ano EM">2º Ano EM</option>
+           <option value="3º Ano EM">3º Ano EM</option>
+         </select>
+       </div>
+
+
+
+
+       <div>
+         <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">TURMA</label>
+         <select id="turma-letra" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+           <option value="" disabled selected>Letra...</option>
+           <option value="A">Turma A</option>
+           <option value="B">Turma B</option>
+           <option value="C">Turma C</option>
+           <option value="D">Turma D</option>
+           <option value="E">Turma E</option>
+         </select>
+       </div>
+     </div>
+
+
+
+
+     <!-- Sua Disciplina (Preenchido dinamicamente com as matérias do professor) -->
+     <div>
+       <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">SUA DISCIPLINA</label>
+       <select id="turma-disciplina" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+         <option value="" disabled selected>Escolha a matéria desta turma...</option>
+       </select>
+     </div>
+
+
+
+
+     <!-- Turno -->
+     <div>
+       <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">TURNO</label>
+       <select id="turma-turno" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+         <option value="Manhã" selected>Manhã</option>
+         <option value="Tarde">Tarde</option>
+         <option value="Noite">Noite</option>
+         <option value="Integral">Integral</option>
+       </select>
+     </div>
+
+
+
+
+     <!-- Card Informativo Inferior (Ano, ID, Status) -->
+     <div class="border border-dashed border-slate-300 rounded-xl p-3.5 bg-slate-50/60 flex items-center justify-between text-xs text-slate-600">
+       <div>Ano Letivo: <strong id="info-ano-letivo" class="text-slate-800 font-bold">2026</strong></div>
+       <div>Seu ID: <strong id="info-prof-id" class="text-slate-800 font-bold">#1 (Prof. Carlos)</strong></div>
+       <div>Status: <span class="text-emerald-600 font-bold">Ativa</span></div>
+     </div>
+
+
+
+
+     <!-- Botões de Ação -->
+     <div class="flex items-center justify-end gap-3 pt-3">
+       <button type="button" onclick="toggleModalTurma(false)" class="px-5 py-3 text-slate-600 hover:text-slate-800 font-bold text-sm transition-colors">
+         Cancelar
+       </button>
+       <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-lg shadow-indigo-500/30 transition-all hover:scale-[1.01]">
+         Criar Turma
+       </button>
+     </div>
+
+
+
+
+   </form>
+ </div>
+</div>
+
+
+
+
+<footer class="home-footer">
+ © 2026 • Techadvisors — Painel do Professor
+</footer>
+
+
+<!--conexão js-->
+<script src="../js/turmas.js"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

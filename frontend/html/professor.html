@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+
+
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techadvisors - Painel do Professor</title>
+
+
+
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+
+
+
+<!--conexão css-->
+<link rel="stylesheet" href="../css/prof.css">
+
+
+
+
+</head>
+
+
+
+
+<body>
+
+
+
+
+<!-- ==================== PÁGINA DO PROFESSOR ==================== -->
+
+
+
+
+<header class="home-header">
+  <div class="logo" onclick="window.location.href='professor.html'">
+    📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+  </div>
+  <nav>
+    <ul>
+      <li onclick="window.location.href='professor.html'">🏠 Portal do Docente</li>
+      <li onclick="window.location.href='turmas.html'">🏫 Minhas Turmas</li>
+      <li onclick="alert('Área de Chatbot em desenvolvimento')">🤖 Chatbot</li>
+    
+      <!-- PROFESSOR DROPDOWN -->
+      <li class="user-menu-container">
+        <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none">
+          <span>👨‍🏫 Olá, Professor</span>
+          <span class="text-xs">▼</span>
+        </div>
+      
+        <div id="userMenu" class="user-dropdown">
+          <ul>
+            <li onclick="minhaConta()">👤 Minha Conta</li>
+            <li onclick="configuracoes()">⚙️ Configurações</li>
+            <li onclick="logout()" class="logout-item">🚪 Sair</li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+
+
+<div class="container">
+
+
+
+
+  <div class="banner">
+    <h2 id="prof-welcome-title">Bem-vindo, Professor(a)!</h2>
+    <p>
+      Gerencie suas turmas, lance conteúdos, acompanhe o desempenho e acesse relatórios inclusivos.
+    </p>
+  </div>
+
+
+
+
+  <div class="cards">
+
+
+
+
+    <div class="card" onclick="window.location.href='turmas.html'">
+      <div class="icone">🏫</div>
+      <h3>Minhas Turmas</h3>
+      <p>Acesse a lista de alunos e diários de classe.</p>
+    </div>
+
+
+
+
+    <div class="card" onclick="alert('Publicação de Atividades')">
+      <div class="icone">📚</div>
+      <h3>Atividades & Materiais</h3>
+      <p>Publique conteúdos e tarefas adaptadas.</p>
+    </div>
+
+
+
+
+    <div class="card" onclick="alert('Relatórios do Professor')">
+      <div class="icone">📊</div>
+      <h3>Relatórios & Notas</h3>
+      <p>Acompanhe o progresso do aprendizado.</p>
+    </div>
+
+
+
+
+    <div class="card" onclick="alert('Assistente Pedagógico Chatbot')">
+      <div class="icone">🤖</div>
+      <h3>Assistente IA</h3>
+      <p>Suporte automático para elaboração de planos de aula.</p>
+    </div>
+
+
+
+
+    <div class="card" onclick="alert('Configurações da Conta')">
+      <div class="icone">⚙️</div>
+      <h3>Meu Perfil</h3>
+      <p>Atualize seus dados institucionais.</p>
+    </div>
+
+
+
+
+  </div>
+
+
+
+
+</div>
+
+
+
+
+<footer class="home-footer">
+  © 2026 • Techadvisors — Painel do Professor
+</footer>
+
+
+<!--conexão js-->
+<script src="../js/prof.js"></script>
+
+
+</body>
+</html>
+
+
+

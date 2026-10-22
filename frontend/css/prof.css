@@ -1,0 +1,176 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+   }
+   
+   
+   
+   
+   body {
+    background: #f3f7fb;
+    color: #333;
+   }
+   
+   
+   
+   
+   header.home-header {
+    background: #1364c2;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+   }
+   
+   
+   
+   
+   .logo {
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+   }
+   
+   
+   
+   
+   nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    gap: 25px;
+   }
+   
+   
+   
+   
+   nav li {
+    cursor: pointer;
+    transition: .3s;
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+   }
+   
+   
+   
+   
+   nav li:hover {
+    color: #FFE082;
+   }
+   
+   
+   
+   
+   .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 50px 0;
+   }
+   
+   
+   
+   
+   .banner {
+    background: linear-gradient(135deg, #0865c2, #2386d8);
+    color: white;
+    padding: 50px;
+    border-radius: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+   }
+   
+   
+   
+   
+   .banner h2 {
+    font-size: 38px;
+    margin-bottom: 12px;
+   }
+   
+   
+   
+   
+   .banner p {
+    font-size: 20px;
+    opacity: .9;
+   }
+   
+   
+   
+   
+   .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+   }
+   
+   
+   
+   
+   .card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    transition: .3s;
+    cursor: pointer;
+   }
+   
+   
+   
+   
+   .card:hover {
+    transform: translateY(-8px);
+   }
+   
+   
+   
+   
+   .card h3 {
+    color: #1565C0;
+    font-size: 20px;
+    margin: 18px 0 10px 0;
+   }
+   
+   
+   
+   
+   .card p {
+    color: #666;
+    font-size: 15px;
+   }
+   
+   
+   
+   
+   .icone {
+    font-size: 60px;
+   }
+   
+   
+   
+   
+   footer.home-footer {
+    text-align: center;
+    padding: 24px;
+    margin-top: 60px;
+    background: #1565C0;
+    color: white;
+    font-size: 15px;
+   }
+   
+   
+   
+   
+   
+   
