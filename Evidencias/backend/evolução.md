@@ -1,0 +1,5 @@
+Inicialmente estavamos seguindo a estrutura conforme o material fornecido no arquivo "AVALIAÇÂO: integração backend" fornecido pelos professores.
+
+Mesmo seguindo a estrutura fielmente encontramos erros na hora de seguir o material fornecido na hora de executar por algum erro não identificado até agora, o problema estava na hora de realizar a conexão com o banco de dados.
+
+Juntamente com a orientação dos professores tomamos a liberdade de buscar alternativas que permitissem realizar o nossa primeira conexão entre API e banco de dados, após muita pesquisa e utilizando a IA somente como orientadora encontramos uma alternativa que deu certo, essa alternativa foi instalar o pacote do supabase localmente e utilizar a estrutura "SUPABASE_URL", "SUPABASE_KEY" em vez da fornecida anteriormente que utilizava o modelo "DATABASE_URL", que mesmo com a mudança de portas não tinha conseguido ser executada de forma correta, em suma seguindo essa estrutura nova nossa API estava no ar e realizamos as nossas primeiras consultas GET e POST.
