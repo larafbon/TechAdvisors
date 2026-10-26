@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre - Techadvisors</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Conexão CSS -->
+  <link rel="stylesheet" href="../css/home.css">
+</head>
+
+<body class="bg-[#f3f7fb]">
+
+  <header class="home-header">
+    <div class="logo" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS
+    </div>
+
+    <nav>
+      <ul>
+        <li onclick="window.location.href='index.html'">🏠 Home</li>
+        <li onclick="handleDashboardNavigation()">📊 Dashboard</li>
+        <li onclick="alert('Área de Chatbot')">🤖 Chatbot</li>
+        <li onclick="window.location.href='index.html'">📝 Cadastro</li>
+        <li onclick="window.location.href='index.html'">🔑 Login</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container my-8">
+
+    <button onclick="window.location.href='index.html'" class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-purple-700 transition-colors cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Voltar para Home
+    </button>
+
+    <div class="banner">
+      <h2>Sobre o TechAdvisors</h2>
+      <p>Inclusão, Personalização e Tecnologia Assistiva na Educação.</p>
+    </div>
+
+    <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-slate-100 text-slate-800 space-y-10 my-8 text-left">
+      
+      <!-- APRESENTAÇÃO E CONTEXTO -->
+      <div>
+        <h3 class="text-2xl font-bold text-purple-900 mb-3 flex items-center gap-2">
+          🎯 O Problema e o Propósito
+        </h3>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          O projeto <strong>TechAdvisors: Inclusões e Personalizações nas Escolas</strong> surge no CEEP Padre Joseir Sversutti (Maringá/PR) sob orientação do coordenador Erinaldo Sanches Nascimento. A iniciativa enfrenta um desafio fundamental na educação: a falta de reforço adequado para alunos neurodivergentes — pessoas cujo cérebro pensa e aprende de maneira diferente, especialmente aqueles com Transtorno do Déficit de Atenção com Hiperatividade (TDAH) e Transtorno do Espectro Autista (TEA).
+        </p>
+        <p class="text-slate-600 leading-relaxed">
+          Alinhado ao <strong>Objetivo de Desenvolvimento Sustentável da ONU para Educação de Qualidade (ODS 4)</strong>, o projeto combate a complexidade e as distrações das aulas e plataformas tradicionais, garantindo que nenhum estudante fique para trás.
+        </p>
+      </div>
+
+      <!-- ARQUITETURA E TECNOLOGIA -->
+      <div class="pt-6 border-t border-slate-100">
+        <h3 class="text-2xl font-bold text-purple-900 mb-4 flex items-center gap-2">
+          ⚙️ Como Funciona a Plataforma
+        </h3>
+        <p class="text-slate-600 leading-relaxed mb-6">
+          A solução consiste em uma plataforma de tecnologia assistiva baseada em ferramentas de código aberto (open-source), dividida em dois módulos principais:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100">
+            <h4 class="font-bold text-purple-900 text-lg mb-2">🖥️ Módulo Operacional & Transacional</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Desenvolvido com Python (FastAPI), PostgreSQL, HTML, CSS, JavaScript e Axios para gerenciar de forma eficiente as rotinas escolares.
+            </p>
+          </div>
+
+          <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100">
+            <h4 class="font-bold text-purple-900 text-lg mb-2">🤖 Módulo de Inteligência e Decisão</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Integra um assistente virtual baseado na IA Gemini (Google) para que o aluno tire dúvidas no seu próprio ritmo sem constrangimento, além de dashboards estatísticos (Matplotlib) para ajudar professores a adaptarem suas estratégias pedagógicas.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- METODOLOGIA -->
+      <div class="pt-6 border-t border-slate-100">
+        <h3 class="text-2xl font-bold text-purple-900 mb-3 flex items-center gap-2">
+          🎓 Metodologia e Impacto Social
+        </h3>
+        <p class="text-slate-600 leading-relaxed">
+          Direcionada a estudantes neurodivergentes e educadores, nossa metodologia foca na autonomia do aluno e na gestão de ensino orientada por dados, sempre sob o acompanhamento e curadoria dos professores. Atualmente em fase de prototipagem e estruturação de banco de dados e APIs, o projeto busca democratizar o acesso à educação inclusiva por meio de estudo de caso e pesquisa-ação.
+        </p>
+      </div>
+
+      <!-- EQUIPE DE DESENVOLVIMENTO -->
+      <div class="pt-6 border-t border-slate-100">
+        <h3 class="text-2xl font-bold text-purple-900 mb-2 flex items-center gap-2">
+          👩‍💻 Equipe de Desenvolvedoras
+        </h3>
+        <p class="text-sm text-slate-500 mb-6">Alunas do 1º Ano do Ensino Médio Técnico — CEEP Padre Joseir Sversutti</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">LB</div>
+            <h4 class="font-bold text-slate-800 text-sm">Lara Faccin Bonette</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º A</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Inteligência Artificial</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">RV</div>
+            <h4 class="font-bold text-slate-800 text-sm">Rafaela Pereira Vitorino</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º B</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Dev. de Sistemas</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">KS</div>
+            <h4 class="font-bold text-slate-800 text-sm">Kamilly Vitória Rosa Santos</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º A</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Inteligência Artificial</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">GB</div>
+            <h4 class="font-bold text-slate-800 text-sm">Gabriella Dias Bueno</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º B</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Dev. de Sistemas</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">KM</div>
+            <h4 class="font-bold text-slate-800 text-sm">Kelly Caroline Michalak</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º B</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Dev. de Sistemas</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">SF</div>
+            <h4 class="font-bold text-slate-800 text-sm">Sabrina N. Fiusa de Freitas</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º B</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Dev. de Sistemas</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">MC</div>
+            <h4 class="font-bold text-slate-800 text-sm">Mariana Cuartas</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º B</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Dev. de Sistemas</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 mx-auto mb-2 bg-purple-200 text-purple-800 rounded-full flex items-center justify-center font-bold text-lg">VF</div>
+            <h4 class="font-bold text-slate-800 text-sm">Valentina Furio</h4>
+            <span class="text-[11px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full inline-block mt-1">1º A</span>
+            <p class="text-xs text-slate-500 mt-2 font-medium">Inteligência Artificial</p>
+          </div>
+
+        </div>
+
+        <div class="mt-6 p-4 bg-purple-50 rounded-2xl border border-purple-100 text-center">
+          <p class="text-xs text-purple-900 font-semibold">👨‍🏫 Orientação: Prof. Erinaldo Sanches Nascimento</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Sobre o Projeto
+  </footer>
+
+  <!-- Conexão JS -->
+  <script src="../js/home.js"></script>
+</body>
+
+</html>

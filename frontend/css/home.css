@@ -1,238 +1,162 @@
-/* Estilos Globais */
+/* ==================== ESTILOS GLOBAIS ==================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    }
-    
-    
-    
-    
-    body {
+  }
+  
+  body {
     background: #f3f7fb;
     color: #333;
-    }
-    
-    
-    
-    
-    /* Header & Navegação */
-    header.home-header {
+  }
+  
+  .font-inter {
+    font-family: 'Inter', sans-serif !important;
+  }
+  
+  /* ==================== CONTROLE DE VISIBILIDADE DAS TELAS ==================== */
+  /* Oculta qualquer tela marcada como hidden ou não-ativa */
+  .hidden {
+    display: none !important;
+  }
+  
+  .page-screen {
+    display: none;
+  }
+  
+  .page-screen.active {
+    display: block;
+  }
+  
+  .page-screen-flex {
+    display: none;
+  }
+  
+  .page-screen-flex.active {
+    display: flex;
+  }
+  
+  /* ==================== HEADER & NAVEGAÇÃO ==================== */
+  header.home-header {
     background: #1364c2;
     color: white;
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,.15);
-    }
-    
-    
-    
-    
-    .logo {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .logo {
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
-    }
-    
-    
-    
-    
-    nav ul {
+    user-select: none;
+  }
+  
+  nav ul {
     display: flex;
     flex-direction: row;
     align-items: center;
     list-style: none;
     gap: 25px;
-    }
-    
-    
-    
-    
-    nav li {
+  }
+  
+  nav li {
     cursor: pointer;
-    transition: .3s;
+    transition: color 0.3s ease;
     font-weight: 500;
     font-size: 16px;
     white-space: nowrap;
-    }
-    
-    
-    
-    
-    nav li:hover {
+  }
+  
+  nav li:hover {
     color: #FFE082;
-    }
-    
-    
-    
-    
-    /* Conteúdo e Cards */
-    .container {
+  }
+  
+  /* ==================== CONTEÚDO E BANNER ==================== */
+  .container {
     width: 90%;
     max-width: 1200px;
     margin: auto;
     padding: 50px 0;
-    }
-    
-    
-    
-    
-    .banner {
+  }
+  
+  .banner {
     background: linear-gradient(135deg, #0865c2, #2386d8);
     color: white;
     padding: 50px;
     border-radius: 24px;
     margin-bottom: 40px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.15);
-    }
-    
-    
-    
-    
-    .banner h2 {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .banner h2 {
     font-size: 38px;
     margin-bottom: 12px;
-    }
-    
-    
-    
-    
-    .banner p {
+  }
+  
+  .banner p {
     font-size: 20px;
-    opacity: .9;
-    }
-    
-    
-    
-    
-    .cards {
+    opacity: 0.9;
+  }
+  
+  /* ==================== GRID DE CARDS ==================== */
+  .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
-    }
-    
-    
-    
-    
-    .card {
+  }
+  
+  .card {
     background: white;
     border-radius: 20px;
     padding: 35px 25px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,.08);
-    transition: .3s;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    }
-    
-    
-    
-    
-    .card:hover {
+  }
+  
+  .card:hover {
     transform: translateY(-8px);
-    }
-    
-    
-    
-    
-    .card h3 {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+  }
+  
+  .card h3 {
     color: #1565C0;
     font-size: 20px;
     margin: 18px 0 10px 0;
-    }
-    
-    
-    
-    
-    .card p {
+  }
+  
+  .card p {
     color: #666;
     font-size: 15px;
-    }
-    
-    
-    
-    
-    .icone {
+  }
+  
+  .icone {
     font-size: 60px;
-    }
-    
-    
-    
-    
-    footer.home-footer {
-    text-align: center;
-    padding: 24px;
-    margin-top: 60px;
-    background: #1565C0;
-    color: white;
-    font-size: 15px;
-    }
-    
-    
-    
-    
-    .font-inter {
-    font-family: 'Inter', sans-serif !important;
-    }
-    
-    
-    
-    
-    .btn-hover {
+  }
+  
+  /* ==================== EFEITOS DE BOTÕES ==================== */
+  .btn-hover {
     transition: all 0.2s ease-in-out;
-    }
-    
-    
-    
-    
-    .btn-hover:hover {
+  }
+  
+  .btn-hover:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    }
-    
-    
-    
-    
-    .btn-hover:active {
+  }
+  
+  .btn-hover:active {
     transform: translateY(0);
-    }
-    
-    
-    
-    
-    /* Ocultar e Exibir Telas */
-    .page-screen {
-    display: none;
-    }
-    
-    
-    
-    
-    .page-screen.active {
-    display: block;
-    }
-    
-    
-    
-    
-    .page-screen-flex {
-    display: none;
-    }
-    
-    
-    
-    
-    .page-screen-flex.active {
-    display: flex;
-    }
-    
-    
-    
-    
-    /* Estilo dos Cards Selecionáveis */
-    .role-card {
+  }
+  
+  /* ==================== CARDS SELECIONÁVEIS (CADASTRO) ==================== */
+  .role-card {
     border: 2px solid #e2e8f0;
     border-radius: 1.25rem;
     padding: 2rem 1.25rem;
@@ -245,26 +169,52 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    }
-    
-    
-    
-    
-    .role-card:hover {
+  }
+  
+  .role-card:hover {
     border-color: #6b21a8;
     transform: translateY(-2px);
-    }
-    
-    
-    
-    
-    .role-card.selected {
+  }
+  
+  .role-card.selected {
     border-color: #6b21a8;
     box-shadow: 0 0 0 2px #6b21a8, 0 10px 20px -5px rgba(107, 33, 168, 0.2);
     background-color: #f5f3ff;
+  }
+  
+  /* ==================== FOOTER ==================== */
+  footer.home-footer {
+    text-align: center;
+    padding: 24px;
+    margin-top: 60px;
+    background: #1565C0;
+    color: white;
+    font-size: 15px;
+  }
+  
+  /* ==================== AJUSTES RESPONSIVOS (CELULAR) ==================== */
+  @media (max-width: 768px) {
+    header.home-header {
+      padding: 20px;
+      flex-direction: column;
+      text-align: center;
     }
-    
-    
-    
-
-    
+  
+    nav ul {
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .banner {
+      padding: 30px 20px;
+    }
+  
+    .banner h2 {
+      font-size: 28px;
+    }
+  
+    .banner p {
+      font-size: 16px;
+    }
+  }
