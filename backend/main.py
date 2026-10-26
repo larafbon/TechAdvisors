@@ -55,4 +55,4 @@ app.include_router(analise_ia.router)
 
 @app.get("/")
 def root():
-    return {"message": "API Educa Inclui rodando com sucesso!"}
+    return {"message": "API Tech Advisors rodando com sucesso!"}
