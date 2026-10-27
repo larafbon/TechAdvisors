@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Painel do Aluno</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/config.css">
+</head>
+<body>
+
+  <header class="home-header">
+    <div class="logo" onclick="window.location.href='alunos.html'">
+      📘 TECHADVISORS <span class="text-xs bg-emerald-400 text-slate-900 px-2 py-1 rounded ml-2 font-bold">ALUNO</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='alunos.html'">🎓 Portal do Estudante</li>
+        <li onclick="alert('Acessando Minhas Matérias')">📚 Minhas Matérias</li>
+        
+        <li class="user-menu-container">
+          <div id="student-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>Olá, Aluno</span>
+            <span class="text-xs">▾</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Meu Perfil</li>
+              <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="banner">
+      <h2 id="student-welcome-title">Bem-vindo, Aluno(a)!</h2>
+      <p>
+        Acompanhe suas disciplinas, veja tarefas pendentes, consulte suas notas e utilize recursos de apoio aos estudos.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card" onclick="alert('Acessando Minhas Disciplinas')">
+        <div class="icone">📖</div>
+        <h3>Minhas Disciplinas</h3>
+        <p>Acesse as matérias, horários e conteúdos das suas turmas.</p>
+      </div>
+
+      <div class="card" onclick="alert('Acessando Atividades & Tarefas')">
+        <div class="icone">📝</div>
+        <h3>Atividades & Trabalhos</h3>
+        <p>Confira prazos de entrega e envie suas tarefas.</p>
+      </div>
+
+      <div class="card" onclick="alert('Acessando Boletos & Notas')">
+        <div class="icone">📊</div>
+        <h3>Notas & Frequência</h3>
+        <p>Acompanhe seu desempenho acadêmico e presença.</p>
+      </div>
+
+      <div class="card" onclick="alert('Acessando Materiais Complementares')">
+        <div class="icone">🎧</div>
+        <h3>Recursos Inclusivos</h3>
+        <p>Acesse áudios, resumos adaptados e ferramentas de apoio.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Painel do Aluno
+  </footer>
+
+  <!-- Botão Flutuante de Configurações de Acessibilidade -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95">
+    ⚙️
+  </button>
+
+  <!-- Overlay e Drawer Lateral de Acessibilidade -->
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="fixed inset-0 bg-slate-900/40 z-50 hidden"></div>
+
+  <aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+    </div>
+
+    <!-- Controle de Fonte -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A +</button>
+      </div>
+    </div>
+
+    <!-- Controle de Brilho -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-1">
+        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+    </div>
+
+    <!-- Controle de Saturação -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+    </div>
+
+    <!-- Alto Contraste -->
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-indigo-600 cursor-pointer">
+    </div>
+
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 underline mt-auto text-center pt-4">Restaurar Padrões</button>
+  </aside>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/alunos.js"></script>
+</body>
+</html>
