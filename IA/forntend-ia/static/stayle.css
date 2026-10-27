@@ -1,0 +1,1130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --green-dark: #43833e;
+    --green: #72a85e;
+    --green-light: #e5f2d8;
+    --green-soft: #f3f9ee;
+
+    --text: #273027;
+
+    --white: #ffffff;
+
+    --border: #dcebd3;
+
+}
+
+
+body {
+
+    font-family: "Nunito", sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fcf4,
+            #eef7e8
+        );
+
+    color: var(--text);
+
+}
+
+
+/* ===================================
+   SITE
+=================================== */
+
+.site {
+
+    display: flex;
+
+    min-height: 100vh;
+
+}
+
+
+/* ===================================
+   SIDEBAR
+=================================== */
+
+.sidebar {
+
+    width: 285px;
+
+    min-height: 100vh;
+
+    padding: 35px 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #edf7e5,
+            #e7f3de
+        );
+
+    border-right:
+        1px solid #d7e8ce;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* LOGO */
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding-left: 8px;
+
+}
+
+
+.logo-icon {
+
+    width: 65px;
+
+    height: 65px;
+
+    border-radius: 50%;
+
+    background: #d8ebcb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 34px;
+
+}
+
+
+.logo h1 {
+
+    color: var(--green-dark);
+
+    font-size: 28px;
+
+    line-height: 0.95;
+
+}
+
+
+.logo-subtitle {
+
+    color: #5b8054;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin: 18px 8px 35px;
+
+}
+
+
+/* MENU */
+
+.menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.menu-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 15px 14px;
+
+    border-radius: 22px;
+
+    color: #263127;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition: 0.25s;
+
+}
+
+
+.menu-item span {
+
+    width: 30px;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    color: #5b9a4f;
+
+}
+
+
+.menu-item:hover {
+
+    background: #dceecf;
+
+    transform: translateX(3px);
+
+}
+
+
+.menu-item.active {
+
+    background: #d9edc8;
+
+    color: #346630;
+
+}
+
+
+/* CARD DA SIDEBAR */
+
+.side-card {
+
+    margin-top: auto;
+
+    padding: 24px 15px;
+
+    text-align: center;
+
+    background: rgba(255,255,255,0.8);
+
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+}
+
+
+.side-heart {
+
+    font-size: 32px;
+
+}
+
+
+.side-card p {
+
+    margin-top: 12px;
+
+    line-height: 1.5;
+
+    font-size: 14px;
+
+}
+
+
+.side-icons {
+
+    margin-top: 18px;
+
+    font-size: 21px;
+
+    letter-spacing: 8px;
+
+}
+
+
+/* ===================================
+   CONTEÚDO
+=================================== */
+
+.content {
+
+    flex: 1;
+
+    padding: 22px 28px;
+
+    max-width: 1500px;
+
+    margin: auto;
+
+}
+
+
+/* ===================================
+   TOPBAR
+=================================== */
+
+.topbar {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.calm-mode {
+
+    padding: 12px 20px;
+
+    border-radius: 30px;
+
+    border: 1px solid var(--border);
+
+    background: #f1f8eb;
+
+    color: #3f743b;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+.circle-button {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 1px solid #cfe1c8;
+
+    color: var(--green-dark);
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+}
+
+
+/* ===================================
+   ASSISTENTE
+=================================== */
+
+.assistant {
+
+    min-height: 320px;
+
+    background: white;
+
+    border: 1px solid #cfe1c6;
+
+    border-radius: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    padding: 25px 30px;
+
+    box-shadow:
+        0 8px 25px rgba(
+            77,
+            120,
+            65,
+            0.06
+        );
+
+}
+
+
+/* PERSONAGEM */
+
+.assistant-person {
+
+    width: 38%;
+
+    height: 280px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+}
+
+
+.person-background {
+
+    position: absolute;
+
+    width: 245px;
+
+    height: 245px;
+
+    border-radius: 50%;
+
+    background: #dcefcf;
+
+}
+
+
+.person {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 150px;
+
+    line-height: 1;
+
+}
+
+
+/* TEXTO */
+
+.assistant-info {
+
+    flex: 1;
+
+    padding: 10px 25px;
+
+}
+
+
+.assistant-tag {
+
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border-radius: 25px;
+
+    background: #e5f2da;
+
+    color: #41733c;
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    margin-bottom: 16px;
+
+}
+
+
+.assistant-info h2 {
+
+    font-size: 30px;
+
+    line-height: 1.2;
+
+    margin-bottom: 12px;
+
+}
+
+
+.assistant-info > p {
+
+    max-width: 700px;
+
+    color: #555e54;
+
+    font-size: 17px;
+
+    line-height: 1.55;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* CARDS */
+
+.features {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+
+.feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 15px;
+
+    border: 1px solid #e1eadd;
+
+    border-radius: 20px;
+
+    background: #fcfefb;
+
+}
+
+
+.feature span {
+
+    font-size: 27px;
+
+}
+
+
+.feature p {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+}
+
+
+/* ===================================
+   LOUSA
+=================================== */
+
+.chalkboard {
+
+    position: relative;
+
+    margin-top: 32px;
+
+    height: 220px;
+
+    border: 10px solid #9a6636;
+
+    border-radius: 22px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.035),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #174b37,
+            #155039
+        );
+
+    box-shadow:
+
+        0 6px 0 #714823,
+
+        inset 0 0 25px
+        rgba(0,0,0,0.3);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* ===================================
+   PESQUISA DENTRO DA LOUSA
+=================================== */
+
+.search-box {
+
+    width: 75%;
+
+    height: 72px;
+
+    border: 3px solid
+        rgba(255,255,255,0.75);
+
+    border-radius: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 18px;
+
+    background:
+        rgba(0,0,0,0.08);
+
+}
+
+
+.search-icon {
+
+    font-size: 30px;
+
+    margin-right: 15px;
+
+}
+
+
+.search-box input {
+
+    flex: 1;
+
+    height: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family:
+        "Nunito",
+        sans-serif;
+
+    font-size: 17px;
+
+}
+
+
+.search-box input::placeholder {
+
+    color:
+        rgba(255,255,255,0.8);
+
+}
+
+
+.search-box button {
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 31px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.search-box button:hover {
+
+    transform:
+        translateX(5px);
+
+}
+
+
+/* ===================================
+   DECORAÇÕES DA LOUSA
+=================================== */
+
+.chalk {
+
+    position: absolute;
+
+    font-size: 42px;
+
+}
+
+
+.bulb {
+
+    left: 30px;
+
+    top: 25px;
+
+}
+
+
+.puzzle {
+
+    left: 30px;
+
+    bottom: 25px;
+
+}
+
+
+.heart {
+
+    right: 30px;
+
+    top: 25px;
+
+    color: #ed80b4;
+
+}
+
+
+.star {
+
+    right: 30px;
+
+    bottom: 25px;
+
+    color: #f3c73e;
+
+}
+
+
+/* GIZES */
+
+.chalks {
+
+    position: absolute;
+
+    bottom: -1px;
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+
+.chalk-piece {
+
+    width: 55px;
+
+    height: 10px;
+
+    border-radius: 10px;
+
+}
+
+
+.pink {
+    background: #ef82b1;
+}
+
+.yellow {
+    background: #f1cb48;
+}
+
+.blue {
+    background: #51a7dc;
+}
+
+.white {
+    background: #f5f0e7;
+}
+
+.green {
+    background: #9bcf76;
+}
+
+
+/* ===================================
+   RESPOSTA
+=================================== */
+
+.response {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 18px;
+
+    max-width: 800px;
+
+    padding: 15px 20px;
+
+    border-radius: 20px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+}
+
+
+.avatar {
+
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 50%;
+
+    background: #e0f0d5;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+
+}
+
+
+.response strong {
+
+    color: #477b41;
+
+}
+
+
+.response p {
+
+    margin-top: 4px;
+
+    color: #596257;
+
+    line-height: 1.5;
+
+}
+
+
+/* ===================================
+   BOTÕES
+=================================== */
+
+.quick-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-top: 18px;
+
+}
+
+
+.quick-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 17px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition: 0.25s;
+
+}
+
+
+.quick-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(70,110,60,0.08);
+
+}
+
+
+.quick-card p {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+}
+
+
+.quick-card span {
+
+    min-width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 26px;
+
+}
+
+
+.blue-icon {
+
+    border: 2px solid #3981b9;
+
+    color: #3981b9;
+
+}
+
+
+.green-icon {
+
+    border: 2px solid #5e9c4d;
+
+    color: #5e9c4d;
+
+}
+
+
+.red-icon {
+
+    border: 2px solid #a74a4a;
+
+    color: #a74a4a;
+
+}
+
+
+.purple-icon {
+
+    color: #8b4fa6;
+
+    background: #f1e5f7;
+
+}
+
+
+/* ===================================
+   FOOTER
+=================================== */
+
+footer {
+
+    margin-top: 18px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    color: #4d7948;
+
+    font-size: 14px;
+
+}
+
+
+/* ===================================
+   RESPONSIVO
+=================================== */
+
+@media (max-width: 1100px) {
+
+    .sidebar {
+
+        width: 230px;
+
+    }
+
+    .assistant-info h2 {
+
+        font-size: 25px;
+
+    }
+
+    .features {
+
+        flex-direction: column;
+
+    }
+
+    .quick-actions {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .site {
+
+        flex-direction: column;
+
+    }
+
+    .sidebar {
+
+        width: 100%;
+
+        min-height: auto;
+
+    }
+
+    .menu {
+
+        flex-direction: row;
+
+        overflow-x: auto;
+
+    }
+
+    .menu-item {
+
+        min-width: max-content;
+
+    }
+
+    .side-card {
+
+        display: none;
+
+    }
+
+    .content {
+
+        padding: 15px;
+
+    }
+
+    .assistant {
+
+        flex-direction: column;
+
+        text-align: center;
+
+    }
+
+    .assistant-person {
+
+        width: 100%;
+
+        height: 220px;
+
+    }
+
+    .assistant-info {
+
+        padding: 15px;
+
+    }
+
+    .features {
+
+        align-items: center;
+
+    }
+
+    .chalkboard {
+
+        height: 190px;
+
+    }
+
+    .search-box {
+
+        width: 78%;
+
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .quick-actions {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .assistant-info h2 {
+
+        font-size: 22px;
+
+    }
+
+    .search-box {
+
+        width: 90%;
+
+    }
+
+    .search-box input {
+
+        font-size: 14px;
+
+    }
+
+    .chalk {
+
+        font-size: 30px;
+
+    }
+
+    .bulb,
+    .puzzle {
+
+        left: 10px;
+
+    }
+
+    .heart,
+    .star {
+
+        right: 10px;
+
+    }
+
+}
