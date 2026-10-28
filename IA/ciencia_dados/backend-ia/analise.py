@@ -1,274 +1,216 @@
 from pathlib import Path
 import pandas as pd
 
-
-# ---------------------------------------------------------------------------
-# Caminho do CSV (independente do diretório de execução)
-# ---------------------------------------------------------------------------
-BASE_DIR = Path(__file__).resolve().parent
-CAMINHO_CSV = BASE_DIR.parent / "database" / "dados.csv"
+CAMINHO_CSV = Path(__file__).resolve().parent.parent / 'database' / 'dados.csv'
 
 
-# ---------------------------------------------------------------------------
-# Colunas obrigatórias
-# ---------------------------------------------------------------------------
-COLUNAS_OBRIGATORIAS = [
-    "id_resposta", "id_aluno", "nome_completo", "tipo_deficiencia",
-    "nivel_suporte", "id_turma", "codigo_turma", "serie_ano",
-    "disciplina", "turno", "ano_letivo", "id_atividade", "titulo",
-    "tipo_atividade", "data_hora_abertura", "data_hora_entrega",
-    "nota_maxima", "status_atividade", "data_hora_envio",
-    "tempo_gasto_seg", "tentativa", "nota_obtida", "acertos",
-    "erros", "status_resposta",
-]
+def ler_dados():
+    # dados dos alunos
+    df = pd.read_csv(CAMINHO_CSV)
+    df = pd.read_csv(CAMINHO_CSV, encoding='utf-8')
 
-COLUNAS_NUMERICAS = [
-    "nivel_suporte", "ano_letivo", "nota_maxima", "tempo_gasto_seg",
-    "tentativa", "nota_obtida", "acertos", "erros",
-]
+    colunas = [
+        'id_resposta', 'id_aluno', 'nome_completo', 'data_nascimento', 'matricula',
+        'tipo_deficiencia', 'nivel_suporte', 'tamanho_fonte', 'sintese_voz',
+        'velocidade_audio', 'contraste_cores', 'fonte_dislexia', 'reducao_estimulo',
+        'tema_exibicao', 'status_aluno', 'id_turma', 'codigo_turma', 'nome_turma',
+        'serie_ano', 'disciplina', 'turno', 'ano_letivo', 'nome_professor',
+        'email_professor', 'status_turma', 'id_atividade', 'titulo', 'descricao',
+        'tipo_atividade', 'data_hora_abertura', 'data_hora_entrega', 'nota_maxima',
+        'recursos_acessibilidade', 'status_atividade', 'data_hora_envio',
+        'tempo_gasto_seg', 'tentativa', 'resposta_selecionada', 'nota_obtida',
+        'acertos', 'erros', 'recursos_usados', 'status_resposta', 'id_analise',
+        'periodo_inicio', 'periodo_fim', 'diagnostico_desempenho',
+        'sugestao_conduta', 'alerta_risco', 'media_notas', 'taxa_conclusao',
+        'tempo_medio_atividade', 'data_geracao',
+    ]
+    if not set(colunas).issubset(df.columns):
+        raise ValueError('Confira as colunas do CSV.')
+    df = df[colunas].copy()
+    if df.empty or df.isna().any().any():
+        raise ValueError('O CSV está vazio ou contém campos ausentes.')
 
-COLUNAS_INTEIRAS = [
-    "nivel_suporte", "ano_letivo", "tempo_gasto_seg",
-    "tentativa", "acertos", "erros",
-]
+    # Datas
+    colunas_data = ['data_nascimento', 'data_hora_abertura', 'data_hora_entrega',
+                    'data_hora_envio', 'periodo_inicio', 'periodo_fim', 'data_geracao']
+    for coluna in colunas_data:
+        df[coluna] = pd.to_datetime(df[coluna], errors='raise')
 
-COLUNAS_DATAS = [
-    "data_hora_abertura", "data_hora_entrega", "data_hora_envio",
-]
+    # Booleanos de perfil
+    for coluna in ['sintese_voz', 'fonte_dislexia', 'reducao_estimulo']:
+        if not df[coluna].isin([True, False]).all():
+            df[coluna] = df[coluna].map({True: True, False: False, 'True': True, 'False': False})
+        df[coluna] = df[coluna].astype(bool)
 
+    # Numéricos
+    colunas_num = ['matricula', 'nivel_suporte', 'tamanho_fonte', 'velocidade_audio',
+                   'ano_letivo', 'nota_maxima', 'tempo_gasto_seg', 'tentativa',
+                   'nota_obtida', 'acertos', 'erros', 'media_notas',
+                   'taxa_conclusao', 'tempo_medio_atividade']
+    for coluna in colunas_num:
+        df[coluna] = pd.to_numeric(df[coluna], errors='raise')
 
-# ---------------------------------------------------------------------------
-# 1. Leitura + validação
-# ---------------------------------------------------------------------------
-def ler_dados() -> pd.DataFrame:
-    """Lê o CSV, valida estrutura, tipos e regras de negócio."""
-    df = pd.read_csv(CAMINHO_CSV, encoding="utf-8-sig")
+    if df[colunas_num].isin([float('inf'), -float('inf')]).any().any():
+        raise ValueError('O CSV contém valores infinitos.')
 
-    faltando = set(COLUNAS_OBRIGATORIAS) - set(df.columns)
-    if faltando:
-        raise ValueError(f"Colunas ausentes no CSV: {sorted(faltando)}")
+    # Validações de negócio
+    if df['id_resposta'].duplicated().any():
+        raise ValueError('Existem respostas com o mesmo id_resposta.')
+    if (df['nota_obtida'] < 0).any() or (df['nota_obtida'] > df['nota_maxima']).any():
+        raise ValueError('Nota obtida deve estar entre 0 e nota_maxima.')
+    if (df['tempo_gasto_seg'] < 0).any():
+        raise ValueError('tempo_gasto_seg não pode ser negativo.')
+    if (df['tentativa'] < 1).any():
+        raise ValueError('tentativa deve ser >= 1.')
+    if (df['acertos'] < 0).any() or (df['erros'] < 0).any():
+        raise ValueError('Acertos e erros não podem ser negativos.')
+    if not df['taxa_conclusao'].between(0, 1).all():
+        raise ValueError('taxa_conclusao deve estar entre 0 e 1.')
+    if not df['alerta_risco'].isin(['baixo', 'medio', 'alto']).all():
+        raise ValueError('alerta_risco deve ser baixo, medio ou alto.')
 
-    df = df[COLUNAS_OBRIGATORIAS].copy()
+    # Análise de um aluno; período e nível de risco
+    for coluna in ['id_aluno', 'alerta_risco']:
+        if (df.groupby('id_analise')[coluna].nunique() > 1).any():
+            raise ValueError('Uma análise tem alunos ou riscos conflitantes.')
 
-    if df.empty:
-        raise ValueError("O CSV está vazio.")
-    if df.isna().any().any():
-        colunas_com_nulos = df.columns[df.isna().any()].tolist()
-        raise ValueError(f"CSV contém valores ausentes em: {colunas_com_nulos}")
-
-    for coluna in COLUNAS_DATAS:
-        df[coluna] = pd.to_datetime(df[coluna], errors="raise")
-    for coluna in COLUNAS_NUMERICAS:
-        df[coluna] = pd.to_numeric(df[coluna], errors="raise")
-
-    if df[COLUNAS_NUMERICAS].isin([float("inf"), -float("inf")]).any().any():
-        raise ValueError("CSV contém valores infinitos.")
-
-    for coluna in COLUNAS_INTEIRAS:
-        if (df[coluna] % 1 != 0).any():
-            raise ValueError(f"A coluna '{coluna}' deve conter inteiros.")
-
-    if (df["nota_obtida"] < 0).any():
-        raise ValueError("Há notas negativas.")
-    if (df["nota_obtida"] > df["nota_maxima"]).any():
-        raise ValueError("Há notas acima da nota máxima.")
-    if (df["tempo_gasto_seg"] < 0).any():
-        raise ValueError("Há tempos negativos.")
-    if (df["tentativa"] < 1).any():
-        raise ValueError("Tentativa deve ser >= 1.")
-    if not df["nivel_suporte"].between(1, 3).all():
-        raise ValueError("nivel_suporte deve estar entre 1 e 3.")
-
-    if df.duplicated().any():
-        raise ValueError("Há linhas idênticas no CSV.")
-    if df["id_resposta"].duplicated().any():
-        raise ValueError("id_resposta duplicado.")
-
-    for coluna in ["id_aluno", "id_atividade", "id_turma"]:
-        if (df.groupby("id_resposta")[coluna].nunique() > 1).any():
-            raise ValueError(f"Uma resposta tem '{coluna}' conflitante.")
-
-    if (df["data_hora_envio"] < df["data_hora_abertura"]).any():
-        raise ValueError("Há envio anterior à abertura da atividade.")
-
+    df['aproveitamento'] = (df['nota_obtida'] / df['nota_maxima']).round(4)
     return df
-
-
-# ---------------------------------------------------------------------------
-# 2. Estatísticas
-# ---------------------------------------------------------------------------
-def estatisticas(df: pd.DataFrame, coluna: str) -> dict:
-    """Estatísticas descritivas em formato serializável."""
-    if coluna not in df.columns:
-        raise ValueError(f"Coluna '{coluna}' não existe.")
-    if not pd.api.types.is_numeric_dtype(df[coluna]):
-        raise ValueError(f"Coluna '{coluna}' não é numérica.")
-
-    s = df[coluna]
+def resumo(df):
+    medias_por_aluno = df.groupby('id_aluno')['nota_obtida'].mean()
+    alunos_unicos = df.drop_duplicates('id_aluno')
     return {
-        "coluna": coluna,
-        "contagem": int(s.count()),
-        "media": round(float(s.mean()), 2),
-        "mediana": round(float(s.median()), 2),
-        "moda": float(s.mode().iloc[0]),
-        "minimo": float(s.min()),
-        "maximo": float(s.max()),
-        "amplitude": round(float(s.max() - s.min()), 2),
-        "variancia": round(float(s.var()), 2),
-        "desvio_padrao": round(float(s.std()), 2),
+        'linhas_respostas': int(len(df)),
+        'total_respostas_distintas': int(df['id_resposta'].nunique()),
+        'total_alunos': int(df['id_aluno'].nunique()),
+        'total_atividades_cadastradas': int(df['id_atividade'].nunique()),
+        'total_atividades_realizadas': int(
+            df[['id_aluno', 'id_atividade']].drop_duplicates().shape[0]
+        ),
+        'total_turmas': int(df['id_turma'].nunique()),
+        'total_professores': int(df['nome_professor'].nunique()),
+        'total_tentativas': int(len(df)),
+        'nota_media': round(float(df['nota_obtida'].mean()), 2),
+        'nota_mediana': round(float(df['nota_obtida'].median()), 2),
+        'aproveitamento_medio': round(float(df['aproveitamento'].mean()), 2),
+        'media_nota_por_aluno': round(float(medias_por_aluno.mean()), 2),
+        'mediana_nota_por_aluno': round(float(medias_por_aluno.median()), 2),
+        'total_acertos': int(df['acertos'].sum()),
+        'total_erros': int(df['erros'].sum()),
+        'tempo_total_seg': int(df['tempo_gasto_seg'].sum()),
+        'tempo_medio_seg': round(float(df['tempo_gasto_seg'].mean()), 2),
+        'alunos_por_tipo_deficiencia':
+            alunos_unicos['tipo_deficiencia'].value_counts().to_dict(),
+        'alunos_por_alerta_risco':
+            alunos_unicos['alerta_risco'].value_counts().to_dict(),
+        'periodo_inicio': df['periodo_inicio'].min().strftime('%Y-%m-%d'),
+        'periodo_fim': df['periodo_fim'].max().strftime('%Y-%m-%d'),
     }
 
 
-def imprimir_estatisticas(df: pd.DataFrame, coluna: str) -> None:
-    """Versão 'print' para uso no terminal (Módulo 7)."""
-    r = estatisticas(df, coluna)
-    print(f"Média: {r['media']}")
-    print(f"Mediana: {r['mediana']}")
-    print(f"Moda: {r['moda']}")
-    print(f"Mínimo: {r['minimo']}")
-    print(f"Máximo: {r['maximo']}")
-    print(f"Amplitude: {r['amplitude']}")
-    print(f"Variância: {r['variancia']}")
-    print(f"Desvio padrão: {r['desvio_padrao']}")
-
-
-# ---------------------------------------------------------------------------
-# 3. Agregações
-# ---------------------------------------------------------------------------
-def agregar(
-    df: pd.DataFrame,
-    coluna_grupo: str,
-    coluna_valor: str,
-    operacao: str = "media",
-) -> list[dict]:
-    """Agrupa e aplica operação. Retorna lista serializável em JSON."""
-    if coluna_grupo not in df.columns:
-        raise ValueError(f"Coluna de grupo '{coluna_grupo}' não existe.")
-    if coluna_valor not in df.columns:
-        raise ValueError(f"Coluna de valor '{coluna_valor}' não existe.")
-
-    grupo = df.groupby(coluna_grupo, as_index=False)[coluna_valor]
-
-    if operacao == "soma":
-        resultado = grupo.sum()
-    elif operacao == "contagem":
-        resultado = grupo.count()
-    elif operacao == "media":
-        resultado = grupo.mean()
-    else:
-        raise ValueError("Operação deve ser: soma, contagem ou media.")
-
-    resultado[coluna_valor] = resultado[coluna_valor].round(2)
-    resultado = resultado.sort_values(coluna_valor, ascending=False)
-    return resultado.to_dict(orient="records")
-
-
-def imprimir_agregacao(
-    df: pd.DataFrame, coluna_grupo: str, coluna_valor: str, operacao: str = "media"
-) -> None:
-    """Versão 'print' para terminal."""
-    for linha in agregar(df, coluna_grupo, coluna_valor, operacao):
-        print(f"{linha[coluna_grupo]}: {linha[coluna_valor]}")
-
-
-# ---------------------------------------------------------------------------
-# 4. Classificação
-# ---------------------------------------------------------------------------
-# Critério: escala de avaliação escolar brasileira (0 a 10).
-#   < 5 -> insuficiente | < 7 -> regular | < 9 -> bom | >= 9 -> excelente
-def classificar_nota(valor: float) -> str:
-    if valor < 5:
-        return "insuficiente"
-    if valor < 7:
-        return "regular"
-    if valor < 9:
-        return "bom"
-    return "excelente"
-
-
-def aplicar_classificacao(df: pd.DataFrame, coluna: str = "nota_obtida") -> pd.DataFrame:
-    """Adiciona coluna 'classificacao' com base no critério documentado."""
-    if coluna not in df.columns:
-        raise ValueError(f"Coluna '{coluna}' não existe.")
-    df = df.copy()
-    df["classificacao"] = df[coluna].apply(classificar_nota)
-    return df
-
-
-def distribuicao_classificacao(df: pd.DataFrame, coluna: str = "nota_obtida") -> list[dict]:
-    """Contagem de respostas por classificação."""
-    df_class = aplicar_classificacao(df, coluna)
-    tabela = (
-        df_class.groupby("classificacao", as_index=False)
-        .size()
-        .rename(columns={"size": "quantidade"})
+def por_aluno(df):
+    tabela = df.groupby('id_aluno', as_index=False).agg(
+        nome_completo=('nome_completo', 'first'),
+        tipo_deficiencia=('tipo_deficiencia', 'first'),
+        nivel_suporte=('nivel_suporte', 'first'),
+        codigo_turma=('codigo_turma', 'first'),
+        disciplina=('disciplina', 'first'),
+        total_tentativas=('id_resposta', 'count'),
+        nota_media=('nota_obtida', 'mean'),
+        aproveitamento_medio=('aproveitamento', 'mean'),
+        total_acertos=('acertos', 'sum'),
+        total_erros=('erros', 'sum'),
+        tempo_medio_seg=('tempo_gasto_seg', 'mean'),
+        alerta_risco=('alerta_risco', 'first'),
+        diagnostico=('diagnostico_desempenho', 'first'),
+        sugestao=('sugestao_conduta', 'first'),
     )
-    ordem = ["insuficiente", "regular", "bom", "excelente"]
-    tabela["classificacao"] = pd.Categorical(
-        tabela["classificacao"], categories=ordem, ordered=True
+    for col in ['nota_media', 'aproveitamento_medio', 'tempo_medio_seg']:
+        tabela[col] = tabela[col].round(2)
+    tabela['taxa_acerto'] = (
+        tabela['total_acertos'] / (tabela['total_acertos'] + tabela['total_erros'])
+    ).round(2)
+    tabela = tabela.sort_values('nota_media', ascending=True)
+    return tabela.to_dict(orient='records')
+
+
+def por_tipo_deficiencia(df):
+    tabela = df.groupby('tipo_deficiencia', as_index=False).agg(
+        total_alunos=('id_aluno', 'nunique'),
+        total_respostas=('id_resposta', 'count'),
+        nota_media=('nota_obtida', 'mean'),
+        aproveitamento_medio=('aproveitamento', 'mean'),
+        tempo_medio_seg=('tempo_gasto_seg', 'mean'),
+        total_acertos=('acertos', 'sum'),
+        total_erros=('erros', 'sum'),
     )
-    return tabela.sort_values("classificacao").to_dict(orient="records")
+    for col in ['nota_media', 'aproveitamento_medio', 'tempo_medio_seg']:
+        tabela[col] = tabela[col].round(2)
+    tabela['taxa_acerto'] = (
+        tabela['total_acertos'] / (tabela['total_acertos'] + tabela['total_erros'])
+    ).round(2)
+    tabela = tabela.sort_values('nota_media', ascending=False)
+    return tabela.to_dict(orient='records')
 
 
-# ---------------------------------------------------------------------------
-# 5. Análises específicas do negócio
-# ---------------------------------------------------------------------------
-def resumo(df: pd.DataFrame) -> dict:
-    """Cartões de resumo do dashboard."""
-    return {
-        "total_respostas": int(len(df)),
-        "total_alunos": int(df["id_aluno"].nunique()),
-        "total_turmas": int(df["id_turma"].nunique()),
-        "total_atividades": int(df["id_atividade"].nunique()),
-        "total_disciplinas": int(df["disciplina"].nunique()),
-        "nota_media": round(float(df["nota_obtida"].mean()), 2),
-        "nota_mediana": round(float(df["nota_obtida"].median()), 2),
-        "tempo_medio_seg": round(float(df["tempo_gasto_seg"].mean()), 2),
-        "periodo_inicio": df["data_hora_envio"].min().strftime("%Y-%m-%d"),
-        "periodo_fim": df["data_hora_envio"].max().strftime("%Y-%m-%d"),
-    }
-
-
-def por_deficiencia(df: pd.DataFrame) -> list[dict]:
-    """Média de notas por tipo de deficiência (agregação principal)."""
-    tabela = (
-        df.groupby("tipo_deficiencia", as_index=False)
-        .agg(
-            media_notas=("nota_obtida", "mean"),
-            total_respostas=("id_resposta", "count"),
-            media_tempo_seg=("tempo_gasto_seg", "mean"),
-        )
-        .round(2)
-        .sort_values("media_notas", ascending=False)
+def por_atividade(df):
+    tabela = df.groupby(
+        ['id_atividade', 'titulo', 'tipo_atividade'], as_index=False
+    ).agg(
+        total_respostas=('id_resposta', 'count'),
+        nota_media=('nota_obtida', 'mean'),
+        aproveitamento_medio=('aproveitamento', 'mean'),
+        tempo_medio_seg=('tempo_gasto_seg', 'mean'),
     )
-    return tabela.to_dict(orient="records")
+    for col in ['nota_media', 'aproveitamento_medio', 'tempo_medio_seg']:
+        tabela[col] = tabela[col].round(2)
+    tabela = tabela.sort_values('nota_media', ascending=False)
+    return tabela.to_dict(orient='records')
 
 
-def por_disciplina(df: pd.DataFrame) -> list[dict]:
-    """Média de notas por disciplina."""
-    tabela = (
-        df.groupby("disciplina", as_index=False)
-        .agg(
-            media_notas=("nota_obtida", "mean"),
-            total_respostas=("id_resposta", "count"),
-        )
-        .round(2)
-        .sort_values("media_notas", ascending=False)
+def por_recursos_usados(df):
+    aux = df[['id_resposta', 'nota_obtida', 'aproveitamento',
+              'tempo_gasto_seg', 'recursos_usados']].copy()
+    aux['recursos_usados'] = aux['recursos_usados'].str.split('|')
+    aux = aux.explode('recursos_usados')
+    tabela = aux.groupby('recursos_usados', as_index=False).agg(
+        total_respostas=('id_resposta', 'count'),
+        nota_media=('nota_obtida', 'mean'),
+        aproveitamento_medio=('aproveitamento', 'mean'),
+        tempo_medio_seg=('tempo_gasto_seg', 'mean'),
     )
-    return tabela.to_dict(orient="records")
+    for col in ['nota_media', 'aproveitamento_medio', 'tempo_medio_seg']:
+        tabela[col] = tabela[col].round(2)
+    tabela = tabela.sort_values('nota_media', ascending=False)
+    return tabela.to_dict(orient='records')
 
 
-def por_data(df: pd.DataFrame) -> list[dict]:
-    """Evolução diária: total de respostas e média de notas."""
-    df = df.copy()
-    df["dia"] = df["data_hora_envio"].dt.strftime("%Y-%m-%d")
-    tabela = (
-        df.groupby("dia", as_index=False)
-        .agg(
-            total_respostas=("id_resposta", "count"),
-            media_notas=("nota_obtida", "mean"),
-        )
-        .round(2)
-        .sort_values("dia")
+def por_data(df):
+    aux = df.copy()
+    aux['data_envio'] = aux['data_hora_envio'].dt.strftime('%Y-%m-%d')
+    tabela = aux.groupby('data_envio', as_index=False).agg(
+        total_respostas=('id_resposta', 'count'),
+        total_alunos=('id_aluno', 'nunique'),
+        nota_media=('nota_obtida', 'mean'),
+        tempo_medio_seg=('tempo_gasto_seg', 'mean'),
     )
-    return tabela.to_dict(orient="records")
+    for col in ['nota_media', 'tempo_medio_seg']:
+        tabela[col] = tabela[col].round(2)
+    return tabela.to_dict(orient='records')
+
+
+def alunos_em_risco(df, nivel='alto'):
+    alunos = df.drop_duplicates('id_aluno').copy()
+    filtro = alunos[alunos['alerta_risco'] == nivel]
+    colunas = ['id_aluno', 'nome_completo', 'tipo_deficiencia', 'nivel_suporte',
+               'codigo_turma', 'nome_turma', 'diagnostico_desempenho',
+               'sugestao_conduta', 'media_notas', 'taxa_conclusao', 'alerta_risco']
+    return filtro[colunas].to_dict(orient='records')
+
+
+if __name__ == '__main__':
+    dados = ler_dados()
+    print('Primeiras respostas:')
+    print(dados.head())
+    print('\nResumo:')
+    print(resumo(dados))
