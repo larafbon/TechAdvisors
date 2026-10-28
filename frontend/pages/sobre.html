@@ -12,7 +12,7 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Conexões CSS (Acessibilidade + Home) -->
+  <!-- Conexões CSS -->
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/config.css">
 </head>
@@ -61,7 +61,7 @@
           O projeto <strong>TechAdvisors: Inclusões e Personalizações nas Escolas</strong> surge no CEEP Padre Joseir Sversutti (Maringá/PR) sob orientação do coordenador Erinaldo Sanches Nascimento. A iniciativa enfrenta um desafio fundamental na educação: a falta de reforço adequado para alunos neurodivergentes — pessoas cujo cérebro pensa e aprende de maneira diferente, especialmente aqueles com Transtorno do Déficit de Atenção com Hiperatividade (TDAH) e Transtorno do Espectro Autista (TEA).
         </p>
         <p class="text-slate-600 leading-relaxed">
-          Alinhado ao <strong>Objetivo de Desenvolvimento Sustentável da ONU para Educação de Qualidade (ODS 4)</strong>, o projeto combate a complexidade e as distrações das aulas e plataformas tradicionais, garantindo que nenhum estudante fique para trás.
+          Alinhado ao <strong>Objetivo de Desenvolvimento Sustentável da ONU para Educação de Qualidade (ODS 4)</strong>, o projeto combats a complexidade e as distrações das aulas e plataformas tradicionais, garantindo que nenhum estudante fique para trás.
         </p>
       </div>
 
@@ -203,4 +203,39 @@
       </div>
       <div class="flex gap-2">
         <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A -</button>
-        <button onclick="resetFontSize()" class="px-3 py-1.
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A +</button>
+      </div>
+    </div>
+
+    <!-- Controle de Brilho -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-1">
+        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+    </div>
+
+    <!-- Controle de Saturação -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+    </div>
+
+    <!-- Alto Contraste -->
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-indigo-600 cursor-pointer">
+    </div>
+
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 underline mt-auto text-center pt-4">Restaurar Padrões</button>
+  </aside>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/home.js"></script>
+</body>
+</html>

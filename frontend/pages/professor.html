@@ -1,171 +1,162 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-
-
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Techadvisors - Painel do Professor</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Painel do Professor</title>
 
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
-
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
-
-
-
-<!--conexão css-->
-<link rel="stylesheet" href="../css/prof.css">
-
-
-
-
+  <!-- Conexões CSS -->
+  <link rel="stylesheet" href="../css/prof.css">
+  <link rel="stylesheet" href="../css/config.css">
 </head>
 
+<body class="bg-[#f3f7fb]">
 
+  <!-- ==================== PÁGINA DO PROFESSOR ==================== -->
 
-
-<body>
-
-
-
-
-<!-- ==================== PÁGINA DO PROFESSOR ==================== -->
-
-
-
-
-<header class="home-header">
-  <div class="logo" onclick="window.location.href='professor.html'">
-    📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
-  </div>
-  <nav>
-    <ul>
-      <li onclick="window.location.href='professor.html'">🏠 Portal do Docente</li>
-      <li onclick="window.location.href='turmas.html'">🏫 Minhas Turmas</li>
-      <li onclick="alert('Área de Chatbot em desenvolvimento')">🤖 Chatbot</li>
-    
-      <!-- PROFESSOR DROPDOWN -->
-      <li class="user-menu-container">
-        <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none">
-          <span>👨‍🏫 Olá, Professor</span>
-          <span class="text-xs">▼</span>
-        </div>
+  <header class="home-header">
+    <div class="logo cursor-pointer" onclick="window.location.href='professor.html'">
+      📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='professor.html'">🏠 Portal do Docente</li>
+        <li onclick="window.location.href='turmas.html'">🏫 Minhas Turmas</li>
+        <li onclick="alert('Área de Chatbot em desenvolvimento')">🤖 Chatbot</li>
       
-        <div id="userMenu" class="user-dropdown">
-          <ul>
-            <li onclick="minhaConta()">👤 Minha Conta</li>
-            <li onclick="configuracoes()">⚙️ Configurações</li>
-            <li onclick="logout()" class="logout-item">🚪 Sair</li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </nav>
-</header>
+        <!-- PROFESSOR DROPDOWN -->
+        <li class="user-menu-container">
+          <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍🏫 Olá, Professor</span>
+            <span class="text-xs">▼</span>
+          </div>
+        
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
+  <div class="container">
 
-
-
-<div class="container">
-
-
-
-
-  <div class="banner">
-    <h2 id="prof-welcome-title">Bem-vindo, Professor(a)!</h2>
-    <p>
-      Gerencie suas turmas, lance conteúdos, acompanhe o desempenho e acesse relatórios inclusivos.
-    </p>
-  </div>
-
-
-
-
-  <div class="cards">
-
-
-
-
-    <div class="card" onclick="window.location.href='turmas.html'">
-      <div class="icone">🏫</div>
-      <h3>Minhas Turmas</h3>
-      <p>Acesse a lista de alunos e diários de classe.</p>
+    <div class="banner">
+      <h2 id="prof-welcome-title">Bem-vindo, Professor(a)!</h2>
+      <p>
+        Gerencie suas turmas, lance conteúdos, acompanhe o desempenho e acesse relatórios inclusivos.
+      </p>
     </div>
 
+    <div class="cards">
 
+      <div class="card" onclick="window.location.href='turmas.html'">
+        <div class="icone">🏫</div>
+        <h3>Minhas Turmas</h3>
+        <p>Acesse a lista de alunos e diários de classe.</p>
+      </div>
 
+      <div class="card" onclick="alert('Publicação de Atividades')">
+        <div class="icone">📚</div>
+        <h3>Atividades & Materiais</h3>
+        <p>Publique conteúdos e tarefas adaptadas.</p>
+      </div>
 
-    <div class="card" onclick="alert('Publicação de Atividades')">
-      <div class="icone">📚</div>
-      <h3>Atividades & Materiais</h3>
-      <p>Publique conteúdos e tarefas adaptadas.</p>
+      <div class="card" onclick="alert('Relatórios do Professor')">
+        <div class="icone">📊</div>
+        <h3>Relatórios & Notas</h3>
+        <p>Acompanhe o progresso do aprendizado.</p>
+      </div>
+
+      <div class="card" onclick="alert('Assistente Pedagógico Chatbot')">
+        <div class="icone">🤖</div>
+        <h3>Assistente IA</h3>
+        <p>Suporte automático para elaboração de planos de aula.</p>
+      </div>
+
+      <div class="card" onclick="toggleSettingsDrawer(true)">
+        <div class="icone">⚙️</div>
+        <h3>Acessibilidade</h3>
+        <p>Ajuste opções de contraste, brilho e fonte.</p>
+      </div>
+
     </div>
-
-
-
-
-    <div class="card" onclick="alert('Relatórios do Professor')">
-      <div class="icone">📊</div>
-      <h3>Relatórios & Notas</h3>
-      <p>Acompanhe o progresso do aprendizado.</p>
-    </div>
-
-
-
-
-    <div class="card" onclick="alert('Assistente Pedagógico Chatbot')">
-      <div class="icone">🤖</div>
-      <h3>Assistente IA</h3>
-      <p>Suporte automático para elaboração de planos de aula.</p>
-    </div>
-
-
-
-
-    <div class="card" onclick="alert('Configurações da Conta')">
-      <div class="icone">⚙️</div>
-      <h3>Meu Perfil</h3>
-      <p>Atualize seus dados institucionais.</p>
-    </div>
-
-
-
 
   </div>
 
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Painel do Professor
+  </footer>
 
+  <!-- Botão Flutuante de Configurações de Acessibilidade -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95">
+    ⚙️
+  </button>
 
+  <!-- Overlay e Drawer Lateral de Acessibilidade -->
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="fixed inset-0 bg-slate-900/40 z-50 hidden"></div>
 
-</div>
+  <aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+    </div>
 
+    <!-- Controle de Fonte -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A +</button>
+      </div>
+    </div>
 
+    <!-- Controle de Brilho -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-1">
+        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+    </div>
 
+    <!-- Controle de Saturação -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+    </div>
 
-<footer class="home-footer">
-  © 2026 • Techadvisors — Painel do Professor
-</footer>
+    <!-- Alto Contraste -->
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-indigo-600 cursor-pointer">
+    </div>
 
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 underline mt-auto text-center pt-4">Restaurar Padrões</button>
+  </aside>
 
-<!--conexão js-->
-<script src="../js/prof.js"></script>
-
+  <!-- Conexões Javascript -->
+  <script src="../js/config.js"></script>
+  <script src="../js/prof.js"></script>
 
 </body>
+
 </html>
-
-
-
-
-
-
-
-

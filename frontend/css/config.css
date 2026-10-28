@@ -1,113 +1,116 @@
 :root {
-    --font-scale-factor: 1;
-    --page-saturation: 100%;
-    --page-brightness: 100%;
-  }
-  
-  html {
-    font-size: calc(16px * var(--font-scale-factor));
-    filter: saturate(var(--page-saturation)) brightness(var(--page-brightness));
-    transition: filter 0.25s ease, font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  body {
-    line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  h1, h2, h3, h4, p, span, a, label, input, button, table, td, th {
-    transition: font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1), line-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* =========================================================
-     MODO ALTO CONTRASTE (Específico para Home e Sobre)
-     ========================================================= */
-  
-  /* 1. Fundo geral e da tag body */
-  body.high-contrast,
-  body.high-contrast.bg-\[\#f3f7fb\] {
-    background-color: #0f172a !important;
-    color: #f8fafc !important;
-  }
-  
-  /* 2. Container Principal do SOBRE e Cards da HOME */
-  body.high-contrast .card,
-  body.high-contrast .bg-white,
-  body.high-contrast header,
-  body.high-contrast footer {
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
-    border-color: #334155 !important;
-  }
-  
-  /* 3. Blocos internos do SOBRE (Equipe, Módulos e Orientação) */
-  body.high-contrast .bg-slate-50,
-  body.high-contrast .bg-purple-50,
-  body.high-contrast .bg-purple-100,
-  body.high-contrast .bg-purple-200 {
-    background-color: #334155 !important;
-    color: #f8fafc !important;
-    border-color: #475569 !important;
-  }
-  
-  /* 4. Cor de todos os Textos e Títulos no Alto Contraste */
-  body.high-contrast h1,
-  body.high-contrast h2,
-  body.high-contrast h3,
-  body.high-contrast h4,
-  body.high-contrast p,
-  body.high-contrast span,
-  body.high-contrast strong,
-  body.high-contrast label,
-  body.high-contrast li {
-    color: #f8fafc !important;
-  }
-  
-  /* 5. Títulos Roxos e Azuis do SOBRE no Alto Contraste */
-  body.high-contrast .text-purple-900,
-  body.high-contrast .text-purple-800,
-  body.high-contrast .text-indigo-700,
-  body.high-contrast .text-slate-800,
-  body.high-contrast .text-slate-900 {
-    color: #e9d5ff !important; /* Roxo claro brilhante e visível */
-  }
-  
-  /* 6. Textos secundários e descrições das alunas */
-  body.high-contrast .text-slate-600,
-  body.high-contrast .text-slate-500 {
-    color: #cbd5e1 !important; /* Cinza bem claro legível */
-  }
-  
-  /* 7. Tags e Badges das alunas (1º A, 1º B) */
-  body.high-contrast .text-purple-800.bg-purple-100,
-  body.high-contrast .bg-purple-200 {
-    background-color: #581c87 !important;
-    color: #f3e8ff !important;
-  }
-  
-  /* 8. Banner Superior */
-  body.high-contrast .banner {
-    background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
-    color: #ffffff !important;
-  }
-  
-  /* Drawer / Painel Lateral de Acessibilidade */
-  #settings-drawer {
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    transform: translateX(100%);
-  }
-  
-  #settings-drawer.open {
-    transform: translateX(0);
-  }
-  
-  #settings-overlay {
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  #settings-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  --font-scale-factor: 1;
+  --page-saturation: 100%;
+  --page-brightness: 100%;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale-factor));
+  filter: saturate(var(--page-saturation)) brightness(var(--page-brightness));
+  transition: filter 0.25s ease, font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, p, span, a, label, input, button, table, td, th {
+  transition: font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1), line-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================================
+   MODO ALTO CONTRASTE (REGRAS DE ALTA PRECEDÊNCIA)
+   ========================================================= */
+
+body.high-contrast,
+body.high-contrast.bg-\[\#f3f7fb\] {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Garante fundo escuro para todos os elementos de cartão, tabelas e caixas */
+body.high-contrast main,
+body.high-contrast .card,
+body.high-contrast .bg-white,
+body.high-contrast .bg-slate-50,
+body.high-contrast .bg-purple-50,
+body.high-contrast .bg-purple-100,
+body.high-contrast .bg-purple-200,
+body.high-contrast header,
+body.high-contrast footer,
+body.high-contrast #settings-drawer {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+/* Força todos os textos a ficarem claros */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast strong,
+body.high-contrast a,
+body.high-contrast li,
+body.high-contrast label,
+body.high-contrast div {
+  color: #f8fafc !important;
+}
+
+/* Destaque para títulos e badges das alunas */
+body.high-contrast .text-purple-900,
+body.high-contrast .text-purple-800,
+body.high-contrast .text-indigo-700,
+body.high-contrast .text-slate-800,
+body.high-contrast .text-slate-900 {
+  color: #e9d5ff !important;
+}
+
+body.high-contrast .text-slate-600,
+body.high-contrast .text-slate-500 {
+  color: #cbd5e1 !important;
+}
+
+body.high-contrast .banner {
+  background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
+  color: #ffffff !important;
+}
+
+/* Drawer / Gaveta Lateral de Acessibilidade */
+#settings-drawer {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(100%);
+}
+
+#settings-drawer.open {
+  transform: translateX(0);
+}
+
+#settings-overlay {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#settings-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Suporte ao Menu Dropdown e Painéis do Professor no Alto Contraste */
+body.high-contrast .user-dropdown {
+  background-color: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+body.high-contrast .user-dropdown li {
+  color: #f8fafc !important;
+}
+
+body.high-contrast .user-dropdown li:hover {
+  background-color: #334155 !important;
+  color: #c084fc !important;
+}

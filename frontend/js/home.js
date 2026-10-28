@@ -208,8 +208,18 @@ async function handleLogin(event) {
 
     if (response.ok) {
       const usuarioBD = await response.json();
-      localStorage.setItem('user', JSON.stringify(usuarioBD));
-      redirectUser(usuarioBD.role);
+      
+      // Garante que a role seja 'aluno' se for responsável ou aluno
+      const roleNormalizada = (usuarioBD.role === 'professor' || usuarioBD.role === 'admin') 
+        ? usuarioBD.role 
+        : 'aluno';
+
+      localStorage.setItem('user', JSON.stringify({
+        ...usuarioBD,
+        role: roleNormalizada
+      }));
+
+      redirectUser(roleNormalizada);
     } else {
       const erro = await response.json();
       alert(`Falha no login: ${erro.detail || 'E-mail ou senha incorretos.'}`);
@@ -220,6 +230,7 @@ async function handleLogin(event) {
   }
 }
 
+// REDIRECIONAMENTO CORRIGIDO
 function redirectUser(role) {
   if (role === 'admin') {
     alert('Redirecionando para o Painel Administrador...');
@@ -227,8 +238,8 @@ function redirectUser(role) {
   } else if (role === 'professor') {
     window.location.href = 'professor.html';
   } else {
-    alert('Login realizado como Aluno/Responsável.');
-    navigateTo('home');
+    // REDIRECIONA PARA A PÁGINA DO ALUNO
+    window.location.href = 'alunos.html';
   }
 }
 
