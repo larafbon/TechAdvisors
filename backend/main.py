@@ -1,5 +1,20 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware # Exemplo comum de middleware
+
+# 1. Primeiro você cria a instância
+app = FastAPI()
+
+# 2. Depois você adiciona os middlewares ou rotas
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
 
 # Importação de todos os controllers
 from controller import (
