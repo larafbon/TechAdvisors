@@ -20,63 +20,100 @@ h1, h2, h3, h4, p, span, a, label, input, button, table, td, th {
 }
 
 /* =========================================================
-   MODO ALTO CONTRASTE (REGRAS DE ALTA PRECEDÊNCIA)
+   MODO ESCURO / ALTO CONTRASTE PREMIUM & AGRADÁVEL
    ========================================================= */
 
+/* Fundo Principal da Tela (Tom Slate Escuro e Confortável) */
 body.high-contrast,
 body.high-contrast.bg-\[\#f3f7fb\] {
   background-color: #0f172a !important;
   color: #f8fafc !important;
 }
 
-/* Garante fundo escuro para todos os elementos de cartão, tabelas e caixas */
-body.high-contrast main,
+/* Header (Cabeçalho com Degradê Azul Elegante) */
+body.high-contrast header.home-header {
+  background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+  border-bottom: 1px solid #334155 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Banner Principal (Roxo e Azul com Brilho e Destaque) */
+body.high-contrast .banner {
+  background: linear-gradient(135deg, #290e52, #132958) !important;
+  color: #ffffff !important;
+  border: 1px solid #6d28d9 !important;
+  box-shadow: 0 10px 30px rgba(109, 40, 217, 0.3) !important;
+}
+
+body.high-contrast .banner h2 {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+body.high-contrast .banner p {
+  color: #e2e8f0 !important;
+}
+
+/* Cards (Caixas com Efeito de Elevação e Bordas Iluminadas) */
 body.high-contrast .card,
 body.high-contrast .bg-white,
 body.high-contrast .bg-slate-50,
 body.high-contrast .bg-purple-50,
 body.high-contrast .bg-purple-100,
-body.high-contrast .bg-purple-200,
-body.high-contrast header,
-body.high-contrast footer,
-body.high-contrast #settings-drawer {
+body.high-contrast .bg-purple-200 {
   background-color: #1e293b !important;
-  color: #f8fafc !important;
-  border-color: #334155 !important;
+  border: 1px solid #334155 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
 
-/* Força todos os textos a ficarem claros */
-body.high-contrast h1,
-body.high-contrast h2,
-body.high-contrast h3,
-body.high-contrast h4,
-body.high-contrast p,
-body.high-contrast span,
-body.high-contrast strong,
-body.high-contrast a,
-body.high-contrast li,
-body.high-contrast label,
-body.high-contrast div {
-  color: #f8fafc !important;
+/* Efeito Hover Agradável ao passar o mouse nos Cards */
+body.high-contrast .card:hover {
+  transform: translateY(-6px) !important;
+  border-color: #818cf8 !important; /* Borda Roxa/Azul Iluminada */
+  box-shadow: 0 12px 28px rgba(129, 140, 248, 0.25) !important;
 }
 
-/* Destaque para títulos e badges das alunas */
+/* Títulos dos Cards (Destaque em Amarelo Âmbar bem Acessível) */
+body.high-contrast .card h3,
 body.high-contrast .text-purple-900,
 body.high-contrast .text-purple-800,
 body.high-contrast .text-indigo-700,
 body.high-contrast .text-slate-800,
 body.high-contrast .text-slate-900 {
-  color: #e9d5ff !important;
+  color: #fbbf24 !important;
+  font-weight: 700 !important;
 }
 
+/* Textos Explicativos nos Cards */
+body.high-contrast .card p,
 body.high-contrast .text-slate-600,
 body.high-contrast .text-slate-500 {
   color: #cbd5e1 !important;
 }
 
-body.high-contrast .banner {
-  background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
-  color: #ffffff !important;
+/* Footer (Rodapé) */
+body.high-contrast footer.home-footer {
+  background-color: #0b1329 !important;
+  border-top: 1px solid #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+/* Menu Dropdown de Usuário/Professor */
+body.high-contrast .user-dropdown {
+  background-color: #1e293b !important;
+  border: 1px solid #475569 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.high-contrast .user-dropdown li {
+  color: #f8fafc !important;
+}
+
+body.high-contrast .user-dropdown li:hover {
+  background-color: #334155 !important;
+  color: #fbbf24 !important;
 }
 
 /* Drawer / Gaveta Lateral de Acessibilidade */
@@ -98,19 +135,4 @@ body.high-contrast .banner {
 #settings-overlay.open {
   opacity: 1;
   pointer-events: auto;
-}
-
-/* Suporte ao Menu Dropdown e Painéis do Professor no Alto Contraste */
-body.high-contrast .user-dropdown {
-  background-color: #1e293b !important;
-  border: 1px solid #334155 !important;
-}
-
-body.high-contrast .user-dropdown li {
-  color: #f8fafc !important;
-}
-
-body.high-contrast .user-dropdown li:hover {
-  background-color: #334155 !important;
-  color: #c084fc !important;
 }
