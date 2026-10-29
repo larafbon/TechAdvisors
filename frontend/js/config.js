@@ -132,3 +132,19 @@ window.toggleSettingsDrawer = function(open) {
     }, 300);
   }
 };
+
+window.applyAllSettings = function() {
+  // Ajusta a escala global da raiz do documento
+  document.documentElement.style.fontSize = (window.currentFontScale * 100) + '%';
+  
+  // Define também a variável CSS caso algum elemento dependa dela
+  document.documentElement.style.setProperty('--font-scale-factor', window.currentFontScale);
+  document.documentElement.style.setProperty('--page-brightness', window.currentBrightness + '%');
+  document.documentElement.style.setProperty('--page-saturation', window.currentSaturation + '%');
+
+  if (window.isHighContrast) {
+    document.body.classList.add('high-contrast');
+  } else {
+    document.body.classList.remove('high-contrast');
+  }
+};
