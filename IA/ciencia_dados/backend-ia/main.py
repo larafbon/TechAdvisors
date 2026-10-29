@@ -12,13 +12,16 @@ app = FastAPI(title='Personalização de Estudos • Neurodivergência')
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://127.0.0.1:5500",
+        "http://127.0.0.1:3000",   
+        "http://localhost:3000",
+        "http://127.0.0.1:8000",   
+        "http://localhost:8000",
+        "http://127.0.0.1:5500",   
         "http://localhost:5500",
     ],
-    allow_methods=["GET"],
-    allow_headers=["Content-Type"],
+    allow_methods=["*"], 
+    allow_headers=["*"],
 )
-
 
 def carregar_dados():
     try:

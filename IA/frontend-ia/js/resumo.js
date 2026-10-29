@@ -1,28 +1,25 @@
-// URL da SUA API. Se a API estiver em 8001, troque aqui.
+// 1. URL da API e captura dos elementos do HTML (Dashboard)
 const API_URL = 'http://127.0.0.1:8000/analise';
-
-// --- Passo 2: selecionar elementos ---
-const totalAlunos       = document.querySelector('#total-alunos');
-const notaMedia         = document.querySelector('#nota-media');
-const totalAtividades   = document.querySelector('#total-atividades');
-const totalRiscoAlto    = document.querySelector('#total-risco-alto');
+const totalAlunos = document.querySelector('#total-alunos');
+const notaMedia = document.querySelector('#nota-media');
+const totalAtividades = document.querySelector('#total-atividades');
+const totalRiscoAlto = document.querySelector('#total-risco-alto');
 const listaDeficiencias = document.querySelector('#lista-deficiencias');
-const botaoAtualizar    = document.querySelector('#botao-atualizar');
-const mensagem          = document.querySelector('#mensagem');
-const atualizacao       = document.querySelector('#atualizacao');
-const periodo           = document.querySelector('#periodo');
-const resumo            = document.querySelector('#resumo');
+const botaoAtualizar = document.querySelector('#botao-atualizar');
+const mensagem = document.querySelector('#mensagem');
+const atualizacao = document.querySelector('#atualizacao');
+const periodo = document.querySelector('#periodo');
+const resumo = document.querySelector('#resumo');
 
-// Mapa opcional para deixar os rótulos mais legíveis.
-// Se aparecer um tipo que não está aqui, o JS exibe o valor bruto.
+// 2. Especificação (Nomes amigáveis)
 const nomesDeficiencias = {
-  'tea':       'TEA (Autismo)',
-  'tdah':      'TDAH',
-  'dislexia':  'Dislexia',
-  'discalculia': 'Discalculia',
+  'tea':        'TEA (Autismo)',
+  'tdah':       'TDAH',
+  'dislexia':   'Dislexia',
+  'discalculia':'Discalculia',
 };
 
-// --- Passo 3: formatação e estados ---
+// 3. Formatação
 function numero(valor) {
   return valor.toLocaleString('pt-BR');
 }
@@ -57,7 +54,7 @@ function limparTotais() {
   periodo.textContent         = '';
 }
 
-// --- Passo 4: consultar uma rota ---
+// 4. Rota (Fetch)
 async function consultar(caminho) {
   let resposta;
   try {
@@ -73,60 +70,51 @@ async function consultar(caminho) {
   return dados;
 }
 
-// --- Passo 5: conferir a consistência dos totais ---
+// 5. Contrato de dados
 function conferirTotais(resumoDados, deficiencias, riscoAlto) {
-  // 1) indicadores válidos
   if (!Number.isInteger(resumoDados.total_alunos) || resumoDados.total_alunos < 0) {
     throw new Error('A API retornou total_alunos inválido.');
   }
   if (typeof resumoDados.nota_media !== 'number' || resumoDados.nota_media < 0) {
     throw new Error('A API retornou nota_media inválida.');
   }
-  if (!Number.isInteger(resumoDados.total_atividades_realizadas) ||
-      resumoDados.total_atividades_realizadas < 0) {
+  if (!Number.isInteger(resumoDados.total_atividades_realizadas) || resumoDados.total_atividades_realizadas < 0) {
     throw new Error('A API retornou total_atividades_realizadas inválido.');
   }
 
-  // 2) tabela no formato esperado
   if (!Array.isArray(deficiencias)) {
     throw new Error('A tabela de deficiências não está no formato esperado.');
   }
 
-  // 3) soma dos alunos por tipo == total geral
   let soma = 0;
   for (const item of deficiencias) {
-    if (typeof item.tipo_deficiencia !== 'string' ||
-        !Number.isInteger(item.total_alunos) || item.total_alunos < 0) {
+    if (typeof item.tipo_deficiencia !== 'string' || !Number.isInteger(item.total_alunos) || item.total_alunos < 0) {
       throw new Error('A API retornou uma contagem de deficiência inválida.');
     }
     soma += item.total_alunos;
   }
+  
   if (soma !== resumoDados.total_alunos) {
-    throw new Error(
-      `Divergência: soma por deficiência (${soma}) ≠ total de alunos (${resumoDados.total_alunos}).`
-    );
+    throw new Error(`Divergência: soma por deficiência (${soma}) ≠ total de alunos (${resumoDados.total_alunos}).`);
   }
 
-  // 4) alunos em risco alto coincidem com o resumo
   if (!Array.isArray(riscoAlto)) {
     throw new Error('A lista de alunos em risco alto não está no formato esperado.');
   }
   const esperadoRisco = (resumoDados.alunos_por_alerta_risco?.alto) ?? 0;
   if (riscoAlto.length !== esperadoRisco) {
-    throw new Error(
-      `Divergência: risco alto na lista (${riscoAlto.length}) ≠ no resumo (${esperadoRisco}).`
-    );
+    throw new Error(`Divergência: risco alto na lista (${riscoAlto.length}) ≠ no resumo (${esperadoRisco}).`);
   }
 }
 
-// --- Passo 6: construir as linhas da tabela ---
+// 6. Linhas da tabela
 function exibirDeficiencias(dados) {
   listaDeficiencias.replaceChildren();
   for (const item of dados) {
     const linha = listaDeficiencias.insertRow();
 
     const tipo = linha.insertCell();
-    tipo.textContent = nomesDeficiencias[item.tipo_deficiencia] || item.tipo_deficiencia;
+    tipo.textContent = nomesDeficiencias[item.tipo_deficiencia.toLowerCase()] || item.tipo_deficiencia;
 
     const alunos = linha.insertCell();
     alunos.textContent = numero(item.total_alunos);
@@ -141,7 +129,7 @@ function exibirDeficiencias(dados) {
   }
 }
 
-// --- Passo 7: orquestrar as consultas ---
+// 7. Consulta Principal
 async function carregarResumo() {
   botaoAtualizar.disabled = true;
   botaoAtualizar.textContent = 'Carregando...';
@@ -152,7 +140,6 @@ async function carregarResumo() {
   estadoTabela('Carregando os dados...');
 
   try {
-    // Quatro consultas independentes. Promise.all resolve quando todas terminam.
     const [resumoDados, deficiencias, riscoAlto] = await Promise.all([
       consultar('/resumo'),
       consultar('/deficiencias'),
@@ -183,6 +170,6 @@ async function carregarResumo() {
   }
 }
 
-// --- Passo 8: ligar o botão e iniciar ---
+// 8. Iniciar
 botaoAtualizar.addEventListener('click', carregarResumo);
 carregarResumo();
