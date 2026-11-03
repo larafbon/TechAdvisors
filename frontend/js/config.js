@@ -1,4 +1,7 @@
-// Variáveis Globais de Estado de Acessibilidade
+// =========================================================
+// GERENCIADOR GLOBAL DE ACESSIBILIDADE - TECHADVISORS
+// =========================================================
+
 window.currentFontScale = 1.0;
 window.currentBrightness = 100;
 window.currentSaturation = 100;
@@ -26,6 +29,7 @@ window.loadSettings = function() {
 };
 
 window.applyAllSettings = function() {
+  document.documentElement.style.fontSize = (window.currentFontScale * 100) + '%';
   document.documentElement.style.setProperty('--font-scale-factor', window.currentFontScale);
   document.documentElement.style.setProperty('--page-brightness', window.currentBrightness + '%');
   document.documentElement.style.setProperty('--page-saturation', window.currentSaturation + '%');
@@ -43,15 +47,17 @@ window.syncUI = function() {
 
   const bLabel = document.getElementById('brightness-label');
   if (bLabel) bLabel.innerText = window.currentBrightness + '%';
+  
   const bRange = document.getElementById('brightness-range');
   if (bRange) bRange.value = window.currentBrightness;
 
   const sLabel = document.getElementById('saturation-label');
   if (sLabel) sLabel.innerText = window.currentSaturation + '%';
+  
   const sRange = document.getElementById('saturation-range');
   if (sRange) sRange.value = window.currentSaturation;
 
-  const contrastCheck = document.getElementById('toggle-contrast');
+  const contrastCheck = document.getElementById('high-contrast-toggle') || document.getElementById('toggle-contrast');
   if (contrastCheck) contrastCheck.checked = window.isHighContrast;
 };
 
@@ -72,29 +78,37 @@ window.changeFontSize = function(delta) {
   window.saveSettings();
 };
 
-window.resetFontSize = function() {
+window.setFontSizeNormal = function() {
   window.currentFontScale = 1.0;
   window.applyAllSettings();
   window.syncUI();
   window.saveSettings();
 };
 
+window.resetFontSize = window.setFontSizeNormal;
+
 window.updateBrightness = function(val) {
-  window.currentBrightness = val;
+  window.currentBrightness = parseInt(val);
   window.applyAllSettings();
   window.syncUI();
   window.saveSettings();
 };
 
 window.updateSaturation = function(val) {
-  window.currentSaturation = val;
+  window.currentSaturation = parseInt(val);
   window.applyAllSettings();
   window.syncUI();
   window.saveSettings();
 };
 
-window.toggleHighContrast = function(enabled) {
-  window.isHighContrast = Boolean(enabled);
+window.toggleHighContrast = function(enabledOrEvent) {
+  if (typeof enabledOrEvent === 'boolean') {
+    window.isHighContrast = enabledOrEvent;
+  } else if (enabledOrEvent && enabledOrEvent.target) {
+    window.isHighContrast = enabledOrEvent.target.checked;
+  } else {
+    window.isHighContrast = !window.isHighContrast;
+  }
   window.applyAllSettings();
   window.syncUI();
   window.saveSettings();
@@ -110,41 +124,20 @@ window.resetAllSettings = function() {
   window.saveSettings();
 };
 
-// Função para abrir e fechar a gaveta (Drawer)
 window.toggleSettingsDrawer = function(open) {
   const drawer = document.getElementById('settings-drawer');
   const overlay = document.getElementById('settings-overlay');
   if (!drawer || !overlay) return;
 
   if (open) {
-    overlay.classList.remove('hidden');
-    drawer.classList.remove('hidden');
-    setTimeout(() => {
-      overlay.classList.add('open');
-      drawer.classList.add('open');
-    }, 10);
+    overlay.classList.remove('hidden-drawer');
+    overlay.classList.add('visible-drawer');
+    drawer.classList.remove('hidden-drawer');
+    drawer.classList.add('visible-drawer');
   } else {
-    overlay.classList.remove('open');
-    drawer.classList.remove('open');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      drawer.classList.add('hidden');
-    }, 300);
-  }
-};
-
-window.applyAllSettings = function() {
-  // Ajusta a escala global da raiz do documento
-  document.documentElement.style.fontSize = (window.currentFontScale * 100) + '%';
-  
-  // Define também a variável CSS caso algum elemento dependa dela
-  document.documentElement.style.setProperty('--font-scale-factor', window.currentFontScale);
-  document.documentElement.style.setProperty('--page-brightness', window.currentBrightness + '%');
-  document.documentElement.style.setProperty('--page-saturation', window.currentSaturation + '%');
-
-  if (window.isHighContrast) {
-    document.body.classList.add('high-contrast');
-  } else {
-    document.body.classList.remove('high-contrast');
+    overlay.classList.remove('visible-drawer');
+    overlay.classList.add('hidden-drawer');
+    drawer.classList.remove('visible-drawer');
+    drawer.classList.add('hidden-drawer');
   }
 };

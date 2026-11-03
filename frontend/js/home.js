@@ -1,20 +1,16 @@
 const API_URL = 'http://127.0.0.1:8000';
 let selectedRole = 'aluno';
 
-// Lista com os IDs de todas as telas na Home
 const ALL_SCREENS = [
   'screen-home',
   'screen-login',
   'screen-register-step1',
-  'screen-register-step2',
-  'screen-dashboard-professor'
+  'screen-register-step2'
 ];
 
-// Alternar visibilidade da senha (Olho Aberto / Fechado)
 function togglePasswordVisibility(inputId, eyeIconId) {
   const input = document.getElementById(inputId);
   const eyeIcon = document.getElementById(eyeIconId);
-  
   if (!input || !eyeIcon) return;
 
   if (input.type === 'password') {
@@ -26,13 +22,11 @@ function togglePasswordVisibility(inputId, eyeIconId) {
   }
 }
 
-// Navegação entre páginas/telas
 function navigateTo(screenName) {
   if (screenName === 'about') {
     window.location.href = 'sobre.html';
     return;
   }
-
   if (screenName === 'dashboard-professor') {
     window.location.href = 'professor.html';
     return;
@@ -71,13 +65,10 @@ function startRegistration() {
 function selectRole(role) {
   selectedRole = role;
   
-  const cardAluno = document.getElementById('card-aluno');
-  const cardProf = document.getElementById('card-professor');
-  const cardAdmin = document.getElementById('card-admin');
-
-  if (cardAluno) cardAluno.classList.remove('selected');
-  if (cardProf) cardProf.classList.remove('selected');
-  if (cardAdmin) cardAdmin.classList.remove('selected');
+  ['aluno', 'professor', 'admin'].forEach(r => {
+    const card = document.getElementById(`card-${r}`);
+    if (card) card.classList.remove('selected');
+  });
 
   const selectedCard = document.getElementById(`card-${role}`);
   if (selectedCard) selectedCard.classList.add('selected');
@@ -124,7 +115,6 @@ async function handleFinalRegister(event) {
 
   const discInput = document.getElementById('prof-disciplina');
   const disciplinaVal = discInput ? discInput.value.trim() : '';
-
   const serieSelect = document.getElementById('aluno-serie');
   const serieVal = serieSelect ? serieSelect.value : '';
 
@@ -133,57 +123,41 @@ async function handleFinalRegister(event) {
 
   if (selectedRole === 'professor') {
     endpoint = '/professores';
-    payload = {
-      nome: name,
-      email: email,
-      senha: password,
-      disciplinas: disciplinaVal,
-      status: 'ativo'
-    };
+    payload = { nome: name, email: email, senha: password, disciplinas: disciplinaVal, status: 'ativo' };
   } else if (selectedRole === 'aluno') {
     endpoint = '/responsaveis';
-    payload = {
-      nome: name,
-      email: email,
-      senha: password,
-      serie: serieVal
-    };
+    payload = { nome: name, email: email, senha: password, serie: serieVal };
   }
 
   try {
     const response = await fetch(`${API_URL}${endpoint}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
 
     if (response.ok) {
       const usuarioCriado = await response.json();
-
-      localStorage.setItem('user', JSON.stringify({
-        id: usuarioCriado.id_professor || usuarioCriado.id_responsavel,
+      const userData = {
+        id: usuarioCriado.id_professor || usuarioCriado.id_responsavel || usuarioCriado.id,
+        id_professor: usuarioCriado.id_professor,
         nome: name,
         email: email,
         disciplinas: usuarioCriado.disciplinas || disciplinaVal,
         serie: serieVal,
         role: selectedRole
-      }));
+      };
+      
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('usuario', JSON.stringify(userData));
 
       redirectUser(selectedRole);
     } else {
       const erro = await response.json();
-      let msg = 'Verifique os dados informados.';
-      if (typeof erro.detail === 'string') {
-        msg = erro.detail;
-      } else if (Array.isArray(erro.detail)) {
-        msg = erro.detail.map(e => `${e.loc[e.loc.length - 1]}: ${e.msg}`).join('\n');
-      }
-      alert(`Erro ao realizar cadastro:\n${msg}`);
+      alert(`Erro no cadastro: ${erro.detail || 'Verifique os dados informados.'}`);
     }
   } catch (error) {
-    console.error('Erro na conexão com o servidor:', error);
+    console.error('Erro de conexão:', error);
     alert('Não foi possível conectar ao servidor FastAPI na porta 8000.');
   }
 }
@@ -197,27 +171,19 @@ async function handleLogin(event) {
   try {
     const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: emailInput,
-        senha: passwordInput
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailInput, senha: passwordInput })
     });
 
     if (response.ok) {
       const usuarioBD = await response.json();
-      
-      // Garante que a role seja 'aluno' se for responsável ou aluno
       const roleNormalizada = (usuarioBD.role === 'professor' || usuarioBD.role === 'admin') 
         ? usuarioBD.role 
         : 'aluno';
 
-      localStorage.setItem('user', JSON.stringify({
-        ...usuarioBD,
-        role: roleNormalizada
-      }));
+      const userData = { ...usuarioBD, role: roleNormalizada };
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('usuario', JSON.stringify(userData));
 
       redirectUser(roleNormalizada);
     } else {
@@ -225,12 +191,11 @@ async function handleLogin(event) {
       alert(`Falha no login: ${erro.detail || 'E-mail ou senha incorretos.'}`);
     }
   } catch (error) {
-    console.error('Erro ao efetuar login:', error);
+    console.error('Erro no login:', error);
     alert('Erro ao conectar com o servidor FastAPI.');
   }
 }
 
-// REDIRECIONAMENTO CORRIGIDO
 function redirectUser(role) {
   if (role === 'admin') {
     alert('Redirecionando para o Painel Administrador...');
@@ -238,13 +203,12 @@ function redirectUser(role) {
   } else if (role === 'professor') {
     window.location.href = 'professor.html';
   } else {
-    // REDIRECIONA PARA A PÁGINA DO ALUNO
     window.location.href = 'alunos.html';
   }
 }
 
 function handleDashboardNavigation() {
-  const savedUser = JSON.parse(localStorage.getItem('user'));
+  const savedUser = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario'));
   if (!savedUser) {
     alert('Por favor, faça login para acessar o Dashboard.');
     navigateTo('login');
@@ -255,5 +219,6 @@ function handleDashboardNavigation() {
 
 function logout() {
   localStorage.removeItem('user');
+  localStorage.removeItem('usuario');
   window.location.href = 'index.html';
 }

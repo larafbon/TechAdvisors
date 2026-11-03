@@ -1,0 +1,263 @@
+/* =========================================================
+   ESTILOS GLOBAIS DE LAYOUT - TECHADVISORS
+   ========================================================= */
+
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Inter', sans-serif;
+  }
+  
+  body {
+    background-color: #f3f7fb;
+    color: #333333;
+    min-height: 100vh;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  /* =========================================================
+     CABEÇALHO & NAVEGAÇÃO
+     ========================================================= */
+  
+  header.home-header,
+  header {
+    background-color: #1364c2;
+    color: #ffffff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+  }
+  
+  .logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 25px;
+  }
+  
+  nav li {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  
+  nav li:hover {
+    color: #FFE082;
+  }
+  
+  /* Menu Dropdown de Usuário */
+  .user-menu-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    background-color: #ffffff;
+    color: #333333;
+    min-width: 190px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .user-dropdown.show {
+    display: block !important;
+  }
+  
+  .user-dropdown ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 6px 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .user-dropdown li {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .user-dropdown li:hover {
+    background-color: #f0f4f9;
+    color: #1364c2;
+  }
+  
+  .user-dropdown li.logout-item {
+    color: #e11d48;
+    border-top: 1px solid #f3f4f6;
+  }
+  
+  .user-dropdown li.logout-item:hover {
+    background-color: #ffe4e6;
+    color: #be123c;
+  }
+  
+  /* =========================================================
+     CONTAINER E BANNER
+     ========================================================= */
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+  
+  .banner {
+    background: linear-gradient(135deg, #0865c2, #2386d8);
+    color: #ffffff;
+    padding: 40px;
+    border-radius: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .banner h2 {
+    font-size: 2.25rem;
+    margin-bottom: 12px;
+  }
+  
+  .banner p {
+    font-size: 1.125rem;
+    opacity: 0.9;
+  }
+  
+  /* =========================================================
+     GRID DE CARDS (HOMEPAGE E MÓDULOS)
+     ========================================================= */
+  
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+  }
+  
+  .card h3 {
+    color: #1565C0;
+    font-size: 1.25rem;
+    margin: 15px 0 8px 0;
+  }
+  
+  .card p {
+    color: #666666;
+    font-size: 0.95rem;
+  }
+  
+  .icone {
+    font-size: 3.5rem;
+  }
+  
+  /* =========================================================
+     CARDS DE SELEÇÃO DE PERFIL (CADASTRO)
+     ========================================================= */
+  
+  .role-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 1.25rem;
+    padding: 2rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .role-card:hover {
+    border-color: #6b21a8;
+    transform: translateY(-2px);
+  }
+  
+  .role-card.selected {
+    border-color: #6b21a8;
+    box-shadow: 0 0 0 2px #6b21a8, 0 10px 20px -5px rgba(107, 33, 168, 0.2);
+    background-color: #f5f3ff;
+  }
+  
+  /* =========================================================
+     RODAPÉ
+     ========================================================= */
+  
+  footer.home-footer,
+  footer {
+    text-align: center;
+    padding: 24px;
+    margin-top: 60px;
+    background-color: #1565C0;
+    color: #ffffff;
+    font-size: 0.95rem;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    header.home-header, header {
+      padding: 15px 20px;
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    nav ul {
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+ 
+ 
+ 
+ 
+ 
+ 
+ 

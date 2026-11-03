@@ -8,8 +8,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="../css/alunos.css">
-  <link rel="stylesheet" href="../css/config.css">
+  <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/config.css">
+
+  <script src="../js/config.js" defer></script>
+  <script src="../js/alunos.js" defer></script>
 </head>
 <body class="bg-[#f3f7fb]">
 
@@ -25,7 +28,7 @@
         <li class="user-menu-container">
           <div id="student-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
             <span>Olá, Aluno</span>
-            <span class="text-xs">▾</span>
+            <span class="text-xs">▼</span>
           </div>
           <div id="userMenu" class="user-dropdown">
             <ul>
@@ -39,12 +42,10 @@
     </nav>
   </header>
 
-  <div class="container">
+  <main class="container">
     <div class="banner">
       <h2 id="student-welcome-title">Bem-vindo, Aluno(a)!</h2>
-      <p>
-        Acompanhe suas disciplinas, veja tarefas pendentes, consulte suas notas e utilize recursos de apoio aos estudos.
-      </p>
+      <p>Acompanhe suas disciplinas, veja tarefas pendentes, consulte suas notas e utilize recursos de apoio aos estudos.</p>
     </div>
 
     <div class="cards">
@@ -60,7 +61,7 @@
         <p>Confira prazos de entrega e envie suas tarefas.</p>
       </div>
 
-      <div class="card" onclick="alert('Acessando Boletos & Notas')">
+      <div class="card" onclick="alert('Acessando Notas')">
         <div class="icone">📊</div>
         <h3>Notas & Frequência</h3>
         <p>Acompanhe seu desempenho acadêmico e presença.</p>
@@ -72,31 +73,29 @@
         <p>Acesse áudios, resumos adaptados e ferramentas de apoio.</p>
       </div>
     </div>
-  </div>
+  </main>
 
   <footer class="home-footer">
     © 2026 • Techadvisors — Painel do Aluno
   </footer>
 
-  <!-- Botão Flutuante de Configurações de Acessibilidade -->
-  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95">
+  <!-- BOTÃO E GAVETA DE ACESSIBILIDADE -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-purple-700 hover:bg-purple-800 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
     ⚙️
   </button>
 
-  <!-- Overlay e Drawer Lateral de Acessibilidade -->
-  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="fixed inset-0 bg-slate-900/40 z-50 hidden"></div>
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
 
-  <aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
+  <aside id="settings-drawer" class="hidden-drawer">
     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
       <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
-      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
     </div>
 
-    <!-- Controle de Fonte -->
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
       <div class="flex justify-between items-center mb-2">
         <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
-        <span id="font-size-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
       </div>
       <div class="flex gap-2">
         <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A -</button>
@@ -105,34 +104,28 @@
       </div>
     </div>
 
-    <!-- Controle de Brilho -->
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
       <div class="flex justify-between items-center mb-1">
         <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
-        <span id="brightness-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
       </div>
-      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
     </div>
 
-    <!-- Controle de Saturação -->
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
       <div class="flex justify-between items-center mb-1">
         <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
-        <span id="saturation-label" class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">100%</span>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
       </div>
-      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
     </div>
 
-    <!-- Alto Contraste -->
-    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
       <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
-      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-indigo-600 cursor-pointer">
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
     </div>
 
-    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 underline mt-auto text-center pt-4">Restaurar Padrões</button>
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4">Restaurar Padrões</button>
   </aside>
-
-  <script src="../js/config.js"></script>
-  <script src="../js/alunos.js"></script>
 </body>
 </html>
