@@ -3,40 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Techadvisors - Painel do Professor</title>
+  <title>Portal do Professor - Techadvisors</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts & Tailwind CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- CSS Connections (Ambos os CSSs conectados) -->
   <link rel="stylesheet" href="../static/home.css">
   <link rel="stylesheet" href="../static/config.css">
+  <link rel="stylesheet" href="../static/prof.css">
 
+  <!-- JS Connections -->
   <script src="../js/config.js" defer></script>
   <script src="../js/prof.js" defer></script>
 </head>
 <body class="bg-[#f3f7fb]">
 
+  <!-- CABEÇALHO -->
   <header class="home-header">
-    <div class="logo cursor-pointer" onclick="window.location.href='professor.html'">
-      📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">PROFESSOR</span>
     </div>
+
     <nav>
       <ul>
-        <li onclick="window.location.href='professor.html'">🏠 Portal do Docente</li>
-        <li onclick="window.location.href='turmas.html'">🏫 Minhas Turmas</li>
-        <li onclick="alert('Área de Chatbot em desenvolvimento')">🤖 Chatbot</li>
-      
-        <li class="user-menu-container">
-          <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
-            <span>👨‍🏫 Olá, Professor</span>
+        <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
+        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard Global</li>
+        <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
+        
+        <!-- MENU DROPDOWN DO UTILIZADOR -->
+        <li class="user-menu-container relative">
+          <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span id="nav-teacher-name">Prof. Ana Beatriz</span>
             <span class="text-xs">▼</span>
           </div>
-        
-          <div id="userMenu" class="user-dropdown">
+          <div id="userMenu" class="user-dropdown hidden absolute right-0 mt-2 w-48 shadow-xl rounded-xl">
             <ul>
-              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
               <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
-              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+              <li onclick="logout()" class="logout-item text-red-500 hover:text-red-700">🚪 Sair</li>
             </ul>
           </div>
         </li>
@@ -44,35 +50,51 @@
     </nav>
   </header>
 
-  <main class="container">
-    <div class="banner">
-      <h2 id="prof-welcome-title">Bem-vindo, Professor(a)!</h2>
-      <p>Gerencie suas turmas, lance conteúdos, acompanhe o desempenho e acesse relatórios inclusivos.</p>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="banner mb-8">
+      <h2 id="welcome-title">Bem-vindo(a), Prof. Ana Beatriz!</h2>
+      <p>Gerencie suas turmas atribuídas, prepare atividades inclusivas e acompanhe o desempenho dos estudantes.</p>
     </div>
 
-    <div class="cards">
-      <div class="card" onclick="window.location.href='turmas.html'">
-        <div class="icone">🏫</div>
-        <h3>Minhas Turmas</h3>
-        <p>Acesse a lista de alunos e diários de classe.</p>
+    <!-- MINHAS TURMAS ATRIBUÍDAS (SEM BOTÃO "+ NOVA TURMA") -->
+    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h3 class="text-lg font-bold text-purple-900">Minhas Turmas Atribuídas</h3>
+          <p class="text-xs text-slate-500">Turmas vinculadas ao seu cadastro pela administração do sistema.</p>
+        </div>
       </div>
 
-      <div class="card" onclick="alert('Publicação de Atividades')">
-        <div class="icone">📚</div>
-        <h3>Atividades & Materiais</h3>
-        <p>Publique conteúdos e tarefas adaptadas.</p>
-      </div>
-
-      <div class="card" onclick="alert('Relatórios do Professor')">
-        <div class="icone">📊</div>
-        <h3>Relatórios & Notas</h3>
-        <p>Acompanhe o progresso do aprendizado.</p>
-      </div>
-
-      <div class="card" onclick="alert('Assistente Pedagógico Chatbot')">
-        <div class="icone">🤖</div>
-        <h3>Assistente IA</h3>
-        <p>Suporte automático para elaboração de planos de aula.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-700">
+          <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
+            <tr>
+              <th class="p-3">Código</th>
+              <th class="p-3">Nome da Turma</th>
+              <th class="p-3">Série/Ano</th>
+              <th class="p-3">Disciplina</th>
+              <th class="p-3">Turno</th>
+              <th class="p-3">Ano Letivo</th>
+              <th class="p-3">Status</th>
+              <th class="p-3 text-center">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="lista-turmas-body">
+            <tr class="border-b border-slate-100 hover:bg-slate-50">
+              <td class="p-3 font-mono font-bold text-purple-700">TURMA9A</td>
+              <td class="p-3 font-semibold">9º Ano A</td>
+              <td class="p-3">9º Ano</td>
+              <td class="p-3">Língua Portuguesa</td>
+              <td class="p-3">Manhã</td>
+              <td class="p-3">2026</td>
+              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Ativa</span></td>
+              <td class="p-3 text-center">
+                <button onclick="window.location.href='materias.html'" class="bg-purple-700 hover:bg-purple-900 text-white font-bold px-3 py-1 rounded-lg text-[11px] transition-all cursor-pointer">Ver Atividades</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
@@ -81,31 +103,34 @@
     © 2026 • Techadvisors — Painel do Professor
   </footer>
 
-  <!-- BOTÃO E GAVETA DE ACESSIBILIDADE -->
-  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-purple-700 hover:bg-purple-800 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
+  <!-- BOTÃO FLUTUANTE DE ACESSIBILIDADE -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
     ⚙️
   </button>
 
   <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
 
+  <!-- GAVETA DE ACESSIBILIDADE -->
   <aside id="settings-drawer" class="hidden-drawer">
     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
       <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
       <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
     </div>
 
+    <!-- TAMANHO DA FONTE -->
     <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
       <div class="flex justify-between items-center mb-2">
         <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
         <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
       </div>
       <div class="flex gap-2">
-        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A -</button>
-        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600">Normal</button>
-        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700">A +</button>
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
       </div>
     </div>
 
+    <!-- BRILHO DA TELA -->
     <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
       <div class="flex justify-between items-center mb-1">
         <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
@@ -114,6 +139,7 @@
       <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
     </div>
 
+    <!-- SATURAÇÃO DE CORES -->
     <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
       <div class="flex justify-between items-center mb-1">
         <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
@@ -122,12 +148,14 @@
       <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
     </div>
 
+    <!-- MODO ALTO CONTRASTE -->
     <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
       <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
       <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
     </div>
 
-    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4">Restaurar Padrões</button>
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
   </aside>
+
 </body>
 </html>

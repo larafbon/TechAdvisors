@@ -1,56 +1,31 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario'));
- 
-  if (!user || user.role !== 'professor') {
-    alert('Acesso restrito a professores logados.');
-    window.location.href = 'index.html';
-    return;
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  localStorage.setItem('tech_user_role', 'professor');
+  const teacherName = localStorage.getItem('tech_user_name') || 'Prof. Ana Beatriz';
 
-  const welcomeTitle = document.getElementById('prof-welcome-title');
-  if (welcomeTitle) {
-    welcomeTitle.innerText = `Bem-vindo(a), ${user.nome || 'Professor'}!`;
-  }
+  const navTeacherName = document.getElementById('nav-teacher-name');
+  if (navTeacherName) navTeacherName.innerText = teacherName;
 
-  const profNav = document.getElementById('prof-name-nav');
-  if (profNav && profNav.querySelector('span')) {
-    profNav.querySelector('span').innerText = `👨‍🏫 ${user.nome || 'Professor'}`;
-  }
+  const welcomeTitle = document.getElementById('welcome-title');
+  if (welcomeTitle) welcomeTitle.innerText = `Bem-vindo(a), ${teacherName}!`;
 });
 
 function toggleUserMenu(event) {
-  if (event) event.stopPropagation();
-  const menu = document.getElementById('userMenu') || document.getElementById('user-dropdown');
+  event.stopPropagation();
+  const menu = document.getElementById('userMenu');
   if (menu) {
-    menu.classList.toggle('show');
+    menu.classList.toggle('hidden');
   }
 }
 
-window.addEventListener('click', function(e) {
-  const menu = document.getElementById('userMenu') || document.getElementById('user-dropdown');
-  const navBtn = document.getElementById('prof-name-nav');
-  if (menu && menu.classList.contains('show')) {
-    if (!menu.contains(e.target) && navBtn && !navBtn.contains(e.target)) {
-      menu.classList.remove('show');
-    }
+document.addEventListener('click', () => {
+  const menu = document.getElementById('userMenu');
+  if (menu && !menu.classList.contains('hidden')) {
+    menu.classList.add('hidden');
   }
 });
 
-function minhaConta() {
-  alert('Acessando: Minha Conta');
-}
-
-function configuracoes() {
-  if (typeof toggleSettingsDrawer === 'function') {
-    toggleSettingsDrawer(true);
-  } else {
-    alert('Acessando: Configurações');
-  }
-}
-
 function logout() {
-  localStorage.removeItem('user');
-  localStorage.removeItem('usuario');
+  localStorage.removeItem('tech_user_name');
+  localStorage.removeItem('tech_user_role');
   window.location.href = 'index.html';
 }
- 

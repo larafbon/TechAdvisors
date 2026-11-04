@@ -1,45 +1,30 @@
-document.addEventListener('DOMContentLoaded', function () {
-  try {
-    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario')) || { nome: 'Aluno', role: 'aluno' };
+document.addEventListener('DOMContentLoaded', () => {
+  const userName = localStorage.getItem('tech_user_name') || 'Lucas Silva';
+  
+  const navStudentName = document.getElementById('nav-student-name');
+  if (navStudentName) navStudentName.innerText = userName;
 
-    const welcomeTitle = document.getElementById('student-welcome-title');
-    if (welcomeTitle) {
-      welcomeTitle.innerText = `Bem-vindo(a), ${user.nome || 'Aluno'}!`;
-    }
-
-    const nameNav = document.getElementById('student-name-nav');
-    if (nameNav && nameNav.querySelector('span')) {
-      nameNav.querySelector('span').innerText = `🎓 ${user.nome || 'Aluno'}`;
-    }
-  } catch (error) {
-    console.warn('Erro ao carregar dados do aluno:', error);
-  }
+  const welcomeTitle = document.getElementById('welcome-title');
+  if (welcomeTitle) welcomeTitle.innerText = `Bem-vindo(a), ${userName}!`;
 });
 
 function toggleUserMenu(event) {
-  if (event) event.stopPropagation();
-  const menu = document.getElementById('userMenu') || document.getElementById('user-dropdown');
+  event.stopPropagation();
+  const menu = document.getElementById('userMenu');
   if (menu) {
-    menu.classList.toggle('show');
+    menu.classList.toggle('hidden');
   }
 }
 
-window.addEventListener('click', function (e) {
-  const menu = document.getElementById('userMenu') || document.getElementById('user-dropdown');
-  const navBtn = document.getElementById('student-name-nav');
-  if (menu && menu.classList.contains('show')) {
-    if (!menu.contains(e.target) && navBtn && !navBtn.contains(e.target)) {
-      menu.classList.remove('show');
-    }
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('userMenu');
+  if (menu && !menu.classList.contains('hidden')) {
+    menu.classList.add('hidden');
   }
 });
 
-function minhaConta() {
-  alert('Acessando o perfil do aluno...');
-}
-
 function logout() {
-  localStorage.removeItem('user');
-  localStorage.removeItem('usuario');
+  localStorage.removeItem('tech_user_name');
+  localStorage.removeItem('tech_user_role');
   window.location.href = 'index.html';
 }
