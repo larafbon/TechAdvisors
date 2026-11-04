@@ -9,17 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function toggleUserMenu(event) {
-  event.stopPropagation();
+  if (event) event.stopPropagation();
   const menu = document.getElementById('userMenu');
   if (menu) {
-    menu.classList.toggle('hidden');
+    menu.classList.toggle('show');
   }
 }
 
 document.addEventListener('click', (e) => {
   const menu = document.getElementById('userMenu');
-  if (menu && !menu.classList.contains('hidden')) {
-    menu.classList.add('hidden');
+  if (menu && menu.classList.contains('show')) {
+    menu.classList.remove('show');
   }
 });
 

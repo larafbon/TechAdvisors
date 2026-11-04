@@ -33,6 +33,7 @@
     align-items: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     position: relative;
+    z-index: 50;
   }
   
   .logo {
@@ -72,12 +73,12 @@
     position: absolute;
     right: 0;
     top: calc(100% + 10px);
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #ffffff !important;
+    color: #333333 !important;
     min-width: 190px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    z-index: 9999 !important;
     overflow: hidden;
     border: 1px solid #e5e7eb;
   }
@@ -98,29 +99,30 @@
   .user-dropdown li {
     padding: 12px 20px;
     font-size: 14px;
-    color: #333333;
+    color: #1e293b !important;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
     width: 100%;
     cursor: pointer;
     text-align: left;
   }
   
   .user-dropdown li:hover {
-    background-color: #f0f4f9;
-    color: #1364c2;
+    background-color: #f1f5f9 !important;
+    color: #6d28d9 !important;
   }
   
   .user-dropdown li.logout-item {
-    color: #e11d48;
+    color: #e11d48 !important;
     border-top: 1px solid #f3f4f6;
   }
   
   .user-dropdown li.logout-item:hover {
-    background-color: #ffe4e6;
-    color: #be123c;
+    background-color: #ffe4e6 !important;
+    color: #be123c !important;
   }
   
   /* =========================================================
@@ -154,7 +156,7 @@
   }
   
   /* =========================================================
-     GRID DE CARDS (HOMEPAGE E MÓDULOS)
+     GRID DE CARDS
      ========================================================= */
   
   .cards {
@@ -198,38 +200,47 @@
   }
   
   /* =========================================================
-     CARDS DE SELEÇÃO DE PERFIL (CADASTRO)
+     AJUSTES PARA MODO ESCURO (HIGH CONTRAST)
      ========================================================= */
   
-  .role-card {
-    border: 2px solid #e2e8f0;
-    border-radius: 1.25rem;
-    padding: 2rem 1.25rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  body.high-contrast .user-dropdown {
+    background-color: #1e0d36 !important;
+    border: 1px solid #4c1d95 !important;
   }
   
-  .role-card:hover {
-    border-color: #6b21a8;
-    transform: translateY(-2px);
+  body.high-contrast .user-dropdown li {
+    color: #f3e8ff !important;
+    background-color: #1e0d36 !important;
   }
   
-  .role-card.selected {
-    border-color: #6b21a8;
-    box-shadow: 0 0 0 2px #6b21a8, 0 10px 20px -5px rgba(107, 33, 168, 0.2);
-    background-color: #f5f3ff;
+  body.high-contrast .user-dropdown li:hover {
+    background-color: #3b1768 !important;
+    color: #ffffff !important;
   }
   
-  /* =========================================================
-     RODAPÉ
-     ========================================================= */
+  body.high-contrast #screen-login main,
+  body.high-contrast #screen-register-step1 main,
+  body.high-contrast #screen-register-step2 main {
+    background-color: #1e0d36 !important;
+    border-color: #3b1768 !important;
+    color: #ffffff !important;
+  }
   
+  body.high-contrast #screen-login label,
+  body.high-contrast #screen-register-step1 label,
+  body.high-contrast #screen-register-step2 label {
+    color: #d8b4fe !important;
+  }
+  
+  body.high-contrast #screen-login input,
+  body.high-contrast #screen-register-step2 input,
+  body.high-contrast #screen-register-step2 select {
+    background-color: #120924 !important;
+    color: #ffffff !important;
+    border-color: #4c1d95 !important;
+  }
+  
+  /* RODAPÉ */
   footer.home-footer,
   footer {
     text-align: center;
@@ -240,7 +251,6 @@
     font-size: 0.95rem;
   }
   
-  /* Responsividade */
   @media (max-width: 768px) {
     header.home-header, header {
       padding: 15px 20px;
@@ -254,8 +264,6 @@
       justify-content: center;
     }
   }
- 
- 
  
  
  

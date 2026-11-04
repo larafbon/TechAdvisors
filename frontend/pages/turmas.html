@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turmas Atribuídas - Techadvisors</title>
+  <title>Portal do Estudante - Techadvisors</title>
 
   <!-- Fonts & Tailwind CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,37 +12,35 @@
   <!-- CSS Connections -->
   <link rel="stylesheet" href="../static/home.css">
   <link rel="stylesheet" href="../static/config.css">
-  <link rel="stylesheet" href="../static/prof.css">
 
   <!-- JS Connections -->
   <script src="../js/config.js" defer></script>
-  <script src="../js/prof.js" defer></script>
+  <script src="../js/alunos.js" defer></script>
 </head>
 <body class="bg-[#f3f7fb]">
 
   <!-- CABEÇALHO -->
   <header class="home-header">
     <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
-      📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">PROFESSOR</span>
+      📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">ALUNO</span>
     </div>
 
     <nav>
       <ul>
-        <li onclick="window.location.href='professor.html'" class="cursor-pointer">👨‍🏫 Portal do Docente</li>
-        <li onclick="window.location.href='turmas.html'" class="font-bold text-yellow-300 cursor-pointer">🏫 Minhas Turmas</li>
+        <li onclick="window.location.href='alunos.html'" class="font-bold text-yellow-300 cursor-pointer">🎓 Portal do Estudante</li>
         <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
         
-        <!-- MENU DROPDOWN -->
+        <!-- MENU DROPDOWN DO USUÁRIO -->
         <li class="user-menu-container relative">
           <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
-            <span id="nav-teacher-name">Prof. Juan</span>
+            <span id="nav-student-name">Lucas Silva</span>
             <span class="text-xs">▼</span>
           </div>
-          <div id="userMenu" class="user-dropdown hidden absolute right-0 mt-2 w-48 shadow-xl rounded-xl z-50">
+          <div id="userMenu" class="user-dropdown">
             <ul>
-              <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
+              <li onclick="window.location.href='perfil.html'">👤 Meu Perfil</li>
               <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
-              <li onclick="logout()" class="logout-item text-red-500 hover:text-red-700">🚪 Sair</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
             </ul>
           </div>
         </li>
@@ -52,62 +50,53 @@
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="max-w-6xl mx-auto px-4 py-8">
-    
-    <div class="mb-6 flex justify-between items-center">
-      <div>
-        <h2 class="text-2xl font-bold text-purple-900">Gestão de Turmas Atribuídas</h2>
-        <p class="text-xs text-slate-500">Consulte as turmas vinculadas ao seu cadastro docente pela administração.</p>
-      </div>
+    <div class="banner mb-8">
+      <h2 id="welcome-title">Bem-vindo(a), Lucas Silva!</h2>
+      <p>Acompanhe suas disciplinas, veja tarefas pendentes, consulte suas notas e utilize recursos de apoio aos estudos.</p>
     </div>
 
-    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-700">
-          <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
-            <tr>
-              <th class="p-3">Código</th>
-              <th class="p-3">Nome da Turma</th>
-              <th class="p-3">Série/Ano</th>
-              <th class="p-3">Disciplina</th>
-              <th class="p-3">Turno</th>
-              <th class="p-3">Ano Letivo</th>
-              <th class="p-3">ID Prof.</th>
-              <th class="p-3">Status</th>
-              <th class="p-3 text-center">Ação</th>
-            </tr>
-          </thead>
-          <tbody id="lista-turmas-body">
-            <tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3 font-mono font-bold text-purple-700">TURMA9A</td>
-              <td class="p-3 font-semibold">9º Ano A</td>
-              <td class="p-3">9º Ano</td>
-              <td class="p-3">Língua Portuguesa</td>
-              <td class="p-3">Manhã</td>
-              <td class="p-3">2026</td>
-              <td class="p-3">PRF-001</td>
-              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Ativa</span></td>
-              <td class="p-3 text-center">
-                <button onclick="window.location.href='materias.html'" class="bg-purple-700 hover:bg-purple-900 text-white font-bold px-3 py-1 rounded-lg text-[11px] transition-all cursor-pointer">Ver Atividades</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- CARDS COM ROTAS CORRETAS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      
+      <div onclick="window.location.href='turmas.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">📖</div>
+        <h3 class="font-bold text-slate-800 text-base mb-1">Minhas Disciplinas</h3>
+        <p class="text-xs text-slate-500">Acesse as matérias, horários e conteúdos das suas turmas.</p>
       </div>
-    </div>
 
+      <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">✏️</div>
+        <h3 class="font-bold text-slate-800 text-base mb-1">Atividades & Trabalhos</h3>
+        <p class="text-xs text-slate-500">Confira prazos de entrega e envie suas tarefas.</p>
+      </div>
+
+      <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">📊</div>
+        <h3 class="font-bold text-slate-800 text-base mb-1">Notas & Frequência</h3>
+        <p class="text-xs text-slate-500">Acompanhe seu desempenho acadêmico e presença.</p>
+      </div>
+
+      <div onclick="toggleSettingsDrawer(true)" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">🎧</div>
+        <h3 class="font-bold text-slate-800 text-base mb-1">Recursos Inclusivos</h3>
+        <p class="text-xs text-slate-500">Acesse áudios, resumos adaptados e ferramentas de apoio.</p>
+      </div>
+
+    </div>
   </main>
 
   <footer class="home-footer">
-    © 2026 • Techadvisors — Painel do Professor
+    © 2026 • Techadvisors — Painel do Aluno
   </footer>
 
-  <!-- BOTÃO E GAVETA DE ACESSIBILIDADE -->
+  <!-- BOTÃO FLUTUANTE DE ACESSIBILIDADE -->
   <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
     ⚙️
   </button>
 
   <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
 
+  <!-- GAVETA DE ACESSIBILIDADE COMPLETA -->
   <aside id="settings-drawer" class="hidden-drawer">
     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
       <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
@@ -133,24 +122,29 @@
         <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
         <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
       </div>
-      <input type="range" id="brightness
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
 
+    <!-- SATURAÇÃO DE CORES -->
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
 
+    <!-- MODO ALTO CONTRASTE -->
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
+    </div>
 
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
+  </aside>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+</body>
+</html>
 
 
 

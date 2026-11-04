@@ -17,25 +17,26 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* =========================================================
-   GAVETA LATERAL DE ACESSIBILIDADE (#settings-drawer)
-   ========================================================= */
+/* GAVETA LATERAL DE ACESSIBILIDADE */
+#settings-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  width: 100% !important;
+  max-width: 360px !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3) !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 24px !important;
+  overflow-y: auto !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 
-   #settings-drawer {
-    position: fixed !important;
-    top: 0 !important;
-    right: 0 !important;
-    height: 100vh !important;
-    width: 100% !important;
-    max-width: 360px !important;
-    background-color: #ffffff !important;
-    z-index: 99999 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 24px !important;
-    overflow-y: scroll !important; /* FORÇA A BARRA DE ROLAGEM VISÍVEL */
-  }
-  
 #settings-drawer.hidden-drawer {
   transform: translateX(100%) !important;
   pointer-events: none !important;
@@ -64,10 +65,7 @@ body {
   pointer-events: auto !important;
 }
 
-/* =========================================================
-   MODO ESCURO / ALTO CONTRASTE (ROXO PROFUNDO)
-   ========================================================= */
-
+/* MODO ALTO CONTRASTE (ROXO PROFUNDO) */
 body.high-contrast {
   background-color: #120924 !important;
   color: #f3e8ff !important;
@@ -85,10 +83,27 @@ body.high-contrast header nav ul li {
 }
 
 body.high-contrast .card,
-body.high-contrast main .bg-white {
+body.high-contrast main .bg-white,
+body.high-contrast table,
+body.high-contrast tbody {
   background-color: #1e0d36 !important;
-  border: 1px solid #3b1768 !important;
+  border-color: #3b1768 !important;
   color: #f3e8ff !important;
+}
+
+body.high-contrast thead,
+body.high-contrast tr {
+  background-color: #2a0e4f !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast th {
+  color: #facc15 !important;
+}
+
+body.high-contrast td {
+  color: #f3e8ff !important;
+  border-color: #3b1768 !important;
 }
 
 body.high-contrast .banner {
@@ -113,6 +128,15 @@ body.high-contrast .text-slate-600,
 body.high-contrast .text-slate-500,
 body.high-contrast .text-slate-700 {
   color: #d8b4fe !important;
+}
+
+body.high-contrast input[type="text"],
+body.high-contrast input[type="email"],
+body.high-contrast input[type="password"],
+body.high-contrast select {
+  background-color: #130724 !important;
+  border: 1px solid #4c1d95 !important;
+  color: #ffffff !important;
 }
 
 /* GAVETA NO MODO ESCURO */

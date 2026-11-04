@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal do Professor - Techadvisors</title>
+  <title>Portal do Docente - Techadvisors</title>
 
   <!-- Fonts & Tailwind CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- CSS Connections (Ambos os CSSs conectados) -->
+  <!-- CSS Connections -->
   <link rel="stylesheet" href="../static/home.css">
   <link rel="stylesheet" href="../static/config.css">
   <link rel="stylesheet" href="../static/prof.css">
@@ -29,20 +29,20 @@
     <nav>
       <ul>
         <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
-        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard Global</li>
+        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
         <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
         
-        <!-- MENU DROPDOWN DO UTILIZADOR -->
+        <!-- MENU DROPDOWN DO USUÁRIO -->
         <li class="user-menu-container relative">
           <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
             <span id="nav-teacher-name">Prof. Ana Beatriz</span>
             <span class="text-xs">▼</span>
           </div>
-          <div id="userMenu" class="user-dropdown hidden absolute right-0 mt-2 w-48 shadow-xl rounded-xl">
+          <div id="userMenu" class="user-dropdown">
             <ul>
               <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
               <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
-              <li onclick="logout()" class="logout-item text-red-500 hover:text-red-700">🚪 Sair</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
             </ul>
           </div>
         </li>
@@ -57,45 +57,33 @@
       <p>Gerencie suas turmas atribuídas, prepare atividades inclusivas e acompanhe o desempenho dos estudantes.</p>
     </div>
 
-    <!-- MINHAS TURMAS ATRIBUÍDAS (SEM BOTÃO "+ NOVA TURMA") -->
-    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 mb-8">
-      <div class="flex justify-between items-center mb-4">
-        <div>
-          <h3 class="text-lg font-bold text-purple-900">Minhas Turmas Atribuídas</h3>
-          <p class="text-xs text-slate-500">Turmas vinculadas ao seu cadastro pela administração do sistema.</p>
-        </div>
+    <!-- OS 4 CARDS PRINCIPAIS DO PROFESSOR -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      
+      <div onclick="window.location.href='turmas.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">🏫</div>
+        <h3 class="font-bold text-purple-900 text-base mb-1">Minhas Turmas</h3>
+        <p class="text-xs text-slate-500">Visualize as turmas atribuídas ao seu perfil docente.</p>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-700">
-          <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
-            <tr>
-              <th class="p-3">Código</th>
-              <th class="p-3">Nome da Turma</th>
-              <th class="p-3">Série/Ano</th>
-              <th class="p-3">Disciplina</th>
-              <th class="p-3">Turno</th>
-              <th class="p-3">Ano Letivo</th>
-              <th class="p-3">Status</th>
-              <th class="p-3 text-center">Ação</th>
-            </tr>
-          </thead>
-          <tbody id="lista-turmas-body">
-            <tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3 font-mono font-bold text-purple-700">TURMA9A</td>
-              <td class="p-3 font-semibold">9º Ano A</td>
-              <td class="p-3">9º Ano</td>
-              <td class="p-3">Língua Portuguesa</td>
-              <td class="p-3">Manhã</td>
-              <td class="p-3">2026</td>
-              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Ativa</span></td>
-              <td class="p-3 text-center">
-                <button onclick="window.location.href='materias.html'" class="bg-purple-700 hover:bg-purple-900 text-white font-bold px-3 py-1 rounded-lg text-[11px] transition-all cursor-pointer">Ver Atividades</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">📝</div>
+        <h3 class="font-bold text-purple-900 text-base mb-1">Criar Atividade</h3>
+        <p class="text-xs text-slate-500">Elabore atividades e recursos pedagógicos adaptados.</p>
       </div>
+
+      <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">📊</div>
+        <h3 class="font-bold text-purple-900 text-base mb-1">Relatórios & Notas</h3>
+        <p class="text-xs text-slate-500">Acompanhe o rendimento e presenças dos alunos.</p>
+      </div>
+
+      <div onclick="toggleSettingsDrawer(true)" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">⚙️</div>
+        <h3 class="font-bold text-purple-900 text-base mb-1">Acessibilidade</h3>
+        <p class="text-xs text-slate-500">Ajuste o tamanho de fonte, brilho e contraste visual.</p>
+      </div>
+
     </div>
   </main>
 
