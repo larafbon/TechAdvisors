@@ -26,28 +26,28 @@
       📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">PROFESSOR</span>
     </div>
 
-    <nav>
-      <ul>
-        <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
-        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
-        <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
-        
-        <!-- MENU DROPDOWN DO USUÁRIO -->
-        <li class="user-menu-container relative">
-          <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
-            <span id="nav-teacher-name">Prof. Ana Beatriz</span>
-            <span class="text-xs">▼</span>
-          </div>
-          <div id="userMenu" class="user-dropdown">
-            <ul>
-              <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
-              <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
-              <li onclick="logout()" class="logout-item">🚪 Sair</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </nav>
+   <!-- Exemplo de Navbar no professor.html -->
+<nav>
+  <ul>
+    <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
+    <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
+    <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
+    
+    <li class="user-menu-container relative">
+      <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+        <span id="nav-teacher-name">Carregando...</span>
+        <span class="text-xs">▼</span>
+      </div>
+      <div id="userMenu" class="user-dropdown">
+        <ul>
+          <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
+          <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
+          <li onclick="logout()" class="logout-item">🚪 Sair</li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
   </header>
 
   <!-- CONTEÚDO PRINCIPAL -->

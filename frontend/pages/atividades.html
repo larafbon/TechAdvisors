@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atividades & Trabalhos - Techadvisors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/config.css">
+  <script src="../js/config.js" defer></script>
+</head>
+<body class="bg-[#f3f7fb]">
+
+  <header class="home-header">
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">ALUNO</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='alunos.html'" class="cursor-pointer">🎓 Portal do Estudante</li>
+        <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
+        <li onclick="toggleSettingsDrawer(true)" class="cursor-pointer">⚙️ Acessibilidade</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="pt-2 mb-6">
+      <button onclick="window.location.href='alunos.html'" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-purple-700 transition-colors cursor-pointer">
+        ← Voltar ao Portal
+      </button>
+    </div>
+
+    <div class="banner mb-8">
+      <h2>✏️ Atividades & Trabalhos Pendentes</h2>
+      <p>Confira os prazos, baixe os materiais de apoio e envie suas tarefas concluídas.</p>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Exemplo de Atividade PENDENTE -->
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">Pendente</span>
+          <h3 class="text-base font-bold text-slate-800 mt-2">Resumo de Literatura - Modernismo</h3>
+          <p class="text-xs text-slate-500 mt-1">Disciplina: Língua Portuguesa • Entrega até: 10/11/2026</p>
+        </div>
+        <button class="bg-[#5b21b6] hover:bg-purple-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-all shadow-md cursor-pointer self-start md:self-auto">
+          Enviar Tarefa
+        </button>
+      </div>
+
+      <!-- Exemplo de Atividade CONCLUÍDA -->
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">Enviado</span>
+          <h3 class="text-base font-bold text-slate-800 mt-2">Lista de Exercícios: Equações do 2º Grau</h3>
+          <p class="text-xs text-slate-500 mt-1">Disciplina: Matemática • Enviado em: 01/11/2026</p>
+        </div>
+        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 self-start md:self-auto">
+          Nota: 9.5 / 10
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Atividades do Aluno
+  </footer>
+
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
+    ⚙️
+  </button>
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
+  <aside id="settings-drawer" class="hidden-drawer">
+    <!-- Conteúdo da gaveta mantido -->
+  </aside>
+</body>
+</html>

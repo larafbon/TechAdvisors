@@ -1,12 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-  localStorage.setItem('tech_user_role', 'professor');
-  const teacherName = localStorage.getItem('tech_user_name') || 'Prof. Ana Beatriz';
+  const userString = localStorage.getItem('tech_user');
+  
+  if (!userString) {
+    // Se não houver sessão ativa, impede acesso e redireciona ao login
+    window.location.href = 'index.html';
+    return;
+  }
 
+  const user = JSON.parse(userString);
+
+  // Redireciona caso um aluno tente acessar a página de professor
+  if (user.role !== 'professor') {
+    window.location.href = 'alunos.html';
+    return;
+  }
+
+  // Preenche a interface com os dados reais do professor logado
   const navTeacherName = document.getElementById('nav-teacher-name');
-  if (navTeacherName) navTeacherName.innerText = teacherName;
+  if (navTeacherName) navTeacherName.innerText = user.nome;
 
   const welcomeTitle = document.getElementById('welcome-title');
-  if (welcomeTitle) welcomeTitle.innerText = `Bem-vindo(a), ${teacherName}!`;
+  if (welcomeTitle) welcomeTitle.innerText = `Bem-vindo(a), ${user.nome}!`;
 });
 
 function toggleUserMenu(event) {
@@ -17,7 +31,7 @@ function toggleUserMenu(event) {
   }
 }
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', () => {
   const menu = document.getElementById('userMenu');
   if (menu && menu.classList.contains('show')) {
     menu.classList.remove('show');
@@ -25,7 +39,6 @@ document.addEventListener('click', (e) => {
 });
 
 function logout() {
-  localStorage.removeItem('tech_user_name');
-  localStorage.removeItem('tech_user_role');
+  localStorage.clear();
   window.location.href = 'index.html';
 }

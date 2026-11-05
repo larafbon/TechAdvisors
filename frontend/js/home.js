@@ -222,3 +222,20 @@ function logout() {
   localStorage.removeItem('usuario');
   window.location.href = 'index.html';
 }
+
+function salvarSessaoUsuario(dadosUsuario) {
+  // Limpa registros residuais de sessões anteriores
+  localStorage.clear();
+
+  // Salva o objeto completo e normalizado
+  const usuario = {
+    id: dadosUsuario.id_professor || dadosUsuario.id_aluno || dadosUsuario.id,
+    nome: dadosUsuario.nome,
+    email: dadosUsuario.email,
+    role: dadosUsuario.role || (dadosUsuario.id_professor ? 'professor' : 'aluno'),
+    disciplinas: dadosUsuario.disciplinas || '',
+    turma: dadosUsuario.id_turma || null
+  };
+
+  localStorage.setItem('tech_user', JSON.stringify(usuario));
+}
