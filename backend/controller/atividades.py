@@ -7,16 +7,14 @@ router = APIRouter(prefix="/atividades", tags=["Atividades"])
 @router.post("", status_code=status.HTTP_201_CREATED)
 def criar_atividade(item: AtividadeCreate):
     try:
-        # Exporta os dados garantindo serialização JSON pura
         dados = item.model_dump(mode="json") if hasattr(item, "model_dump") else item.dict()
-        
-        # Se a data de criação não for enviada ou for nula, remove a chave
-        # para que o Supabase/PostgreSQL aplique o DEFAULT CURRENT_DATE do banco
+
+        # Garante remoção de data_criacao para o Supabase usar DEFAULT CURRENT_DATE
         if not dados.get("data_criacao"):
             dados.pop("data_criacao", None)
             
         if not dados.get("id_tipo_atividade"):
-            dados["id_tipo_atividade"] = 1
+            dados["id_tipo_atividade"] = 1  # 1 para Atividade Padrão / Quiz
 
         res = supabase.table("atividade").insert(dados).execute()
         return {"status": "sucesso", "dados": res.data}
