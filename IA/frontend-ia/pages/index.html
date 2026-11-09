@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Adivisors</title>
     <link rel="stylesheet" href="../static/style.css">
+    
+    <!-- Biblioteca Chart.js para os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Arquivo JavaScript unificado -->
     <script src="../js/resumo.js" defer></script>
 
     <style>
@@ -125,7 +130,7 @@
         }
         .feature span { font-size: 30px; }
 
-        /* ===== LOUSA (original verde/madeira) ===== */
+        /* ===== LOUSA ===== */
         .chalkboard {
             position: relative; display: flex; justify-content: center;
             align-items: center; min-height: 225px;
@@ -202,7 +207,7 @@
         .quick-card p { font-size: 15px; line-height: 1.5; }
 
         /* =========================================
-           RESUMO DE APRENDIZAGEM (NOVO)
+           RESUMO DE APRENDIZAGEM
         ========================================= */
         .resumo-section {
             margin-top: 32px;
@@ -287,6 +292,33 @@
             font-size: 14px; color: #5b4bbd; margin-bottom: 0;
         }
 
+        /* =========================================
+           NOVA SEÇÃO DE GRÁFICOS (DASHBOARD)
+        ========================================= */
+        .graficos-section {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 32px;
+        }
+        .grafico-card {
+            background: white;
+            border: 1px solid #d8ccff;
+            border-radius: 27px;
+            padding: 24px;
+            box-shadow: 0 4px 12px #6d1fd61a;
+        }
+        .grafico-card h3 {
+            font-size: 20px;
+            color: #5c1fd6;
+            margin-bottom: 20px;
+        }
+        .canvas-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
         /* ===== FOOTER ===== */
         footer {
             margin-top: 27px; padding: 18px;
@@ -296,6 +328,11 @@
         }
 
         /* ===== RESPONSIVO ===== */
+        @media (max-width: 1100px) {
+            .graficos-section {
+                grid-template-columns: 1fr; /* Um gráfico embaixo do outro no celular/tablet */
+            }
+        }
         @media (min-width: 1000px) and (max-width: 1250px) {
             .layout { grid-template-columns: 230px minmax(0, 1fr); }
             .sidebar { padding: 28px 13px 20px; }
@@ -312,284 +349,107 @@
         }
 
         /* =========================================
-           MODO CALMO — preto e branco com destaques
+           MODO CALMO
         ========================================= */
-        body.calm-mode {
-            background: #ffffff;
-            color: #111111;
-        }
+        body.calm-mode { background: #ffffff; color: #111111; }
         body.calm-mode * { transition: none !important; }
-
-        body.calm-mode .sidebar {
-            background: #f7f7f7;
-            border-right-color: #e0e0e0;
-        }
+        body.calm-mode .sidebar { background: #f7f7f7; border-right-color: #e0e0e0; }
         body.calm-mode .logo { color: #111111; }
         body.calm-mode .logo-icon { filter: grayscale(1); }
         body.calm-mode .subtitle { color: #555555; }
         body.calm-mode .menu a { color: #111111; }
-        body.calm-mode .menu a:hover,
-        body.calm-mode .menu a.active {
-            background: #ededed;
-            color: #111111;
-        }
+        body.calm-mode .menu a:hover, body.calm-mode .menu a.active { background: #ededed; color: #111111; }
         body.calm-mode .menu-icon { color: #7a3fd4; }
-        body.calm-mode .side-card {
-            background: #ffffff;
-            border-color: #e0e0e0;
-        }
+        body.calm-mode .side-card { background: #ffffff; border-color: #e0e0e0; }
         body.calm-mode .side-card .heart { filter: grayscale(1); }
-
-        body.calm-mode .calm-button {
-            background: #f2f2f2;
-            border-color: #d8d8d8;
-            color: #111111;
-        }
-        body.calm-mode .round-button {
-            background: #ffffff;
-            border-color: #d8d8d8;
-            color: #111111;
-        }
-
-        body.calm-mode .assistant {
-            background: #ffffff;
-            border-color: #e0e0e0;
-            box-shadow: 0 2px 8px #00000008;
-        }
-        body.calm-mode .person {
-            background: #f0f0f0;
-            filter: grayscale(1);
-        }
-        body.calm-mode .tag {
-            background: #eef4ff;
-            color: #2a5dba;
-        }
+        body.calm-mode .calm-button { background: #f2f2f2; border-color: #d8d8d8; color: #111111; }
+        body.calm-mode .round-button { background: #ffffff; border-color: #d8d8d8; color: #111111; }
+        body.calm-mode .assistant { background: #ffffff; border-color: #e0e0e0; box-shadow: 0 2px 8px #00000008; }
+        body.calm-mode .person { background: #f0f0f0; filter: grayscale(1); }
+        body.calm-mode .tag { background: #eef4ff; color: #2a5dba; }
         body.calm-mode .assistant h1 { color: #111111; }
         body.calm-mode .description { color: #444444; }
-        body.calm-mode .feature {
-            background: #ffffff;
-            border-color: #e5e5e5;
-        }
+        body.calm-mode .feature { background: #ffffff; border-color: #e5e5e5; }
         body.calm-mode .feature span { filter: grayscale(1); }
-
-        body.calm-mode .chalkboard {
-            border-color: #7a3fd4;
-            background-color: #f2f2f2;
-            box-shadow: inset 0 0 12px #00000008, 0 4px 0 #d0d0d0;
-        }
+        body.calm-mode .chalkboard { border-color: #7a3fd4; background-color: #f2f2f2; box-shadow: inset 0 0 12px #00000008, 0 4px 0 #d0d0d0; }
         body.calm-mode .chalkboard::before { border-color: #d8d8d8; }
-        body.calm-mode .search-box {
-            border-color: #c8c8c8;
-            background: #ffffff;
-        }
+        body.calm-mode .search-box { border-color: #c8c8c8; background: #ffffff; }
         body.calm-mode .search-icon { color: #7a3fd4; }
         body.calm-mode .search-box input { color: #111111; }
         body.calm-mode .search-box input::placeholder { color: #888888; }
         body.calm-mode .send-button { color: #2a5dba; }
-
         body.calm-mode .decoration { filter: grayscale(1); }
         body.calm-mode .chalk-heart { color: #7a3fd4; filter: none; }
         body.calm-mode .star { color: #2a5dba; filter: none; }
-
-        body.calm-mode .chalk-piece.pink   { background: #7a3fd4; }
+        body.calm-mode .chalk-piece.pink { background: #7a3fd4; }
         body.calm-mode .chalk-piece.yellow { background: #2a5dba; }
-        body.calm-mode .chalk-piece.blue   { background: #bfbfbf; }
-        body.calm-mode .chalk-piece.white  { background: #e8e8e8; }
-        body.calm-mode .chalk-piece.green  { background: #a8a8a8; }
-
-        body.calm-mode .response {
-            background: #ffffff;
-            border-color: #e0e0e0;
-            color: #111111;
-        }
+        body.calm-mode .chalk-piece.blue { background: #bfbfbf; }
+        body.calm-mode .chalk-piece.white { background: #e8e8e8; }
+        body.calm-mode .chalk-piece.green { background: #a8a8a8; }
+        body.calm-mode .response { background: #ffffff; border-color: #e0e0e0; color: #111111; }
         body.calm-mode .response strong { color: #7a3fd4; }
         body.calm-mode .response-avatar { filter: grayscale(1); }
-
-        body.calm-mode .quick-card {
-            background: #ffffff;
-            border-color: #e0e0e0;
-            color: #111111;
-        }
+        body.calm-mode .quick-card { background: #ffffff; border-color: #e0e0e0; color: #111111; }
         body.calm-mode .quick-card:hover { background: #f2f2f2; }
         body.calm-mode .quick-icon { filter: grayscale(1); }
-
-        body.calm-mode .resumo-section {
-            background: #ffffff;
-            border-color: #e0e0e0;
-            box-shadow: 0 2px 8px #00000008;
-        }
-        body.calm-mode .resumo-header h2 { color: #111111; }
+        body.calm-mode .resumo-section, body.calm-mode .grafico-card { background: #ffffff; border-color: #e0e0e0; box-shadow: 0 2px 8px #00000008; }
+        body.calm-mode .resumo-header h2, body.calm-mode .grafico-card h3 { color: #111111; }
         body.calm-mode .resumo-header p { color: #555555; }
-        body.calm-mode .resumo-header button {
-            background: #f2f2f2;
-            border-color: #d8d8d8;
-            color: #111111;
-        }
+        body.calm-mode .resumo-header button { background: #f2f2f2; border-color: #d8d8d8; color: #111111; }
         body.calm-mode #atualizacao { color: #666666; }
-
-        body.calm-mode .card {
-            background: #f7f7f7;
-            border-color: #e0e0e0;
-        }
+        body.calm-mode .card { background: #f7f7f7; border-color: #e0e0e0; }
         body.calm-mode .card span { color: #555555; }
         body.calm-mode .card strong { color: #7a3fd4; }
-
-        body.calm-mode .resumo-section table {
-            background: #ffffff;
-            border-color: #e0e0e0;
-        }
+        body.calm-mode .resumo-section table { background: #ffffff; border-color: #e0e0e0; }
         body.calm-mode .resumo-section thead { background: #f2f2f2; }
         body.calm-mode .resumo-section th { color: #111111; }
-        body.calm-mode .resumo-section th,
-        body.calm-mode .resumo-section td {
-            border-bottom-color: #ededed;
-            color: #222222;
-        }
-        body.calm-mode .resumo-section td.vazio,
-        body.calm-mode .resumo-section #periodo { color: #666666; }
-
-        body.calm-mode .mensagem {
-            background: #eef4ff;
-            color: #2a5dba;
-        }
-        body.calm-mode .mensagem.erro {
-            background: #fdecec;
-            color: #a13a3a;
-        }
-
-        body.calm-mode footer {
-            background: #f7f7f7;
-            color: #333333;
-        }
+        body.calm-mode .resumo-section th, body.calm-mode .resumo-section td { border-bottom-color: #ededed; color: #222222; }
+        body.calm-mode .resumo-section td.vazio, body.calm-mode .resumo-section #periodo { color: #666666; }
+        body.calm-mode .mensagem { background: #eef4ff; color: #2a5dba; }
+        body.calm-mode .mensagem.erro { background: #fdecec; color: #a13a3a; }
+        body.calm-mode footer { background: #f7f7f7; color: #333333; }
 
         /* =========================================
-           MODO ESCURO (toggle do botão ☼)
+           MODO ESCURO
         ========================================= */
-        body.high-contrast {
-            background: #08061a;
-            color: #e8e4fb;
-        }
-
-        body.high-contrast .sidebar {
-            background: #100d24;
-            border-right-color: #241d47;
-        }
+        body.high-contrast { background: #08061a; color: #e8e4fb; }
+        body.high-contrast .sidebar { background: #100d24; border-right-color: #241d47; }
         body.high-contrast .logo { color: #b8a4ff; }
         body.high-contrast .subtitle { color: #9a8ee0; }
         body.high-contrast .menu a { color: #e8e4fb; }
-        body.high-contrast .menu a:hover,
-        body.high-contrast .menu a.active {
-            background: #241d47;
-            color: #c4b5fd;
-        }
+        body.high-contrast .menu a:hover, body.high-contrast .menu a.active { background: #241d47; color: #c4b5fd; }
         body.high-contrast .menu-icon { color: #8a72e8; }
-        body.high-contrast .side-card {
-            background: #17142e;
-            border-color: #241d47;
-            color: #e8e4fb;
-        }
-
-        body.high-contrast .calm-button {
-            background: #17142e;
-            border-color: #241d47;
-            color: #c4b5fd;
-        }
-        body.high-contrast .round-button {
-            background: #17142e;
-            border-color: #241d47;
-            color: #b8a4ff;
-        }
-
-        body.high-contrast .assistant {
-            background: #100d24;
-            border: 2px solid #3a2f6b;
-            box-shadow: 0 4px 12px #00000060;
-        }
+        body.high-contrast .side-card { background: #17142e; border-color: #241d47; color: #e8e4fb; }
+        body.high-contrast .calm-button { background: #17142e; border-color: #241d47; color: #c4b5fd; }
+        body.high-contrast .round-button { background: #17142e; border-color: #241d47; color: #b8a4ff; }
+        body.high-contrast .assistant { background: #100d24; border: 2px solid #3a2f6b; box-shadow: 0 4px 12px #00000060; }
         body.high-contrast .person { background: #241d47; }
-        body.high-contrast .tag {
-            background: #241d47;
-            color: #c4b5fd;
-        }
+        body.high-contrast .tag { background: #241d47; color: #c4b5fd; }
         body.high-contrast .assistant h1 { color: #f2eefe; }
         body.high-contrast .description { color: #b8b0d9; }
-        body.high-contrast .feature {
-            background: #17142e;
-            border-color: #241d47;
-            color: #e8e4fb;
-        }
-
-        body.high-contrast .chalkboard {
-            border-color: #2a2250;
-            background-color: #030109;
-            box-shadow: inset 0 0 22px #000a, 0 5px 0 #050316;
-        }
-        body.high-contrast .search-box {
-            border-color: #3a2f6b;
-            background: #ffffff06;
-        }
-
-        body.high-contrast .response {
-            background: #100d24;
-            border: 2px solid #3a2f6b;
-            color: #e8e4fb;
-        }
+        body.high-contrast .feature { background: #17142e; border-color: #241d47; color: #e8e4fb; }
+        body.high-contrast .chalkboard { border-color: #2a2250; background-color: #030109; box-shadow: inset 0 0 22px #000a, 0 5px 0 #050316; }
+        body.high-contrast .search-box { border-color: #3a2f6b; background: #ffffff06; }
+        body.high-contrast .response { background: #100d24; border: 2px solid #3a2f6b; color: #e8e4fb; }
         body.high-contrast .response strong { color: #b8a4ff; }
-
-        body.high-contrast .quick-card {
-            background: #100d24;
-            border: 2px solid #3a2f6b;
-            color: #e8e4fb;
-        }
+        body.high-contrast .quick-card { background: #100d24; border: 2px solid #3a2f6b; color: #e8e4fb; }
         body.high-contrast .quick-card:hover { background: #1c1740; }
-
-        body.high-contrast .resumo-section {
-            background: #100d24;
-            border: 2px solid #3a2f6b;
-            box-shadow: 0 4px 12px #00000060;
-        }
-        body.high-contrast .resumo-header h2 { color: #b8a4ff; }
+        body.high-contrast .resumo-section, body.high-contrast .grafico-card { background: #100d24; border: 2px solid #3a2f6b; box-shadow: 0 4px 12px #00000060; }
+        body.high-contrast .resumo-header h2, body.high-contrast .grafico-card h3 { color: #b8a4ff; }
         body.high-contrast .resumo-header p { color: #b8b0d9; }
-        body.high-contrast .resumo-header button {
-            background: #241d47;
-            border-color: #3a2f6b;
-            color: #c4b5fd;
-        }
+        body.high-contrast .resumo-header button { background: #241d47; border-color: #3a2f6b; color: #c4b5fd; }
         body.high-contrast #atualizacao { color: #9a8ee0; }
-
-        body.high-contrast .card {
-            background: #17142e;
-            border-color: #241d47;
-        }
+        body.high-contrast .card { background: #17142e; border-color: #241d47; }
         body.high-contrast .card span { color: #9a8ee0; }
         body.high-contrast .card strong { color: #c4b5fd; }
-
-        body.high-contrast .resumo-section table {
-            background: #0a0817;
-            border-color: #241d47;
-        }
+        body.high-contrast .resumo-section table { background: #0a0817; border-color: #241d47; }
         body.high-contrast .resumo-section thead { background: #241d47; }
-        body.high-contrast .resumo-section th,
-        body.high-contrast .resumo-section td {
-            border-bottom-color: #1c1740;
-            color: #e8e4fb;
-        }
+        body.high-contrast .resumo-section th, body.high-contrast .resumo-section td { border-bottom-color: #1c1740; color: #e8e4fb; }
         body.high-contrast .resumo-section th { color: #c4b5fd; }
-        body.high-contrast .resumo-section td.vazio,
-        body.high-contrast .resumo-section #periodo { color: #9a8ee0; }
-
-        body.high-contrast .mensagem {
-            background: #241d47;
-            color: #c4b5fd;
-        }
-        body.high-contrast .mensagem.erro {
-            background: #3a1a2c;
-            color: #f0a8c0;
-        }
-
-        body.high-contrast footer {
-            background: #100d24;
-            color: #b8a4ff;
-        }
+        body.high-contrast .resumo-section td.vazio, body.high-contrast .resumo-section #periodo { color: #9a8ee0; }
+        body.high-contrast .mensagem { background: #241d47; color: #c4b5fd; }
+        body.high-contrast .mensagem.erro { background: #3a1a2c; color: #f0a8c0; }
+        body.high-contrast footer { background: #100d24; color: #b8a4ff; }
     </style>
 </head>
 
@@ -713,7 +573,7 @@
         </section>
 
         <!-- =========================================
-             RESUMO DE APRENDIZAGEM (NOVO)
+             RESUMO DE APRENDIZAGEM
         ========================================= -->
         <section class="resumo-section" id="resumo">
             <div class="resumo-header">
@@ -748,6 +608,25 @@
             <p id="periodo"></p>
         </section>
 
+        <!-- =========================================
+             NOVA SEÇÃO: GRÁFICOS DO DASHBOARD
+        ========================================= -->
+        <div class="graficos-section">
+            <div class="grafico-card">
+                <h3>Respostas por Dia</h3>
+                <div class="canvas-container">
+                    <canvas id="graficoRespostas"></canvas>
+                </div>
+            </div>
+
+            <div class="grafico-card">
+                <h3>Tempo de Estudo por Dia (em minutos)</h3>
+                <div class="canvas-container">
+                    <canvas id="graficoTempo"></canvas>
+                </div>
+            </div>
+        </div>
+
         <footer>
             ♡ Você não está sozinho(a). Respeite seu tempo,
             celebre suas conquistas e siga no seu ritmo. 💜
@@ -755,51 +634,5 @@
     </main>
 </div>
 
-<script>
-    const form = document.getElementById("questionForm");
-    const input = document.getElementById("questionInput");
-    const response = document.getElementById("responseText");
-
-    function responder(pergunta) {
-        const texto = pergunta.toLowerCase();
-        if (texto.includes("plano") || texto.includes("estudo"))
-            return "Vamos organizar seus estudos em pequenas etapas! 💜 Qual matéria você quer estudar primeiro?";
-        if (texto.includes("foco") || texto.includes("focado"))
-            return "Vamos tentar uma tarefa de cada vez, com pausas e menos distrações. 🎯 Qual tarefa você precisa fazer?";
-        if (texto.includes("sobrecarregado") || texto.includes("ansioso"))
-            return "Tudo bem fazer uma pausa. 💙 Você pode aprender no seu ritmo. Vamos começar com algo pequeno quando se sentir preparado(a).";
-        if (texto.includes("matemática") || texto.includes("matematica"))
-            return "Vamos aprender matemática passo a passo! 🧮 Qual assunto você quer entender?";
-        if (texto.includes("português") || texto.includes("portugues"))
-            return "Vamos estudar português com exemplos simples! 📚 Qual assunto você está aprendendo?";
-        return "Estou aqui para ajudar! 💜 Conte qual matéria você está estudando e vamos dividir o assunto em etapas menores.";
-    }
-
-    function enviarPergunta(pergunta) {
-        if (!pergunta.trim()) return;
-        response.textContent = responder(pergunta);
-        input.value = "";
-        input.focus();
-    }
-
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        enviarPergunta(input.value);
-    });
-
-    document.querySelectorAll(".quick-card").forEach(function (botao) {
-        botao.addEventListener("click", function () {
-            enviarPergunta(botao.dataset.question);
-        });
-    });
-
-    document.getElementById("calmButton").addEventListener("click", function () {
-        document.body.classList.toggle("calm-mode");
-    });
-
-    document.getElementById("themeButton").addEventListener("click", function () {
-        document.body.classList.toggle("high-contrast");
-    });
-</script>
 </body>
 </html>

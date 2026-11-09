@@ -1,5 +1,10 @@
-// 1. URL da API e captura dos elementos do HTML (Dashboard)
+// ==========================================
+// 1. URLS DA API E CAPTURA DE ELEMENTOS
+// ==========================================
 const API_URL = 'http://127.0.0.1:8000/analise';
+const API_DASHBOARD = 'http://127.0.0.1:8000/dashboard';
+
+// Elementos do Resumo
 const totalAlunos = document.querySelector('#total-alunos');
 const notaMedia = document.querySelector('#nota-media');
 const totalAtividades = document.querySelector('#total-atividades');
@@ -11,7 +16,13 @@ const atualizacao = document.querySelector('#atualizacao');
 const periodo = document.querySelector('#periodo');
 const resumo = document.querySelector('#resumo');
 
-// 2. Especificação (Nomes amigáveis)
+// Variáveis globais para os gráficos
+let chartRespostas = null;
+let chartTempo = null;
+
+// ==========================================
+// 2. FORMATAÇÃO E UTILITÁRIOS
+// ==========================================
 const nomesDeficiencias = {
   'tea':        'TEA (Autismo)',
   'tdah':       'TDAH',
@@ -19,16 +30,9 @@ const nomesDeficiencias = {
   'discalculia':'Discalculia',
 };
 
-// 3. Formatação
-function numero(valor) {
-  return valor.toLocaleString('pt-BR');
-}
-
+function numero(valor) { return valor.toLocaleString('pt-BR'); }
 function numeroDecimal(valor) {
-  return valor.toLocaleString('pt-BR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function mostrarMensagem(texto, erro = false) {
@@ -54,7 +58,9 @@ function limparTotais() {
   periodo.textContent         = '';
 }
 
-// 4. Rota (Fetch)
+// ==========================================
+// 3. FETCH E CONFERÊNCIA DO RESUMO
+// ==========================================
 async function consultar(caminho) {
   let resposta;
   try {
@@ -70,26 +76,16 @@ async function consultar(caminho) {
   return dados;
 }
 
-// 5. Contrato de dados
 function conferirTotais(resumoDados, deficiencias, riscoAlto) {
-  if (!Number.isInteger(resumoDados.total_alunos) || resumoDados.total_alunos < 0) {
-    throw new Error('A API retornou total_alunos inválido.');
-  }
-  if (typeof resumoDados.nota_media !== 'number' || resumoDados.nota_media < 0) {
-    throw new Error('A API retornou nota_media inválida.');
-  }
-  if (!Number.isInteger(resumoDados.total_atividades_realizadas) || resumoDados.total_atividades_realizadas < 0) {
-    throw new Error('A API retornou total_atividades_realizadas inválido.');
-  }
-
-  if (!Array.isArray(deficiencias)) {
-    throw new Error('A tabela de deficiências não está no formato esperado.');
-  }
+  if (!Number.isInteger(resumoDados.total_alunos) || resumoDados.total_alunos < 0) throw new Error('API: total_alunos inválido.');
+  if (typeof resumoDados.nota_media !== 'number' || resumoDados.nota_media < 0) throw new Error('API: nota_media inválida.');
+  if (!Number.isInteger(resumoDados.total_atividades_realizadas) || resumoDados.total_atividades_realizadas < 0) throw new Error('API: total_atividades_realizadas inválido.');
+  if (!Array.isArray(deficiencias)) throw new Error('API: tabela de deficiências não é um array.');
 
   let soma = 0;
   for (const item of deficiencias) {
     if (typeof item.tipo_deficiencia !== 'string' || !Number.isInteger(item.total_alunos) || item.total_alunos < 0) {
-      throw new Error('A API retornou uma contagem de deficiência inválida.');
+      throw new Error('API: contagem de deficiência inválida.');
     }
     soma += item.total_alunos;
   }
@@ -98,38 +94,29 @@ function conferirTotais(resumoDados, deficiencias, riscoAlto) {
     throw new Error(`Divergência: soma por deficiência (${soma}) ≠ total de alunos (${resumoDados.total_alunos}).`);
   }
 
-  if (!Array.isArray(riscoAlto)) {
-    throw new Error('A lista de alunos em risco alto não está no formato esperado.');
-  }
+  if (!Array.isArray(riscoAlto)) throw new Error('API: lista de risco alto não é um array.');
   const esperadoRisco = (resumoDados.alunos_por_alerta_risco?.alto) ?? 0;
   if (riscoAlto.length !== esperadoRisco) {
     throw new Error(`Divergência: risco alto na lista (${riscoAlto.length}) ≠ no resumo (${esperadoRisco}).`);
   }
 }
 
-// 6. Linhas da tabela
 function exibirDeficiencias(dados) {
   listaDeficiencias.replaceChildren();
   for (const item of dados) {
     const linha = listaDeficiencias.insertRow();
-
     const tipo = linha.insertCell();
     tipo.textContent = nomesDeficiencias[item.tipo_deficiencia.toLowerCase()] || item.tipo_deficiencia;
-
     const alunos = linha.insertCell();
     alunos.textContent = numero(item.total_alunos);
     alunos.className = 'numero';
-
     const media = linha.insertCell();
     media.textContent = numeroDecimal(item.nota_media);
     media.className = 'numero';
   }
-  if (dados.length === 0) {
-    estadoTabela('Nenhum tipo de deficiência no período.');
-  }
+  if (dados.length === 0) estadoTabela('Nenhum tipo de deficiência no período.');
 }
 
-// 7. Consulta Principal
 async function carregarResumo() {
   botaoAtualizar.disabled = true;
   botaoAtualizar.textContent = 'Carregando...';
@@ -159,6 +146,7 @@ async function carregarResumo() {
     atualizacao.textContent = 'Última consulta: ' + new Date().toLocaleString('pt-BR');
     mostrarMensagem('Dados atualizados. A soma por tipo de deficiência confere com o total de alunos.');
   } catch (erro) {
+    console.error("Erro no resumo:", erro); // Ajuda a debugar no F12
     limparTotais();
     estadoTabela('Dados indisponíveis. Consulte a mensagem acima e tente novamente.');
     atualizacao.textContent = 'A consulta não foi concluída.';
@@ -170,6 +158,90 @@ async function carregarResumo() {
   }
 }
 
-// 8. Iniciar
-botaoAtualizar.addEventListener('click', carregarResumo);
-carregarResumo();
+// ==========================================
+// 4. LÓGICA DOS GRÁFICOS
+// ==========================================
+async function carregarGraficos() {
+  try {
+    const [respostaRespostas, respostaTempo] = await Promise.all([
+      fetch(API_DASHBOARD + '/respostas-por-dia'),
+      fetch(API_DASHBOARD + '/tempo-total-por-dia')
+    ]);
+
+    if (!respostaRespostas.ok || !respostaTempo.ok) throw new Error('Erro ao buscar dados do dashboard.');
+
+    const dadosRespostas = await respostaRespostas.json();
+    const dadosTempo = await respostaTempo.json();
+
+    const labelsDatas = dadosRespostas.map(item => {
+      const [ano, mes, dia] = item.data.split('-');
+      return `${dia}/${mes}`;
+    });
+
+    const valoresRespostas = dadosRespostas.map(item => item.total_respostas);
+    const valoresTempo = dadosTempo.map(item => (item.tempo_total_segundos / 60).toFixed(1));
+
+    renderizarGraficoRespostas(labelsDatas, valoresRespostas);
+    renderizarGraficoTempo(labelsDatas, valoresTempo);
+
+  } catch (erro) {
+    console.error("Erro ao carregar gráficos:", erro);
+  }
+}
+
+function renderizarGraficoRespostas(labels, dados) {
+  const canvas = document.getElementById('graficoRespostas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (chartRespostas) chartRespostas.destroy();
+
+  chartRespostas = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{ label: 'Respostas', data: dados, backgroundColor: '#8b5cf6', borderRadius: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+    }
+  });
+}
+
+function renderizarGraficoTempo(labels, dados) {
+  const canvas = document.getElementById('graficoTempo');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (chartTempo) chartTempo.destroy();
+
+  chartTempo = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Minutos', data: dados, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.1)',
+        borderWidth: 3, tension: 0.3, fill: true, pointBackgroundColor: '#5c1fd6'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `Tempo: ${ctx.raw} min` } } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+}
+
+// ==========================================
+// 5. INICIAR E EVENTOS
+// ==========================================
+botaoAtualizar.addEventListener('click', () => {
+  carregarResumo();
+  carregarGraficos();
+});
+
+// Inicia os dois quando a página carregar
+document.addEventListener('DOMContentLoaded', () => {
+  carregarResumo();
+  carregarGraficos();
+});

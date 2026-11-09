@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 
@@ -6,22 +7,29 @@ from analise import (
     ler_dados, resumo, por_aluno, por_tipo_deficiencia,
     por_atividade, por_recursos_usados, por_data, alunos_em_risco,
 )
+from controller.dashboard import router as dashboard_router
 
-app = FastAPI(title='Personalização de Estudos • Neurodivergência')
+
+app = FastAPI(title='Personalização de Estudos API • Neurodivergência')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:3000",   
+     allow_origins=[
+        "http://127.0.0.1:3000",
         "http://localhost:3000",
-        "http://127.0.0.1:8000",   
+        "http://127.0.0.1:3002",
+        "http://localhost:3002",
+        "http://127.0.0.1:8000",
         "http://localhost:8000",
-        "http://127.0.0.1:5500",   
+        "http://127.0.0.1:5500",
         "http://localhost:5500",
     ],
-    allow_methods=["*"], 
+    allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(dashboard_router)
+
 
 def carregar_dados():
     try:
@@ -81,3 +89,28 @@ def consultar_risco(nivel: str):
             detail='Nível deve ser baixo, medio ou alto.',
         )
     return alunos_em_risco(carregar_dados(), nivel)
+
+
+
+@app.exception_handler(ValueError)
+async def erro_de_validacao(request: Request, erro: ValueError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": f"CSV inválido: {erro}"},
+    )
+
+
+@app.exception_handler(FileNotFoundError)
+async def arquivo_ausente(request: Request, erro: FileNotFoundError):
+    return JSONResponse(
+        status_code=503,
+        content={"detail": "Arquivo database/dados.csv não encontrado."},
+    )
+
+
+@app.exception_handler(pd.errors.ParserError)
+async def csv_corrompido(request: Request, erro: pd.errors.ParserError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": f"CSV inválido: {erro}"},
+    )
