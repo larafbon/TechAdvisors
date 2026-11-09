@@ -3,10 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function carregarDadosPerfil() {
-  const savedUser = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario')) || {};
-  const userRole = savedUser.role || localStorage.getItem('tech_user_role') || 'aluno';
-  const userName = savedUser.nome || localStorage.getItem('tech_user_name') || (userRole === 'professor' ? 'Prof. Ana Beatriz' : 'Lucas Silva');
-  const userEmail = savedUser.email || localStorage.getItem('tech_user_email') || (userRole === 'professor' ? 'ana.nogueira@escola.edu.br' : 'lucas.silva@aluno.escola.edu.br');
+  const userString = localStorage.getItem('tech_user');
+  if (!userString) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  const user = JSON.parse(userString);
+  const userRole = user.role || 'aluno';
+  const userName = user.nome || 'Usuário';
+  const userEmail = user.email || '';
 
   const navUserLabel = document.getElementById('nav-user-label');
   if (navUserLabel) navUserLabel.innerText = `Olá, ${userName.split(' ')[0]}`;
@@ -37,21 +43,19 @@ function carregarDadosPerfil() {
 
   if (userRole === 'professor') {
     if (labelExtra1) labelExtra1.innerText = 'CÓDIGO DOCENTE';
-    if (valExtra1) valExtra1.innerText = savedUser.id_professor ? `DOC-${savedUser.id_professor}` : 'DOC2026-88';
+    if (valExtra1) valExtra1.innerText = user.id_professor ? `DOC-${user.id_professor}` : `DOC-${user.id}`;
 
     if (labelExtra2) labelExtra2.innerText = 'DISCIPLINAS MINISTRADAS';
-    if (valExtra2) valExtra2.innerText = savedUser.disciplinas || 'Língua Portuguesa';
+    if (valExtra2) valExtra2.innerText = user.disciplinas || 'Não informada';
 
-    // Oculta secção de acessibilidade para professor
     if (secAcessibilidade) secAcessibilidade.classList.add('hidden');
   } else {
     if (labelExtra1) labelExtra1.innerText = 'MATRÍCULA';
-    if (valExtra1) valExtra1.innerText = savedUser.matricula || 'MAT202601';
+    if (valExtra1) valExtra1.innerText = user.matricula || `MAT-${user.id}`;
 
     if (labelExtra2) labelExtra2.innerText = 'TURMA / SÉRIE';
-    if (valExtra2) valExtra2.innerText = savedUser.serie || '9º Ano A - Manhã';
+    if (valExtra2) valExtra2.innerText = user.serie || 'Turma não atribuída';
 
-    // Exibe secção de acessibilidade apenas para aluno
     if (secAcessibilidade) secAcessibilidade.classList.remove('hidden');
   }
 
@@ -74,13 +78,13 @@ function salvarDadosPerfil(event) {
   const novoNome = document.getElementById('edit-name').value;
   const novoEmail = document.getElementById('edit-email').value;
 
-  const savedUser = JSON.parse(localStorage.getItem('user')) || {};
-  savedUser.nome = novoNome;
-  savedUser.email = novoEmail;
-  localStorage.setItem('user', JSON.stringify(savedUser));
-
-  localStorage.setItem('tech_user_name', novoNome);
-  localStorage.setItem('tech_user_email', novoEmail);
+  const userString = localStorage.getItem('tech_user');
+  if (userString) {
+    const user = JSON.parse(userString);
+    user.nome = novoNome;
+    user.email = novoEmail;
+    localStorage.setItem('tech_user', JSON.stringify(user));
+  }
 
   alert('Dados atualizados com sucesso!');
   carregarDadosPerfil();
@@ -109,7 +113,6 @@ function alterarSenha(event) {
     return;
   }
 
-  localStorage.setItem('tech_user_password', passNova);
   alert('Senha alterada com sucesso!');
   document.getElementById('form-perfil-senha').reset();
 }
@@ -128,9 +131,9 @@ document.addEventListener('click', () => {
 });
 
 function voltarAoPainel() {
-  const savedUser = JSON.parse(localStorage.getItem('user')) || {};
-  const role = savedUser.role || localStorage.getItem('tech_user_role') || 'aluno';
-  if (role === 'professor') {
+  const userString = localStorage.getItem('tech_user');
+  const user = userString ? JSON.parse(userString) : {};
+  if (user.role === 'professor') {
     window.location.href = 'professor.html';
   } else {
     window.location.href = 'alunos.html';

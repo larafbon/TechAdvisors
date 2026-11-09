@@ -5,18 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal do Docente - Techadvisors</title>
 
-  <!-- Fonts & Tailwind CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- CSS Connections -->
   <link rel="stylesheet" href="../static/home.css">
   <link rel="stylesheet" href="../static/config.css">
-  <link rel="stylesheet" href="../static/prof.css">
-
-  <!-- JS Connections -->
-  <script src="../js/config.js" defer></script>
-  <script src="../js/prof.js" defer></script>
 </head>
 <body class="bg-[#f3f7fb]">
 
@@ -26,38 +19,37 @@
       📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">PROFESSOR</span>
     </div>
 
-   <!-- Exemplo de Navbar no professor.html -->
-<nav>
-  <ul>
-    <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
-    <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
-    <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
-    
-    <li class="user-menu-container relative">
-      <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
-        <span id="nav-teacher-name">Carregando...</span>
-        <span class="text-xs">▼</span>
-      </div>
-      <div id="userMenu" class="user-dropdown">
-        <ul>
-          <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
-          <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
-          <li onclick="logout()" class="logout-item">🚪 Sair</li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-</nav>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
+        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
+        <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
+        
+        <li class="user-menu-container relative">
+          <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span id="nav-teacher-name">Docente</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
+              <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
   </header>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="banner mb-8">
-      <h2 id="welcome-title">Bem-vindo(a), Prof. Ana Beatriz!</h2>
+      <h2 id="welcome-title">Bem-vindo(a)!</h2>
       <p>Gerencie suas turmas atribuídas, prepare atividades inclusivas e acompanhe o desempenho dos estudantes.</p>
     </div>
 
-    <!-- OS 4 CARDS PRINCIPAIS DO PROFESSOR -->
+    <!-- CARDS PRINCIPAIS DO PROFESSOR -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
       
       <div onclick="window.location.href='turmas.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
@@ -66,7 +58,7 @@
         <p class="text-xs text-slate-500">Visualize as turmas atribuídas ao seu perfil docente.</p>
       </div>
 
-      <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+      <div onclick="abrirModalAtividade()" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
         <div class="text-4xl mb-3">📝</div>
         <h3 class="font-bold text-purple-900 text-base mb-1">Criar Atividade</h3>
         <p class="text-xs text-slate-500">Elabore atividades e recursos pedagógicos adaptados.</p>
@@ -87,63 +79,96 @@
     </div>
   </main>
 
+  <!-- MODAL DE CRIAR ATIVIDADE -->
+  <div id="modal-atividade" class="hidden fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-base font-bold text-slate-800">Nova Atividade para a Turma</h3>
+        <button type="button" onclick="fecharModalAtividade()" class="text-slate-400 hover:text-slate-600 text-xl font-bold cursor-pointer">&times;</button>
+      </div>
+      
+      <form id="form-criar-atividade" onsubmit="event.preventDefault(); enviarAtividadeDireta();" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Título da Atividade</label>
+          <input type="text" id="titulo_atividade" required placeholder="Ex: Exercícios de Matemática" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+        </div>
+      
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Descrição / Instruções</label>
+          <textarea id="descricao_atividade" rows="3" placeholder="Digite as instruções..." class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
+        </div>
+      
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">ID da Turma</label>
+          <input type="number" id="id_turma_atividade" value="1" required class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+        </div>
+      
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="fecharModalAtividade()" class="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-[#5b21b6] hover:bg-purple-900 rounded-xl transition-all shadow-md cursor-pointer">Publicar Atividade</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer class="home-footer">
     © 2026 • Techadvisors — Painel do Professor
   </footer>
 
-  <!-- BOTÃO FLUTUANTE DE ACESSIBILIDADE -->
   <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
     ⚙️
   </button>
 
   <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
 
-  <!-- GAVETA DE ACESSIBILIDADE -->
-  <aside id="settings-drawer" class="hidden-drawer">
+  <aside id="settings-drawer" class="hidden-drawer bg-white p-6 shadow-2xl">
     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
       <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
       <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
     </div>
 
-    <!-- TAMANHO DA FONTE -->
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <div class="flex justify-between items-center mb-2">
-        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
-        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+    <div class="space-y-4">
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <div class="flex justify-between items-center mb-2">
+          <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+          <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="changeFontSize(-0.1)" class="py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+          <button type="button" onclick="resetFontSize()" class="py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+          <button type="button" onclick="changeFontSize(0.1)" class="py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
+        </div>
       </div>
-      <div class="flex gap-2">
-        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
-        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
-        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
+
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <div class="flex justify-between items-center mb-1">
+          <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+          <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+        </div>
+        <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
+      </div>
+
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <div class="flex justify-between items-center mb-1">
+          <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+          <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+        </div>
+        <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
+      </div>
+
+      <div class="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+        <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
       </div>
     </div>
 
-    <!-- BRILHO DA TELA -->
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <div class="flex justify-between items-center mb-1">
-        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
-        <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-      </div>
-      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    <div class="mt-6 text-center">
+      <button type="button" onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline cursor-pointer">Restaurar Padrões</button>
     </div>
-
-    <!-- SATURAÇÃO DE CORES -->
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <div class="flex justify-between items-center mb-1">
-        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
-        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-      </div>
-      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
-    </div>
-
-    <!-- MODO ALTO CONTRASTE -->
-    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
-      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
-    </div>
-
-    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
   </aside>
 
+  <!-- IMPORTAÇÃO DOS SCRIPTS NO FINAL DO BODY -->
+  <script src="../js/config.js"></script>
+  <script src="../js/prof.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../static/home.css">
   <link rel="stylesheet" href="../static/config.css">
   <script src="../js/config.js" defer></script>
+  <script src="../js/atividades.js" defer></script>
 </head>
 <body class="bg-[#f3f7fb]">
 
@@ -37,29 +38,10 @@
       <p>Confira os prazos, baixe os materiais de apoio e envie suas tarefas concluídas.</p>
     </div>
 
-    <div class="space-y-4">
-      <!-- Exemplo de Atividade PENDENTE -->
-      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <span class="text-[10px] font-bold uppercase bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">Pendente</span>
-          <h3 class="text-base font-bold text-slate-800 mt-2">Resumo de Literatura - Modernismo</h3>
-          <p class="text-xs text-slate-500 mt-1">Disciplina: Língua Portuguesa • Entrega até: 10/11/2026</p>
-        </div>
-        <button class="bg-[#5b21b6] hover:bg-purple-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-all shadow-md cursor-pointer self-start md:self-auto">
-          Enviar Tarefa
-        </button>
-      </div>
-
-      <!-- Exemplo de Atividade CONCLUÍDA -->
-      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <span class="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">Enviado</span>
-          <h3 class="text-base font-bold text-slate-800 mt-2">Lista de Exercícios: Equações do 2º Grau</h3>
-          <p class="text-xs text-slate-500 mt-1">Disciplina: Matemática • Enviado em: 01/11/2026</p>
-        </div>
-        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 self-start md:self-auto">
-          Nota: 9.5 / 10
-        </span>
+    <!-- CONTAINER ONDE O JAVASCRIPT INSERE AS ATIVIDADES -->
+    <div id="lista-atividades-container" class="space-y-4">
+      <div class="bg-white p-6 rounded-3xl text-center text-slate-500">
+        Carregando atividades...
       </div>
     </div>
   </main>
@@ -73,7 +55,7 @@
   </button>
   <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
   <aside id="settings-drawer" class="hidden-drawer">
-    <!-- Conteúdo da gaveta mantido -->
+    <!-- Acessibilidade -->
   </aside>
 </body>
 </html>

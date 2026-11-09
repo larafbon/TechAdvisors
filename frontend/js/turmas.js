@@ -3,13 +3,14 @@ let currentProfId = 1;
 let currentProfName = 'Professor';
 
 document.addEventListener('DOMContentLoaded', function() {
-  const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario'));
-  if (!user) {
+  const userString = localStorage.getItem('tech_user');
+  if (!userString) {
     alert('Acesso restrito. Por favor, faça login.');
     window.location.href = 'index.html';
     return;
   }
 
+  const user = JSON.parse(userString);
   currentProfId = user.id_professor || user.id || 1;
   currentProfName = user.nome || 'Professor';
 
@@ -32,26 +33,11 @@ async function carregarDisciplinasDoProfessor() {
   const selectDisciplina = document.getElementById('turma-disciplina');
   if (!selectDisciplina) return;
 
-  const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario')) || {};
+  const userString = localStorage.getItem('tech_user');
+  const user = userString ? JSON.parse(userString) : {};
   let listaDisciplinas = [];
-  const idProf = user.id_professor || user.id;
 
-  if (idProf) {
-    try {
-      const response = await fetch(`${API_URL}/professores`);
-      if (response.ok) {
-        const professores = await response.json();
-        const profAtual = professores.find(p => (p.id_professor || p.id) === idProf);
-        if (profAtual && profAtual.disciplinas) {
-          listaDisciplinas = profAtual.disciplinas.split(',').map(d => d.trim()).filter(Boolean);
-        }
-      }
-    } catch (e) {
-      console.warn('Erro ao consultar API:', e);
-    }
-  }
-
-  if (listaDisciplinas.length === 0 && user.disciplinas) {
+  if (user.disciplinas) {
     listaDisciplinas = user.disciplinas.split(',').map(d => d.trim()).filter(Boolean);
   }
 
@@ -65,7 +51,7 @@ async function carregarDisciplinasDoProfessor() {
       selectDisciplina.appendChild(option);
     });
   } else {
-    selectDisciplina.innerHTML = '<option value="" disabled selected>Nenhuma disciplina encontrada</option>';
+    selectDisciplina.innerHTML = '<option value="" disabled selected>Nenhuma disciplina cadastrada</option>';
   }
 }
 
@@ -185,12 +171,6 @@ async function handleSalvarTurma(event) {
 }
 
 function logout() {
-  localStorage.removeItem('user');
-  localStorage.removeItem('usuario');
+  localStorage.clear();
   window.location.href = 'index.html';
 }
-
-
- 
- 
- 

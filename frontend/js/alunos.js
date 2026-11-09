@@ -1,11 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const userName = localStorage.getItem('tech_user_name') || 'Lucas Silva';
+  const userString = localStorage.getItem('tech_user');
   
+  if (!userString) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  const user = JSON.parse(userString);
+
   const navStudentName = document.getElementById('nav-student-name');
-  if (navStudentName) navStudentName.innerText = userName;
+  if (navStudentName) navStudentName.innerText = user.nome;
 
   const welcomeTitle = document.getElementById('welcome-title');
-  if (welcomeTitle) welcomeTitle.innerText = `Bem-vindo(a), ${userName}!`;
+  if (welcomeTitle) welcomeTitle.innerText = `Bem-vindo(a), ${user.nome}!`;
 });
 
 function toggleUserMenu(event) {
@@ -24,7 +31,6 @@ document.addEventListener('click', (e) => {
 });
 
 function logout() {
-  localStorage.removeItem('tech_user_name');
-  localStorage.removeItem('tech_user_role');
+  localStorage.clear();
   window.location.href = 'index.html';
 }

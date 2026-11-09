@@ -106,6 +106,29 @@ function goToStep1() {
   navigateTo('register-step1');
 }
 
+function salvarSessaoUsuario(usuarioBD) {
+  // Limpa o localStorage para eliminar resíduos de contas anteriores
+  localStorage.clear();
+
+  const roleNormalizada = usuarioBD.role || (usuarioBD.id_professor ? 'professor' : 'aluno');
+  
+  const usuario = {
+    id: usuarioBD.id_professor || usuarioBD.id_aluno || usuarioBD.id,
+    id_professor: usuarioBD.id_professor || (roleNormalizada === 'professor' ? (usuarioBD.id || 1) : null),
+    id_aluno: usuarioBD.id_aluno || (roleNormalizada === 'aluno' ? usuarioBD.id : null),
+    id_turma: usuarioBD.id_turma || 1,
+    nome: usuarioBD.nome || 'Usuário',
+    email: usuarioBD.email || '',
+    role: roleNormalizada,
+    disciplinas: usuarioBD.disciplinas || '',
+    matricula: usuarioBD.matricula || '',
+    serie: usuarioBD.serie || ''
+  };
+
+  localStorage.setItem('tech_user', JSON.stringify(usuario));
+  return usuario;
+}
+
 async function handleFinalRegister(event) {
   event.preventDefault();
   
@@ -138,19 +161,8 @@ async function handleFinalRegister(event) {
 
     if (response.ok) {
       const usuarioCriado = await response.json();
-      const userData = {
-        id: usuarioCriado.id_professor || usuarioCriado.id_responsavel || usuarioCriado.id,
-        id_professor: usuarioCriado.id_professor,
-        nome: name,
-        email: email,
-        disciplinas: usuarioCriado.disciplinas || disciplinaVal,
-        serie: serieVal,
-        role: selectedRole
-      };
-      
-      localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('usuario', JSON.stringify(userData));
-
+      usuarioCriado.role = selectedRole;
+      salvarSessaoUsuario(usuarioCriado);
       redirectUser(selectedRole);
     } else {
       const erro = await response.json();
@@ -158,7 +170,7 @@ async function handleFinalRegister(event) {
     }
   } catch (error) {
     console.error('Erro de conexão:', error);
-    alert('Não foi possível conectar ao servidor FastAPI na porta 8000.');
+    alert('Não foi possível conectar ao servidor FastAPI.');
   }
 }
 
@@ -177,15 +189,8 @@ async function handleLogin(event) {
 
     if (response.ok) {
       const usuarioBD = await response.json();
-      const roleNormalizada = (usuarioBD.role === 'professor' || usuarioBD.role === 'admin') 
-        ? usuarioBD.role 
-        : 'aluno';
-
-      const userData = { ...usuarioBD, role: roleNormalizada };
-      localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('usuario', JSON.stringify(userData));
-
-      redirectUser(roleNormalizada);
+      const user = salvarSessaoUsuario(usuarioBD);
+      redirectUser(user.role);
     } else {
       const erro = await response.json();
       alert(`Falha no login: ${erro.detail || 'E-mail ou senha incorretos.'}`);
@@ -208,34 +213,17 @@ function redirectUser(role) {
 }
 
 function handleDashboardNavigation() {
-  const savedUser = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('usuario'));
-  if (!savedUser) {
+  const userString = localStorage.getItem('tech_user');
+  if (!userString) {
     alert('Por favor, faça login para acessar o Dashboard.');
     navigateTo('login');
   } else {
-    redirectUser(savedUser.role);
+    const user = JSON.parse(userString);
+    redirectUser(user.role);
   }
 }
 
 function logout() {
-  localStorage.removeItem('user');
-  localStorage.removeItem('usuario');
-  window.location.href = 'index.html';
-}
-
-function salvarSessaoUsuario(dadosUsuario) {
-  // Limpa registros residuais de sessões anteriores
   localStorage.clear();
-
-  // Salva o objeto completo e normalizado
-  const usuario = {
-    id: dadosUsuario.id_professor || dadosUsuario.id_aluno || dadosUsuario.id,
-    nome: dadosUsuario.nome,
-    email: dadosUsuario.email,
-    role: dadosUsuario.role || (dadosUsuario.id_professor ? 'professor' : 'aluno'),
-    disciplinas: dadosUsuario.disciplinas || '',
-    turma: dadosUsuario.id_turma || null
-  };
-
-  localStorage.setItem('tech_user', JSON.stringify(usuario));
+  window.location.href = 'index.html';
 }
