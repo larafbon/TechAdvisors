@@ -1,0 +1,58 @@
+/* Estilos específicos da tela de Quizzes & Gamificação */
+.chip-selected {
+    background-color: #3332A5 !important;
+    color: #FFFFFF !important;
+    border-color: #3332A5 !important;
+    box-shadow: 0 2px 4px rgba(51, 50, 165, 0.2);
+  }
+  
+  .tab-active {
+    background-color: #3332A5 !important;
+    color: #FFFFFF !important;
+  }
+  
+  .quizizz-card {
+    border-left: 6px solid #8B5CF6;
+    background: linear-gradient(135deg, #ffffff 0%, #fdfbfb 100%);
+  }
+  
+  .option-card-a { background-color: #ECFDF5; border: 1.5px solid #10B981; }
+  .option-card-b { background-color: #EFF6FF; border: 1.5px solid #3B82F6; }
+  .option-card-c { background-color: #FFFBEB; border: 1.5px solid #F59E0B; }
+  .option-card-d { background-color: #FEF2F2; border: 1.5px solid #EF4444; }
+  
+  /* ESTRUTURA COM TAMANHO FIXO E ESTÁVEL PARA O PREVIEW DO ALUNO */
+  #student-preview-box {
+    min-height: 590px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  #preview-card-wrapper {
+    min-height: 400px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  /* ESTILO GAMIFICADO DAS ALTERNATIVAS DO ALUNO (BOTÕES 3D INTERATIVOS) */
+  .game-option-btn {
+    transition: all 0.15s ease-in-out;
+    border-bottom-width: 4px !important;
+  }
+  
+  .game-option-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+  }
+  
+  .game-option-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px !important;
+  }
+  
+  .btn-opt-a { background-color: #22C55E !important; border-color: #15803D !important; color: #FFFFFF !important; }
+  .btn-opt-b { background-color: #3B82F6 !important; border-color: #1D4ED8 !important; color: #FFFFFF !important; }
+  .btn-opt-c { background-color: #F59E0B !important; border-color: #B45309 !important; color: #FFFFFF !important; }
+  .btn-opt-d { background-color: #EF4444 !important; border-color: #B91C1C !important; color: #FFFFFF !important; }

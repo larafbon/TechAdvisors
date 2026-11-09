@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal do Docente - Techadvisors</title>
+  <title>Techadvisors — Portal do Docente</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -11,23 +11,25 @@
   <link rel="stylesheet" href="../static/home.css">
   <link rel="stylesheet" href="../static/config.css">
 </head>
-<body class="bg-[#f3f7fb]">
+<body class="bg-[#f3f7fb] font-['Poppins']">
 
-  <!-- CABEÇALHO -->
+  <!-- CABEÇALHO DO PROFESSOR -->
   <header class="home-header">
-    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+    <div class="logo cursor-pointer" onclick="window.location.href='professor.html'">
       📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">PROFESSOR</span>
     </div>
 
     <nav>
       <ul>
         <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
+        <li onclick="window.location.href='turmas.html'" class="cursor-pointer">🏫 Turmas</li>
+        <li onclick="window.location.href='quizzes.html'" class="cursor-pointer">🎮 Quizzes & IA</li>
         <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
-        <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
         
+        <!-- DROPDOWN DE USUÁRIO -->
         <li class="user-menu-container relative">
-          <div id="user-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
-            <span id="nav-teacher-name">Docente</span>
+          <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span id="nav-teacher-name">Prof. Ana Beatriz Nogueira</span>
             <span class="text-xs">▼</span>
           </div>
           <div id="userMenu" class="user-dropdown">
@@ -42,34 +44,38 @@
     </nav>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- CONTEÚDO PRINCIPAL DO PROFESSOR -->
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="banner mb-8">
-      <h2 id="welcome-title">Bem-vindo(a)!</h2>
-      <p>Gerencie suas turmas atribuídas, prepare atividades inclusivas e acompanhe o desempenho dos estudantes.</p>
+      <h2 id="welcome-title" class="text-2xl font-bold">Bem-vindo(a), Prof. Ana Beatriz Nogueira!</h2>
+      <p class="text-sm opacity-90 mt-1">Gerencie suas turmas atribuídas, prepare atividades inclusivas e acompanhe o desempenho dos estudantes.</p>
     </div>
 
-    <!-- CARDS PRINCIPAIS DO PROFESSOR -->
+    <!-- GRELHA COMPLETA COM OS 4 CARDS -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
       
+      <!-- CARD 1: MINHAS TURMAS -->
       <div onclick="window.location.href='turmas.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
         <div class="text-4xl mb-3">🏫</div>
         <h3 class="font-bold text-purple-900 text-base mb-1">Minhas Turmas</h3>
         <p class="text-xs text-slate-500">Visualize as turmas atribuídas ao seu perfil docente.</p>
       </div>
 
-      <div onclick="abrirModalAtividade()" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
-        <div class="text-4xl mb-3">📝</div>
-        <h3 class="font-bold text-purple-900 text-base mb-1">Criar Atividade</h3>
-        <p class="text-xs text-slate-500">Elabore atividades e recursos pedagógicos adaptados.</p>
+      <!-- CARD 2: CRIAR ATIVIDADE / QUIZZES & IA -->
+      <div onclick="window.location.href='quizzes.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
+        <div class="text-4xl mb-3">🎮</div>
+        <h3 class="font-bold text-purple-900 text-base mb-1">Quizzes & IA</h3>
+        <p class="text-xs text-slate-500">Elabore atividades, quizzes gamificados e gerador por IA.</p>
       </div>
 
+      <!-- CARD 3: RELATÓRIOS & NOTAS -->
       <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
         <div class="text-4xl mb-3">📊</div>
         <h3 class="font-bold text-purple-900 text-base mb-1">Relatórios & Notas</h3>
         <p class="text-xs text-slate-500">Acompanhe o rendimento e presenças dos alunos.</p>
       </div>
 
+      <!-- CARD 4: ACESSIBILIDADE & CONFIGURAÇÕES -->
       <div onclick="toggleSettingsDrawer(true)" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
         <div class="text-4xl mb-3">⚙️</div>
         <h3 class="font-bold text-purple-900 text-base mb-1">Acessibilidade</h3>
@@ -79,49 +85,19 @@
     </div>
   </main>
 
-  <!-- MODAL DE CRIAR ATIVIDADE -->
-  <div id="modal-atividade" class="hidden fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-base font-bold text-slate-800">Nova Atividade para a Turma</h3>
-        <button type="button" onclick="fecharModalAtividade()" class="text-slate-400 hover:text-slate-600 text-xl font-bold cursor-pointer">&times;</button>
-      </div>
-      
-      <form id="form-criar-atividade" onsubmit="event.preventDefault(); enviarAtividadeDireta();" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Título da Atividade</label>
-          <input type="text" id="titulo_atividade" required placeholder="Ex: Exercícios de Matemática" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
-        </div>
-      
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Descrição / Instruções</label>
-          <textarea id="descricao_atividade" rows="3" placeholder="Digite as instruções..." class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
-        </div>
-      
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">ID da Turma</label>
-          <input type="number" id="id_turma_atividade" value="1" required class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
-        </div>
-      
-        <div class="flex justify-end gap-3 pt-2">
-          <button type="button" onclick="fecharModalAtividade()" class="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer">Cancelar</button>
-          <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-[#5b21b6] hover:bg-purple-900 rounded-xl transition-all shadow-md cursor-pointer">Publicar Atividade</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <footer class="home-footer">
     © 2026 • Techadvisors — Painel do Professor
   </footer>
 
+  <!-- BOTÃO FLUTUANTE DE CONFIGURAÇÕES -->
   <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
     ⚙️
   </button>
 
-  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="fixed inset-0 bg-slate-900/40 z-50 hidden"></div>
 
-  <aside id="settings-drawer" class="hidden-drawer bg-white p-6 shadow-2xl">
+  <!-- GAVETA DE CONFIGURAÇÕES -->
+  <aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
       <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
       <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
@@ -167,7 +143,7 @@
     </div>
   </aside>
 
-  <!-- IMPORTAÇÃO DOS SCRIPTS NO FINAL DO BODY -->
+  <!-- SCRIPTS -->
   <script src="../js/config.js"></script>
   <script src="../js/prof.js"></script>
 </body>
