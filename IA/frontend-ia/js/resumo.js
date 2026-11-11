@@ -1,6 +1,4 @@
-// ==========================================
 // 1. URLS DA API E CAPTURA DE ELEMENTOS
-// ==========================================
 const API_URL = 'http://127.0.0.1:8000/analise';
 const API_DASHBOARD = 'http://127.0.0.1:8000/dashboard';
 
@@ -245,3 +243,61 @@ document.addEventListener('DOMContentLoaded', () => {
   carregarResumo();
   carregarGraficos();
 });
+// 1. Chatbot (Responder as perguntas da lousa)
+const form = document.getElementById("questionForm");
+const input = document.getElementById("questionInput");
+const responseText = document.getElementById("responseText");
+
+if (form) {
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!input.value.trim()) return;
+        
+        const texto = input.value.toLowerCase();
+        let resposta = "Estou aqui para ajudar! 💜 Conte qual matéria você está estudando e vamos dividir o assunto em etapas menores.";
+        
+        if (texto.includes("plano") || texto.includes("estudo")) {
+            resposta = "Vamos organizar seus estudos em pequenas etapas! 💜 Qual matéria você quer estudar primeiro?";
+        } else if (texto.includes("foco") || texto.includes("focado")) {
+            resposta = "Vamos tentar uma tarefa de cada vez, com pausas e menos distrações. 🎯 Qual tarefa você precisa fazer?";
+        } else if (texto.includes("sobrecarregado") || texto.includes("ansioso")) {
+            resposta = "Tudo bem fazer uma pausa. 💙 Você pode aprender no seu ritmo. Vamos começar com algo pequeno quando se sentir preparado(a).";
+        } else if (texto.includes("matemática") || texto.includes("matematica")) {
+            resposta = "Vamos aprender matemática passo a passo! 🧮 Qual assunto você quer entender?";
+        } else if (texto.includes("português") || texto.includes("portugues")) {
+            resposta = "Vamos estudar português com exemplos simples! 📚 Qual assunto você está aprendendo?";
+        }
+        
+        responseText.textContent = resposta;
+        input.value = "";
+        input.focus();
+    });
+}
+
+// 2. Modo Calmo
+const botaoCalmo = document.getElementById("calmButton");
+if (botaoCalmo) {
+    botaoCalmo.addEventListener("click", function () {
+        document.body.classList.toggle("calm-mode");
+    });
+}
+
+// 3. Modo Escuro / Alto Contraste
+const botaoTema = document.getElementById("themeButton");
+if (botaoTema) {
+    botaoTema.addEventListener("click", function () {
+        document.body.classList.toggle("high-contrast");
+        
+        // Atualiza as cores dos gráficos para não ficarem invisíveis no modo escuro
+        if (document.body.classList.contains("high-contrast")) {
+            Chart.defaults.color = '#e8e4fb';
+            Chart.defaults.borderColor = '#241d47';
+        } else {
+            Chart.defaults.color = '#191333';
+            Chart.defaults.borderColor = 'rgba(0,0,0,0.1)';
+        }
+        
+        // Redesenha os gráficos com a nova cor
+        carregarGraficos();
+    });
+}
