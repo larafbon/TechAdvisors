@@ -25,63 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const profIdLabel = document.getElementById('info-prof-id');
   if (profIdLabel) profIdLabel.innerText = `#${currentProfId} (${currentProfName})`;
 
-  carregarDisciplinasDoProfessor();
   carregarTurmas();
 });
-
-async function carregarDisciplinasDoProfessor() {
-  const selectDisciplina = document.getElementById('turma-disciplina');
-  if (!selectDisciplina) return;
-
-  const userString = localStorage.getItem('tech_user');
-  const user = userString ? JSON.parse(userString) : {};
-  let listaDisciplinas = [];
-
-  if (user.disciplinas) {
-    listaDisciplinas = user.disciplinas.split(',').map(d => d.trim()).filter(Boolean);
-  }
-
-  selectDisciplina.innerHTML = '';
-  if (listaDisciplinas.length > 0) {
-    selectDisciplina.innerHTML = '<option value="" disabled selected>Escolha a disciplina...</option>';
-    listaDisciplinas.forEach(disc => {
-      const option = document.createElement('option');
-      option.value = disc;
-      option.textContent = disc;
-      selectDisciplina.appendChild(option);
-    });
-  } else {
-    selectDisciplina.innerHTML = '<option value="" disabled selected>Nenhuma disciplina cadastrada</option>';
-  }
-}
-
-function toggleUserMenu(event) {
-  if (event) event.stopPropagation();
-  const menu = document.getElementById('userMenu') || document.getElementById('user-dropdown');
-  if (menu) menu.classList.toggle('show');
-}
-
-window.addEventListener('click', function(e) {
-  const menu = document.getElementById('userMenu') || document.getElementById('user-dropdown');
-  const navBtn = document.getElementById('prof-name-nav');
-  if (menu && menu.classList.contains('show')) {
-    if (!menu.contains(e.target) && navBtn && !navBtn.contains(e.target)) {
-      menu.classList.remove('show');
-    }
-  }
-});
-
-function toggleModalTurma(show) {
-  const modal = document.getElementById('modal-turma');
-  if (!modal) return;
-  if (show) {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-  } else {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-  }
-}
 
 async function carregarTurmas() {
   const tbody = document.getElementById('lista-turmas-body');
@@ -92,7 +37,7 @@ async function carregarTurmas() {
     if (response.ok) {
       const turmas = await response.json();
       if (turmas.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Você ainda não possui turmas cadastradas.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Você ainda não possui turmas vinculadas.</td></tr>';
         return;
       }
 
@@ -123,54 +68,4 @@ async function carregarTurmas() {
     console.error('Erro na conexão:', error);
     tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-red-500">Servidor FastAPI indisponível.</td></tr>';
   }
-}
-
-async function handleSalvarTurma(event) {
-  event.preventDefault();
-
-  const serie = document.getElementById('turma-serie').value;
-  const letra = document.getElementById('turma-letra').value;
-  const disciplina = document.getElementById('turma-disciplina').value;
-  const turno = document.getElementById('turma-turno').value;
-  const anoLetivo = new Date().getFullYear();
-
-  const nomeTurma = `${serie} - Turma ${letra}`;
-  const serieFormatada = serie.replace(/[^a-zA-Z0-9]/g, '');
-  const hashRandom = Math.random().toString(36).substring(2, 6).toUpperCase();
-  const codigoTurma = `TURMA-${anoLetivo}-${serieFormatada}-${letra}-${hashRandom}`;
-
-  const payload = {
-    codigo_turma: codigoTurma,
-    nome_turma: nomeTurma,
-    serie_ano: `${serie} (${letra})`,
-    disciplina: disciplina,
-    turno: turno,
-    ano_letivo: anoLetivo,
-    id_professor: parseInt(currentProfId),
-    status_turma: 'ativa'
-  };
-
-  try {
-    const response = await fetch(`${API_URL}/turmas`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (response.ok) {
-      toggleModalTurma(false);
-      event.target.reset();
-      carregarTurmas();
-    } else {
-      alert('Erro ao criar turma. Verifique os dados informados.');
-    }
-  } catch (error) {
-    console.error('Erro de conexão ao salvar turma:', error);
-    alert('Não foi possível conectar ao servidor.');
-  }
-}
-
-function logout() {
-  localStorage.clear();
-  window.location.href = 'index.html';
 }

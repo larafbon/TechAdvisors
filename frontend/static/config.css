@@ -162,3 +162,55 @@ body.high-contrast #settings-drawer button {
   color: #ffffff !important;
   border-color: #4c1d95 !important;
 }
+
+/* GAVETA LATERAL DE ACESSIBILIDADE - ESTILOS E ANIMAÇÃO */
+#settings-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  width: 100% !important;
+  max-width: 360px !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3) !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 24px !important;
+  overflow-y: auto !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#settings-drawer.hidden-drawer,
+#settings-drawer.hidden {
+  transform: translateX(100%) !important;
+  pointer-events: none !important;
+}
+
+#settings-drawer.visible-drawer,
+#settings-drawer.active {
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+#settings-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  z-index: 99990 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+#settings-overlay.hidden-drawer,
+#settings-overlay.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#settings-overlay.visible-drawer,
+#settings-overlay.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}

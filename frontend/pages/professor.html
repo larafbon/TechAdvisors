@@ -3,35 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Techadvisors — Portal do Docente</title>
+  <title>Painel do Professor - Techadvisors</title>
 
+  <!-- Fonts & Tailwind CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- CSS Connections -->
   <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/prof.css">
   <link rel="stylesheet" href="../static/config.css">
+
+  <!-- JS Connections (carregados na ordem correta) -->
+  <script src="../js/config.js" defer></script>
+  <script src="../js/prof.js" defer></script>
 </head>
-<body class="bg-[#f3f7fb] font-['Poppins']">
+<body class="bg-[#f3f7fb]">
 
-  <!-- CABEÇALHO DO PROFESSOR -->
+  <!-- CABEÇALHO -->
   <header class="home-header">
-    <div class="logo cursor-pointer" onclick="window.location.href='professor.html'">
-      📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">PROFESSOR</span>
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
     </div>
-
     <nav>
       <ul>
-        <li onclick="window.location.href='professor.html'" class="font-bold text-yellow-300 cursor-pointer">👨‍🏫 Portal do Docente</li>
-        <li onclick="window.location.href='turmas.html'" class="cursor-pointer">🏫 Turmas</li>
+        <li onclick="window.location.href='professor.html'" class="cursor-pointer font-bold text-yellow-300">🏠 Portal do Docente</li>
+        <li onclick="window.location.href='turmas.html'" class="cursor-pointer">🏫 Minhas Turmas</li>
         <li onclick="window.location.href='quizzes.html'" class="cursor-pointer">🎮 Quizzes & IA</li>
-        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Dashboard</li>
         
         <!-- DROPDOWN DE USUÁRIO -->
         <li class="user-menu-container relative">
           <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
-            <span id="nav-teacher-name">Prof. Ana Beatriz Nogueira</span>
+            <span id="nav-teacher-name">👨‍🏫 Olá, Professor</span>
             <span class="text-xs">▼</span>
           </div>
+        
           <div id="userMenu" class="user-dropdown">
             <ul>
               <li onclick="window.location.href='perfil.html'">👤 Minha Conta</li>
@@ -44,45 +50,49 @@
     </nav>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL DO PROFESSOR -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="banner mb-8">
-      <h2 id="welcome-title" class="text-2xl font-bold">Bem-vindo(a), Prof. Ana Beatriz Nogueira!</h2>
-      <p class="text-sm opacity-90 mt-1">Gerencie suas turmas atribuídas, prepare atividades inclusivas e acompanhe o desempenho dos estudantes.</p>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container">
+
+    <div class="banner">
+      <h2 id="welcome-title">Bem-vindo(a), Professor(a)!</h2>
+      <p>Gerencie suas turmas, lance conteúdos, acompanhe o desempenho e acesse relatórios inclusivos.</p>
     </div>
 
-    <!-- GRELHA COMPLETA COM OS 4 CARDS -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-      
-      <!-- CARD 1: MINHAS TURMAS -->
-      <div onclick="window.location.href='turmas.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
-        <div class="text-4xl mb-3">🏫</div>
-        <h3 class="font-bold text-purple-900 text-base mb-1">Minhas Turmas</h3>
-        <p class="text-xs text-slate-500">Visualize as turmas atribuídas ao seu perfil docente.</p>
+    <div class="cards">
+
+      <div class="card" onclick="window.location.href='turmas.html'">
+        <div class="icone">🏫</div>
+        <h3>Minhas Turmas</h3>
+        <p>Acesse a lista de alunos e diários de classe.</p>
       </div>
 
-      <!-- CARD 2: CRIAR ATIVIDADE / QUIZZES & IA -->
-      <div onclick="window.location.href='quizzes.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
-        <div class="text-4xl mb-3">🎮</div>
-        <h3 class="font-bold text-purple-900 text-base mb-1">Quizzes & IA</h3>
-        <p class="text-xs text-slate-500">Elabore atividades, quizzes gamificados e gerador por IA.</p>
+      <div class="card" onclick="window.location.href='quizzes.html'">
+        <div class="icone">📚</div>
+        <h3>Atividades & Materiais</h3>
+        <p>Publique conteúdos e tarefas adaptadas.</p>
       </div>
 
-      <!-- CARD 3: RELATÓRIOS & NOTAS -->
-      <div onclick="window.location.href='dashboard.html'" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
-        <div class="text-4xl mb-3">📊</div>
-        <h3 class="font-bold text-purple-900 text-base mb-1">Relatórios & Notas</h3>
-        <p class="text-xs text-slate-500">Acompanhe o rendimento e presenças dos alunos.</p>
+      <div class="card" onclick="alert('Relatórios & Notas em desenvolvimento')">
+        <div class="icone">📊</div>
+        <h3>Relatórios & Notas</h3>
+        <p>Acompanhe o progresso do aprendizado.</p>
       </div>
 
-      <!-- CARD 4: ACESSIBILIDADE & CONFIGURAÇÕES -->
-      <div onclick="toggleSettingsDrawer(true)" class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center hover:shadow-xl transition-all cursor-pointer flex flex-col items-center justify-center">
-        <div class="text-4xl mb-3">⚙️</div>
-        <h3 class="font-bold text-purple-900 text-base mb-1">Acessibilidade</h3>
-        <p class="text-xs text-slate-500">Ajuste o tamanho de fonte, brilho e contraste visual.</p>
+      <!-- CARD DO ASSISTENTE IA (ALERT OU REDIRECIONAMENTO CORRETO) -->
+      <div class="card" onclick="alert('Assistente Pedagógico IA: Tire dúvidas ou gere planos de aula diretamente na aba Quizzes & IA!')">
+        <div class="icone">🤖</div>
+        <h3>Assistente IA</h3>
+        <p>Suporte automático para elaboração de planos de aula.</p>
+      </div>
+
+      <div class="card" onclick="toggleSettingsDrawer(true)">
+        <div class="icone">⚙️</div>
+        <h3>Meu Perfil & Ajustes</h3>
+        <p>Atualize preferências de acessibilidade e dados.</p>
       </div>
 
     </div>
+
   </main>
 
   <footer class="home-footer">
@@ -94,57 +104,50 @@
     ⚙️
   </button>
 
-  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="fixed inset-0 bg-slate-900/40 z-50 hidden"></div>
+  <!-- OVERLAY E DRAWER LATERAL DE ACESSIBILIDADE (OCULTOS POR PADRÃO) -->
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
 
-  <!-- GAVETA DE CONFIGURAÇÕES -->
-  <aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
+  <aside id="settings-drawer" class="hidden-drawer">
     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
       <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
       <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
     </div>
 
-    <div class="space-y-4">
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <div class="flex justify-between items-center mb-2">
-          <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
-          <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2">
-          <button type="button" onclick="changeFontSize(-0.1)" class="py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
-          <button type="button" onclick="resetFontSize()" class="py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
-          <button type="button" onclick="changeFontSize(0.1)" class="py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
-        </div>
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
       </div>
-
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <div class="flex justify-between items-center mb-1">
-          <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
-          <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-        </div>
-        <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
-      </div>
-
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <div class="flex justify-between items-center mb-1">
-          <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
-          <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-        </div>
-        <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
-      </div>
-
-      <div class="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
-        <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
       </div>
     </div>
 
-    <div class="mt-6 text-center">
-      <button type="button" onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline cursor-pointer">Restaurar Padrões</button>
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
     </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
+
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
+    </div>
+
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
   </aside>
 
-  <!-- SCRIPTS -->
-  <script src="../js/config.js"></script>
-  <script src="../js/prof.js"></script>
 </body>
 </html>

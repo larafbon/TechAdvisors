@@ -1,143 +1,111 @@
-// =========================================================
-// GERENCIADOR GLOBAL DE ACESSIBILIDADE - TECHADVISORS
-// =========================================================
+// Abrir/Fechar a gaveta de configurações
+window.toggleSettingsDrawer = function(open) {
+  const drawer = document.getElementById('settings-drawer');
+  const overlay = document.getElementById('settings-overlay');
 
-window.currentFontScale = 1.0;
-window.currentBrightness = 100;
-window.currentSaturation = 100;
-window.isHighContrast = false;
+  if (!drawer || !overlay) return;
 
-document.addEventListener('DOMContentLoaded', () => {
-  window.loadSettings();
-});
+  if (open) {
+    overlay.classList.remove('hidden-drawer', 'hidden');
+    overlay.classList.add('visible-drawer');
 
-window.loadSettings = function() {
-  const saved = localStorage.getItem('tech_accessibility_settings');
-  if (saved) {
-    try {
-      const settings = JSON.parse(saved);
-      window.currentFontScale = settings.fontScale || 1.0;
-      window.currentBrightness = settings.brightness || 100;
-      window.currentSaturation = settings.saturation || 100;
-      window.isHighContrast = settings.highContrast || false;
-    } catch (e) {
-      console.error('Erro ao ler configurações:', e);
-    }
+    drawer.classList.remove('hidden-drawer', 'hidden');
+    drawer.classList.add('visible-drawer');
+  } else {
+    overlay.classList.remove('visible-drawer');
+    overlay.classList.add('hidden-drawer');
+
+    drawer.classList.remove('visible-drawer');
+    drawer.classList.add('hidden-drawer');
   }
-  window.applyAllSettings();
-  window.syncUI();
 };
 
-window.applyAllSettings = function() {
-  document.documentElement.style.fontSize = (window.currentFontScale * 100) + '%';
-  document.documentElement.style.setProperty('--font-scale-factor', window.currentFontScale);
-  document.documentElement.style.setProperty('--page-brightness', window.currentBrightness + '%');
-  document.documentElement.style.setProperty('--page-saturation', window.currentSaturation + '%');
+// Toggle do Menu Dropdown do Usuário (Universal)
+window.toggleUserMenu = function(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('userMenu');
+  if (menu) {
+    menu.classList.toggle('show');
+    menu.classList.toggle('active');
+  }
+};
 
-  if (window.isHighContrast) {
+// Abrir Configurações pelo menu superior
+window.openSettingsFromMenu = function(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('userMenu');
+  if (menu) {
+    menu.classList.remove('show', 'active');
+  }
+  window.toggleSettingsDrawer(true);
+};
+
+// Abrir Tela de Perfil
+window.openPerfilPage = function(e) {
+  if (e) e.stopPropagation();
+  window.location.href = 'perfil.html';
+};
+
+// Fechar menu ao clicar fora dele
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('userMenu');
+  const userContainer = document.querySelector('.user-menu-container');
+  if (menu && userContainer && !userContainer.contains(e.target)) {
+    menu.classList.remove('show', 'active');
+  }
+});
+
+// Acessibilidade: Controle de Fonte
+let currentFontScale = 1;
+window.changeFontSize = function(delta) {
+  currentFontScale = Math.min(Math.max(currentFontScale + delta, 0.8), 1.4);
+  document.documentElement.style.fontSize = `${currentFontScale * 100}%`;
+  const label = document.getElementById('font-size-label');
+  if (label) label.innerText = `${Math.round(currentFontScale * 100)}%`;
+};
+
+window.resetFontSize = function() {
+  currentFontScale = 1;
+  document.documentElement.style.fontSize = '100%';
+  const label = document.getElementById('font-size-label');
+  if (label) label.innerText = '100%';
+};
+
+// Acessibilidade: Brilho e Saturação
+window.updateBrightness = function(val) {
+  document.body.style.filter = `brightness(${val}%)`;
+  const label = document.getElementById('brightness-label');
+  if (label) label.innerText = `${val}%`;
+};
+
+window.updateSaturation = function(val) {
+  document.body.style.filter = `saturate(${val}%)`;
+  const label = document.getElementById('saturation-label');
+  if (label) label.innerText = `${val}%`;
+};
+
+window.toggleHighContrast = function(checked) {
+  if (checked) {
     document.body.classList.add('high-contrast');
   } else {
     document.body.classList.remove('high-contrast');
   }
 };
 
-window.syncUI = function() {
-  const fontLabel = document.getElementById('font-size-label');
-  if (fontLabel) fontLabel.innerText = Math.round(window.currentFontScale * 100) + '%';
-
-  const bLabel = document.getElementById('brightness-label');
-  if (bLabel) bLabel.innerText = window.currentBrightness + '%';
-  
-  const bRange = document.getElementById('brightness-range');
-  if (bRange) bRange.value = window.currentBrightness;
-
-  const sLabel = document.getElementById('saturation-label');
-  if (sLabel) sLabel.innerText = window.currentSaturation + '%';
-  
-  const sRange = document.getElementById('saturation-range');
-  if (sRange) sRange.value = window.currentSaturation;
-
-  const contrastCheck = document.getElementById('high-contrast-toggle') || document.getElementById('toggle-contrast');
-  if (contrastCheck) contrastCheck.checked = window.isHighContrast;
-};
-
-window.saveSettings = function() {
-  const settings = {
-    fontScale: window.currentFontScale,
-    brightness: window.currentBrightness,
-    saturation: window.currentSaturation,
-    highContrast: window.isHighContrast
-  };
-  localStorage.setItem('tech_accessibility_settings', JSON.stringify(settings));
-};
-
-window.changeFontSize = function(delta) {
-  window.currentFontScale = parseFloat((Math.min(Math.max(window.currentFontScale + delta, 0.8), 2.0)).toFixed(1));
-  window.applyAllSettings();
-  window.syncUI();
-  window.saveSettings();
-};
-
-window.setFontSizeNormal = function() {
-  window.currentFontScale = 1.0;
-  window.applyAllSettings();
-  window.syncUI();
-  window.saveSettings();
-};
-
-window.resetFontSize = window.setFontSizeNormal;
-
-window.updateBrightness = function(val) {
-  window.currentBrightness = parseInt(val);
-  window.applyAllSettings();
-  window.syncUI();
-  window.saveSettings();
-};
-
-window.updateSaturation = function(val) {
-  window.currentSaturation = parseInt(val);
-  window.applyAllSettings();
-  window.syncUI();
-  window.saveSettings();
-};
-
-window.toggleHighContrast = function(enabledOrEvent) {
-  if (typeof enabledOrEvent === 'boolean') {
-    window.isHighContrast = enabledOrEvent;
-  } else if (enabledOrEvent && enabledOrEvent.target) {
-    window.isHighContrast = enabledOrEvent.target.checked;
-  } else {
-    window.isHighContrast = !window.isHighContrast;
-  }
-  window.applyAllSettings();
-  window.syncUI();
-  window.saveSettings();
-};
-
 window.resetAllSettings = function() {
-  window.currentFontScale = 1.0;
-  window.currentBrightness = 100;
-  window.currentSaturation = 100;
-  window.isHighContrast = false;
-  window.applyAllSettings();
-  window.syncUI();
-  window.saveSettings();
+  window.resetFontSize();
+  window.updateBrightness(100);
+  window.updateSaturation(100);
+  window.toggleHighContrast(false);
+  const bRange = document.getElementById('brightness-range');
+  const sRange = document.getElementById('saturation-range');
+  const cCheck = document.getElementById('toggle-contrast');
+  if (bRange) bRange.value = 100;
+  if (sRange) sRange.value = 100;
+  if (cCheck) cCheck.checked = false;
 };
 
-window.toggleSettingsDrawer = function(open) {
-  const drawer = document.getElementById('settings-drawer');
-  const overlay = document.getElementById('settings-overlay');
-  if (!drawer || !overlay) return;
-
-  if (open) {
-    overlay.classList.remove('hidden-drawer');
-    overlay.classList.add('visible-drawer');
-    drawer.classList.remove('hidden-drawer');
-    drawer.classList.add('visible-drawer');
-  } else {
-    overlay.classList.remove('visible-drawer');
-    overlay.classList.add('hidden-drawer');
-    drawer.classList.remove('visible-drawer');
-    drawer.classList.add('hidden-drawer');
-  }
+window.logout = function() {
+  localStorage.removeItem('tech_user');
+  window.location.href = 'index.html';
 };
