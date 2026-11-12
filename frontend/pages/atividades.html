@@ -81,17 +81,20 @@
     </div>
   </div>
 
-  <!-- MODAL GAME QUIZIZZ ALUNO -->
-  <div id="modal-quiz-game" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl p-6 md:p-8 relative border border-slate-100 space-y-5">
-      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-        <span class="bg-purple-100 text-purple-900 text-xs font-bold px-3 py-1 rounded-xl">🎮 Modo Quiz Gamificado</span>
-        <button onclick="fecharQuizGame()" class="text-slate-400 hover:text-slate-600 font-bold">✕ Sair</button>
+ <!-- MODAL GAME QUIZIZZ ALUNO (AMPLIADO E IMERSIVO) -->
+ <div id="modal-quiz-game" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 z-50 overflow-y-auto">
+  <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl p-6 sm:p-8 relative border border-slate-100 space-y-6 my-auto">
+    <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+      <div class="flex items-center gap-2.5">
+        <span class="bg-purple-100 text-purple-900 text-xs sm:text-sm font-extrabold px-3.5 py-1.5 rounded-xl">🎮 Arena Quizizz</span>
+        <span class="text-xs font-semibold text-slate-400 hidden sm:inline">Tentativa Única</span>
       </div>
-
-      <div id="quiz-game-body" class="space-y-4"></div>
+      <button onclick="fecharQuizGame()" class="text-slate-400 hover:text-rose-600 bg-slate-100 hover:bg-rose-50 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">✕ Sair do Quiz</button>
     </div>
+
+    <div id="quiz-game-body" class="space-y-5"></div>
   </div>
+</div>
 
   <!-- BOTÃO FLUTUANTE DE CONFIGURAÇÕES -->
   <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all text-xl cursor-pointer">
