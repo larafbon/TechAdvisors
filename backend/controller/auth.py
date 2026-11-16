@@ -15,20 +15,36 @@ def login(credentials: LoginRequest):
     if prof_res.data:
         prof = prof_res.data[0]
         if prof.get("senha") and (verify_password(senha, prof["senha"]) or prof["senha"] == senha):
-            return {"id": prof["id_professor"], "nome": prof["nome"], "email": prof["email"], "role": "professor"}
+            return {
+                "id": prof["id_professor"],
+                "nome": prof["nome"],
+                "email": prof["email"],
+                "role": "professor"
+            }
 
-    # 2. Responsável
+    # 2. Responsável (Todo responsável é Administrador)
     resp_res = supabase.table("responsavel").select("*").eq("email", email).execute()
     if resp_res.data:
         resp = resp_res.data[0]
         if resp.get("senha") and (verify_password(senha, resp["senha"]) or resp["senha"] == senha):
-            return {"id": resp["id_responsavel"], "nome": resp["nome"], "email": resp["email"], "role": "responsavel"}
+            return {
+                "id": resp["id_responsavel"],
+                "id_responsavel": resp["id_responsavel"],
+                "nome": resp["nome"],
+                "email": resp["email"],
+                "role": "admin"
+            }
 
     # 3. Aluno
     aluno_res = supabase.table("aluno").select("*").eq("email", email).execute()
     if aluno_res.data:
         aluno = aluno_res.data[0]
         if aluno.get("senha") and (verify_password(senha, aluno["senha"]) or aluno["senha"] == senha):
-            return {"id": aluno["id_aluno"], "nome": aluno["nome"], "email": aluno["email"], "role": "aluno"}
+            return {
+                "id": aluno["id_aluno"],
+                "nome": aluno["nome"],
+                "email": aluno["email"],
+                "role": "aluno"
+            }
 
     raise HTTPException(status_code=401, detail="E-mail ou senha incorretos.")
