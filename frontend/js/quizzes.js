@@ -774,7 +774,7 @@ window.verRespostasDoAluno = async function(id, tituloEnc) {
           const raw = r.conteudo_resposta || '';
           const partes = raw.split('|||ANEXO_ALUNO|||');
           return {
-            aluno: r.aluno?.nome || 'Lucas Silva (Aluno)',
+            aluno: r.aluno?.nome || r.nome_aluno || `Aluno #${r.id_aluno || ''}`,
             data: new Date(r.data_resposta).toLocaleDateString('pt-BR'),
             respostaTexto: partes[0],
             arquivoUrl: partes[1] || ''

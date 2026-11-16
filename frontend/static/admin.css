@@ -1,0 +1,180 @@
+/* ==========================================
+   VARIÁVEIS DE TEMA (CLARO & ESCURO)
+   ========================================== */
+   :root {
+    --bg-page: #f3f7fb;
+    --bg-surface: #ffffff;
+    --bg-surface-alt: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --accent-primary: #5b21b6;
+    --accent-hover: #4c1d95;
+    --accent-ring: #7c3aed;
+  }
+  
+  body.dark-theme {
+    --bg-page: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-surface-alt: #0f172a;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+  }
+  
+  /* ==========================================
+     BASE E SUPERFÍCIES
+     ========================================== */
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .surface-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+  }
+  
+  .surface-alt {
+    background-color: var(--bg-surface-alt);
+    border: 1px solid var(--border-color);
+  }
+  
+  .text-main {
+    color: var(--text-main);
+  }
+  
+  .text-muted {
+    color: var(--text-muted);
+  }
+  
+  .border-theme {
+    border-color: var(--border-color);
+  }
+  
+  /* ==========================================
+     CARDS DE NAVEGAÇÃO E ABAS
+     ========================================== */
+  body.dark-theme .card {
+    background-color: var(--bg-surface);
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+  
+  body.dark-theme .card p {
+    color: var(--text-muted);
+  }
+  
+  .card-nav {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .card-nav.active-tab {
+    border-color: var(--accent-ring);
+  }
+  
+  .tab-section {
+    display: none;
+  }
+  
+  .tab-section.active {
+    display: block;
+  }
+  
+  /* ==========================================
+     INPUTS E FORMULÁRIOS
+     ========================================== */
+  .input-theme {
+    background-color: var(--bg-surface-alt);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+  }
+  
+  .input-theme:focus {
+    outline: none;
+    border-color: var(--accent-ring);
+  }
+  
+  /* ==========================================
+     RELATÓRIOS, GRÁFICOS E INDICADORES
+     ========================================== */
+  .chart-bar-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 150px;
+    gap: 6px;
+  }
+  
+  .chart-bar-fill {
+    width: 24px;
+    border-radius: 6px 6px 2px 2px;
+    transition: height 0.4s ease;
+  }
+  
+  .progress-track {
+    width: 100%;
+    height: 8px;
+    background-color: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  
+  body.dark-theme .progress-track {
+    background-color: #334155;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+  
+  /* ==========================================
+     TABELAS E SCROLLBARS
+     ========================================== */
+  table tbody tr {
+    transition: background-color 0.15s ease;
+  }
+  
+  table tbody tr:hover {
+    background-color: rgba(124, 58, 237, 0.04);
+  }
+  
+  body.dark-theme table tbody tr:hover {
+    background-color: rgba(167, 139, 250, 0.06);
+  }
+
+  /* ==========================================
+   PROPORÇÃO DOS CARDS DE NAVEGAÇÃO
+   ========================================== */
+.card.card-nav {
+  padding: 1.5rem 1rem !important;
+  min-height: 190px;
+  height: auto !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card.card-nav .icone {
+  font-size: 2.2rem;
+  margin-bottom: 0.65rem;
+}
+
+.card.card-nav h3 {
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-bottom: 0.4rem;
+}
+
+.card.card-nav p {
+  font-size: 0.75rem;
+  line-height: 1.35;
+}

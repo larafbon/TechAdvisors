@@ -107,13 +107,22 @@ function goToStep1() {
 }
 
 function salvarSessaoUsuario(usuarioBD) {
-  // Limpa o localStorage para eliminar resíduos de contas anteriores
   localStorage.clear();
 
-  const roleNormalizada = usuarioBD.role || (usuarioBD.id_professor ? 'professor' : 'aluno');
+  let roleNormalizada = usuarioBD.role;
+  if (!roleNormalizada) {
+    if (usuarioBD.id_responsavel || usuarioBD.id_admin) {
+      roleNormalizada = 'admin';
+    } else if (usuarioBD.id_professor) {
+      roleNormalizada = 'professor';
+    } else {
+      roleNormalizada = 'aluno';
+    }
+  }
   
   const usuario = {
-    id: usuarioBD.id_professor || usuarioBD.id_aluno || usuarioBD.id,
+    id: usuarioBD.id_responsavel || usuarioBD.id_admin || usuarioBD.id_professor || usuarioBD.id_aluno || usuarioBD.id,
+    id_responsavel: usuarioBD.id_responsavel || (roleNormalizada === 'admin' ? usuarioBD.id : null),
     id_professor: usuarioBD.id_professor || (roleNormalizada === 'professor' ? (usuarioBD.id || 1) : null),
     id_aluno: usuarioBD.id_aluno || (roleNormalizada === 'aluno' ? usuarioBD.id : null),
     id_turma: usuarioBD.id_turma || 1,
@@ -136,20 +145,21 @@ async function handleFinalRegister(event) {
   const email = document.getElementById('reg-email')?.value || '';
   const password = document.getElementById('reg-password')?.value || '';
 
-  const discInput = document.getElementById('prof-disciplina');
-  const disciplinaVal = discInput ? discInput.value.trim() : '';
-  const serieSelect = document.getElementById('aluno-serie');
-  const serieVal = serieSelect ? serieSelect.value : '';
-
   let endpoint = '/responsaveis';
   let payload = { nome: name, email: email, senha: password };
 
   if (selectedRole === 'professor') {
     endpoint = '/professores';
-    payload = { nome: name, email: email, senha: password, disciplinas: disciplinaVal, status: 'ativo' };
+    payload = { nome: name, email: email, senha: password, status: 'ativo' };
   } else if (selectedRole === 'aluno') {
-    endpoint = '/responsaveis';
-    payload = { nome: name, email: email, senha: password, serie: serieVal };
+    endpoint = '/alunos';
+    payload = {
+      nome: name,
+      email: email,
+      senha: password,
+      data_nascimento: '2010-01-01',
+      matricula: `MAT${Date.now().toString().slice(-6)}`
+    };
   }
 
   try {
@@ -161,6 +171,7 @@ async function handleFinalRegister(event) {
 
     if (response.ok) {
       const usuarioCriado = await response.json();
+      usuarioCriado.email = usuarioCriado.email || email;
       usuarioCriado.role = selectedRole;
       salvarSessaoUsuario(usuarioCriado);
       redirectUser(selectedRole);
@@ -189,6 +200,9 @@ async function handleLogin(event) {
 
     if (response.ok) {
       const usuarioBD = await response.json();
+      if (!usuarioBD.email) {
+        usuarioBD.email = emailInput;
+      }
       const user = salvarSessaoUsuario(usuarioBD);
       redirectUser(user.role);
     } else {
@@ -203,8 +217,7 @@ async function handleLogin(event) {
 
 function redirectUser(role) {
   if (role === 'admin') {
-    alert('Redirecionando para o Painel Administrador...');
-    navigateTo('home');
+    window.location.href = 'admin.html';
   } else if (role === 'professor') {
     window.location.href = 'professor.html';
   } else {

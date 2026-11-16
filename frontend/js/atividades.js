@@ -3,26 +3,47 @@ let atividadeAtualId = null;
 window.studentActivities = [];
 window.studentSubmissionsMap = {};
 
+function getAlunoLogado() {
+  try {
+    const raw = localStorage.getItem('tech_user') || localStorage.getItem('user') || '{}';
+    const u = JSON.parse(raw);
+    return {
+      id: Number(u.id_aluno || u.id || 1),
+      nome: u.nome || 'Aluno',
+      idTurma: Number(u.id_turma || 1)
+    };
+  } catch (e) {
+    return { id: 1, nome: 'Aluno', idTurma: 1 };
+  }
+}
+
+function getStorageKeyAluno(idAluno) {
+  return `tech_student_answers_${idAluno}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   carregarAtividadesDoAluno();
 });
 
-// 1. Carrega as atividades da turma a partir do backend FastAPI
+// 1. Carrega as atividades da turma real do aluno logado
 async function carregarAtividadesDoAluno() {
   const container = document.getElementById('lista-atividades-container');
   if (!container) return;
 
+  const aluno = getAlunoLogado();
+
   try {
-    const response = await fetch(`${API_URL}/atividades/turma/1`);
+    const response = await fetch(`${API_URL}/atividades/turma/${aluno.idTurma}`);
     if (response.ok) {
       const dadosBackend = await response.json();
       window.studentActivities = dadosBackend.map(a => {
         const rawDesc = a.descricao || 'Sem orientações.';
+        const descSemMeta = rawDesc.split('|||META_CONFIG|||')[0];
         const parts = rawDesc.split('|||QUIZ_DATA|||');
         return {
           id: String(a.id_atividade || a.id),
           title: a.titulo,
-          description: parts[0],
+          description: descSemMeta.split('|||QUIZ_DATA|||')[0],
           quizData: parts[1] ? JSON.parse(parts[1]) : null,
           grade: (a.titulo || '').includes('1º') ? '1º Ano EM' : ((a.titulo || '').includes('2º') ? '2º Ano EM' : '3º Ano EM'),
           type: a.id_tipo_atividade === 2 ? 'QUIZ' : 'MATERIAL',
@@ -49,9 +70,10 @@ async function carregarAtividadesDoAluno() {
   }
 }
 
-// 2. Renderiza os cards e garante TENTATIVA ÚNICA por aluno
+// 2. Renderiza os cards filtrando exclusivamente pelas entregas do aluno logado
 async function renderizarListaAlunos(container, lista) {
-  const respostasSalvas = JSON.parse(localStorage.getItem('tech_student_answers') || '{}');
+  const aluno = getAlunoLogado();
+  const respostasSalvas = JSON.parse(localStorage.getItem(getStorageKeyAluno(aluno.id)) || '{}');
   window.studentSubmissionsMap = {};
 
   const promessas = lista.map(async (atv) => {
@@ -63,13 +85,15 @@ async function renderizarListaAlunos(container, lista) {
       if (res.ok) {
         const dadosRespostas = await res.json();
         if (Array.isArray(dadosRespostas)) {
-          const doAluno = dadosRespostas.find(r => r.id_aluno === 1);
+          const doAluno = dadosRespostas.find(r => Number(r.id_aluno) === aluno.id);
           if (doAluno) {
             const raw = doAluno.conteudo_resposta || '';
             entregaAluno = {
               respostaTexto: raw.split('|||ANEXO_ALUNO|||')[0],
               data: doAluno.data_resposta ? new Date(doAluno.data_resposta).toLocaleDateString('pt-BR') : 'Concluída'
             };
+          } else {
+            entregaAluno = null;
           }
         }
       }
@@ -145,7 +169,7 @@ async function renderizarListaAlunos(container, lista) {
   container.innerHTML = htmlCards.join('');
 }
 
-// 3. Abre PDF ou Imagem do professor convertendo Base64 em Blob nativo (INTACTO)
+// 3. Abre PDF ou Imagem do professor convertendo Base64 em Blob nativo
 function abrirAnexoPorId(id) {
   const act = window.studentActivities.find(a => String(a.id) === String(id));
   if (!act || !act.fileUrl) return alert("Anexo não encontrado.");
@@ -213,7 +237,7 @@ function fecharModalResposta() {
   }
 }
 
-// 5. Processa e comprime ficheiros enviados pelo aluno (INTACTO)
+// 5. Processa e comprime ficheiros enviados pelo aluno
 function processarArquivoAlunoParaBase64(file) {
   return new Promise((resolve, reject) => {
     if (file.type.startsWith('image/')) {
@@ -243,7 +267,7 @@ function processarArquivoAlunoParaBase64(file) {
   });
 }
 
-// 6. Confirma o envio da tarefa (texto e/ou arquivo) (INTACTO)
+// 6. Confirma o envio da tarefa (texto e/ou arquivo)
 async function confirmarEnvioResposta() {
   const texto = document.getElementById('task-answer-text')?.value.trim() || '';
   const modal = document.getElementById('modal-responder-tarefa');
@@ -273,7 +297,7 @@ async function confirmarEnvioResposta() {
   carregarAtividadesDoAluno();
 }
 
-// 7. Lógica da Arena Quizizz Gamificada (Ampliada, com Cronômetro e Explicação)
+// 7. Lógica da Arena Quizizz Gamificada
 function abrirQuizGame(atv) {
   const modal = document.getElementById('modal-quiz-game');
   const body = document.getElementById('quiz-game-body');
@@ -356,7 +380,6 @@ function renderizarPerguntaAtualQuiz() {
 
   body.innerHTML = `
     <div class="space-y-5">
-      <!-- Placar Superior Gamificado -->
       <div class="bg-gradient-to-r from-[#3332A5] via-indigo-800 to-purple-800 text-white p-5 sm:p-6 rounded-3xl space-y-4 shadow-lg">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
@@ -376,13 +399,11 @@ function renderizarPerguntaAtualQuiz() {
           </div>
         </div>
 
-        <!-- Barra de Progresso -->
         <div class="w-full h-2.5 bg-white/20 rounded-full overflow-hidden">
           <div class="h-full bg-yellow-400 transition-all duration-300" style="width: ${progressoPct}%"></div>
         </div>
       </div>
 
-      <!-- Card Ampliado da Pergunta -->
       <div class="p-6 sm:p-7 bg-slate-50 border border-slate-200 rounded-3xl space-y-5">
         <div class="flex items-center justify-between">
           <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-700 bg-indigo-100 px-3 py-1 rounded-xl">Enunciado</span>
@@ -404,13 +425,11 @@ function renderizarPerguntaAtualQuiz() {
           }).join('')}
         </div>
 
-        <!-- Banner de Feedback e Explicação -->
         <div id="quiz-feedback-banner" class="hidden p-4 rounded-2xl text-xs sm:text-sm font-bold space-y-1.5"></div>
       </div>
     </div>
   `;
 
-  // Inicia cronômetro regressivo se a questão tiver tempo limite
   if (tempoLimite > 0) {
     let restante = tempoLimite;
     state.timerInterval = setInterval(() => {
@@ -424,7 +443,7 @@ function renderizarPerguntaAtualQuiz() {
       }
       if (restante <= 0) {
         limparCronometroQuiz();
-        responderPerguntaQuiz(-1); // Tempo esgotado
+        responderPerguntaQuiz(-1);
       }
     }, 1000);
   }
@@ -452,7 +471,6 @@ function responderPerguntaQuiz(indiceEscolhido) {
     state.streak = 0;
   }
 
-  // Feedback visual instantâneo nos botões
   document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
     const idx = Number(btn.dataset.optIdx);
     btn.classList.add('pointer-events-none');
@@ -495,7 +513,6 @@ function responderPerguntaQuiz(indiceEscolhido) {
     }
   }
 
-  // Dá um tempo extra se houver explicação do professor para o aluno conseguir ler
   const delayAvanco = qData.explanation ? 2400 : 1500;
 
   setTimeout(() => {
@@ -557,30 +574,31 @@ async function exibirTelaFinalQuiz() {
   `;
 }
 
-// 8. Salva a resposta localmente e envia para a tabela 'resposta' do Supabase (INTACTO)
+// 8. Salva a resposta isolada por aluno e envia com o ID real para o Supabase
 async function salvarSubmissao(texto, arquivoUrl = '') {
   const idStr = String(atividadeAtualId);
+  const aluno = getAlunoLogado();
   
   const conteudoParaBanco = arquivoUrl 
     ? `${texto}|||ANEXO_ALUNO|||${arquivoUrl}` 
     : texto;
 
-  const respostasSalvas = JSON.parse(localStorage.getItem('tech_student_answers') || '{}');
-  // Garante tentativa única também no armazenamento local
+  const storageKey = getStorageKeyAluno(aluno.id);
+  const respostasSalvas = JSON.parse(localStorage.getItem(storageKey) || '{}');
   respostasSalvas[idStr] = [{
-    aluno: 'Lucas Silva (Aluno)',
+    aluno: aluno.nome,
     data: new Date().toLocaleDateString('pt-BR'),
     respostaTexto: texto,
     arquivoUrl: arquivoUrl
   }];
-  localStorage.setItem('tech_student_answers', JSON.stringify(respostasSalvas));
+  localStorage.setItem(storageKey, JSON.stringify(respostasSalvas));
 
   try {
     await fetch(`${API_URL}/atividades/resposta`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id_aluno: 1,
+        id_aluno: aluno.id,
         id_atividade: Number(atividadeAtualId),
         conteudo_resposta: conteudoParaBanco
       })

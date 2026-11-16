@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Administrador - Techadvisors</title>
+
+  <!-- Fonts & Tailwind CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- CSS Connections -->
+  <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/config.css">
+  <link rel="stylesheet" href="../static/admin.css">
+
+  <!-- JS Connections -->
+  <script src="../js/config.js" defer></script>
+  <script src="../js/admin.js" defer></script>
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header class="home-header">
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-amber-300 text-purple-950 px-2 py-0.5 rounded font-bold ml-2">ADMIN</span>
+    </div>
+
+    <nav>
+      <ul>
+        <li onclick="switchTab('turmas')" class="font-bold text-yellow-300 cursor-pointer">⚙️ Painel Admin</li>
+        <li onclick="switchTab('relatorios')" class="cursor-pointer">📊 Relatórios</li>
+        <li onclick="window.location.href='sobre.html'" class="cursor-pointer">ℹ️ Sobre</li>
+        <li>
+          <button id="theme-toggle-btn" onclick="toggleDarkMode()" class="px-3 py-1 rounded-full text-xs font-bold bg-white/15 hover:bg-white/25 text-white cursor-pointer">
+            🌙 Modo Escuro
+          </button>
+        </li>
+        <li class="user-menu-container relative">
+          <div id="admin-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span id="nav-admin-name">⚙️ Administrador</span>
+            <span class="text-xs">▼</span>
+          </div>
+
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="window.location.href='perfil.html'">👤 Meu Perfil</li>
+              <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <div class="banner mb-8">
+      <h2 id="welcome-title">Bem-vindo(a), Administrador(a)!</h2>
+      <p>Gerencie cadastros de alunos, professores, turmas e acompanhe os indicadores gerais da escola.</p>
+    </div>
+
+    <!-- CARDS DO ADMINISTRADOR / RESPONSÁVEL -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+
+      <div id="card-tab-turmas" onclick="switchTab('turmas')" class="card card-nav active-tab">
+        <div class="icone">🏫</div>
+        <h3>Gerenciar Turmas</h3>
+        <p>Visualize e organize as turmas e horários da instituição.</p>
+      </div>
+
+      <div id="card-tab-alunos" onclick="switchTab('alunos')" class="card card-nav">
+        <div class="icone">🎓</div>
+        <h3>Portal dos Alunos</h3>
+        <p>Gerencie matrículas, turmas e dados dos estudantes.</p>
+      </div>
+
+      <div id="card-tab-professores" onclick="switchTab('professores')" class="card card-nav">
+        <div class="icone">👨‍🏫</div>
+        <h3>Portal dos Professores</h3>
+        <p>Gerencie o corpo docente, disciplinas e turmas vinculadas.</p>
+      </div>
+
+      <div id="card-tab-relatorios" onclick="switchTab('relatorios')" class="card card-nav">
+        <div class="icone">📊</div>
+        <h3>Relatórios & Indicadores</h3>
+        <p>Acompanhe métricas gerais, frequência e desempenho por turma.</p>
+      </div>
+
+      <div onclick="toggleSettingsDrawer(true)" class="card card-nav">
+        <div class="icone">⚙️</div>
+        <h3>Acessibilidade & Ajustes</h3>
+        <p>Configure contraste, fonte, brilho e preferências do sistema.</p>
+      </div>
+
+    </div>
+
+    <!-- SEÇÃO: GESTÃO DE TURMAS -->
+    <section id="section-turmas" class="tab-section active surface-card rounded-2xl p-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-theme">
+        <div>
+          <h3 class="text-xl font-extrabold text-main">🏫 Gestão de Turmas</h3>
+          <p class="text-xs text-muted mt-1">Organize as turmas ativas, capacidade de alunos, salas e turnos.</p>
+        </div>
+        <button onclick="openModal('modal-turma')" class="bg-[#5b21b6] hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
+          + Nova Turma
+        </button>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <input type="text" id="search-turmas" oninput="renderTurmas()" placeholder="Buscar turma por nome ou sala..." class="input-theme flex-1 px-4 py-2 rounded-xl text-xs">
+        <select id="filter-turno" onchange="renderTurmas()" class="input-theme px-4 py-2 rounded-xl text-xs">
+          <option value="Todos">Todos os Turnos</option>
+          <option value="Manhã">Manhã</option>
+          <option value="Tarde">Tarde</option>
+          <option value="Noite">Noite</option>
+          <option value="Integral">Integral</option>
+        </select>
+      </div>
+
+      <div id="grid-turmas" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- SEÇÃO: ALUNOS & MATRÍCULAS -->
+    <section id="section-alunos" class="tab-section surface-card rounded-2xl p-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-theme">
+        <div>
+          <h3 class="text-xl font-extrabold text-main">🎓 Alunos & Matrículas</h3>
+          <p class="text-xs text-muted mt-1">Cadastre estudantes, vincule turmas e controle status de matrícula.</p>
+        </div>
+        <button onclick="openModal('modal-aluno')" class="bg-[#5b21b6] hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
+          + Matricular Aluno
+        </button>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <input type="text" id="search-alunos" oninput="renderAlunos()" placeholder="Buscar por nome, matrícula ou turma..." class="input-theme flex-1 px-4 py-2 rounded-xl text-xs">
+        <select id="filter-aluno-status" onchange="renderAlunos()" class="input-theme px-4 py-2 rounded-xl text-xs">
+          <option value="Todos">Todos os Status</option>
+          <option value="Ativo">Ativo</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Transferido">Transferido</option>
+        </select>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-theme text-[11px] uppercase text-muted">
+              <th class="py-3 px-4">Matrícula</th>
+              <th class="py-3 px-4">Aluno</th>
+              <th class="py-3 px-4">Turma</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4 text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-alunos" class="divide-y border-theme text-xs"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: CORPO DOCENTE -->
+    <section id="section-professores" class="tab-section surface-card rounded-2xl p-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-theme">
+        <div>
+          <h3 class="text-xl font-extrabold text-main">👨‍🏫 Corpo Docente</h3>
+          <p class="text-xs text-muted mt-1">Gerencie professores, disciplinas ministradas e turmas vinculadas.</p>
+        </div>
+        <button onclick="openModal('modal-professor')" class="bg-[#5b21b6] hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
+          + Cadastrar Professor
+        </button>
+      </div>
+
+      <div class="mb-6">
+        <input type="text" id="search-profs" oninput="renderProfessores()" placeholder="Buscar docente por nome ou disciplina..." class="input-theme w-full px-4 py-2 rounded-xl text-xs">
+      </div>
+
+      <div id="grid-profs" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- SEÇÃO: RELATÓRIOS & INDICADORES -->
+    <section id="section-relatorios" class="tab-section surface-card rounded-2xl p-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-theme">
+        <div>
+          <h3 class="text-xl font-extrabold text-main">📊 Relatórios & Indicadores da Plataforma</h3>
+          <p class="text-xs text-muted mt-1">Visão geral de engajamento dos alunos, entrega de atividades, médias e desempenho consolidado por turma.</p>
+        </div>
+        <button onclick="exportarRelatorioCSV()" class="bg-[#5b21b6] hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
+          📥 Exportar Planilha
+        </button>
+      </div>
+
+      <!-- CARDS DE MÉTRICAS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="surface-alt rounded-xl p-4">
+          <div class="text-[11px] font-bold uppercase text-muted mb-1">Total de Alunos</div>
+          <div id="rel-total-alunos" class="text-2xl font-extrabold text-main">0</div>
+          <div class="text-[11px] text-emerald-600 font-semibold mt-1">Matriculados na plataforma</div>
+        </div>
+
+        <div class="surface-alt rounded-xl p-4">
+          <div class="text-[11px] font-bold uppercase text-muted mb-1">Frequência Média</div>
+          <div id="rel-freq-media" class="text-2xl font-extrabold text-main">0%</div>
+          <div class="text-[11px] text-emerald-600 font-semibold mt-1">Participação regular</div>
+        </div>
+
+        <div class="surface-alt rounded-xl p-4">
+          <div class="text-[11px] font-bold uppercase text-muted mb-1">Média Geral Simulados</div>
+          <div id="rel-media-simulados" class="text-2xl font-extrabold text-purple-600">0,0</div>
+          <div class="text-[11px] text-muted font-semibold mt-1">Desempenho acadêmico</div>
+        </div>
+
+        <div class="surface-alt rounded-xl p-4">
+          <div class="text-[11px] font-bold uppercase text-muted mb-1">Turmas em Atenção</div>
+          <div id="rel-turmas-atencao" class="text-2xl font-extrabold text-amber-600">0</div>
+          <div class="text-[11px] text-muted font-semibold mt-1">Sem alunos vinculados</div>
+        </div>
+      </div>
+
+      <!-- GRÁFICOS DE ENGAJAMENTO E ÁREAS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="surface-alt rounded-xl p-5">
+          <h4 class="font-bold text-sm text-main mb-1">Frequência & Engajamento Mensal (%)</h4>
+          <p class="text-[11px] text-muted mb-4">Taxa média de participação nas atividades semestrais.</p>
+          <div id="rel-chart-mensal" class="flex items-end justify-around pt-4 border-t border-theme"></div>
+        </div>
+
+        <div class="surface-alt rounded-xl p-5">
+          <h4 class="font-bold text-sm text-main mb-1">Conclusão por Área</h4>
+          <p class="text-[11px] text-muted mb-4">Percentual médio de atividades entregues por área de conhecimento.</p>
+          <div id="rel-conclusao-areas" class="space-y-4 pt-2"></div>
+        </div>
+      </div>
+
+      <!-- VISÃO CONSOLIDADA POR TURMA -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <h4 class="font-bold text-sm text-main">Visão Consolidada por Turma</h4>
+          <p class="text-[11px] text-muted">Acompanhamento de frequência, entregas e situação de cada turma.</p>
+        </div>
+        <input type="text" id="search-rel-turmas" oninput="renderRelatorios()" placeholder="Buscar turma no relatório..." class="input-theme px-4 py-2 rounded-xl text-xs sm:w-64">
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-theme text-[11px] uppercase text-muted">
+              <th class="py-3 px-4">Turma / Disciplina</th>
+              <th class="py-3 px-4">Turno</th>
+              <th class="py-3 px-4">Alunos</th>
+              <th class="py-3 px-4">Frequência</th>
+              <th class="py-3 px-4">Atividades</th>
+              <th class="py-3 px-4">Média Geral</th>
+              <th class="py-3 px-4 text-right">Situação</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-relatorios-turmas" class="divide-y border-theme text-xs"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Painel do Administrador
+  </footer>
+
+  <!-- MODAL: NOVA TURMA -->
+  <div id="modal-turma" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 class="font-bold text-base text-main">🏫 Nova Turma</h3>
+        <button onclick="closeModal('modal-turma')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="salvarTurma(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Nome da Turma</label>
+          <input type="text" id="turma-nome" required placeholder="Ex: 1º Ano C - Ensino Médio" class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Série / Ano</label>
+            <input type="text" id="turma-serie" required placeholder="Ex: 1º Ano" class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Disciplina</label>
+            <input type="text" id="turma-disciplina" required placeholder="Ex: Matemática" class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Turno</label>
+            <select id="turma-turno" class="input-theme w-full px-3 py-2 rounded-xl">
+              <option value="Manhã">Manhã</option>
+              <option value="Tarde">Tarde</option>
+              <option value="Noite">Noite</option>
+              <option value="Integral">Integral</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Capacidade</label>
+            <input type="number" id="turma-capacidade" required min="5" max="100" value="35" class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Professor Responsável</label>
+            <select id="turma-professor" required class="input-theme w-full px-3 py-2 rounded-xl"></select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Sala / Laboratório</label>
+            <input type="text" id="turma-sala" required placeholder="Ex: Sala 105 - Bloco B" class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-turma')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Salvar Turma</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ALUNOS DA TURMA -->
+  <div id="modal-alunos-turma" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 id="modal-turma-alunos-titulo" class="font-bold text-base text-main">🎓 Alunos da Turma</h3>
+        <button onclick="closeModal('modal-alunos-turma')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <div id="lista-alunos-turma" class="space-y-2 max-h-72 overflow-y-auto"></div>
+      <div class="flex justify-end pt-4">
+        <button type="button" onclick="closeModal('modal-alunos-turma')" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white text-xs font-bold cursor-pointer">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NOVO ALUNO -->
+  <div id="modal-aluno" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 class="font-bold text-base text-main">🎓 Matricular Aluno</h3>
+        <button onclick="closeModal('modal-aluno')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="salvarAluno(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Nome Completo</label>
+          <input type="text" id="aluno-nome" required placeholder="Ex: Lucas Gabriel Santos" class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">E-mail Institucional</label>
+            <input type="email" id="aluno-email" required placeholder="lucas@aluno.escola.edu.br" class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Data de Nascimento</label>
+            <input type="date" id="aluno-nascimento" required value="2011-05-10" class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Turma</label>
+            <select id="aluno-turma" required class="input-theme w-full px-3 py-2 rounded-xl"></select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Status</label>
+            <select id="aluno-status" class="input-theme w-full px-3 py-2 rounded-xl">
+              <option value="Ativo">Ativo</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Transferido">Transferido</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-aluno')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Confirmar Matrícula</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NOVO PROFESSOR -->
+  <div id="modal-professor" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 class="font-bold text-base text-main">👨‍🏫 Cadastrar Professor</h3>
+        <button onclick="closeModal('modal-professor')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="salvarProfessor(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Nome do Docente</label>
+          <input type="text" id="prof-nome" required placeholder="Ex: Profa. Camila Oliveira" class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Disciplina Principal</label>
+          <input type="text" id="prof-disciplina" required placeholder="Ex: Banco de Dados e SQL" class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">E-mail</label>
+          <input type="email" id="prof-email" required placeholder="camila.oliveira@techadvisors.br" class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Vincular a Turmas Existentes (Opcional)</label>
+          <div id="prof-turmas-checkboxes" class="input-theme rounded-xl p-3 max-h-36 overflow-y-auto space-y-2"></div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-professor')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Salvar Docente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: VINCULAR TURMAS AO PROFESSOR -->
+  <div id="modal-vincular-turmas-prof" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 id="modal-vincular-prof-titulo" class="font-bold text-base text-main">🏫 Vincular Turmas</h3>
+        <button onclick="closeModal('modal-vincular-turmas-prof')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="confirmarVinculoTurmasProf(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="vincular-prof-id">
+        <p class="text-muted">Selecione as turmas existentes que ficarão sob responsabilidade deste docente:</p>
+        <div id="lista-checkboxes-vincular-turmas" class="input-theme rounded-xl p-3 max-h-48 overflow-y-auto space-y-2"></div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-vincular-turmas-prof')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Salvar Vínculos</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BOTÃO FLUTUANTE DE CONFIGURAÇÕES -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
+    ⚙️
+  </button>
+
+  <!-- GAVETA DE ACESSIBILIDADE -->
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
+
+  <aside id="settings-drawer" class="hidden-drawer">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
+    </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
+      </div>
+    </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
+
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
+    </div>
+
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
+  </aside>
+
+</body>
+</html>
