@@ -5,6 +5,8 @@ window.filterTurmaId = 'ALL';
 window.teacherTurmas = [];
 window.activities = [];
 window.currentStudentSubmissions = [];
+window.previewQuestionsCache = [];
+window.previewTitleCache = '';
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (window.lucide) window.lucide.createIcons();
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await carregarAtividadesDoBanco();
 });
 
-// 1. Busca as turmas reais do professor no FastAPI (com fallback seguro)
+// 1. Busca as turmas reais do professor no FastAPI
 async function carregarTurmasDoProfessor() {
   const userStr = localStorage.getItem('user') || localStorage.getItem('professor');
   let idProfessor = 1;
@@ -44,7 +46,6 @@ async function carregarTurmasDoProfessor() {
     } catch (e) {}
   }
 
-  // Fallback caso o endpoint ainda não tenha turmas cadastradas
   if (window.teacherTurmas.length === 0) {
     const locais = JSON.parse(localStorage.getItem('tech_turmas') || '[]');
     if (Array.isArray(locais) && locais.length > 0) {
@@ -65,14 +66,12 @@ async function carregarTurmasDoProfessor() {
 }
 
 function preencherSeletoresDeTurma() {
-  // Preenche o <select> dentro do Modal de Criação
   const modalSelect = document.getElementById('modal-turma-select');
   if (modalSelect) {
     modalSelect.innerHTML = `<option value="">Selecione a turma...</option>` +
       window.teacherTurmas.map(t => `<option value="${t.id}">${t.nome}</option>`).join('');
   }
 
-  // Preenche os chips de filtro na barra superior
   const filterContainer = document.getElementById('filter-turmas-container');
   if (filterContainer) {
     filterContainer.innerHTML = `
@@ -136,7 +135,7 @@ async function carregarAtividadesDoBanco() {
   window.renderCards();
 }
 
-// 3. Renderiza os cards das atividades com Turma e Limite de Tentativas
+// 3. Renderiza os cards das atividades
 window.renderCards = async function() {
   const container = document.getElementById('cards-grid');
   const emptyState = document.getElementById('empty-state');
@@ -246,7 +245,7 @@ window.setFilterTurma = function(turmaId, btnElement) {
   window.renderCards();
 };
 
-// 4. Abre PDF ou Imagem convertendo Base64 para Blob nativo (INTACTO)
+// 4. Abre PDF ou Imagem convertendo Base64 para Blob nativo
 window.abrirAnexoPorId = function(id) {
   const act = window.activities.find(a => String(a.id) === String(id));
   if (!act || !act.fileUrl) return alert("Anexo não encontrado.");
@@ -330,61 +329,7 @@ window.switchCreationMode = function(mode) {
   }
 };
 
-
-window.switchCreationMode = function(mode) {
-  window.currentCreationMode = mode;
-  const tabQuick = document.getElementById('tab-quick-btn');
-  const tabManual = document.getElementById('tab-manual-btn');
-  const tabAi = document.getElementById('tab-ai-btn');
-
-  const secQuick = document.getElementById('mode-quick-section');
-  const secManual = document.getElementById('mode-manual-section');
-  const secAi = document.getElementById('mode-ai-section');
-
-  [tabQuick, tabManual, tabAi].forEach(t => {
-    if (!t) return;
-    t.classList.remove('tab-active', 'bg-white', 'shadow-sm', 'text-purple-700', 'bg-[#3332A5]', 'bg-purple-800', 'text-white');
-    t.classList.add('text-slate-600');
-  });
-
-  if (mode === 'QUICK') {
-    tabQuick?.classList.add('tab-active', 'bg-[#3332A5]', 'text-white', 'shadow-sm');
-    tabQuick?.classList.remove('text-slate-600');
-    secQuick?.classList.remove('hidden');
-    secManual?.classList.add('hidden');
-    secAi?.classList.add('hidden');
-  } else if (mode === 'MANUAL') {
-    tabManual?.classList.add('tab-active', 'bg-[#3332A5]', 'text-white', 'shadow-sm');
-    tabManual?.classList.remove('text-slate-600');
-    secQuick?.classList.add('hidden');
-    secManual?.classList.remove('hidden');
-    secAi?.classList.add('hidden');
-    const qContainer = document.getElementById('quiz-questions-container');
-    if (qContainer && qContainer.children.length === 0) {
-      window.adicionarBlocoQuestao('MULTIPLA');
-    }
-  } else if (mode === 'AI') {
-    tabAi?.classList.add('tab-active', 'bg-[#3332A5]', 'text-white', 'shadow-sm');
-    tabAi?.classList.remove('text-slate-600');
-    secQuick?.classList.add('hidden');
-    secManual?.classList.add('hidden');
-    secAi?.classList.remove('hidden');
-  }
-};
-
-window.selectModalGrade = function(grade, btnElement) {
-  window.selectedModalGrade = grade;
-  document.querySelectorAll('.modal-grade-chip').forEach(btn => {
-    btn.classList.remove('bg-purple-700', 'text-white');
-    btn.classList.add('bg-white', 'text-slate-600');
-  });
-  if (btnElement) {
-    btnElement.classList.add('bg-purple-700', 'text-white');
-    btnElement.classList.remove('bg-white', 'text-slate-600');
-  }
-};
-
-// 5. Editor Avançado de Questões (Múltipla Escolha, Verdadeiro/Falso e Enquete)
+// 6. Editor Avançado de Questões
 let questionUniqueCounter = 0;
 
 window.adicionarBlocoQuestao = function(tipo = 'MULTIPLA') {
@@ -508,7 +453,6 @@ window.removerBlocoQuestao = function(btn) {
   });
 };
 
-// 6. Coleta as questões configuradas no Editor (com tempo, pontos e gabarito comentado)
 function coletarQuestoesDoEditor() {
   const cards = Array.from(document.querySelectorAll('#quiz-questions-container .quiz-question-card'));
   return cards.map(card => {
@@ -543,7 +487,7 @@ function coletarQuestoesDoEditor() {
         type: 'ENQUETE',
         question: enunciado,
         options: opcoesEnquete.length >= 2 ? opcoesEnquete : ['Concordo', 'Discordo'],
-        correctIndex: -1, // Todas pontuam na enquete
+        correctIndex: -1,
         timeLimit,
         points,
         explanation
@@ -572,7 +516,96 @@ function coletarQuestoesDoEditor() {
   });
 }
 
-// 7. Pré-visualização do Quiz antes de publicar (Visão do Aluno)
+// 7. Pré-visualização do Quiz com Simulador dos Modos Inclusivos (TEA, TDAH Biônico e Dislexia Silábica)
+function formatarTextoSimulacaoProfessor(texto, modo) {
+  if (!texto) return '';
+  if (modo === 'TDAH') {
+    const kwRegex = /^(não|nunca|exceto|incorreta|correta|falso|verdadeiro|calcule|identifique|assinale|principal|menor|maior|apenas|somente|sempre)$/i;
+    return texto.split(/(\s+)/).map(tok => {
+      if (/^\s+$/.test(tok)) return tok;
+      const m = tok.match(/^([^\wÀ-ÿ]*)([\wÀ-ÿ-]+)([^\wÀ-ÿ]*)$/);
+      if (!m) return tok;
+      const [, pre, nuc, suf] = m;
+      if (kwRegex.test(nuc)) return `${pre}<span class="tdah-keyword">${nuc}</span>${suf}`;
+      const corte = Math.ceil(nuc.length * 0.42);
+      return `${pre}<span class="bionic-lead">${nuc.slice(0, corte)}</span>${nuc.slice(corte)}${suf}`;
+    }).join('');
+  }
+  if (modo === 'DISLEXIA') {
+    return texto.split(/(\s+)/).map(tok => {
+      if (/^\s+$/.test(tok) || tok.length <= 4) return tok;
+      return tok.replace(/([^aeiouáéíóúâêôãõü])([aeiouáéíóúâêôãõü])/gi, '·$1$2')
+                .replace(/^·/, '')
+                .replace(/([aeiouáéíóúâêôãõü])([bcdfgjklmnpqrstvwxz])([bcdfgjklmnpqrstvwxz])/gi, '$1$2·$3');
+    }).join('');
+  }
+  return texto;
+}
+
+window.setPreviewA11y = function(modo) {
+  const modal = document.getElementById('student-preview-modal');
+  if (!modal) return;
+
+  modal.classList.remove('mode-tea', 'mode-tdah', 'mode-dislexia', 'theme-cream', 'theme-calm', 'hide-timer');
+  if (modo === 'TEA') modal.classList.add('mode-tea', 'theme-calm', 'hide-timer');
+  if (modo === 'TDAH') modal.classList.add('mode-tdah');
+  if (modo === 'DISLEXIA') modal.classList.add('mode-dislexia', 'theme-cream', 'hide-timer');
+
+  document.querySelectorAll('.prev-a11y-btn').forEach(b => {
+    b.classList.remove('bg-purple-700', 'text-white');
+    b.classList.add('bg-white', 'text-slate-700');
+  });
+  const activeBtn = document.getElementById(`prev-btn-${modo}`);
+  if (activeBtn) {
+    activeBtn.classList.add('bg-purple-700', 'text-white');
+    activeBtn.classList.remove('bg-white', 'text-slate-700');
+  }
+
+  renderizarCorpoPreviewProfessor(modo);
+};
+
+function renderizarCorpoPreviewProfessor(modo = 'PADRAO') {
+  const body = document.getElementById('professor-preview-body');
+  const perguntas = window.previewQuestionsCache || [];
+  const titulo = window.previewTitleCache || 'Prévia do Quiz';
+  if (!body || perguntas.length === 0) return;
+
+  const coresBotao = ['btn-opt-a', 'btn-opt-b', 'btn-opt-c', 'btn-opt-d'];
+
+  body.innerHTML = `
+    <div class="quiz-header-banner bg-gradient-to-r from-[#3332A5] to-purple-700 text-white p-4 rounded-2xl">
+      <span class="text-[10px] font-extrabold uppercase tracking-wider text-yellow-300">Simulação (${modo}) • ${perguntas.length} Questão(ões)</span>
+      <h3 class="text-base font-bold mt-0.5">${titulo}</h3>
+    </div>
+    ${perguntas.map((q, idx) => {
+      const tipoTxt = q.type === 'VF' ? 'Verdadeiro ou Falso' : (q.type === 'ENQUETE' ? 'Enquete / Opinião' : 'Múltipla Escolha');
+      const gabaritoTxt = q.type === 'ENQUETE' ? '📊 Todas pontuam' : `✓ Gabarito: ${String.fromCharCode(65 + q.correctIndex)}`;
+      return `
+        <div class="quiz-question-box p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+          <div class="flex justify-between items-center flex-wrap gap-1">
+            <span class="text-[10px] font-extrabold uppercase text-indigo-700 bg-indigo-100 px-2.5 py-0.5 rounded-lg">Questão ${idx + 1} • ${tipoTxt}</span>
+            <div class="flex items-center gap-2 text-[10px] font-bold">
+              <span id="quiz-timer-badge" class="text-slate-500">⏱️ ${q.timeLimit > 0 ? q.timeLimit + 's' : 'Livre'}</span>
+              <span class="text-amber-600">⭐ ${q.points} pts</span>
+              <span class="text-emerald-700">${gabaritoTxt}</span>
+            </div>
+          </div>
+          <p class="quiz-readable-text text-xs font-bold text-slate-800">${formatarTextoSimulacaoProfessor(q.question, modo)}</p>
+          <div class="grid grid-cols-1 ${q.type === 'VF' ? 'sm:grid-cols-2' : ''} gap-2">
+            ${q.options.map((opt, oIdx) => `
+              <div class="game-option-btn ${coresBotao[oIdx % 4]} p-3 rounded-xl text-xs font-bold flex items-center justify-between shadow-sm">
+                <span class="quiz-readable-text">${String.fromCharCode(65 + oIdx)}) ${formatarTextoSimulacaoProfessor(opt, modo)}</span>
+                ${oIdx === q.correctIndex ? '<span class="bg-white/25 px-2 py-0.5 rounded text-[10px]">CORRETA</span>' : ''}
+              </div>
+            `).join('')}
+          </div>
+          ${q.explanation ? `<p class="quiz-readable-text text-[11px] text-purple-900 bg-purple-50 p-2.5 rounded-xl border border-purple-200">💡 <strong>Explicação:</strong> ${formatarTextoSimulacaoProfessor(q.explanation, modo)}</p>` : ''}
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
 window.preVisualizarQuizProfessor = function() {
   const perguntas = coletarQuestoesDoEditor();
   if (perguntas.length === 0) {
@@ -580,51 +613,18 @@ window.preVisualizarQuizProfessor = function() {
     return;
   }
 
-  const titulo = document.getElementById('title')?.value.trim() || 'Prévia do Quiz';
+  window.previewQuestionsCache = perguntas;
+  window.previewTitleCache = document.getElementById('title')?.value.trim() || 'Prévia do Quiz';
+
   const modal = document.getElementById('student-preview-modal');
-  const body = document.getElementById('professor-preview-body');
-  if (!modal || !body) return;
+  if (!modal) return;
 
-  const coresBotao = ['btn-opt-a', 'btn-opt-b', 'btn-opt-c', 'btn-opt-d'];
-
-  body.innerHTML = `
-    <div class="bg-gradient-to-r from-[#3332A5] to-purple-700 text-white p-4 rounded-2xl">
-      <span class="text-[10px] font-extrabold uppercase tracking-wider text-yellow-300">Simulação do Aluno • ${perguntas.length} Questão(ões)</span>
-      <h3 class="text-base font-bold mt-0.5">${titulo}</h3>
-    </div>
-    ${perguntas.map((q, idx) => {
-      const tipoTxt = q.type === 'VF' ? 'Verdadeiro ou Falso' : (q.type === 'ENQUETE' ? 'Enquete / Opinião' : 'Múltipla Escolha');
-      const gabaritoTxt = q.type === 'ENQUETE' ? '📊 Todas pontuam' : `✓ Gabarito: ${String.fromCharCode(65 + q.correctIndex)}`;
-      return `
-        <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <div class="flex justify-between items-center flex-wrap gap-1">
-            <span class="text-[10px] font-extrabold uppercase text-indigo-700 bg-indigo-100 px-2.5 py-0.5 rounded-lg">Questão ${idx + 1} • ${tipoTxt}</span>
-            <div class="flex items-center gap-2 text-[10px] font-bold">
-              <span class="text-slate-500">⏱️ ${q.timeLimit > 0 ? q.timeLimit + 's' : 'Livre'}</span>
-              <span class="text-amber-600">⭐ ${q.points} pts</span>
-              <span class="text-emerald-700">${gabaritoTxt}</span>
-            </div>
-          </div>
-          <p class="text-xs font-bold text-slate-800">${q.question}</p>
-          <div class="grid grid-cols-1 ${q.type === 'VF' ? 'sm:grid-cols-2' : ''} gap-2">
-            ${q.options.map((opt, oIdx) => `
-              <div class="game-option-btn ${coresBotao[oIdx % 4]} p-3 rounded-xl text-xs font-bold flex items-center justify-between shadow-sm">
-                <span>${String.fromCharCode(65 + oIdx)}) ${opt}</span>
-                ${oIdx === q.correctIndex ? '<span class="bg-white/25 px-2 py-0.5 rounded text-[10px]">CORRETA</span>' : ''}
-              </div>
-            `).join('')}
-          </div>
-          ${q.explanation ? `<p class="text-[11px] text-purple-900 bg-purple-50 p-2.5 rounded-xl border border-purple-200">💡 <strong>Explicação:</strong> ${q.explanation}</p>` : ''}
-        </div>
-      `;
-    }).join('')}
-  `;
-
+  window.setPreviewA11y('PADRAO');
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 };
 
-// 8. Converte e comprime imagens para não estourar o limite do FastAPI (INTACTO)
+// 8. Converte e comprime imagens
 function processarFicheiroParaBase64(file) {
   return new Promise((resolve, reject) => {
     if (file.type.startsWith('image/')) {
@@ -654,7 +654,7 @@ function processarFicheiroParaBase64(file) {
   });
 }
 
-// 9. Envia a nova atividade (Material PDF ou Quiz) para o Supabase via FastAPI
+// 9. Envia a nova atividade para o Supabase via FastAPI
 window.handleFormSubmit = async function(e) {
   if (e) e.preventDefault();
 
@@ -739,7 +739,6 @@ window.handleFormSubmit = async function(e) {
   }
 };
 
-
 // 10. Exclui atividade permanentemente
 window.deleteActivity = async function(id) {
   if (!confirm("Deseja excluir esta atividade permanentemente?")) return;
@@ -821,7 +820,7 @@ window.verRespostasDoAluno = async function(id, tituloEnc) {
   }
 };
 
-// 12. Abre o arquivo enviado pelo aluno convertendo Base64 para Blob (INTACTO)
+// 12. Abre o arquivo enviado pelo aluno
 window.abrirArquivoDaEntrega = function(index) {
   const item = window.currentStudentSubmissions?.[index];
   if (!item || !item.arquivoUrl) return alert("Arquivo não encontrado.");

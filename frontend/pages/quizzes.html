@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Techadvisors — Atividades & Quizzes (Ensino Médio)</title>
+  <title>Techadvisors — Atividades & Quizzes Inclusivos (Professor)</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -54,9 +54,9 @@
     <div class="banner mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 p-8 rounded-3xl shadow-sm">
       <div class="space-y-2">
         <div class="flex items-center gap-3">
-          <h2 id="prof-welcome-title" class="text-2xl md:text-3xl font-bold">Atividades & Quizzes (Ensino Médio)</h2>
+          <h2 id="prof-welcome-title" class="text-2xl md:text-3xl font-bold">Atividades & Quizzes Inclusivos</h2>
         </div>
-        <p class="text-sm opacity-90 max-w-xl">Crie avaliações gamificadas no formato Quizizz para turmas do Ensino Médio ou envie materiais rápidos.</p>
+        <p class="text-sm opacity-90 max-w-xl">Crie avaliações adaptáveis para TEA, TDAH e Dislexia ou envie materiais de apoio para suas turmas.</p>
       </div>
       <button type="button" onclick="openModal()" class="bg-white text-[#3332A5] hover:bg-slate-50 font-bold px-6 py-3.5 rounded-2xl shadow transition flex items-center gap-2.5 shrink-0 text-sm cursor-pointer">
         <i data-lucide="plus-circle" class="w-5 h-5 text-[#4C7FE5]"></i>
@@ -65,7 +65,7 @@
     </div>
 
     <!-- PAINEL DE FILTROS -->
-    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 my-6 space-y-5">
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 my-6 space-y-4">
       <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
         <div class="relative w-full md:flex-1">
           <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
@@ -77,7 +77,8 @@
       </div>
 
       <!-- CHIPS DE TURMA -->
-      
+      <div id="filter-turmas-container" class="flex flex-wrap gap-2 pt-1"></div>
+    </div>
 
     <!-- GRID DE ATIVIDADES -->
     <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6"></div>
@@ -115,25 +116,6 @@
         <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
       </div>
     </div>
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <div class="flex justify-between items-center mb-1">
-        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
-        <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-      </div>
-      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
-    </div>
-    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <div class="flex justify-between items-center mb-1">
-        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
-        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
-      </div>
-      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
-    </div>
-    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
-      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
-      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
-    </div>
-    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
   </aside>
 
   <!-- MODAL DE CRIAÇÃO DA ATIVIDADE -->
@@ -147,7 +129,7 @@
           </div>
           <div>
             <h2 class="text-lg font-bold text-slate-800">Criar Atividade / Quiz</h2>
-            <p class="text-xs text-slate-400">Monte quizzes interativos para o Ensino Médio ou utilize IA</p>
+            <p class="text-xs text-slate-400">Os modos TEA, TDAH, Dislexia, Leitura Biônica e Voz são ativados automaticamente para os alunos</p>
           </div>
         </div>
         <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
@@ -190,7 +172,7 @@
 
         <div>
           <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Orientações (Opcional)</label>
-          <textarea id="description" rows="2" placeholder="Instruções para a turma (ex: Leia antes de começar)..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#3332A5]"></textarea>
+          <textarea id="description" rows="2" placeholder="Instruções para a turma (ex: Leia com atenção antes de começar)..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#3332A5]"></textarea>
         </div>
 
         <!-- MODO 1: ENVIO RÁPIDO (PDF) -->
@@ -216,8 +198,7 @@
           </div>
         </div>
 
-        <!-- MODO 2: QUIZIZZ EDITOR (MÚLTIPLA ESCOLHA, V/F E ENQUETE) -->
-        <!-- MODO 2: QUIZIZZ EDITOR (MÚLTIPLA ESCOLHA, V/F E ENQUETE) -->
+        <!-- MODO 2: QUIZIZZ EDITOR -->
         <div id="mode-manual-section" class="hidden p-4 bg-indigo-50/70 border border-indigo-200 rounded-2xl space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-indigo-200/60">
             <div>
@@ -240,7 +221,7 @@
           <div id="quiz-questions-container" class="space-y-3 max-h-80 overflow-y-auto pr-1"></div>
         </div>
 
-        <!-- MODO 3: GERADOR IA COMPLETO (RESERVADO PARA PRÓXIMA ETAPA) -->
+        <!-- MODO 3: GERADOR IA COMPLETO -->
         <div id="mode-ai-section" class="hidden p-5 bg-gradient-to-br from-indigo-900 to-purple-900 text-white rounded-2xl space-y-2 text-center">
           <span class="text-2xl">✨</span>
           <h4 class="text-sm font-extrabold">Gerador de Quiz por Inteligência Artificial</h4>
@@ -251,7 +232,7 @@
         <div class="flex items-center justify-between pt-4 border-t border-slate-100">
           <button type="button" onclick="window.preVisualizarQuizProfessor()" class="px-4 py-2.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
             <i data-lucide="eye" class="w-4 h-4"></i>
-            <span>Pré-visualizar Quiz</span>
+            <span>Pré-visualizar Quiz Inclusivo</span>
           </button>
           <div class="flex gap-2">
             <button type="button" onclick="closeModal()" class="px-5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">Cancelar</button>
@@ -262,14 +243,26 @@
     </div>
   </div>
 
-  <!-- MODAL PRÉ-VISUALIZAÇÃO DO PROFESSOR -->
-  <div id="student-preview-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl p-6 md:p-8 relative border border-slate-100 space-y-5">
+  <!-- MODAL PRÉ-VISUALIZAÇÃO DO PROFESSOR (COM SIMULADOR DE MODOS INCLUSIVOS) -->
+  <div id="student-preview-modal" class="quiz-a11y-scope fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50 overflow-y-auto">
+    <div class="quiz-modal-card bg-white rounded-3xl max-w-xl w-full shadow-2xl p-6 md:p-8 relative border border-slate-100 space-y-4">
       <div class="flex justify-between items-center pb-3 border-b border-slate-100">
         <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-xl">👁️ Pré-visualização (Visão do Aluno)</span>
         <button type="button" onclick="document.getElementById('student-preview-modal').classList.add('hidden'); document.getElementById('student-preview-modal').classList.remove('flex');" class="text-slate-400 hover:text-slate-600 font-bold p-1 cursor-pointer">✕ FECHAR</button>
       </div>
-      <div id="professor-preview-body" class="space-y-4 max-h-[65vh] overflow-y-auto pr-1"></div>
+
+      <!-- Simulador de Apoio Inclusivo para o Professor testar -->
+      <div class="flex flex-wrap items-center justify-between gap-1.5 bg-slate-50 p-2.5 rounded-2xl border border-slate-200 text-[11px]">
+        <span class="font-extrabold text-slate-600">♿ Simular Apoio do Aluno:</span>
+        <div class="flex flex-wrap gap-1">
+          <button type="button" id="prev-btn-PADRAO" onclick="window.setPreviewA11y('PADRAO')" class="prev-a11y-btn px-2.5 py-1 rounded-lg bg-purple-700 text-white font-bold cursor-pointer">Padrão</button>
+          <button type="button" id="prev-btn-TEA" onclick="window.setPreviewA11y('TEA')" class="prev-a11y-btn px-2.5 py-1 rounded-lg bg-white border border-slate-200 font-bold text-slate-700 hover:bg-purple-50 cursor-pointer">🧩 TEA</button>
+          <button type="button" id="prev-btn-TDAH" onclick="window.setPreviewA11y('TDAH')" class="prev-a11y-btn px-2.5 py-1 rounded-lg bg-white border border-slate-200 font-bold text-slate-700 hover:bg-purple-50 cursor-pointer">⚡ TDAH</button>
+          <button type="button" id="prev-btn-DISLEXIA" onclick="window.setPreviewA11y('DISLEXIA')" class="prev-a11y-btn px-2.5 py-1 rounded-lg bg-white border border-slate-200 font-bold text-slate-700 hover:bg-purple-50 cursor-pointer">📖 Dislexia</button>
+        </div>
+      </div>
+
+      <div id="professor-preview-body" class="space-y-4 max-h-[62vh] overflow-y-auto pr-1"></div>
     </div>
   </div>
 
