@@ -6,13 +6,18 @@ from models.professores import ProfessorCreate, ProfessorResponse
 
 router = APIRouter(prefix="/professores", tags=["Professores"])
 
+@router.get("", response_model=List[ProfessorResponse])
+def listar_professores():
+    res = supabase.table("professor").select("id_professor, nome, email, status").execute()
+    return res.data or []
+
 @router.post("", response_model=ProfessorResponse)
 def criar_professor(prof: ProfessorCreate):
     dados = prof.model_dump() if hasattr(prof, "model_dump") else prof.dict()
     dados["email"] = dados["email"].lower()
     dados["senha"] = hash_password(dados["senha"])
     dados["status"] = dados.get("status") or "ativo"
-    
+
     res = supabase.table("professor").insert(dados).execute()
     return res.data[0]
 
@@ -33,7 +38,7 @@ def atualizar_professor(id_professor: int, prof: ProfessorCreate):
         dados["senha"] = hash_password(dados["senha"])
     else:
         dados.pop("senha", None)
-        
+
     res = supabase.table("professor").update(dados).eq("id_professor", id_professor).execute()
     return res.data or {}
 
