@@ -24,6 +24,12 @@ def listar_turmas(id_professor: Optional[int] = None):
     res = query.execute()
     return res.data or []
 
+# Alias necessário para quizzes.js
+@router.get("/professor/{id_professor}", response_model=List[TurmaResponse])
+def listar_turmas_por_professor(id_professor: int):
+    res = supabase.table("turma").select("*").eq("id_professor", id_professor).execute()
+    return res.data or []
+
 @router.put("/{id_turma}")
 def atualizar_turma(id_turma: int, turma: TurmaCreate):
     dados = turma.model_dump() if hasattr(turma, "model_dump") else turma.dict()

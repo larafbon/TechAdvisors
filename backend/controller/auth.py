@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from database import supabase
-from security import verify_password
+from security import verify_password, hash_password
 from models.auth import LoginRequest
 
 router = APIRouter(tags=["Autenticação"])
@@ -14,19 +14,26 @@ def login(credentials: LoginRequest):
     prof_res = supabase.table("professor").select("*").eq("email", email).execute()
     if prof_res.data:
         prof = prof_res.data[0]
-        if prof.get("senha") and (verify_password(senha, prof["senha"]) or prof["senha"] == senha):
+        senha_db = prof.get("senha") or ""
+        if verify_password(senha, senha_db) or senha_db == senha:
+            if senha_db == senha:
+                supabase.table("professor").update({"senha": hash_password(senha)}).eq("id_professor", prof["id_professor"]).execute()
             return {
                 "id": prof["id_professor"],
+                "id_professor": prof["id_professor"],
                 "nome": prof["nome"],
                 "email": prof["email"],
                 "role": "professor"
             }
 
-    # 2. Responsável (Todo responsável é Administrador)
+    # 2. Responsável (Administrador)
     resp_res = supabase.table("responsavel").select("*").eq("email", email).execute()
     if resp_res.data:
         resp = resp_res.data[0]
-        if resp.get("senha") and (verify_password(senha, resp["senha"]) or resp["senha"] == senha):
+        senha_db = resp.get("senha") or ""
+        if verify_password(senha, senha_db) or senha_db == senha:
+            if senha_db == senha:
+                supabase.table("responsavel").update({"senha": hash_password(senha)}).eq("id_responsavel", resp["id_responsavel"]).execute()
             return {
                 "id": resp["id_responsavel"],
                 "id_responsavel": resp["id_responsavel"],
@@ -35,13 +42,18 @@ def login(credentials: LoginRequest):
                 "role": "admin"
             }
 
-    # 3. Aluno
+    # 3. Aluno (Inclui id_turma para carregar atividades corretamente)
     aluno_res = supabase.table("aluno").select("*").eq("email", email).execute()
     if aluno_res.data:
         aluno = aluno_res.data[0]
-        if aluno.get("senha") and (verify_password(senha, aluno["senha"]) or aluno["senha"] == senha):
+        senha_db = aluno.get("senha") or ""
+        if verify_password(senha, senha_db) or senha_db == senha:
+            if senha_db == senha:
+                supabase.table("aluno").update({"senha": hash_password(senha)}).eq("id_aluno", aluno["id_aluno"]).execute()
             return {
                 "id": aluno["id_aluno"],
+                "id_aluno": aluno["id_aluno"],
+                "id_turma": aluno.get("id_turma") or 1,
                 "nome": aluno["nome"],
                 "email": aluno["email"],
                 "role": "aluno"
