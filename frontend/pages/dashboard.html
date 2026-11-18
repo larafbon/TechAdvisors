@@ -15,18 +15,19 @@
 
   <!-- JS Connections -->
   <script src="../js/config.js" defer></script>
+  <script src="../js/dashboard.js" defer></script>
 </head>
 <body class="bg-[#f3f7fb]">
 
   <!-- CABEÇALHO -->
   <header class="home-header">
     <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
-      📘 TECHADVISORS
+      📘 TECHADVISORS <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">ALUNO</span>
     </div>
 
     <nav>
       <ul>
-        <li onclick="window.history.back()" class="cursor-pointer">← Voltar</li>
+        <li onclick="window.location.href='alunos.html'" class="cursor-pointer">← Voltar</li>
         <li onclick="window.location.href='alunos.html'" class="cursor-pointer">🎓 Meu Painel</li>
         <li onclick="toggleSettingsDrawer(true)" class="cursor-pointer">⚙️ Acessibilidade</li>
       </ul>
@@ -36,66 +37,90 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="banner mb-8">
-      <h2>📊 Notas & Frequência Escolar</h2>
-      <p>Consulte seu boletim acadêmico, média de notas e percentual de presença nas disciplinas.</p>
+      <h2 id="boletim-titulo">📊 Notas & Frequência Escolar</h2>
+      <p>Consulte seu boletim acadêmico em tempo real, média das atividades e os recursos inclusivos utilizados.</p>
     </div>
 
     <!-- RESUMO DO ALUNO -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
       <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
         <span class="text-xs font-bold uppercase text-slate-400">Média Geral</span>
-        <h3 class="text-3xl font-black text-purple-900 mt-2">8.7</h3>
-        <p class="text-xs text-emerald-600 font-bold mt-1">Desempenho Excelente</p>
+        <h3 id="dash-media-geral" class="text-3xl font-black text-purple-900 mt-2">--</h3>
+        <p id="dash-media-status" class="text-xs text-emerald-600 font-bold mt-1">Carregando...</p>
       </div>
 
       <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
         <span class="text-xs font-bold uppercase text-slate-400">Frequência Total</span>
-        <h3 class="text-3xl font-black text-purple-900 mt-2">96%</h3>
-        <p class="text-xs text-purple-600 font-bold mt-1">Acima do Limite Mínimo</p>
+        <h3 id="dash-frequencia" class="text-3xl font-black text-purple-900 mt-2">96%</h3>
+        <p class="text-xs text-purple-600 font-bold mt-1">Presença Regular</p>
       </div>
 
       <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
         <span class="text-xs font-bold uppercase text-slate-400">Tarefas Entregues</span>
-        <h3 class="text-3xl font-black text-purple-900 mt-2">14/15</h3>
-        <p class="text-xs text-slate-500 font-bold mt-1">1 Atividade Pendente</p>
+        <h3 id="dash-entregues" class="text-3xl font-black text-purple-900 mt-2">0/0</h3>
+        <p id="dash-pendentes-texto" class="text-xs text-slate-500 font-bold mt-1">Verificando atividades...</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
+        <span class="text-xs font-bold uppercase text-slate-400">Recurso Favorito</span>
+        <h3 id="dash-recurso-favorito" class="text-lg font-black text-purple-900 mt-3 leading-tight">Modo Padrão</h3>
+        <p class="text-xs text-indigo-600 font-bold mt-1">Mais utilizado por você</p>
       </div>
     </div>
 
     <!-- TABELA DE MATÉRIAS E NOTAS -->
-    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
-      <h3 class="text-lg font-bold text-purple-900 mb-4">Detalhamento por Disciplina</h3>
+    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <h3 class="text-lg font-bold text-purple-900">📚 Desempenho por Disciplina</h3>
+          <p class="text-xs text-slate-500">Médias calculadas a partir das suas atividades e quizzes avaliados.</p>
+        </div>
+      </div>
+
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-700">
           <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
             <tr>
               <th class="p-3">Disciplina</th>
-              <th class="p-3">1º Bimestre</th>
-              <th class="p-3">2º Bimestre</th>
+              <th class="p-3">Turma</th>
+              <th class="p-3">Atividades Feitas</th>
+              <th class="p-3">Média Atual</th>
               <th class="p-3">Presença</th>
-              <th class="p-3">Status</th>
+              <th class="p-3">Situação</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3 font-semibold">Língua Portuguesa</td>
-              <td class="p-3 font-bold text-purple-900">9.0</td>
-              <td class="p-3 font-bold text-purple-900">8.5</td>
-              <td class="p-3">98%</td>
-              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Aprovado</span></td>
+          <tbody id="tbody-disciplinas-aluno">
+            <tr>
+              <td colspan="6" class="p-6 text-center text-slate-400">Carregando disciplinas e notas...</td>
             </tr>
-            <tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3 font-semibold">Matemática</td>
-              <td class="p-3 font-bold text-purple-900">8.0</td>
-              <td class="p-3 font-bold text-purple-900">8.8</td>
-              <td class="p-3">95%</td>
-              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Aprovado</span></td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- HISTÓRICO DE ATIVIDADES & RECURSOS INCLUSIVOS USADOS -->
+    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <h3 class="text-lg font-bold text-purple-900">🧩 Histórico de Quizzes & Recursos Inclusivos Utilizados</h3>
+          <p class="text-xs text-slate-500">Registro das suas entregas, notas obtidas e ferramentas de acessibilidade usadas em cada atividade.</p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-700">
+          <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
+            <tr>
+              <th class="p-3">Atividade / Quiz</th>
+              <th class="p-3">Disciplina</th>
+              <th class="p-3">Data</th>
+              <th class="p-3">Recursos Inclusivos Utilizados</th>
+              <th class="p-3 text-right">Nota</th>
             </tr>
-            <tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3 font-semibold">História</td>
-              <td class="p-3 font-bold text-purple-900">9.5</td>
-              <td class="p-3 font-bold text-purple-900">9.2</td>
-              <td class="p-3">96%</td>
-              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Aprovado</span></td>
+          </thead>
+          <tbody id="tbody-historico-respostas">
+            <tr>
+              <td colspan="5" class="p-6 text-center text-slate-400">Carregando histórico de avaliações...</td>
             </tr>
           </tbody>
         </table>

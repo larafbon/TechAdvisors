@@ -68,7 +68,7 @@
       <div id="card-tab-turmas" onclick="switchTab('turmas')" class="card card-nav active-tab">
         <div class="icone">🏫</div>
         <h3>Gerenciar Turmas</h3>
-        <p>Visualize e organize as turmas e horários da instituição.</p>
+        <p>Visualize e organize as turmas e turnos da instituição.</p>
       </div>
 
       <div id="card-tab-alunos" onclick="switchTab('alunos')" class="card card-nav">
@@ -102,7 +102,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-theme">
         <div>
           <h3 class="text-xl font-extrabold text-main">🏫 Gestão de Turmas</h3>
-          <p class="text-xs text-muted mt-1">Organize as turmas ativas, capacidade de alunos, salas e turnos.</p>
+          <p class="text-xs text-muted mt-1">Organize as turmas ativas, disciplinas, professores responsáveis e turnos.</p>
         </div>
         <button onclick="openModal('modal-turma')" class="bg-[#5b21b6] hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
           + Nova Turma
@@ -110,7 +110,7 @@
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 mb-6">
-        <input type="text" id="search-turmas" oninput="renderTurmas()" placeholder="Buscar turma por nome ou sala..." class="input-theme flex-1 px-4 py-2 rounded-xl text-xs">
+        <input type="text" id="search-turmas" oninput="renderTurmas()" placeholder="Buscar turma por nome, disciplina ou professor..." class="input-theme flex-1 px-4 py-2 rounded-xl text-xs">
         <select id="filter-turno" onchange="renderTurmas()" class="input-theme px-4 py-2 rounded-xl text-xs">
           <option value="Todos">Todos os Turnos</option>
           <option value="Manhã">Manhã</option>
@@ -128,7 +128,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-theme">
         <div>
           <h3 class="text-xl font-extrabold text-main">🎓 Alunos & Matrículas</h3>
-          <p class="text-xs text-muted mt-1">Cadastre estudantes, vincule turmas e controle status de matrícula.</p>
+          <p class="text-xs text-muted mt-1">Cadastre estudantes, edite dados existentes, vincule turmas e controle status.</p>
         </div>
         <button onclick="openModal('modal-aluno')" class="bg-[#5b21b6] hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
           + Matricular Aluno
@@ -151,7 +151,7 @@
             <tr class="border-b border-theme text-[11px] uppercase text-muted">
               <th class="py-3 px-4">Matrícula</th>
               <th class="py-3 px-4">Aluno</th>
-              <th class="py-3 px-4">Turma</th>
+              <th class="py-3 px-4">Turmas</th>
               <th class="py-3 px-4">Status</th>
               <th class="py-3 px-4 text-right">Ações</th>
             </tr>
@@ -174,7 +174,7 @@
       </div>
 
       <div class="mb-6">
-        <input type="text" id="search-profs" oninput="renderProfessores()" placeholder="Buscar docente por nome ou disciplina..." class="input-theme w-full px-4 py-2 rounded-xl text-xs">
+        <input type="text" id="search-profs" oninput="renderProfessores()" placeholder="Buscar docente por nome, e-mail ou disciplina..." class="input-theme w-full px-4 py-2 rounded-xl text-xs">
       </div>
 
       <div id="grid-profs" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
@@ -267,7 +267,7 @@
     © 2026 • Techadvisors — Painel do Administrador
   </footer>
 
-  <!-- MODAL: NOVA TURMA -->
+  <!-- MODAL: NOVA TURMA (SEM SALA E SEM CAPACIDADE) -->
   <div id="modal-turma" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
     <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
       <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
@@ -300,18 +300,8 @@
             </select>
           </div>
           <div>
-            <label class="block font-semibold mb-1">Capacidade</label>
-            <input type="number" id="turma-capacidade" required min="5" max="100" value="35" class="input-theme w-full px-3 py-2 rounded-xl">
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
             <label class="block font-semibold mb-1">Professor Responsável</label>
             <select id="turma-professor" required class="input-theme w-full px-3 py-2 rounded-xl"></select>
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Sala / Laboratório</label>
-            <input type="text" id="turma-sala" required placeholder="Ex: Sala 105 - Bloco B" class="input-theme w-full px-3 py-2 rounded-xl">
           </div>
         </div>
         <div class="flex justify-end gap-2 pt-2">
@@ -336,7 +326,7 @@
     </div>
   </div>
 
-  <!-- MODAL: NOVO ALUNO -->
+  <!-- MODAL: NOVO ALUNO (COM MÚLTIPLAS TURMAS) -->
   <div id="modal-aluno" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
     <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
       <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
@@ -358,23 +348,68 @@
             <input type="date" id="aluno-nascimento" required value="2011-05-10" class="input-theme w-full px-3 py-2 rounded-xl">
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold mb-1">Turma</label>
-            <select id="aluno-turma" required class="input-theme w-full px-3 py-2 rounded-xl"></select>
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Status</label>
-            <select id="aluno-status" class="input-theme w-full px-3 py-2 rounded-xl">
-              <option value="Ativo">Ativo</option>
-              <option value="Pendente">Pendente</option>
-              <option value="Transferido">Transferido</option>
-            </select>
-          </div>
+        <div>
+          <label class="block font-semibold mb-1">Status da Matrícula</label>
+          <select id="aluno-status" class="input-theme w-full px-3 py-2 rounded-xl">
+            <option value="Ativo">Ativo</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Transferido">Transferido</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Turmas Vinculadas (Selecione uma ou mais)</label>
+          <div id="aluno-turmas-checkboxes" class="input-theme rounded-xl p-3 max-h-36 overflow-y-auto space-y-2"></div>
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modal-aluno')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
           <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Confirmar Matrícula</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDITAR ALUNO EXISTENTE (COM MÚLTIPLAS TURMAS) -->
+  <div id="modal-editar-aluno" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 class="font-bold text-base text-main">✏️ Editar Dados do Aluno</h3>
+        <button onclick="closeModal('modal-editar-aluno')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="atualizarAluno(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-aluno-id">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">Matrícula</label>
+            <input type="text" id="edit-aluno-matricula" required class="input-theme w-full px-3 py-2 rounded-xl font-mono">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Data de Nascimento</label>
+            <input type="date" id="edit-aluno-nascimento" required class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Nome Completo</label>
+          <input type="text" id="edit-aluno-nome" required class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">E-mail Institucional</label>
+          <input type="email" id="edit-aluno-email" required class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Status da Matrícula</label>
+          <select id="edit-aluno-status" class="input-theme w-full px-3 py-2 rounded-xl">
+            <option value="Ativo">Ativo</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Transferido">Transferido</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Turmas Vinculadas (Selecione uma ou mais)</label>
+          <div id="edit-aluno-turmas-checkboxes" class="input-theme rounded-xl p-3 max-h-36 overflow-y-auto space-y-2"></div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-editar-aluno')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Salvar Alterações</button>
         </div>
       </form>
     </div>

@@ -25,6 +25,47 @@ function normalizarTurno(turno) {
   return turno || 'Manhã';
 }
 
+// Retorna todos os IDs de turmas de um aluno (combinando id_turma do banco + turmas extras)
+function getTurmasIdsDoAluno(aluno) {
+  const ids = new Set();
+  if (aluno.id_turma) ids.add(Number(aluno.id_turma));
+  const extras = adminMeta.alunos[aluno.id_aluno]?.turmasIds;
+  if (Array.isArray(extras)) {
+    extras.forEach(id => {
+      if (id) ids.add(Number(id));
+    });
+  }
+  return Array.from(ids);
+}
+
+// Normaliza os dados vindos da tabela "professor" do Supabase
+function normalizarProfessor(raw) {
+  const id = Number(raw.id_professor || raw.id);
+  const nome =
+    raw.nome ||
+    raw.nome_professor ||
+    raw.usuario?.nome ||
+    `Professor #${id}`;
+
+  const email =
+    raw.email ||
+    raw.email_professor ||
+    raw.usuario?.email ||
+    'docente@techadvisors.br';
+
+  const disciplina =
+    raw.disciplina ||
+    adminMeta.professores[id]?.disciplina ||
+    '';
+
+  return {
+    id_professor: id,
+    nome,
+    email,
+    disciplina
+  };
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const userString = localStorage.getItem('tech_user');
 
@@ -59,7 +100,7 @@ async function carregarDadosDoBanco() {
     const [resTurmas, resAlunos, resProfs] = await Promise.all([
       fetch(`${API_URL}/turmas`).catch(() => ({ ok: false })),
       fetch(`${API_URL}/alunos`).catch(() => ({ ok: false })),
-      fetch(`${API_URL}/professor`).catch(() => ({ ok: false }))
+      fetch(`${API_URL}/professores`).catch(() => ({ ok: false }))
     ]);
 
     const rawTurmas = resTurmas.ok ? await resTurmas.json() : [];
@@ -69,32 +110,37 @@ async function carregarDadosDoBanco() {
     turmas = Array.isArray(rawTurmas) ? rawTurmas : (rawTurmas.turmas || rawTurmas.data || []);
     alunos = Array.isArray(rawAlunos) ? rawAlunos : (rawAlunos.alunos || rawAlunos.data || []);
 
-    if (rawProfs) {
-      professores = Array.isArray(rawProfs) ? rawProfs : (rawProfs.professores || rawProfs.professor || rawProfs.data || []);
-      adminMeta.listaProfessoresCache = professores;
-      saveMeta();
-    } else {
-      const cache = adminMeta.listaProfessoresCache || [];
-      const mapProfs = new Map();
+    const mapProfs = new Map();
 
-      cache.forEach(p => {
-        const id = p.id_professor || p.id;
-        if (id) mapProfs.set(id, p);
+    // 1. Prioridade máxima: professores reais retornados de GET /professores
+    if (Array.isArray(rawProfs)) {
+      rawProfs.map(normalizarProfessor).forEach(p => {
+        if (p.id_professor) mapProfs.set(p.id_professor, p);
       });
-
-      turmas.forEach(t => {
-        if (t.id_professor && !mapProfs.has(t.id_professor)) {
-          mapProfs.set(t.id_professor, {
-            id_professor: t.id_professor,
-            nome: t.nome_professor || t.professor || `Professor #${t.id_professor}`,
-            email: t.email_professor || 'docente@techadvisors.br',
-            disciplina: t.disciplina || 'Corpo Docente'
-          });
+    } else {
+      // Fallback caso o servidor ainda não tenha sido reiniciado
+      (adminMeta.listaProfessoresCache || []).forEach(p => {
+        const norm = normalizarProfessor(p);
+        if (norm.id_professor && !mapProfs.has(norm.id_professor)) {
+          mapProfs.set(norm.id_professor, norm);
         }
       });
 
-      professores = Array.from(mapProfs.values());
+      turmas.forEach(t => {
+        const idProf = Number(t.id_professor);
+        if (idProf && !mapProfs.has(idProf)) {
+          mapProfs.set(idProf, normalizarProfessor({
+            id_professor: idProf,
+            nome: t.nome_professor || t.professor,
+            disciplina: t.disciplina
+          }));
+        }
+      });
     }
+
+    professores = Array.from(mapProfs.values());
+    adminMeta.listaProfessoresCache = professores;
+    saveMeta();
 
     renderTurmas();
     renderAlunos();
@@ -149,32 +195,43 @@ function closeModal(id) {
   }
 }
 
-function populateSelects() {
-  const selectTurma = document.getElementById('aluno-turma');
-  if (selectTurma) {
-    selectTurma.innerHTML = turmas.length
-      ? turmas.map(t => `<option value="${t.id_turma}">${t.nome_turma} (${normalizarTurno(t.turno)})</option>`).join('')
-      : `<option value="">Nenhuma turma cadastrada</option>`;
+function renderCheckboxesTurmas(containerId, inputName, idsSelecionados = []) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  if (!turmas.length) {
+    container.innerHTML = `<p class="text-muted text-[11px]">Nenhuma turma cadastrada ainda.</p>`;
+    return;
   }
 
+  container.innerHTML = turmas.map(t => {
+    const marcado = idsSelecionados.includes(Number(t.id_turma)) ? 'checked' : '';
+    return `
+      <label class="flex items-center justify-between p-1.5 rounded hover:bg-purple-500/10 cursor-pointer">
+        <div class="flex items-center gap-2">
+          <input type="checkbox" name="${inputName}" value="${t.id_turma}" ${marcado} class="accent-purple-700">
+          <span class="font-semibold text-main">${t.nome_turma}</span>
+        </div>
+        <span class="text-[10px] text-muted">${normalizarTurno(t.turno)}</span>
+      </label>
+    `;
+  }).join('');
+}
+
+function populateSelects() {
+  // Checkboxes de turmas no modal de novo aluno
+  renderCheckboxesTurmas('aluno-turmas-checkboxes', 'aluno-turma-check', []);
+
+  // Select de professor no modal de nova turma
   const selectProf = document.getElementById('turma-professor');
   if (selectProf) {
     selectProf.innerHTML = professores.length
-      ? professores.map(p => `<option value="${p.id_professor || p.id}">${p.nome || p.nome_professor}</option>`).join('')
+      ? professores.map(p => `<option value="${p.id_professor}">${p.nome}</option>`).join('')
       : `<option value="">Nenhum professor cadastrado</option>`;
   }
 
-  const boxTurmasProf = document.getElementById('prof-turmas-checkboxes');
-  if (boxTurmasProf) {
-    boxTurmasProf.innerHTML = turmas.length
-      ? turmas.map(t => `
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="prof-turma-check" value="${t.id_turma}" class="accent-purple-700">
-            <span class="text-main">${t.nome_turma} (${normalizarTurno(t.turno)})</span>
-          </label>
-        `).join('')
-      : `<p class="text-muted text-[11px]">Nenhuma turma cadastrada ainda.</p>`;
-  }
+  // Checkboxes de turmas no modal de novo professor
+  renderCheckboxesTurmas('prof-turmas-checkboxes', 'prof-turma-check', []);
 }
 
 // ==========================================
@@ -188,10 +245,15 @@ function renderTurmas() {
   const turnoFilter = document.getElementById('filter-turno')?.value || 'Todos';
 
   const filtradas = turmas.filter(t => {
-    const meta = adminMeta.turmas[t.id_turma] || {};
-    const sala = meta.sala || t.disciplina || '';
+    const profObj = professores.find(p => Number(p.id_professor) === Number(t.id_professor));
+    const nomeProf = profObj ? profObj.nome : '';
+    const disciplina = t.disciplina || '';
     const turnoPadrao = normalizarTurno(t.turno);
-    const matchTexto = (t.nome_turma || '').toLowerCase().includes(search) || sala.toLowerCase().includes(search);
+
+    const matchTexto =
+      (t.nome_turma || '').toLowerCase().includes(search) ||
+      disciplina.toLowerCase().includes(search) ||
+      nomeProf.toLowerCase().includes(search);
     const matchTurno = turnoFilter === 'Todos' || turnoPadrao === turnoFilter;
     return matchTexto && matchTurno;
   });
@@ -202,12 +264,10 @@ function renderTurmas() {
   }
 
   grid.innerHTML = filtradas.map(t => {
-    const meta = adminMeta.turmas[t.id_turma] || {};
-    const capacidade = meta.capacidade || 35;
-    const sala = meta.sala || `Disciplina: ${t.disciplina}`;
     const turnoPadrao = normalizarTurno(t.turno);
-    const matriculados = alunos.filter(a => a.id_turma === t.id_turma).length;
-    const percentual = Math.min(100, Math.round((matriculados / capacidade) * 100));
+    const matriculados = alunos.filter(a => getTurmasIdsDoAluno(a).includes(Number(t.id_turma))).length;
+    const profObj = professores.find(p => Number(p.id_professor) === Number(t.id_professor));
+    const nomeProf = profObj ? profObj.nome : 'Docente não atribuído';
 
     const badgeColor = turnoPadrao === 'Manhã' ? 'bg-amber-100 text-amber-800' :
                        turnoPadrao === 'Tarde' ? 'bg-blue-100 text-blue-800' :
@@ -224,17 +284,15 @@ function renderTurmas() {
             </div>
           </div>
           <h4 class="font-bold text-sm text-main mb-1">${t.nome_turma}</h4>
-          <p class="text-xs text-muted mb-3">📍 ${sala}</p>
+          <p class="text-xs text-muted mb-1">📘 Disciplina: ${t.disciplina || 'Geral'}</p>
+          <p class="text-xs text-muted mb-3">👨‍🏫 Professor: <span class="text-main font-semibold">${nomeProf}</span></p>
         </div>
 
-        <div>
-          <div class="flex justify-between text-[11px] font-semibold mb-1">
-            <span class="text-muted">Ocupação</span>
-            <span class="text-main">${matriculados} / ${capacidade} alunos (${percentual}%)</span>
-          </div>
-          <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-            <div class="h-full bg-[#5b21b6]" style="width: ${percentual}%"></div>
-          </div>
+        <div class="pt-3 border-t border-theme flex justify-between items-center text-[11px] font-semibold">
+          <span class="text-muted">Alunos matriculados</span>
+          <button onclick="verAlunosTurma(${t.id_turma})" class="text-purple-600 hover:text-purple-800 font-bold cursor-pointer">
+            🎓 ${matriculados} aluno(s)
+          </button>
         </div>
       </div>
     `;
@@ -242,8 +300,8 @@ function renderTurmas() {
 }
 
 function verAlunosTurma(idTurma) {
-  const turma = turmas.find(t => t.id_turma === idTurma);
-  const alunosDaTurma = alunos.filter(a => a.id_turma === idTurma);
+  const turma = turmas.find(t => Number(t.id_turma) === Number(idTurma));
+  const alunosDaTurma = alunos.filter(a => getTurmasIdsDoAluno(a).includes(Number(idTurma)));
 
   const tituloEl = document.getElementById('modal-turma-alunos-titulo');
   const listaEl = document.getElementById('lista-alunos-turma');
@@ -280,8 +338,6 @@ async function salvarTurma(e) {
   const serie_ano = document.getElementById('turma-serie').value.trim();
   const disciplina = document.getElementById('turma-disciplina').value.trim();
   const turno = document.getElementById('turma-turno').value;
-  const capacidade = parseInt(document.getElementById('turma-capacidade').value, 10);
-  const sala = document.getElementById('turma-sala').value.trim();
   const id_professor = parseInt(document.getElementById('turma-professor').value, 10);
 
   if (!id_professor) {
@@ -313,10 +369,6 @@ async function salvarTurma(e) {
       return;
     }
 
-    const novaTurma = await res.json();
-    adminMeta.turmas[novaTurma.id_turma] = { sala, capacidade };
-    saveMeta();
-
     await carregarDadosDoBanco();
     e.target.reset();
     closeModal('modal-turma');
@@ -344,7 +396,7 @@ async function removerTurma(idTurma) {
 }
 
 // ==========================================
-// ALUNOS
+// ALUNOS (MÚLTIPLAS TURMAS, EDITAR E REMOVER)
 // ==========================================
 function renderAlunos() {
   const tbody = document.getElementById('tbody-alunos');
@@ -354,13 +406,16 @@ function renderAlunos() {
   const statusFilter = document.getElementById('filter-aluno-status')?.value || 'Todos';
 
   const filtrados = alunos.filter(a => {
-    const turmaObj = turmas.find(t => t.id_turma === a.id_turma);
-    const turmaNome = turmaObj ? turmaObj.nome_turma : 'Sem turma';
+    const idsTurmas = getTurmasIdsDoAluno(a);
+    const nomesTurmas = idsTurmas
+      .map(id => turmas.find(t => Number(t.id_turma) === id)?.nome_turma)
+      .filter(Boolean);
+    const textoTurmas = nomesTurmas.length ? nomesTurmas.join(', ') : 'Sem turma';
     const status = (adminMeta.alunos[a.id_aluno]?.status) || 'Ativo';
 
     const matchTexto = (a.nome || '').toLowerCase().includes(search) ||
                        (a.matricula || '').toLowerCase().includes(search) ||
-                       turmaNome.toLowerCase().includes(search);
+                       textoTurmas.toLowerCase().includes(search);
     const matchStatus = statusFilter === 'Todos' || status === statusFilter;
     return matchTexto && matchStatus;
   });
@@ -371,10 +426,18 @@ function renderAlunos() {
   }
 
   tbody.innerHTML = filtrados.map(a => {
-    const turmaObj = turmas.find(t => t.id_turma === a.id_turma);
-    const turmaNome = turmaObj ? turmaObj.nome_turma : 'Sem turma';
-    const status = (adminMeta.alunos[a.id_aluno]?.status) || 'Ativo';
+    const idsTurmas = getTurmasIdsDoAluno(a);
+    const nomesTurmas = idsTurmas
+      .map(id => turmas.find(t => Number(t.id_turma) === id)?.nome_turma)
+      .filter(Boolean);
 
+    const turmasHtml = nomesTurmas.length
+      ? `<div class="flex flex-wrap gap-1">${nomesTurmas.map(nome =>
+          `<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200">${nome}</span>`
+        ).join('')}</div>`
+      : `<span class="text-muted">Sem turma</span>`;
+
+    const status = (adminMeta.alunos[a.id_aluno]?.status) || 'Ativo';
     const statusBadge = status === 'Ativo' ? 'bg-emerald-100 text-emerald-800' :
                         status === 'Pendente' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800';
 
@@ -385,16 +448,93 @@ function renderAlunos() {
           <div class="font-bold text-main">${a.nome}</div>
           <div class="text-[11px] text-muted">${a.email || ''}</div>
         </td>
-        <td class="py-3 px-4 text-main">${turmaNome}</td>
+        <td class="py-3 px-4 text-main">${turmasHtml}</td>
         <td class="py-3 px-4">
           <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${statusBadge}">${status}</span>
         </td>
-        <td class="py-3 px-4 text-right">
+        <td class="py-3 px-4 text-right space-x-3">
+          <button onclick="abrirModalEditarAluno(${a.id_aluno})" class="text-purple-600 hover:text-purple-800 font-bold cursor-pointer">Editar</button>
           <button onclick="removerAluno(${a.id_aluno})" class="text-red-500 hover:text-red-700 font-bold cursor-pointer">Remover</button>
         </td>
       </tr>
     `;
   }).join('');
+}
+
+function abrirModalEditarAluno(idAluno) {
+  const aluno = alunos.find(a => Number(a.id_aluno) === Number(idAluno));
+  if (!aluno) return;
+
+  const statusAtual = (adminMeta.alunos[aluno.id_aluno]?.status) || 'Ativo';
+  const turmasAtuais = getTurmasIdsDoAluno(aluno);
+
+  document.getElementById('edit-aluno-id').value = aluno.id_aluno;
+  document.getElementById('edit-aluno-matricula').value = aluno.matricula || '';
+  document.getElementById('edit-aluno-nome').value = aluno.nome || '';
+  document.getElementById('edit-aluno-email').value = aluno.email || '';
+  document.getElementById('edit-aluno-nascimento').value = (aluno.data_nascimento || '2011-05-10').split('T')[0];
+  document.getElementById('edit-aluno-status').value = statusAtual;
+
+  renderCheckboxesTurmas('edit-aluno-turmas-checkboxes', 'edit-aluno-turma-check', turmasAtuais);
+
+  const modal = document.getElementById('modal-editar-aluno');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+async function atualizarAluno(e) {
+  e.preventDefault();
+
+  const idAluno = parseInt(document.getElementById('edit-aluno-id').value, 10);
+  const alunoOriginal = alunos.find(a => Number(a.id_aluno) === idAluno) || {};
+
+  const matricula = document.getElementById('edit-aluno-matricula').value.trim();
+  const nome = document.getElementById('edit-aluno-nome').value.trim();
+  const email = document.getElementById('edit-aluno-email').value.trim();
+  const data_nascimento = document.getElementById('edit-aluno-nascimento').value;
+  const status = document.getElementById('edit-aluno-status').value;
+
+  const turmasSelecionadas = Array.from(document.querySelectorAll('input[name="edit-aluno-turma-check"]:checked'))
+    .map(cb => parseInt(cb.value, 10));
+
+  const turmaPrincipal = turmasSelecionadas.length > 0 ? turmasSelecionadas[0] : null;
+
+  const payload = {
+    nome,
+    email,
+    data_nascimento,
+    matricula,
+    id_turma: turmaPrincipal,
+    id_responsavel: alunoOriginal.id_responsavel || null
+  };
+
+  try {
+    const res = await fetch(`${API_URL}/alunos/${idAluno}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      alert(`Erro ao atualizar aluno: ${err.detail || 'Verifique os dados informados.'}`);
+      return;
+    }
+
+    adminMeta.alunos[idAluno] = {
+      status,
+      turmasIds: turmasSelecionadas
+    };
+    saveMeta();
+
+    await carregarDadosDoBanco();
+    closeModal('modal-editar-aluno');
+  } catch (error) {
+    console.error('Erro ao atualizar aluno:', error);
+    alert('Falha na comunicação com o servidor.');
+  }
 }
 
 async function salvarAluno(e) {
@@ -404,10 +544,13 @@ async function salvarAluno(e) {
   const nome = document.getElementById('aluno-nome').value.trim();
   const email = document.getElementById('aluno-email').value.trim();
   const data_nascimento = document.getElementById('aluno-nascimento').value;
-  const idTurmaVal = document.getElementById('aluno-turma').value;
-  const id_turma = idTurmaVal ? parseInt(idTurmaVal, 10) : null;
   const status = document.getElementById('aluno-status').value;
   const matricula = `MAT${Date.now().toString().slice(-6)}`;
+
+  const turmasSelecionadas = Array.from(document.querySelectorAll('input[name="aluno-turma-check"]:checked'))
+    .map(cb => parseInt(cb.value, 10));
+
+  const turmaPrincipal = turmasSelecionadas.length > 0 ? turmasSelecionadas[0] : null;
 
   const payload = {
     nome,
@@ -415,7 +558,7 @@ async function salvarAluno(e) {
     data_nascimento,
     matricula,
     senha: '12345678',
-    id_turma,
+    id_turma: turmaPrincipal,
     id_responsavel: user.id_responsavel || user.id || null
   };
 
@@ -433,7 +576,10 @@ async function salvarAluno(e) {
     }
 
     const novoAluno = await res.json();
-    adminMeta.alunos[novoAluno.id_aluno] = { status };
+    adminMeta.alunos[novoAluno.id_aluno] = {
+      status,
+      turmasIds: turmasSelecionadas
+    };
     saveMeta();
 
     await carregarDadosDoBanco();
@@ -463,7 +609,7 @@ async function removerAluno(idAluno) {
 }
 
 // ==========================================
-// PROFESSORES (ROTA /professor + VÍNCULO COM TURMAS)
+// PROFESSORES (BANCO DE DADOS + VÍNCULO COM TURMAS)
 // ==========================================
 function renderProfessores() {
   const grid = document.getElementById('grid-profs');
@@ -472,11 +618,16 @@ function renderProfessores() {
   const search = (document.getElementById('search-profs')?.value || '').toLowerCase();
 
   const filtrados = professores.filter(p => {
-    const idProf = p.id_professor || p.id;
-    const nomeProf = p.nome || p.nome_professor || '';
+    const idProf = Number(p.id_professor);
+    const nomeProf = p.nome || '';
+    const emailProf = p.email || '';
     const meta = adminMeta.professores[idProf] || {};
     const disc = p.disciplina || meta.disciplina || 'Docente';
-    return nomeProf.toLowerCase().includes(search) || disc.toLowerCase().includes(search);
+    return (
+      nomeProf.toLowerCase().includes(search) ||
+      emailProf.toLowerCase().includes(search) ||
+      disc.toLowerCase().includes(search)
+    );
   });
 
   if (filtrados.length === 0) {
@@ -485,10 +636,12 @@ function renderProfessores() {
   }
 
   grid.innerHTML = filtrados.map(p => {
-    const idProf = p.id_professor || p.id;
-    const nomeProf = p.nome || p.nome_professor || 'Docente';
+    const idProf = Number(p.id_professor);
+    const nomeProf = p.nome || `Professor #${idProf}`;
     const meta = adminMeta.professores[idProf] || {};
-    const turmasVinculadas = turmas.filter(t => t.id_professor === idProf || (meta.turmasIds || []).includes(t.id_turma));
+    const turmasVinculadas = turmas.filter(
+      t => Number(t.id_professor) === idProf || (meta.turmasIds || []).includes(t.id_turma)
+    );
     const disciplina = p.disciplina || meta.disciplina || (turmasVinculadas[0]?.disciplina) || 'Corpo Docente';
 
     const nomesTurmas = turmasVinculadas.length > 0
@@ -533,7 +686,7 @@ async function salvarProfessor(e) {
   };
 
   try {
-    const res = await fetch(`${API_URL}/professor`, {
+    const res = await fetch(`${API_URL}/professores`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -546,10 +699,10 @@ async function salvarProfessor(e) {
     }
 
     const novoProf = await res.json();
-    const idNovo = novoProf.id_professor || novoProf.id || Date.now();
+    const idNovo = Number(novoProf.id_professor || novoProf.id || Date.now());
     const profObj = { id_professor: idNovo, nome, email, disciplina };
 
-    adminMeta.professores[idNovo] = { disciplina, turmasIds: turmasSelecionadas };
+    adminMeta.professores[idNovo] = { nome, email, disciplina, turmasIds: turmasSelecionadas };
     if (!adminMeta.listaProfessoresCache) adminMeta.listaProfessoresCache = [];
     adminMeta.listaProfessoresCache.push(profObj);
     saveMeta();
@@ -568,19 +721,19 @@ async function salvarProfessor(e) {
 }
 
 function abrirModalVincularTurmas(idProf) {
-  const prof = professores.find(p => (p.id_professor || p.id) === idProf);
+  const prof = professores.find(p => Number(p.id_professor) === Number(idProf));
   const meta = adminMeta.professores[idProf] || {};
   const titulo = document.getElementById('modal-vincular-prof-titulo');
   const inputId = document.getElementById('vincular-prof-id');
   const container = document.getElementById('lista-checkboxes-vincular-turmas');
 
-  if (titulo) titulo.innerText = `🏫 Vincular Turmas — ${prof?.nome || prof?.nome_professor || 'Docente'}`;
+  if (titulo) titulo.innerText = `🏫 Vincular Turmas — ${prof?.nome || 'Docente'}`;
   if (inputId) inputId.value = idProf;
 
   if (container) {
     container.innerHTML = turmas.length
       ? turmas.map(t => {
-          const jaVinculada = t.id_professor === idProf || (meta.turmasIds || []).includes(t.id_turma);
+          const jaVinculada = Number(t.id_professor) === Number(idProf) || (meta.turmasIds || []).includes(t.id_turma);
           return `
             <label class="flex items-center justify-between p-1.5 rounded hover:bg-purple-500/10 cursor-pointer">
               <div class="flex items-center gap-2">
@@ -616,7 +769,7 @@ async function confirmarVinculoTurmasProf(e) {
 }
 
 async function vincularTurmaNoBanco(idTurma, idProf) {
-  const turmaObj = turmas.find(t => t.id_turma === idTurma);
+  const turmaObj = turmas.find(t => Number(t.id_turma) === Number(idTurma));
   if (!turmaObj) return;
   turmaObj.id_professor = idProf;
 
@@ -631,16 +784,18 @@ async function removerProfessor(idProfessor) {
   if (!confirm('Deseja realmente remover este docente?')) return;
 
   try {
-    const res = await fetch(`${API_URL}/professor/${idProfessor}`, { method: 'DELETE' });
+    const res = await fetch(`${API_URL}/professores/${idProfessor}`, { method: 'DELETE' });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      alert(err.detail || 'Não foi possível remover este professor.');
+      return;
+    }
     delete adminMeta.professores[idProfessor];
     if (adminMeta.listaProfessoresCache) {
-      adminMeta.listaProfessoresCache = adminMeta.listaProfessoresCache.filter(p => (p.id_professor || p.id) !== idProfessor);
+      adminMeta.listaProfessoresCache = adminMeta.listaProfessoresCache.filter(p => Number(p.id_professor) !== Number(idProfessor));
     }
     saveMeta();
     await carregarDadosDoBanco();
-    if (!res.ok) {
-      console.warn('DELETE /professor não disponível no backend; removido da listagem local.');
-    }
   } catch (error) {
     console.error('Erro ao remover professor:', error);
   }
@@ -658,7 +813,7 @@ function renderRelatorios() {
   const totalAlunos = alunos.length;
   const freqMedia = totalAlunos > 0 ? '89,8%' : '0%';
   const mediaGeral = totalAlunos > 0 ? '7,8' : '0,0';
-  const turmasSemAlunos = turmas.filter(t => alunos.filter(a => a.id_turma === t.id_turma).length === 0).length;
+  const turmasSemAlunos = turmas.filter(t => alunos.filter(a => getTurmasIdsDoAluno(a).includes(Number(t.id_turma))).length === 0).length;
 
   if (totalAlunosEl) totalAlunosEl.innerText = totalAlunos;
   if (freqMediaEl) freqMediaEl.innerText = freqMedia;
@@ -722,7 +877,7 @@ function renderRelatorios() {
   }
 
   tbodyConsolidado.innerHTML = turmasFiltradas.map(t => {
-    const qtdAlunos = alunos.filter(a => a.id_turma === t.id_turma).length;
+    const qtdAlunos = alunos.filter(a => getTurmasIdsDoAluno(a).includes(Number(t.id_turma))).length;
     const freq = qtdAlunos > 0 ? '91,4%' : '0%';
     const atividades = qtdAlunos > 0 ? '88%' : '0%';
     const media = qtdAlunos > 0 ? '7,9' : '-';
@@ -759,7 +914,7 @@ function exportarRelatorioCSV() {
       t.nome_turma,
       t.disciplina || '',
       normalizarTurno(t.turno),
-      alunos.filter(a => a.id_turma === t.id_turma).length
+      alunos.filter(a => getTurmasIdsDoAluno(a).includes(Number(t.id_turma))).length
     ])
   ];
 

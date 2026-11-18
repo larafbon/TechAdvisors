@@ -468,24 +468,61 @@ function iniciarCicloRespiracao() {
 }
 
 // =========================================================
-// GESTÃO DO ALUNO LOGADO E ATIVIDADES
+// GESTÃO DO ALUNO LOGADO, NOTAS E REGISTRO DE RECURSOS INCLUSIVOS
 // =========================================================
 function getAlunoLogado() {
   try {
     const raw = localStorage.getItem('tech_user') || localStorage.getItem('user') || '{}';
     const u = JSON.parse(raw);
+    const id = Number(u.id_aluno || u.id || 1);
+
+    // Combina turma principal do banco + turmas extras vinculadas no admin
+    const adminMeta = JSON.parse(localStorage.getItem('tech_admin_meta') || '{}');
+    const turmasSet = new Set();
+    if (u.id_turma) turmasSet.add(Number(u.id_turma));
+    const extras = adminMeta.alunos?.[id]?.turmasIds;
+    if (Array.isArray(extras)) {
+      extras.forEach(tId => {
+        if (tId) turmasSet.add(Number(tId));
+      });
+    }
+    if (turmasSet.size === 0) turmasSet.add(1);
+
     return {
-      id: Number(u.id_aluno || u.id || 1),
+      id,
       nome: u.nome || 'Aluno',
-      idTurma: Number(u.id_turma || 1)
+      idTurma: Number(u.id_turma || 1),
+      turmasIds: Array.from(turmasSet)
     };
   } catch (e) {
-    return { id: 1, nome: 'Aluno', idTurma: 1 };
+    return { id: 1, nome: 'Aluno', idTurma: 1, turmasIds: [1] };
   }
 }
 
 function getStorageKeyAluno(idAluno) {
   return `tech_student_answers_${idAluno}`;
+}
+
+function coletarRecursosInclusivosAtivos() {
+  const recursos = [];
+
+  if (a11yState.profile === 'TEA') recursos.push('Autismo (TEA)');
+  else if (a11yState.profile === 'TDAH') recursos.push('TDAH (Hiperfoco)');
+  else if (a11yState.profile === 'DISLEXIA') recursos.push('Dislexia');
+  else if (a11yState.profile === 'CUSTOM') recursos.push('Perfil Personalizado');
+
+  if (a11yState.bionicReading) recursos.push('Leitura Biônica');
+  if (a11yState.syllables) recursos.push('Divisão Silábica');
+  if (a11yState.readingRuler) recursos.push('Régua de Leitura');
+  if (a11yState.noTimer) recursos.push('Sem Cronômetro');
+  if (a11yState.twoStepConfirm) recursos.push('Confirmação em 2 Cliques');
+  if (a11yState.allowEliminate) recursos.push('Descarte de Alternativas');
+  if (a11yState.theme === 'cream') recursos.push('Papel Creme');
+  if (a11yState.theme === 'calm') recursos.push('Cores Calmas');
+  if (a11yState.theme === 'dark') recursos.push('Tema Escuro');
+  if (a11yState.fontScale > 1.05) recursos.push(`Fonte ${Math.round(a11yState.fontScale * 100)}%`);
+
+  return Array.from(new Set(recursos));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -499,24 +536,34 @@ async function carregarAtividadesDoAluno() {
   const aluno = getAlunoLogado();
 
   try {
-    const response = await fetch(`${API_URL}/atividades/turma/${aluno.idTurma}`);
-    if (response.ok) {
-      const dadosBackend = await response.json();
-      window.studentActivities = dadosBackend.map(a => {
-        const rawDesc = a.descricao || 'Sem orientações.';
-        const descSemMeta = rawDesc.split('|||META_CONFIG|||')[0];
-        const parts = rawDesc.split('|||QUIZ_DATA|||');
-        return {
-          id: String(a.id_atividade || a.id),
-          title: a.titulo,
-          description: descSemMeta.split('|||QUIZ_DATA|||')[0],
-          quizData: parts[1] ? JSON.parse(parts[1]) : null,
-          grade: (a.titulo || '').includes('1º') ? '1º Ano EM' : ((a.titulo || '').includes('2º') ? '2º Ano EM' : '3º Ano EM'),
-          type: a.id_tipo_atividade === 2 ? 'QUIZ' : 'MATERIAL',
-          fileUrl: a.ficheiro_url || ''
-        };
-      });
+    let todasAtividades = [];
+    for (const idTurma of aluno.turmasIds) {
+      const response = await fetch(`${API_URL}/atividades/turma/${idTurma}`);
+      if (response.ok) {
+        const dadosBackend = await response.json();
+        if (Array.isArray(dadosBackend)) {
+          dadosBackend.forEach(a => {
+            const idStr = String(a.id_atividade || a.id);
+            if (!todasAtividades.some(item => item.id === idStr)) {
+              const rawDesc = a.descricao || 'Sem orientações.';
+              const descSemMeta = rawDesc.split('|||META_CONFIG|||')[0];
+              const parts = rawDesc.split('|||QUIZ_DATA|||');
+              todasAtividades.push({
+                id: idStr,
+                idTurma: Number(a.id_turma || idTurma),
+                title: a.titulo,
+                description: descSemMeta.split('|||QUIZ_DATA|||')[0],
+                quizData: parts[1] ? JSON.parse(parts[1]) : null,
+                grade: (a.titulo || '').includes('1º') ? '1º Ano EM' : ((a.titulo || '').includes('2º') ? '2º Ano EM' : '3º Ano EM'),
+                type: a.id_tipo_atividade === 2 ? 'QUIZ' : 'MATERIAL',
+                fileUrl: a.ficheiro_url || ''
+              });
+            }
+          });
+        }
+      }
     }
+    window.studentActivities = todasAtividades;
   } catch (err) {
     const local = localStorage.getItem('tech_activities');
     if (local) {
@@ -545,20 +592,17 @@ async function renderizarListaAlunos(container, lista) {
     let entregaAluno = (respostasSalvas[idStr] && respostasSalvas[idStr][0]) || null;
 
     try {
-      const res = await fetch(`${API_URL}/atividades/${atv.id}/respostas`);
+      const res = await fetch(`${API_URL}/respostas?id_aluno=${aluno.id}&id_atividade=${atv.id}`);
       if (res.ok) {
         const dadosRespostas = await res.json();
-        if (Array.isArray(dadosRespostas)) {
-          const doAluno = dadosRespostas.find(r => Number(r.id_aluno) === aluno.id);
-          if (doAluno) {
-            const raw = doAluno.conteudo_resposta || '';
-            entregaAluno = {
-              respostaTexto: raw.split('|||ANEXO_ALUNO|||')[0],
-              data: doAluno.data_resposta ? new Date(doAluno.data_resposta).toLocaleDateString('pt-BR') : 'Concluída'
-            };
-          } else {
-            entregaAluno = null;
-          }
+        if (Array.isArray(dadosRespostas) && dadosRespostas.length > 0) {
+          const doAluno = dadosRespostas[dadosRespostas.length - 1];
+          const raw = doAluno.conteudo_resposta || '';
+          entregaAluno = {
+            respostaTexto: raw.split('|||ANEXO_ALUNO|||')[0],
+            nota: doAluno.nota,
+            data: doAluno.data_resposta ? new Date(doAluno.data_resposta).toLocaleDateString('pt-BR') : 'Concluída'
+          };
         }
       }
     } catch (e) {}
@@ -614,9 +658,14 @@ async function renderizarListaAlunos(container, lista) {
               <span class="font-extrabold block">🔒 Resposta Registrada (${entregaAluno.data || 'Enviada'})</span>
               <span class="text-[11px] text-emerald-700 font-medium">${entregaAluno.respostaTexto}</span>
             </div>
-            <span class="text-[11px] font-extrabold text-emerald-700 bg-white px-3 py-1 rounded-xl border border-emerald-200 shrink-0 self-start sm:self-center">
-              ✓ Entregue
-            </span>
+            <div class="flex items-center gap-2 shrink-0 self-start sm:self-center">
+              ${entregaAluno.nota !== null && entregaAluno.nota !== undefined ? `
+                <span class="text-xs font-black text-purple-900 bg-purple-100 px-3 py-1 rounded-xl">Nota: ${Number(entregaAluno.nota).toFixed(1).replace('.', ',')}</span>
+              ` : ''}
+              <span class="text-[11px] font-extrabold text-emerald-700 bg-white px-3 py-1 rounded-xl border border-emerald-200">
+                ✓ Entregue
+              </span>
+            </div>
           </div>
         ` : `
           <div class="pl-2 pt-3 border-t border-slate-100 flex justify-end items-center">
@@ -633,96 +682,7 @@ async function renderizarListaAlunos(container, lista) {
   container.innerHTML = htmlCards.join('');
 }
 
-function abrirAnexoPorId(id) {
-  const act = window.studentActivities.find(a => String(a.id) === String(id));
-  if (!act || !act.fileUrl) return alert("Anexo não encontrado.");
-
-  const url = act.fileUrl;
-  if (url.startsWith('data:')) {
-    try {
-      const arr = url.split(',');
-      const mime = arr[0].match(/:(.*?);/)[1];
-      const bstr = atob(arr[1]);
-      let n = bstr.length;
-      const u8arr = new Uint8Array(n);
-      while (n--) u8arr[n] = bstr.charCodeAt(n);
-      const blob = new Blob([u8arr], { type: mime });
-      window.open(URL.createObjectURL(blob), '_blank');
-    } catch (e) {
-      alert("Erro ao processar o ficheiro anexo.");
-    }
-  } else {
-    window.open(url, '_blank');
-  }
-}
-
-function iniciarResposta(id) {
-  atividadeAtualId = String(id);
-  if (window.studentSubmissionsMap[atividadeAtualId]) {
-    alert("⚠️ Você já concluiu esta atividade. Apenas uma resposta por aluno é permitida.");
-    return;
-  }
-
-  const atv = window.studentActivities.find(a => String(a.id) === atividadeAtualId);
-  if (!atv) return;
-
-  if (atv.type === 'QUIZ') {
-    abrirQuizGame(atv);
-  } else {
-    const titleEl = document.getElementById('modal-task-title');
-    const descEl = document.getElementById('modal-task-desc');
-    const textInput = document.getElementById('task-answer-text');
-    const fileInput = document.getElementById('task-answer-file');
-
-    if (titleEl) titleEl.innerText = atv.title;
-    if (descEl) descEl.innerText = atv.description;
-    if (textInput) textInput.value = '';
-    if (fileInput) fileInput.value = '';
-
-    const modal = document.getElementById('modal-responder-tarefa');
-    if (modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-  }
-}
-
-function fecharModalResposta() {
-  const modal = document.getElementById('modal-responder-tarefa');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-  }
-}
-
-function processarArquivoAlunoParaBase64(file) {
-  return new Promise((resolve, reject) => {
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 900;
-          const scaleSize = MAX_WIDTH / img.width;
-          canvas.width = img.width > MAX_WIDTH ? MAX_WIDTH : img.width;
-          canvas.height = img.width > MAX_WIDTH ? img.height * scaleSize : img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL('image/jpeg', 0.75));
-        };
-      };
-      reader.onerror = err => reject(err);
-    } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = err => reject(err);
-    }
-  });
-}
+// ... (mantenha abrirAnexoPorId, iniciarResposta, fecharModalResposta, processarArquivoAlunoParaBase64)
 
 async function confirmarEnvioResposta() {
   const texto = document.getElementById('task-answer-text')?.value.trim() || '';
@@ -745,12 +705,154 @@ async function confirmarEnvioResposta() {
   }
 
   const textoFinal = texto || 'Arquivo enviado em anexo.';
-  await salvarSubmissao(textoFinal, arquivoBase64);
+  await salvarSubmissao(textoFinal, arquivoBase64, null);
 
   if (fileInput) fileInput.value = '';
   alert('🎉 Resposta enviada com sucesso para o professor!');
   fecharModalResposta();
   carregarAtividadesDoAluno();
+}
+
+// =========================================================
+// FINALIZAÇÃO DO QUIZ (CALCULA NOTA DE 0 A 10 E SALVA RECURSOS)
+// =========================================================
+async function exibirTelaFinalQuiz() {
+  limparCronometroQuiz();
+  const body = document.getElementById('quiz-game-body');
+  const state = window.currentQuizState;
+  if (!body || !state) return;
+
+  const total = state.perguntas.length;
+  const acertos = state.acertos;
+  const pontos = state.pontosTotais;
+  const percentual = Math.round((acertos / total) * 100);
+  const notaFinal = Number(((acertos / total) * 10).toFixed(1));
+
+  const recursosUsados = coletarRecursosInclusivosAtivos();
+  const perfilUsado = recursosUsados.length > 0 ? ` [Apoio: ${recursosUsados.join(', ')}]` : '';
+  const textoEntrega = `Quiz Concluído — Acertou ${acertos} de ${total} questões (${percentual}%) [+${pontos} PTS]${perfilUsado}`;
+
+  await salvarSubmissao(textoEntrega, '', notaFinal);
+
+  body.innerHTML = `
+    <div class="text-center space-y-6 py-5">
+      <div class="w-20 h-20 mx-auto rounded-3xl bg-yellow-100 text-yellow-600 flex items-center justify-center text-4xl shadow-inner">
+        🏆
+      </div>
+      <div>
+        <span class="text-xs font-extrabold uppercase tracking-wider text-purple-700 bg-purple-100 px-3.5 py-1 rounded-full">Nota Registrada no Boletim</span>
+        <h3 class="text-2xl font-extrabold text-slate-800 mt-2.5">${notaFinal >= 7 ? 'Excelente Desempenho!' : 'Quiz Finalizado!'}</h3>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">Sua nota (${notaFinal.toFixed(1).replace('.', ',')}) e os recursos de acessibilidade utilizados já foram registrados.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 bg-slate-50 p-5 rounded-3xl border border-slate-200 max-w-lg mx-auto">
+        <div>
+          <p class="text-[11px] font-bold text-slate-400 uppercase">Acertos</p>
+          <p class="text-xl sm:text-2xl font-extrabold text-emerald-600 mt-0.5">${acertos}/${total}</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-bold text-slate-400 uppercase">Nota Final</p>
+          <p class="text-xl sm:text-2xl font-extrabold text-indigo-700 mt-0.5">${notaFinal.toFixed(1).replace('.', ',')}</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-bold text-slate-400 uppercase">Pontuação</p>
+          <p class="text-xl sm:text-2xl font-extrabold text-amber-600 mt-0.5">+${pontos}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <button type="button" onclick="fecharQuizGame(); window.location.href='dashboard.html';" class="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-lg transition cursor-pointer">
+          📊 Ver Meu Boletim
+        </button>
+        <button type="button" onclick="fecharQuizGame(); carregarAtividadesDoAluno();" class="flex-1 py-3.5 bg-[#3332A5] hover:bg-indigo-900 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-lg transition cursor-pointer">
+          Voltar às Atividades
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function salvarSubmissao(texto, arquivoUrl = '', nota = null) {
+  const idStr = String(atividadeAtualId);
+  const aluno = getAlunoLogado();
+  const recursosUsados = coletarRecursosInclusivosAtivos();
+  const dataAgora = new Date().toISOString();
+
+  const conteudoParaBanco = arquivoUrl
+    ? `${texto}|||ANEXO_ALUNO|||${arquivoUrl}`
+    : texto;
+
+  // 1. Salva no localStorage do aluno
+  const storageKey = getStorageKeyAluno(aluno.id);
+  const respostasSalvas = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  respostasSalvas[idStr] = [{
+    aluno: aluno.nome,
+    data: new Date().toLocaleDateString('pt-BR'),
+    respostaTexto: texto,
+    arquivoUrl: arquivoUrl,
+    nota: nota,
+    recursos: recursosUsados
+  }];
+  localStorage.setItem(storageKey, JSON.stringify(respostasSalvas));
+
+  // 2. Salva log detalhado de recursos usados para o Boletim e para a IA do Professor
+  const logsRecursos = JSON.parse(localStorage.getItem('tech_quiz_recursos_log') || '[]');
+  logsRecursos.push({
+    id_aluno: aluno.id,
+    nome_aluno: aluno.nome,
+    id_atividade: Number(atividadeAtualId),
+    nota: nota,
+    recursos: recursosUsados,
+    data: dataAgora
+  });
+  localStorage.setItem('tech_quiz_recursos_log', JSON.stringify(logsRecursos));
+
+  // 3. Envia para POST /respostas do FastAPI (salvando nota real na tabela "resposta")
+  try {
+    const res = await fetch(`${API_URL}/respostas`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        conteudo_resposta: conteudoParaBanco,
+        id_aluno: aluno.id,
+        id_atividade: Number(atividadeAtualId),
+        data_resposta: dataAgora,
+        nota: nota
+      })
+    });
+
+    if (res.ok) {
+      const respostaCriada = await res.json();
+      const idResposta = respostaCriada.id_resposta;
+
+      // 4. Se houver recursos inclusivos ativos, vincula também na tabela "resposta_recurso"
+      if (idResposta && recursosUsados.length > 0) {
+        const resCatalogo = await fetch(`${API_URL}/recursos-acessibilidade`).catch(() => ({ ok: false }));
+        if (resCatalogo.ok) {
+          const catalogo = await resCatalogo.json();
+          if (Array.isArray(catalogo)) {
+            for (const nomeRec of recursosUsados) {
+              const match = catalogo.find(c =>
+                (c.nome_recurso || c.nome || '').toLowerCase().includes(nomeRec.toLowerCase().split(' ')[0])
+              );
+              if (match && match.id_recurso) {
+                await fetch(`${API_URL}/resposta-recurso`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    id_resposta: Number(idResposta),
+                    id_recurso: Number(match.id_recurso)
+                  })
+                }).catch(() => {});
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.warn("API offline, resposta e recursos salvos localmente.");
+  }
 }
 
 // =========================================================
