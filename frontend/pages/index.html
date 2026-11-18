@@ -15,7 +15,6 @@
   <script src="../js/home.js" defer></script>
 
   <style>
-
     .role-card {
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -58,6 +57,7 @@
       color: #facc15 !important;
     }
   </style>
+
 </head>
 <body class="bg-[#f3f7fb]">
 
@@ -290,6 +290,15 @@
       });
     });
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('tech_open_login') === 'true') {
+      sessionStorage.removeItem('tech_open_login');
+      if (typeof navigateTo === 'function') navigateTo('login');
+    }
+  });
+</script>
 
 </body>
 </html>

@@ -81,12 +81,12 @@ function salvarEstadoA11y() {
   localStorage.setItem('tech_quiz_inclusive_v2', JSON.stringify(a11yState));
 }
 
-function togglePainelPersonalizacao() {
+window.togglePainelPersonalizacao = function() {
   const drawer = document.getElementById('quiz-custom-drawer');
   if (drawer) drawer.classList.toggle('hidden');
-}
+};
 
-function selecionarPerfilInclusivo(profileKey) {
+window.selecionarPerfilInclusivo = function(profileKey) {
   const preset = PERFIS_INCLUSIVOS[profileKey] || PERFIS_INCLUSIVOS.PADRAO;
   a11yState = {
     profile: profileKey,
@@ -98,16 +98,16 @@ function selecionarPerfilInclusivo(profileKey) {
   if (window.currentQuizState) {
     renderizarPerguntaAtualQuiz();
   }
-}
+};
 
-function alterarEscalaFonte(delta) {
+window.alterarEscalaFonte = function(delta) {
   a11yState.profile = 'CUSTOM';
   a11yState.fontScale = Math.min(1.45, Math.max(0.85, Number((a11yState.fontScale + delta).toFixed(2))));
   salvarEstadoA11y();
   aplicarEstadoVisualA11y();
-}
+};
 
-function aplicarAjusteManual() {
+window.aplicarAjusteManual = function() {
   a11yState.profile = 'CUSTOM';
   a11yState.theme = document.getElementById('custom-theme-select')?.value || 'default';
   a11yState.voiceRate = Number(document.getElementById('custom-voice-rate')?.value || 0.95);
@@ -127,7 +127,7 @@ function aplicarAjusteManual() {
   if (window.currentQuizState) {
     renderizarPerguntaAtualQuiz();
   }
-}
+};
 
 function aplicarEstadoVisualA11y() {
   const modal = document.getElementById('modal-quiz-game');
@@ -211,7 +211,6 @@ function aplicarEstadoVisualA11y() {
 // =========================================================
 function separarSilabasPortugues(palavra) {
   if (palavra.length <= 4) return palavra;
-  // Separação silábica heurística para auxiliar decodificação fonológica na dislexia
   return palavra.replace(/([^aeiouáéíóúâêôãõü])([aeiouáéíóúâêôãõü])/gi, '·$1$2')
                 .replace(/^·/, '')
                 .replace(/([aeiouáéíóúâêôãõü])([bcdfgjklmnpqrstvwxz])([bcdfgjklmnpqrstvwxz])/gi, '$1$2·$3');
@@ -237,12 +236,10 @@ function processarTextoAcessivel(texto) {
     const [, prefixo, nucleo, sufixo] = matchPontuacao;
     let processado = nucleo;
 
-    // 1. Separação silábica (Dislexia)
     if (a11yState.syllables) {
       processado = separarSilabasPortugues(processado);
     }
 
-    // 2. Destaque de palavras-chave e Leitura Biônica (TDAH)
     if (a11yState.tdahKeywords && palavrasChaveRegex.test(nucleo)) {
       processado = `<span class="tdah-keyword">${processado}</span>`;
     } else if (a11yState.bionicReading && !a11yState.syllables) {
@@ -254,7 +251,7 @@ function processarTextoAcessivel(texto) {
 }
 
 // =========================================================
-// LEITOR DE VOZ (TTS) GRANULAR COM DESTAQUE VISUAL (KARAOKÊ)
+// LEITOR DE VOZ (TTS) GRANULAR COM DESTAQUE VISUAL
 // =========================================================
 function limparDestaquesVoz() {
   document.querySelectorAll('.tts-speaking-highlight').forEach(el => {
@@ -262,7 +259,7 @@ function limparDestaquesVoz() {
   });
 }
 
-function falarTextoComDestaque(texto, elementoAlvo = null) {
+window.falarTextoComDestaque = function(texto, elementoAlvo = null) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   limparDestaquesVoz();
@@ -279,9 +276,9 @@ function falarTextoComDestaque(texto, elementoAlvo = null) {
   utterance.onerror = () => limparDestaquesVoz();
 
   window.speechSynthesis.speak(utterance);
-}
+};
 
-function lerQuestaoAtualEmVozAlta() {
+window.lerQuestaoAtualEmVozAlta = function() {
   const state = window.currentQuizState;
   if (!state) return;
 
@@ -292,10 +289,10 @@ function lerQuestaoAtualEmVozAlta() {
     .join('. ');
 
   const boxEnunciado = document.getElementById('quiz-question-box-el');
-  falarTextoComDestaque(`${qData.question}. ${textoOpcoes}`, boxEnunciado);
-}
+  window.falarTextoComDestaque(`${qData.question}. ${textoOpcoes}`, boxEnunciado);
+};
 
-function lerAlternativaIndividual(event, idx) {
+window.lerAlternativaIndividual = function(event, idx) {
   if (event) event.stopPropagation();
   const state = window.currentQuizState;
   if (!state) return;
@@ -304,11 +301,11 @@ function lerAlternativaIndividual(event, idx) {
   const letras = ['A', 'B', 'C', 'D'];
   const texto = `Alternativa ${letras[idx] || idx + 1}: ${qData.options?.[idx] || ''}`;
   const cardEl = document.getElementById(`opt-wrapper-${idx}`);
-  falarTextoComDestaque(texto, cardEl);
-}
+  window.falarTextoComDestaque(texto, cardEl);
+};
 
 // =========================================================
-// RÉGUA DE LEITURA E ATALHOS DE TECLADO (ACESSIBILIDADE MOTORA)
+// RÉGUA DE LEITURA E ATALHOS DE TECLADO
 // =========================================================
 document.addEventListener('mousemove', (e) => {
   if (!a11yState.readingRuler) return;
@@ -339,30 +336,30 @@ document.addEventListener('keydown', (e) => {
     const totalOpts = window.currentQuizState.perguntas[window.currentQuizState.indiceAtual]?.options?.length || 0;
     if (idx < totalOpts) {
       e.preventDefault();
-      aoClicarAlternativa(idx);
+      window.aoClicarAlternativa(idx);
     }
   } else if (tecla === 'enter' && a11yState.twoStepConfirm && window.currentQuizState.selecaoPendente !== null) {
     e.preventDefault();
-    confirmarEscolhaPendente();
+    window.confirmarEscolhaPendente();
   } else if (tecla === 'r') {
     e.preventDefault();
-    lerQuestaoAtualEmVozAlta();
+    window.lerQuestaoAtualEmVozAlta();
   } else if (tecla === 'p') {
     e.preventDefault();
     const overlay = document.getElementById('sensory-pause-overlay');
-    if (overlay && overlay.classList.contains('hidden')) abrirPausaSensorial();
-    else fecharPausaSensorial();
+    if (overlay && overlay.classList.contains('hidden')) window.abrirPausaSensorial();
+    else window.fecharPausaSensorial();
   }
 });
 
 // =========================================================
-// PAUSA SENSORIAL, RESPIRAÇÃO GUIADA & SOM CALMANTE (WEB AUDIO)
+// PAUSA SENSORIAL, RESPIRAÇÃO GUIADA & SOM CALMANTE
 // =========================================================
 let breathingInterval = null;
 let audioCtx = null;
 let rainNoiseNode = null;
 
-function alternarSomCalmante() {
+window.alternarSomCalmante = function() {
   const btn = document.getElementById('btn-calm-sound');
   if (rainNoiseNode) {
     pararSomCalmante();
@@ -377,7 +374,6 @@ function alternarSomCalmante() {
     const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
 
-    // Gera ruído marrom suave (som natural de chuva calma)
     let lastOut = 0.0;
     for (let i = 0; i < bufferSize; i++) {
       const white = Math.random() * 2 - 1;
@@ -396,7 +392,7 @@ function alternarSomCalmante() {
   } catch (e) {
     alert('Seu navegador bloqueou o áudio automático.');
   }
-}
+};
 
 function pararSomCalmante() {
   if (rainNoiseNode) {
@@ -409,7 +405,7 @@ function pararSomCalmante() {
   }
 }
 
-function abrirPausaSensorial() {
+window.abrirPausaSensorial = function() {
   limparCronometroQuiz();
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
@@ -420,9 +416,9 @@ function abrirPausaSensorial() {
     overlay.classList.remove('hidden');
     iniciarCicloRespiracao();
   }
-}
+};
 
-function fecharPausaSensorial() {
+window.fecharPausaSensorial = function() {
   pararSomCalmante();
   const btn = document.getElementById('btn-calm-sound');
   if (btn) btn.innerText = '🌧️ Ligar Som Suave de Chuva';
@@ -440,7 +436,7 @@ function fecharPausaSensorial() {
   if (window.currentQuizState && !window.currentQuizState.bloqueado) {
     renderizarPerguntaAtualQuiz();
   }
-}
+};
 
 function iniciarCicloRespiracao() {
   if (breathingInterval) clearInterval(breathingInterval);
@@ -468,7 +464,7 @@ function iniciarCicloRespiracao() {
 }
 
 // =========================================================
-// GESTÃO DO ALUNO LOGADO, NOTAS E REGISTRO DE RECURSOS INCLUSIVOS
+// GESTÃO DO ALUNO LOGADO E CARREGAMENTO DE ATIVIDADES
 // =========================================================
 function getAlunoLogado() {
   try {
@@ -476,7 +472,6 @@ function getAlunoLogado() {
     const u = JSON.parse(raw);
     const id = Number(u.id_aluno || u.id || 1);
 
-    // Combina turma principal do banco + turmas extras vinculadas no admin
     const adminMeta = JSON.parse(localStorage.getItem('tech_admin_meta') || '{}');
     const turmasSet = new Set();
     if (u.id_turma) turmasSet.add(Number(u.id_turma));
@@ -526,6 +521,11 @@ function coletarRecursosInclusivosAtivos() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Se o aluno definiu um perfil padrão na Central de Recursos Inclusivos, aplica automaticamente
+  const perfilPreferido = localStorage.getItem('tech_perfil_inclusivo');
+  if (perfilPreferido && PERFIS_INCLUSIVOS[perfilPreferido]) {
+    a11yState = { profile: perfilPreferido, ...PERFIS_INCLUSIVOS[perfilPreferido] };
+  }
   carregarAtividadesDoAluno();
 });
 
@@ -548,14 +548,18 @@ async function carregarAtividadesDoAluno() {
               const rawDesc = a.descricao || 'Sem orientações.';
               const descSemMeta = rawDesc.split('|||META_CONFIG|||')[0];
               const parts = rawDesc.split('|||QUIZ_DATA|||');
+              let parsedQuiz = null;
+              if (parts[1]) {
+                try { parsedQuiz = JSON.parse(parts[1]); } catch (e) {}
+              }
               todasAtividades.push({
                 id: idStr,
                 idTurma: Number(a.id_turma || idTurma),
                 title: a.titulo,
                 description: descSemMeta.split('|||QUIZ_DATA|||')[0],
-                quizData: parts[1] ? JSON.parse(parts[1]) : null,
+                quizData: parsedQuiz,
                 grade: (a.titulo || '').includes('1º') ? '1º Ano EM' : ((a.titulo || '').includes('2º') ? '2º Ano EM' : '3º Ano EM'),
-                type: a.id_tipo_atividade === 2 ? 'QUIZ' : 'MATERIAL',
+                type: (a.id_tipo_atividade === 2 || parsedQuiz) ? 'QUIZ' : 'MATERIAL',
                 fileUrl: a.ficheiro_url || ''
               });
             }
@@ -682,9 +686,80 @@ async function renderizarListaAlunos(container, lista) {
   container.innerHTML = htmlCards.join('');
 }
 
-// ... (mantenha abrirAnexoPorId, iniciarResposta, fecharModalResposta, processarArquivoAlunoParaBase64)
+// =========================================================
+// FUNÇÕES RESTAURADAS: INICIAR RESPOSTA / QUIZ E ABRIR ANEXO
+// =========================================================
+window.abrirAnexoPorId = function(id) {
+  const atv = window.studentActivities.find(a => String(a.id) === String(id));
+  if (!atv || !atv.fileUrl) {
+    alert('Anexo não encontrado.');
+    return;
+  }
 
-async function confirmarEnvioResposta() {
+  const url = atv.fileUrl;
+  if (url.startsWith('data:')) {
+    try {
+      const arr = url.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) u8arr[n] = bstr.charCodeAt(n);
+      const blob = new Blob([u8arr], { type: mime });
+      window.open(URL.createObjectURL(blob), '_blank');
+    } catch (e) {
+      alert('Erro ao abrir o arquivo anexado.');
+    }
+  } else {
+    window.open(url, '_blank');
+  }
+};
+
+window.iniciarResposta = function(id) {
+  atividadeAtualId = String(id);
+  const atv = window.studentActivities.find(a => String(a.id) === String(id));
+  if (!atv) {
+    alert('Atividade não encontrada.');
+    return;
+  }
+
+  if (atv.type === 'QUIZ') {
+    abrirQuizGame(atv);
+  } else {
+    const modal = document.getElementById('modal-responder-tarefa');
+    const titleEl = document.getElementById('modal-task-title');
+    const descEl = document.getElementById('modal-task-desc');
+    const textEl = document.getElementById('task-answer-text');
+
+    if (titleEl) titleEl.innerText = atv.title;
+    if (descEl) descEl.innerText = atv.description;
+    if (textEl) textEl.value = '';
+
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+};
+
+window.fecharModalResposta = function() {
+  const modal = document.getElementById('modal-responder-tarefa');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+function processarArquivoAlunoParaBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = err => reject(err);
+  });
+}
+
+window.confirmarEnvioResposta = async function() {
   const texto = document.getElementById('task-answer-text')?.value.trim() || '';
   const modal = document.getElementById('modal-responder-tarefa');
   const fileInput = document.getElementById('task-answer-file') || modal?.querySelector('input[type="file"]');
@@ -709,9 +784,9 @@ async function confirmarEnvioResposta() {
 
   if (fileInput) fileInput.value = '';
   alert('🎉 Resposta enviada com sucesso para o professor!');
-  fecharModalResposta();
+  window.fecharModalResposta();
   carregarAtividadesDoAluno();
-}
+};
 
 // =========================================================
 // FINALIZAÇÃO DO QUIZ (CALCULA NOTA DE 0 A 10 E SALVA RECURSOS)
@@ -782,7 +857,6 @@ async function salvarSubmissao(texto, arquivoUrl = '', nota = null) {
     ? `${texto}|||ANEXO_ALUNO|||${arquivoUrl}`
     : texto;
 
-  // 1. Salva no localStorage do aluno
   const storageKey = getStorageKeyAluno(aluno.id);
   const respostasSalvas = JSON.parse(localStorage.getItem(storageKey) || '{}');
   respostasSalvas[idStr] = [{
@@ -795,7 +869,6 @@ async function salvarSubmissao(texto, arquivoUrl = '', nota = null) {
   }];
   localStorage.setItem(storageKey, JSON.stringify(respostasSalvas));
 
-  // 2. Salva log detalhado de recursos usados para o Boletim e para a IA do Professor
   const logsRecursos = JSON.parse(localStorage.getItem('tech_quiz_recursos_log') || '[]');
   logsRecursos.push({
     id_aluno: aluno.id,
@@ -807,7 +880,6 @@ async function salvarSubmissao(texto, arquivoUrl = '', nota = null) {
   });
   localStorage.setItem('tech_quiz_recursos_log', JSON.stringify(logsRecursos));
 
-  // 3. Envia para POST /respostas do FastAPI (salvando nota real na tabela "resposta")
   try {
     const res = await fetch(`${API_URL}/respostas`, {
       method: 'POST',
@@ -825,7 +897,6 @@ async function salvarSubmissao(texto, arquivoUrl = '', nota = null) {
       const respostaCriada = await res.json();
       const idResposta = respostaCriada.id_resposta;
 
-      // 4. Se houver recursos inclusivos ativos, vincula também na tabela "resposta_recurso"
       if (idResposta && recursosUsados.length > 0) {
         const resCatalogo = await fetch(`${API_URL}/recursos-acessibilidade`).catch(() => ({ ok: false }));
         if (resCatalogo.ok) {
@@ -906,7 +977,7 @@ function limparCronometroQuiz() {
   }
 }
 
-function fecharQuizGame() {
+window.fecharQuizGame = function() {
   limparCronometroQuiz();
   pararSomCalmante();
   if (breathingInterval) {
@@ -925,9 +996,9 @@ function fecharQuizGame() {
     modal.classList.remove('flex');
   }
   window.currentQuizState = null;
-}
+};
 
-function alternarDescarteAlternativa(event, idx) {
+window.alternarDescarteAlternativa = function(event, idx) {
   if (event) event.stopPropagation();
   const state = window.currentQuizState;
   if (!state || state.bloqueado) return;
@@ -942,7 +1013,7 @@ function alternarDescarteAlternativa(event, idx) {
     state.eliminadas.add(idx);
     wrapper.classList.add('opt-eliminated');
   }
-}
+};
 
 function renderizarPerguntaAtualQuiz() {
   limparCronometroQuiz();
@@ -972,7 +1043,6 @@ function renderizarPerguntaAtualQuiz() {
     { bg: 'bg-rose-600 hover:bg-rose-700 border-rose-800', badge: 'bg-rose-800' }
   ];
 
-  // Mapa visual de previsibilidade (TEA)
   const mapaEtapasHtml = (a11yState.profile === 'TEA') ? `
     <div class="bg-slate-100 border border-slate-300 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-800">
       <div>
@@ -1047,7 +1117,6 @@ function renderizarPerguntaAtualQuiz() {
                   <span class="quiz-readable-text leading-snug">${optProcessada}</span>
                 </button>
 
-                <!-- Botões Laterais de Apoio (Ouvir só esta alternativa / Descartar distrator no TDAH) -->
                 <div class="flex flex-col justify-center gap-1.5 shrink-0">
                   <button type="button" onclick="lerAlternativaIndividual(event, ${idx})" title="Ouvir apenas esta alternativa" class="px-2.5 py-2 bg-white hover:bg-indigo-50 border border-slate-200 rounded-xl text-xs font-bold text-indigo-900 shadow-sm cursor-pointer">
                     🔊
@@ -1063,7 +1132,6 @@ function renderizarPerguntaAtualQuiz() {
           }).join('')}
         </div>
 
-        <!-- Barra de Confirmação Anti-Impulsividade (2 Cliques) -->
         <div id="two-step-confirm-bar" class="hidden p-4 bg-purple-100/90 border-2 border-purple-500 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
           <span id="two-step-selected-label" class="text-xs sm:text-sm font-extrabold text-purple-950">Alternativa selecionada. Deseja confirmar?</span>
           <button type="button" onclick="confirmarEscolhaPendente()" class="w-full sm:w-auto px-6 py-2.5 bg-purple-800 hover:bg-purple-950 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow cursor-pointer">
@@ -1097,7 +1165,7 @@ function renderizarPerguntaAtualQuiz() {
   }
 }
 
-function aoClicarAlternativa(indiceEscolhido) {
+window.aoClicarAlternativa = function(indiceEscolhido) {
   const state = window.currentQuizState;
   if (!state || state.bloqueado) return;
 
@@ -1124,13 +1192,13 @@ function aoClicarAlternativa(indiceEscolhido) {
   }
 
   responderPerguntaQuiz(indiceEscolhido);
-}
+};
 
-function confirmarEscolhaPendente() {
+window.confirmarEscolhaPendente = function() {
   const state = window.currentQuizState;
   if (!state || state.selecaoPendente === null) return;
   responderPerguntaQuiz(state.selecaoPendente);
-}
+};
 
 function responderPerguntaQuiz(indiceEscolhido) {
   const state = window.currentQuizState;
@@ -1218,85 +1286,4 @@ function responderPerguntaQuiz(indiceEscolhido) {
       exibirTelaFinalQuiz();
     }
   }, delayAvanco);
-}
-
-async function exibirTelaFinalQuiz() {
-  limparCronometroQuiz();
-  const body = document.getElementById('quiz-game-body');
-  const state = window.currentQuizState;
-  if (!body || !state) return;
-
-  const total = state.perguntas.length;
-  const acertos = state.acertos;
-  const pontos = state.pontosTotais;
-  const percentual = Math.round((acertos / total) * 100);
-
-  const perfilUsado = a11yState.profile !== 'PADRAO' ? ` [Apoio: ${a11yState.profile}]` : '';
-  const textoEntrega = `Quiz Concluído — Acertou ${acertos} de ${total} questões (${percentual}%) [+${pontos} PTS]${perfilUsado}`;
-  await salvarSubmissao(textoEntrega, '');
-
-  body.innerHTML = `
-    <div class="text-center space-y-6 py-5">
-      <div class="w-20 h-20 mx-auto rounded-3xl bg-yellow-100 text-yellow-600 flex items-center justify-center text-4xl shadow-inner">
-        🏆
-      </div>
-      <div>
-        <span class="text-xs font-extrabold uppercase tracking-wider text-purple-700 bg-purple-100 px-3.5 py-1 rounded-full">Atividade Concluída</span>
-        <h3 class="text-2xl font-extrabold text-slate-800 mt-2.5">${percentual >= 70 ? 'Excelente Desempenho!' : 'Quiz Finalizado!'}</h3>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1">Sua entrega já foi registrada com sucesso para o professor.</p>
-      </div>
-
-      <div class="grid grid-cols-3 gap-4 bg-slate-50 p-5 rounded-3xl border border-slate-200 max-w-lg mx-auto">
-        <div>
-          <p class="text-[11px] font-bold text-slate-400 uppercase">Acertos</p>
-          <p class="text-xl sm:text-2xl font-extrabold text-emerald-600 mt-0.5">${acertos}/${total}</p>
-        </div>
-        <div>
-          <p class="text-[11px] font-bold text-slate-400 uppercase">Aproveitamento</p>
-          <p class="text-xl sm:text-2xl font-extrabold text-indigo-700 mt-0.5">${percentual}%</p>
-        </div>
-        <div>
-          <p class="text-[11px] font-bold text-slate-400 uppercase">Pontuação</p>
-          <p class="text-xl sm:text-2xl font-extrabold text-amber-600 mt-0.5">+${pontos}</p>
-        </div>
-      </div>
-
-      <button type="button" onclick="fecharQuizGame(); carregarAtividadesDoAluno();" class="w-full max-w-md mx-auto py-3.5 bg-[#3332A5] hover:bg-indigo-900 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-lg transition cursor-pointer">
-        Concluir e Voltar às Atividades
-      </button>
-    </div>
-  `;
-}
-
-async function salvarSubmissao(texto, arquivoUrl = '') {
-  const idStr = String(atividadeAtualId);
-  const aluno = getAlunoLogado();
-  
-  const conteudoParaBanco = arquivoUrl 
-    ? `${texto}|||ANEXO_ALUNO|||${arquivoUrl}` 
-    : texto;
-
-  const storageKey = getStorageKeyAluno(aluno.id);
-  const respostasSalvas = JSON.parse(localStorage.getItem(storageKey) || '{}');
-  respostasSalvas[idStr] = [{
-    aluno: aluno.nome,
-    data: new Date().toLocaleDateString('pt-BR'),
-    respostaTexto: texto,
-    arquivoUrl: arquivoUrl
-  }];
-  localStorage.setItem(storageKey, JSON.stringify(respostasSalvas));
-
-  try {
-    await fetch(`${API_URL}/atividades/resposta`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id_aluno: aluno.id,
-        id_atividade: Number(atividadeAtualId),
-        conteudo_resposta: conteudoParaBanco
-      })
-    });
-  } catch (e) {
-    console.warn("API offline, resposta salva localmente.");
-  }
 }

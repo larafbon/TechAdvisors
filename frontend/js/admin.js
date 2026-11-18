@@ -58,11 +58,17 @@ function normalizarProfessor(raw) {
     adminMeta.professores[id]?.disciplina ||
     '';
 
+  const status =
+    adminMeta.professores[id]?.status ||
+    raw.status ||
+    'ativo';
+
   return {
     id_professor: id,
     nome,
     email,
-    disciplina
+    disciplina,
+    status
   };
 }
 
@@ -219,10 +225,8 @@ function renderCheckboxesTurmas(containerId, inputName, idsSelecionados = []) {
 }
 
 function populateSelects() {
-  // Checkboxes de turmas no modal de novo aluno
   renderCheckboxesTurmas('aluno-turmas-checkboxes', 'aluno-turma-check', []);
 
-  // Select de professor no modal de nova turma
   const selectProf = document.getElementById('turma-professor');
   if (selectProf) {
     selectProf.innerHTML = professores.length
@@ -230,7 +234,6 @@ function populateSelects() {
       : `<option value="">Nenhum professor cadastrado</option>`;
   }
 
-  // Checkboxes de turmas no modal de novo professor
   renderCheckboxesTurmas('prof-turmas-checkboxes', 'prof-turma-check', []);
 }
 
@@ -364,7 +367,7 @@ async function salvarTurma(e) {
     });
 
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json().catch(() => ({}));
       alert(`Erro ao salvar turma: ${err.detail || 'Verifique os campos.'}`);
       return;
     }
@@ -519,7 +522,10 @@ async function atualizarAluno(e) {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      alert(`Erro ao atualizar aluno: ${err.detail || 'Verifique os dados informados.'}`);
+      const msgErro = Array.isArray(err.detail)
+        ? err.detail.map(d => `${d.loc?.slice(-1)[0] || 'Campo'}: ${d.msg}`).join('\n')
+        : (err.detail || 'Verifique os dados informados.');
+      alert(`Erro ao atualizar aluno:\n${msgErro}`);
       return;
     }
 
@@ -570,7 +576,7 @@ async function salvarAluno(e) {
     });
 
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json().catch(() => ({}));
       alert(`Erro ao matricular aluno: ${err.detail || 'Verifique os dados.'}`);
       return;
     }
@@ -609,7 +615,7 @@ async function removerAluno(idAluno) {
 }
 
 // ==========================================
-// PROFESSORES (BANCO DE DADOS + VÍNCULO COM TURMAS)
+// PROFESSORES (BANCO DE DADOS + VER/EDITAR + VÍNCULO COM TURMAS)
 // ==========================================
 function renderProfessores() {
   const grid = document.getElementById('grid-profs');
@@ -643,6 +649,7 @@ function renderProfessores() {
       t => Number(t.id_professor) === idProf || (meta.turmasIds || []).includes(t.id_turma)
     );
     const disciplina = p.disciplina || meta.disciplina || (turmasVinculadas[0]?.disciplina) || 'Corpo Docente';
+    const statusProf = meta.status || p.status || 'ativo';
 
     const nomesTurmas = turmasVinculadas.length > 0
       ? turmasVinculadas.map(t => t.nome_turma).join(', ')
@@ -652,22 +659,124 @@ function renderProfessores() {
       <div class="surface-alt rounded-xl p-4 flex flex-col justify-between">
         <div>
           <div class="flex justify-between items-start gap-2 mb-2">
-            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">${disciplina}</span>
-            <button onclick="removerProfessor(${idProf})" class="text-red-500 hover:text-red-700 text-xs font-bold cursor-pointer" title="Remover Docente">✕</button>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">${disciplina}</span>
+              ${statusProf === 'inativo' ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">Inativo</span>` : ''}
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="abrirModalEditarProfessor(${idProf})" class="text-purple-600 hover:text-purple-800 text-xs font-bold cursor-pointer" title="Ver e Editar Dados">✏️</button>
+              <button onclick="removerProfessor(${idProf})" class="text-red-500 hover:text-red-700 text-xs font-bold cursor-pointer" title="Remover Docente">✕</button>
+            </div>
           </div>
           <h4 class="font-bold text-sm text-main mb-1">${nomeProf}</h4>
           <p class="text-xs text-muted mb-2">✉️ ${p.email || 'E-mail não disponível'}</p>
           <p class="text-[11px] text-main mb-3">🏫 <span class="text-muted">Turmas:</span> ${nomesTurmas}</p>
         </div>
         <div class="pt-3 border-t border-theme flex justify-between items-center text-[11px] font-semibold">
-          <span class="text-muted">${turmasVinculadas.length} turma(s)</span>
+          <button onclick="abrirModalEditarProfessor(${idProf})" class="text-slate-600 hover:text-purple-700 font-bold cursor-pointer">
+            👁️ Ver / Editar
+          </button>
           <button onclick="abrirModalVincularTurmas(${idProf})" class="text-purple-600 hover:text-purple-800 font-bold cursor-pointer">
-            + Vincular Turmas
+            + Vincular Turmas (${turmasVinculadas.length})
           </button>
         </div>
       </div>
     `;
   }).join('');
+}
+
+function abrirModalEditarProfessor(idProf) {
+  const prof = professores.find(p => Number(p.id_professor) === Number(idProf));
+  if (!prof) return;
+
+  const meta = adminMeta.professores[idProf] || {};
+  const turmasVinculadasIds = turmas
+    .filter(t => Number(t.id_professor) === Number(idProf) || (meta.turmasIds || []).includes(t.id_turma))
+    .map(t => Number(t.id_turma));
+
+  const disciplinaAtual = prof.disciplina || meta.disciplina || (turmas.find(t => Number(t.id_professor) === Number(idProf))?.disciplina) || 'Corpo Docente';
+  const statusAtual = meta.status || prof.status || 'ativo';
+
+  document.getElementById('edit-prof-id').value = idProf;
+  document.getElementById('edit-prof-codigo').value = `PROF-${String(idProf).padStart(3, '0')}`;
+  document.getElementById('edit-prof-status').value = statusAtual;
+  document.getElementById('edit-prof-nome').value = prof.nome || '';
+  document.getElementById('edit-prof-email').value = prof.email || '';
+  document.getElementById('edit-prof-disciplina').value = disciplinaAtual;
+
+  renderCheckboxesTurmas('edit-prof-turmas-checkboxes', 'edit-prof-turma-check', turmasVinculadasIds);
+
+  const modal = document.getElementById('modal-editar-professor');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+async function atualizarProfessor(e) {
+  e.preventDefault();
+
+  const idProf = parseInt(document.getElementById('edit-prof-id').value, 10);
+  const profOriginal = professores.find(p => Number(p.id_professor) === idProf) || {};
+
+  const nome = document.getElementById('edit-prof-nome').value.trim();
+  const email = document.getElementById('edit-prof-email').value.trim();
+  const disciplina = document.getElementById('edit-prof-disciplina').value.trim();
+  const status = document.getElementById('edit-prof-status').value;
+
+  const turmasSelecionadas = Array.from(document.querySelectorAll('input[name="edit-prof-turma-check"]:checked'))
+    .map(cb => parseInt(cb.value, 10));
+
+  const payload = {
+    nome,
+    email,
+    senha: profOriginal.senha || '12345678',
+    status
+  };
+
+  try {
+    const res = await fetch(`${API_URL}/professores/${idProf}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok && res.status !== 404 && res.status !== 405) {
+      const err = await res.json().catch(() => ({}));
+      const msgErro = Array.isArray(err.detail)
+        ? err.detail.map(d => `${d.loc?.slice(-1)[0] || 'Campo'}: ${d.msg}`).join('\n')
+        : (err.detail || 'Verifique os dados informados.');
+      alert(`Erro ao atualizar professor:\n${msgErro}`);
+      return;
+    }
+
+    adminMeta.professores[idProf] = {
+      ...(adminMeta.professores[idProf] || {}),
+      nome,
+      email,
+      disciplina,
+      status,
+      turmasIds: turmasSelecionadas
+    };
+
+    if (Array.isArray(adminMeta.listaProfessoresCache)) {
+      const idx = adminMeta.listaProfessoresCache.findIndex(p => Number(p.id_professor) === idProf);
+      if (idx !== -1) {
+        adminMeta.listaProfessoresCache[idx] = { ...adminMeta.listaProfessoresCache[idx], nome, email, disciplina, status };
+      }
+    }
+    saveMeta();
+
+    for (const idTurma of turmasSelecionadas) {
+      await vincularTurmaNoBanco(idTurma, idProf);
+    }
+
+    await carregarDadosDoBanco();
+    closeModal('modal-editar-professor');
+  } catch (error) {
+    console.error('Erro ao atualizar professor:', error);
+    alert('Falha na comunicação com o servidor.');
+  }
 }
 
 async function salvarProfessor(e) {
@@ -693,7 +802,7 @@ async function salvarProfessor(e) {
     });
 
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json().catch(() => ({}));
       alert(`Erro ao cadastrar professor: ${err.detail || 'Verifique os dados.'}`);
       return;
     }
@@ -702,7 +811,7 @@ async function salvarProfessor(e) {
     const idNovo = Number(novoProf.id_professor || novoProf.id || Date.now());
     const profObj = { id_professor: idNovo, nome, email, disciplina };
 
-    adminMeta.professores[idNovo] = { nome, email, disciplina, turmasIds: turmasSelecionadas };
+    adminMeta.professores[idNovo] = { nome, email, disciplina, status: 'ativo', turmasIds: turmasSelecionadas };
     if (!adminMeta.listaProfessoresCache) adminMeta.listaProfessoresCache = [];
     adminMeta.listaProfessoresCache.push(profObj);
     saveMeta();

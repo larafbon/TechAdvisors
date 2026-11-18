@@ -191,7 +191,7 @@
   window.logout = function () {
     localStorage.removeItem('tech_user');
     localStorage.removeItem('user');
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
   };
 
   document.addEventListener('click', () => {

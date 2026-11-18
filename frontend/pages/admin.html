@@ -466,6 +466,59 @@
     </div>
   </div>
 
+  <!-- MODAL: VER E EDITAR DADOS DO PROFESSOR -->
+  <div id="modal-editar-professor" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="surface-card rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-theme">
+        <h3 class="font-bold text-base text-main">👨‍🏫 Ver e Editar Dados do Professor</h3>
+        <button onclick="closeModal('modal-editar-professor')" class="text-muted hover:text-main font-bold cursor-pointer">✕</button>
+      </div>
+      <form onsubmit="atualizarProfessor(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-prof-id">
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">ID Docente</label>
+            <input type="text" id="edit-prof-codigo" readonly class="input-theme w-full px-3 py-2 rounded-xl font-mono opacity-75">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Status</label>
+            <select id="edit-prof-status" class="input-theme w-full px-3 py-2 rounded-xl">
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1">Nome Completo do Docente</label>
+          <input type="text" id="edit-prof-nome" required class="input-theme w-full px-3 py-2 rounded-xl">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">E-mail Institucional</label>
+            <input type="email" id="edit-prof-email" required class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Disciplina Principal</label>
+            <input type="text" id="edit-prof-disciplina" required class="input-theme w-full px-3 py-2 rounded-xl">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1">Turmas Vinculadas</label>
+          <div id="edit-prof-turmas-checkboxes" class="input-theme rounded-xl p-3 max-h-36 overflow-y-auto space-y-2"></div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-editar-professor')" class="px-4 py-2 rounded-xl border border-theme text-muted cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#5b21b6] text-white font-bold cursor-pointer">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- BOTÃO FLUTUANTE DE CONFIGURAÇÕES -->
   <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
     ⚙️

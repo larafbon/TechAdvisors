@@ -183,7 +183,7 @@ window.renderCards = async function() {
       try {
         const parsedQ = JSON.parse(descParts[1]);
         const count = Array.isArray(parsedQ) ? parsedQ.length : 1;
-        qtdQuestoesBadge = `<span class="text-[10px] font-bold px-2.5 py-0.5 bg-purple-50 text-purple-700 border border-purple-200 rounded-lg">🎯 ${count} questão${count > 1 ? 'ões' : ''}</span>`;
+        qtdQuestoesBadge = `<span class="text-[10px] font-bold px-2.5 py-0.5 bg-purple-50 text-purple-700 border border-purple-200 rounded-lg">🎯 ${count === 1 ? '1 questão' : `${count} questões`}</span>`;
       } catch (e) {}
     }
 
