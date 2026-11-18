@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../static/prof.css">
   <link rel="stylesheet" href="../static/config.css">
 
-  <!-- JS Connections (carregados na ordem correta) -->
+  <!-- JS Connections -->
   <script src="../js/config.js" defer></script>
   <script src="../js/prof.js" defer></script>
 </head>
@@ -29,7 +29,7 @@
       <ul>
         <li onclick="window.location.href='professor.html'" class="cursor-pointer font-bold text-yellow-300">🏠 Portal do Docente</li>
         <li onclick="window.location.href='turmas.html'" class="cursor-pointer">🏫 Minhas Turmas</li>
-        <li onclick="window.location.href='quizzes.html'" class="cursor-pointer">🎮 Quizzes & IA</li>
+        <li onclick="window.location.href='quizzes.html'" class="cursor-pointer">🎮 Atividades & Quizzes</li>
         
         <!-- DROPDOWN DE USUÁRIO -->
         <li class="user-menu-container relative">
@@ -72,17 +72,16 @@
         <p>Publique conteúdos e tarefas adaptadas.</p>
       </div>
 
-      <div class="card" onclick="alert('Relatórios & Notas em desenvolvimento')">
+      <div class="card" onclick="window.location.href='relatorios-professor.html'">
         <div class="icone">📊</div>
         <h3>Relatórios & Notas</h3>
-        <p>Acompanhe o progresso do aprendizado.</p>
+        <p>Acompanhe o progresso do aprendizado e sugestões inclusivas.</p>
       </div>
 
-      <!-- CARD DO ASSISTENTE IA (ALERT OU REDIRECIONAMENTO CORRETO) -->
-      <div class="card" onclick="alert('Assistente Pedagógico IA: Tire dúvidas ou gere planos de aula diretamente na aba Quizzes & IA!')">
+      <div class="card" onclick="window.location.href='assistente-ia.html'">
         <div class="icone">🤖</div>
         <h3>Assistente IA</h3>
-        <p>Suporte automático para elaboração de planos de aula.</p>
+        <p>Diagnóstico pedagógico, adaptação de textos e planos de aula inclusivos.</p>
       </div>
 
       <div class="card" onclick="toggleSettingsDrawer(true)">
@@ -104,7 +103,7 @@
     ⚙️
   </button>
 
-  <!-- OVERLAY E DRAWER LATERAL DE ACESSIBILIDADE (OCULTOS POR PADRÃO) -->
+  <!-- OVERLAY E DRAWER LATERAL DE ACESSIBILIDADE -->
   <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
 
   <aside id="settings-drawer" class="hidden-drawer">

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatórios & Notas - Techadvisors</title>
+
+  <!-- Fonts & Tailwind CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- CSS Connections -->
+  <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/config.css">
+
+  <!-- JS Connections -->
+  <script src="../js/config.js" defer></script>
+  <script src="../js/relatorios-professor.js" defer></script>
+</head>
+<body class="bg-[#f3f7fb]">
+
+  <!-- CABEÇALHO -->
+  <header class="home-header">
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='professor.html'" class="cursor-pointer">← Voltar</li>
+        <li onclick="window.location.href='turmas.html'" class="cursor-pointer">🏫 Minhas Turmas</li>
+        <li onclick="window.location.href='quizzes.html'" class="cursor-pointer">🎮 Quizzes & IA</li>
+        <li onclick="toggleSettingsDrawer(true)" class="cursor-pointer">⚙️ Acessibilidade</li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="banner mb-8">
+      <h2 id="relatorio-prof-titulo">📊 Relatórios de Notas & Inteligência Inclusiva</h2>
+      <p>Acompanhe o desempenho dos alunos, corrija atividades pendentes e receba sugestões baseadas nos recursos de acessibilidade utilizados.</p>
+    </div>
+
+    <!-- BARRA DE FILTROS E EXPORTAÇÃO -->
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
+        <label for="filtro-turma-relatorio" class="text-xs font-extrabold uppercase text-purple-900 shrink-0">🏫 Filtrar por Turma:</label>
+        <select id="filtro-turma-relatorio" onchange="renderizarRelatorioProfessor()" class="w-full sm:max-w-xs text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer">
+          <option value="ALL">Todas as Minhas Turmas</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="exportarRelatorioCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition cursor-pointer flex items-center justify-center gap-2 shrink-0">
+        <span>📥 Exportar Planilha (CSV)</span>
+      </button>
+    </div>
+
+    <!-- CARDS DE INDICADORES -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
+        <span class="text-xs font-bold uppercase text-slate-400">Média da Turma</span>
+        <h3 id="prof-kpi-media" class="text-3xl font-black text-purple-900 mt-2">--</h3>
+        <p id="prof-kpi-media-sub" class="text-xs text-slate-500 font-bold mt-1">Calculando...</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
+        <span class="text-xs font-bold uppercase text-slate-400">Entregas Recebidas</span>
+        <h3 id="prof-kpi-entregas" class="text-3xl font-black text-purple-900 mt-2">0</h3>
+        <p id="prof-kpi-pendentes-correcao" class="text-xs text-amber-600 font-bold mt-1">0 aguardando nota</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
+        <span class="text-xs font-bold uppercase text-slate-400">Taxa de Aprovação</span>
+        <h3 id="prof-kpi-aprovacao" class="text-3xl font-black text-emerald-700 mt-2">--</h3>
+        <p class="text-xs text-emerald-600 font-bold mt-1">Notas ≥ 6,0</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 text-center">
+        <span class="text-xs font-bold uppercase text-slate-400">Recurso Mais Eficaz</span>
+        <h3 id="prof-kpi-recurso" class="text-base font-black text-indigo-800 mt-3 leading-tight">Modo Padrão</h3>
+        <p id="prof-kpi-recurso-media" class="text-xs text-indigo-600 font-bold mt-1">Maior média associada</p>
+      </div>
+    </div>
+
+    <!-- PAINEL DE SUGESTÕES PEDAGÓGICAS & ACESSIBILIDADE -->
+    <div class="bg-gradient-to-r from-indigo-50 via-purple-50 to-white p-6 rounded-3xl shadow-sm border border-purple-200/80 mb-8">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-wider bg-purple-700 text-white px-2.5 py-0.5 rounded-full">Insights de Inclusão</span>
+          <h3 class="text-lg font-bold text-purple-950 mt-1">💡 Sugestões Pedagógicas Baseadas no Uso de Recursos</h3>
+          <p class="text-xs text-slate-600">Análise automática cruzando o desempenho nas avaliações com as ferramentas de acessibilidade ativadas pelos alunos.</p>
+        </div>
+      </div>
+
+      <div id="container-sugestoes-professor" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white/80 p-4 rounded-2xl border border-purple-100 text-xs text-slate-500">
+          Analisando dados de desempenho e recursos utilizados...
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMO POR ALUNO -->
+    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 mb-8">
+      <div class="mb-4">
+        <h3 class="text-lg font-bold text-purple-900">🎓 Boletim Consolidado por Aluno</h3>
+        <p class="text-xs text-slate-500">Visão geral da média, entregas e recursos inclusivos preferidos de cada estudante.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-700">
+          <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
+            <tr>
+              <th class="p-3">Aluno</th>
+              <th class="p-3">Turma</th>
+              <th class="p-3">Entregas</th>
+              <th class="p-3">Recursos Inclusivos Utilizados</th>
+              <th class="p-3">Média</th>
+              <th class="p-3">Situação</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-boletim-alunos-prof">
+            <tr>
+              <td colspan="6" class="p-6 text-center text-slate-400">Carregando dados dos alunos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DETALHAMENTO DE ENTREGAS E LANÇAMENTO DE NOTAS -->
+    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
+      <div class="mb-4">
+        <h3 class="text-lg font-bold text-purple-900">📝 Avaliações Recebidas & Lançamento de Notas</h3>
+        <p class="text-xs text-slate-500">Visualize as respostas enviadas, os recursos ativados durante a atividade e lance ou ajuste notas diretamente.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-700">
+          <thead class="bg-purple-50 text-purple-900 uppercase font-bold border-b border-purple-100">
+            <tr>
+              <th class="p-3">Aluno</th>
+              <th class="p-3">Atividade / Quiz</th>
+              <th class="p-3">Resumo da Resposta</th>
+              <th class="p-3">Recursos Usados</th>
+              <th class="p-3">Nota (0 a 10)</th>
+              <th class="p-3 text-right">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-entregas-professor">
+            <tr>
+              <td colspan="6" class="p-6 text-center text-slate-400">Carregando entregas...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Relatórios Docentes
+  </footer>
+
+  <!-- BOTÃO FLUTUANTE E GAVETA DE ACESSIBILIDADE -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
+    ⚙️
+  </button>
+
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
+
+  <aside id="settings-drawer" class="hidden-drawer">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
+    </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
+      </div>
+    </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="brightness-range" class="text-xs font-semibold text-slate-700">Brilho da Tela</label>
+        <span id="brightness-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="brightness-range" min="30" max="100" value="100" step="5" oninput="updateBrightness(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
+
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-1">
+        <label for="saturation-range" class="text-xs font-semibold text-slate-700">Saturação de Cores</label>
+        <span id="saturation-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <input type="range" id="saturation-range" min="0" max="150" value="100" step="5" oninput="updateSaturation(this.value)" class="w-full accent-purple-700 cursor-pointer">
+    </div>
+
+    <div class="mb-6 flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <span class="text-xs font-semibold text-slate-700">Modo Alto Contraste</span>
+      <input type="checkbox" id="toggle-contrast" onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-purple-700 cursor-pointer">
+    </div>
+
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
+  </aside>
+
+</body>
+</html>

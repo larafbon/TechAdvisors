@@ -28,7 +28,7 @@
       <ul>
         <li onclick="window.location.href='professor.html'" class="cursor-pointer">👨‍🏫 Portal do Docente</li>
         <li onclick="window.location.href='turmas.html'" class="cursor-pointer">🏫 Turmas</li>
-        <li onclick="window.location.href='quizzes.html'" class="font-bold text-yellow-300 cursor-pointer">🎮 Quizzes & IA</li>
+        <li onclick="window.location.href='quizzes.html'" class="font-bold text-yellow-300 cursor-pointer">🎮 Atividades & Quizzes</li>
         
         <li class="user-menu-container relative">
           <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
@@ -137,11 +137,10 @@
         </button>
       </div>
 
-      <!-- SELETOR DE MODO -->
-      <div class="grid grid-cols-3 gap-1.5 p-1.5 bg-slate-100 rounded-2xl">
+      <!-- SELETOR DE MODO (2 ABAS) -->
+      <div class="grid grid-cols-2 gap-1.5 p-1.5 bg-slate-100 rounded-2xl">
         <button type="button" id="tab-quick-btn" onclick="switchCreationMode('QUICK')" class="py-2.5 px-2 rounded-xl text-xs font-bold transition tab-active text-center cursor-pointer">Envio Rápido (PDF)</button>
         <button type="button" id="tab-manual-btn" onclick="switchCreationMode('MANUAL')" class="py-2.5 px-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition text-center cursor-pointer">Quizizz Editor</button>
-        <button type="button" id="tab-ai-btn" onclick="switchCreationMode('AI')" class="py-2.5 px-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition text-center cursor-pointer flex items-center justify-center gap-1">Gerador IA Completo</button>
       </div>
 
       <form id="activity-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
@@ -219,13 +218,6 @@
           </div>
 
           <div id="quiz-questions-container" class="space-y-3 max-h-80 overflow-y-auto pr-1"></div>
-        </div>
-
-        <!-- MODO 3: GERADOR IA COMPLETO -->
-        <div id="mode-ai-section" class="hidden p-5 bg-gradient-to-br from-indigo-900 to-purple-900 text-white rounded-2xl space-y-2 text-center">
-          <span class="text-2xl">✨</span>
-          <h4 class="text-sm font-extrabold">Gerador de Quiz por Inteligência Artificial</h4>
-          <p class="text-xs text-purple-200 max-w-md mx-auto">Em breve: gere automaticamente conjuntos completos de questões alinhadas à BNCC a partir de qualquer tópico.</p>
         </div>
 
         <!-- BOTÕES DE AÇÃO DO MODAL -->

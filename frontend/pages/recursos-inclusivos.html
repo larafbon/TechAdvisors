@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos Inclusivos - Techadvisors</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/config.css">
+
+  <script src="../js/config.js" defer></script>
+  <script src="../js/recursos-inclusivos.js" defer></script>
+</head>
+<body class="bg-[#f3f7fb]">
+
+  <header class="home-header">
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-pink-200 text-purple-900 px-2 py-0.5 rounded font-bold ml-2">ALUNO</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='alunos.html'" class="cursor-pointer">← Voltar</li>
+        <li onclick="window.location.href='dashboard.html'" class="cursor-pointer">📊 Minhas Notas</li>
+        <li onclick="toggleSettingsDrawer(true)" class="cursor-pointer">⚙️ Acessibilidade</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+    <div class="banner">
+      <h2 id="rec-aluno-titulo">🎧 Central de Recursos Inclusivos & Apoio ao Estudo</h2>
+      <p>Conheça as ferramentas de acessibilidade do Techadvisors, teste cada modo na prática e veja recomendações personalizadas para você.</p>
+    </div>
+
+    <!-- BLOCO 1: RECOMENDAÇÃO PERSONALIZADA DO ALUNO -->
+    <section class="bg-gradient-to-r from-purple-50 via-indigo-50 to-white p-6 rounded-3xl shadow-sm border border-purple-200">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider bg-purple-700 text-white px-2.5 py-0.5 rounded-full">Sugestão Inteligente para Você</span>
+          <h3 id="rec-sugestao-titulo" class="text-lg font-bold text-purple-950">Analisando seu histórico de estudos...</h3>
+          <p id="rec-sugestao-texto" class="text-xs text-slate-600 leading-relaxed max-w-3xl">
+            Carregando suas atividades anteriores para indicar os melhores recursos de acessibilidade.
+          </p>
+        </div>
+        <div id="rec-perfil-atual-badge" class="bg-white px-4 py-3 rounded-2xl border border-purple-200 text-center shrink-0">
+          <span class="block text-[10px] font-bold uppercase text-slate-400">Seu Perfil Ativo</span>
+          <span id="rec-perfil-atual-nome" class="text-sm font-black text-purple-900">Padrão</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCO 2: GUIA DOS MODOS DE ACESSIBILIDADE -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- CARD TEA -->
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col justify-between space-y-4">
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">🧩</span>
+            <span class="text-[10px] font-extrabold uppercase bg-sky-100 text-sky-800 px-2.5 py-0.5 rounded-full">Previsibilidade</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">Modo Autismo (TEA)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Organiza as instruções em passos claros e diretos, remove a pressão do cronômetro e ativa cores suaves para reduzir estímulos visuais.
+          </p>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="testarModoNaCaixa('TEA')" class="flex-1 py-2 bg-sky-50 hover:bg-sky-100 text-sky-900 font-bold rounded-xl text-xs transition cursor-pointer">
+            👁️ Testar Exemplo
+          </button>
+          <button type="button" onclick="definirPerfilPreferido('TEA', 'Autismo (TEA)')" class="flex-1 py-2 bg-[#5b21b6] hover:bg-purple-900 text-white font-bold rounded-xl text-xs transition cursor-pointer">
+            ✓ Usar como Padrão
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD TDAH -->
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col justify-between space-y-4">
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">⚡</span>
+            <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">Foco Guiado</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">Modo TDAH (Hiperfoco)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Ativa a <strong>Leitura Biônica</strong> (destacando o início das palavras) e marca palavras-chave como <em>NÃO, EXCETO, CALCULE</em> para evitar distrações.
+          </p>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="testarModoNaCaixa('TDAH')" class="flex-1 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold rounded-xl text-xs transition cursor-pointer">
+            👁️ Testar Exemplo
+          </button>
+          <button type="button" onclick="definirPerfilPreferido('TDAH', 'TDAH (Hiperfoco)')" class="flex-1 py-2 bg-[#5b21b6] hover:bg-purple-900 text-white font-bold rounded-xl text-xs transition cursor-pointer">
+            ✓ Usar como Padrão
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD DISLEXIA -->
+      <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col justify-between space-y-4">
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">📖</span>
+            <span class="text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">Leitura Confortável</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">Modo Dislexia</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Aplica o fundo <strong>Papel Creme</strong> (baixo brilho), aumenta o espaçamento entre letras e oferece <strong>divisão silábica</strong> e leitura em voz alta.
+          </p>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="testarModoNaCaixa('DISLEXIA')" class="flex-1 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold rounded-xl text-xs transition cursor-pointer">
+            👁️ Testar Exemplo
+          </button>
+          <button type="button" onclick="definirPerfilPreferido('DISLEXIA', 'Dislexia')" class="flex-1 py-2 bg-[#5b21b6] hover:bg-purple-900 text-white font-bold rounded-xl text-xs transition cursor-pointer">
+            ✓ Usar como Padrão
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCO 3: LABORATÓRIO INTERATIVO DE LEITURA & ÁUDIO (TTS) -->
+    <section class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <div>
+          <h3 class="text-lg font-bold text-purple-900">🔊 Laboratório Prático: Teste Leitura & Áudio</h3>
+          <p class="text-xs text-slate-500">Veja na prática como um enunciado se transforma em cada modo ou clique em ouvir.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="testarModoNaCaixa('PADRAO')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">Padrão</button>
+          <button type="button" onclick="testarModoNaCaixa('TEA')" class="px-3 py-1.5 rounded-xl bg-sky-100 hover:bg-sky-200 text-xs font-bold text-sky-900 cursor-pointer">🧩 TEA</button>
+          <button type="button" onclick="testarModoNaCaixa('TDAH')" class="px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-xs font-bold text-amber-900 cursor-pointer">⚡ TDAH</button>
+          <button type="button" onclick="testarModoNaCaixa('DISLEXIA')" class="px-3 py-1.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-xs font-bold text-emerald-900 cursor-pointer">📖 Dislexia</button>
+          <button type="button" onclick="ouvirTextoExemplo()" class="px-4 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-xs font-bold text-white shadow-sm cursor-pointer">
+            🔊 Ouvir em Voz Alta
+          </button>
+        </div>
+      </div>
+
+      <div id="caixa-demonstracao-recurso" class="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-800 leading-relaxed transition-all">
+        A fotossíntese é o processo realizado pelas plantas para produzir energia a partir da luz solar, água e gás carbônico. Identifique qual alternativa NÃO representa um elemento necessário para esse processo.
+      </div>
+    </section>
+  </main>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Recursos Inclusivos
+  </footer>
+
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
+    ⚙️
+  </button>
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
+  <aside id="settings-drawer" class="hidden-drawer">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
+    </div>
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
+      </div>
+    </div>
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
+  </aside>
+
+</body>
+</html>

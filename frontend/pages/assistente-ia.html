@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistente Pedagógico IA - Techadvisors</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="../static/home.css">
+  <link rel="stylesheet" href="../static/config.css">
+
+  <script src="../js/config.js" defer></script>
+  <script src="../js/assistente-ia.js" defer></script>
+</head>
+<body class="bg-[#f3f7fb]">
+
+  <header class="home-header">
+    <div class="logo cursor-pointer" onclick="window.location.href='index.html'">
+      📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='professor.html'" class="cursor-pointer">← Voltar</li>
+        <li onclick="window.location.href='relatorios-professor.html'" class="cursor-pointer">📊 Relatórios & Notas</li>
+        <li onclick="window.location.href='quizzes.html'" class="cursor-pointer">🎮 Quizzes & IA</li>
+        <li onclick="toggleSettingsDrawer(true)" class="cursor-pointer">⚙️ Acessibilidade</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+    <div class="banner">
+      <h2>🤖 Assistente Pedagógico IA — Educação Inclusiva</h2>
+      <p>Analise o desempenho individual dos alunos, adapte textos para TEA, TDAH e Dislexia e gere planos de aula inclusivos.</p>
+    </div>
+
+    <!-- BLOCO 1: ANÁLISE IA DE ENTREGA DO ALUNO (SALVA EM /analise-ia) -->
+    <section class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 space-y-4">
+      <div>
+        <span class="text-[10px] font-extrabold uppercase tracking-wider bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded-full">Conectado ao Banco (analise_ia)</span>
+        <h3 class="text-lg font-bold text-purple-900 mt-1">🧠 Diagnóstico Pedagógico Individual por Entrega</h3>
+        <p class="text-xs text-slate-500">Selecione uma resposta enviada por um aluno para gerar recomendações de apoio e registrar a análise no Supabase.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+        <div class="md:col-span-2">
+          <label for="ia-select-resposta" class="block text-xs font-bold text-slate-700 mb-1">Selecione a Entrega / Avaliação do Aluno:</label>
+          <select id="ia-select-resposta" onchange="carregarHistoricoAnaliseResposta()" class="w-full text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer">
+            <option value="">Carregando entregas dos alunos...</option>
+          </select>
+        </div>
+
+        <button type="button" onclick="gerarESalvarAnaliseAluno()" class="w-full bg-[#5b21b6] hover:bg-purple-900 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow transition cursor-pointer">
+          ✨ Analisar & Salvar no Banco
+        </button>
+      </div>
+
+      <div id="ia-resultado-aluno-box" class="hidden p-5 bg-purple-50/70 border border-purple-200 rounded-2xl space-y-3"></div>
+    </section>
+
+    <!-- BLOCO 2: ADAPTADOR DE TEXTOS & PLANO DE AULA -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- ADAPTADOR DE TEXTOS / ENUNCIADOS -->
+      <section class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col justify-between space-y-4">
+        <div class="space-y-4">
+          <div>
+            <span class="text-[10px] font-extrabold uppercase tracking-wider bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded-full">Acessibilidade Cognitiva</span>
+            <h3 class="text-lg font-bold text-purple-900 mt-1">📝 Adaptador de Enunciados & Textos</h3>
+            <p class="text-xs text-slate-500">Cole um texto ou questão comum e adapte instantaneamente para o perfil neurodivergente desejado.</p>
+          </div>
+
+          <div>
+            <label for="ia-perfil-adaptacao" class="block text-xs font-bold text-slate-700 mb-1">Perfil de Adaptação:</label>
+            <select id="ia-perfil-adaptacao" class="w-full text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-600 cursor-pointer">
+              <option value="TEA">🧩 Autismo (TEA) — Passos objetivos e sem ambiguidades</option>
+              <option value="TDAH">⚡ TDAH — Leitura Biônica + Destaque de palavras-chave</option>
+              <option value="DISLEXIA">📖 Dislexia — Separação silábica e blocos curtos</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="ia-texto-original" class="block text-xs font-bold text-slate-700 mb-1">Texto ou Enunciado Original:</label>
+            <textarea id="ia-texto-original" rows="4" placeholder="Ex: Leia atentamente o texto abaixo e identifique qual alternativa NÃO corresponde às causas principais da Revolução Industrial..." class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-600"></textarea>
+          </div>
+
+          <button type="button" onclick="adaptarTextoInclusivo()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 rounded-xl shadow transition cursor-pointer">
+            🪄 Adaptar Conteúdo Agora
+          </button>
+        </div>
+
+        <div id="ia-texto-adaptado-box" class="hidden mt-4 p-4 bg-slate-50 border border-indigo-200 rounded-2xl space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold text-indigo-900">Resultado Adaptado:</span>
+            <button type="button" onclick="copiarTextoAdaptado()" class="text-[11px] font-bold text-purple-700 hover:underline cursor-pointer">📋 Copiar Texto</button>
+          </div>
+          <div id="ia-texto-adaptado-saida" class="text-xs text-slate-800 leading-relaxed bg-white p-3.5 rounded-xl border border-slate-200"></div>
+        </div>
+      </section>
+
+      <!-- GERADOR DE PLANO DE AULA INCLUSIVO -->
+      <section class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 flex flex-col justify-between space-y-4">
+        <div class="space-y-4">
+          <div>
+            <span class="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">Planejamento Docente</span>
+            <h3 class="text-lg font-bold text-purple-900 mt-1">📚 Gerador de Plano de Aula Inclusivo</h3>
+            <p class="text-xs text-slate-500">Crie um roteiro de aula estruturado em blocos de foco com estratégias para TEA, TDAH e Dislexia.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="ia-plano-disciplina" class="block text-xs font-bold text-slate-700 mb-1">Disciplina / Turma:</label>
+              <select id="ia-plano-disciplina" class="w-full text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-600 cursor-pointer">
+                <option value="Língua Portuguesa">Língua Portuguesa</option>
+                <option value="Matemática">Matemática</option>
+                <option value="História">História</option>
+                <option value="Ciências / Biologia">Ciências / Biologia</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="ia-plano-tema" class="block text-xs font-bold text-slate-700 mb-1">Tema da Aula:</label>
+              <input type="text" id="ia-plano-tema" placeholder="Ex: Interpretação de Texto" class="w-full text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-600">
+            </div>
+          </div>
+
+          <button type="button" onclick="gerarPlanoDeAulaInclusivo()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 rounded-xl shadow transition cursor-pointer">
+            📅 Gerar Plano de Aula Estruturado
+          </button>
+        </div>
+
+        <div id="ia-plano-aula-box" class="hidden mt-4 p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold text-emerald-900">Roteiro Gerado (45 min):</span>
+            <button type="button" onclick="copiarPlanoAula()" class="text-[11px] font-bold text-emerald-800 hover:underline cursor-pointer">📋 Copiar Plano</button>
+          </div>
+          <div id="ia-plano-aula-saida" class="text-xs text-slate-800 leading-relaxed bg-white p-3.5 rounded-xl border border-emerald-100 space-y-2"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Assistente Pedagógico IA
+  </footer>
+
+  <!-- GAVETA DE ACESSIBILIDADE -->
+  <button onclick="toggleSettingsDrawer(true)" title="Configurações e Acessibilidade" class="fixed bottom-6 right-6 z-40 bg-[#5b21b6] hover:bg-purple-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-white/20 transition-all hover:scale-105 active:scale-95 text-xl cursor-pointer">
+    ⚙️
+  </button>
+  <div id="settings-overlay" onclick="toggleSettingsDrawer(false)" class="hidden-drawer"></div>
+  <aside id="settings-drawer" class="hidden-drawer">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+      <h2 class="text-lg font-bold text-slate-800">Configurações & Acessibilidade</h2>
+      <button onclick="toggleSettingsDrawer(false)" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
+    </div>
+    <div class="mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="flex justify-between items-center mb-2">
+        <label class="text-xs font-semibold text-slate-700">Tamanho da Fonte</label>
+        <span id="font-size-label" class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">100%</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A -</button>
+        <button onclick="resetFontSize()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs text-slate-600 cursor-pointer">Normal</button>
+        <button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded text-xs font-bold text-slate-700 cursor-pointer">A +</button>
+      </div>
+    </div>
+    <button onclick="resetAllSettings()" class="text-xs font-semibold text-slate-500 hover:text-purple-700 underline mt-auto text-center pt-4 cursor-pointer">Restaurar Padrões</button>
+  </aside>
+
+</body>
+</html>

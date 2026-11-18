@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // 1. Busca as turmas reais do professor no FastAPI
 async function carregarTurmasDoProfessor() {
-  const userStr = localStorage.getItem('user') || localStorage.getItem('professor');
+  const userStr = localStorage.getItem('tech_user') || localStorage.getItem('user') || localStorage.getItem('professor');
   let idProfessor = 1;
   if (userStr) {
     try {
@@ -269,12 +269,13 @@ window.abrirAnexoPorId = function(id) {
   }
 };
 
-// 5. Controlo do Modal de Criação e das Abas
+// 5. Controlo do Modal de Criação e das Abas (Tarefa Rápida & Quizizz Editor)
 window.openModal = function() {
   const modal = document.getElementById('modal');
   if (modal) {
     modal.classList.remove('hidden');
     modal.classList.add('flex');
+    window.switchCreationMode('QUICK');
   }
 };
 
@@ -292,13 +293,11 @@ window.switchCreationMode = function(mode) {
   window.currentCreationMode = mode;
   const tabQuick = document.getElementById('tab-quick-btn');
   const tabManual = document.getElementById('tab-manual-btn');
-  const tabAi = document.getElementById('tab-ai-btn');
 
   const secQuick = document.getElementById('mode-quick-section');
   const secManual = document.getElementById('mode-manual-section');
-  const secAi = document.getElementById('mode-ai-section');
 
-  [tabQuick, tabManual, tabAi].forEach(t => {
+  [tabQuick, tabManual].forEach(t => {
     if (!t) return;
     t.classList.remove('tab-active', 'bg-white', 'shadow-sm', 'text-purple-700', 'bg-[#3332A5]', 'bg-purple-800', 'text-white');
     t.classList.add('text-slate-600');
@@ -309,23 +308,15 @@ window.switchCreationMode = function(mode) {
     tabQuick?.classList.remove('text-slate-600');
     secQuick?.classList.remove('hidden');
     secManual?.classList.add('hidden');
-    secAi?.classList.add('hidden');
-  } else if (mode === 'MANUAL') {
+  } else {
     tabManual?.classList.add('tab-active', 'bg-[#3332A5]', 'text-white', 'shadow-sm');
     tabManual?.classList.remove('text-slate-600');
     secQuick?.classList.add('hidden');
     secManual?.classList.remove('hidden');
-    secAi?.classList.add('hidden');
     const qContainer = document.getElementById('quiz-questions-container');
     if (qContainer && qContainer.children.length === 0) {
       window.adicionarBlocoQuestao('MULTIPLA');
     }
-  } else if (mode === 'AI') {
-    tabAi?.classList.add('tab-active', 'bg-[#3332A5]', 'text-white', 'shadow-sm');
-    tabAi?.classList.remove('text-slate-600');
-    secQuick?.classList.add('hidden');
-    secManual?.classList.add('hidden');
-    secAi?.classList.remove('hidden');
   }
 };
 
@@ -676,7 +667,7 @@ window.handleFormSubmit = async function(e) {
     return;
   }
 
-  let actType = (window.currentCreationMode === 'MANUAL' || window.currentCreationMode === 'AI') ? 'QUIZ' : 'MATERIAL';
+  let actType = window.currentCreationMode === 'MANUAL' ? 'QUIZ' : 'MATERIAL';
   let fileUrl = '';
   let descBase = document.getElementById('description')?.value.trim() || 'Atividade publicada pelo docente.';
   const metaTag = `|||META_CONFIG|||${JSON.stringify({ maxAttempts })}`;
