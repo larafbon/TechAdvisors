@@ -5,7 +5,7 @@
 }
 
 html {
-  font-size: calc(16px * var(--font-scale-factor)) !important;
+  font-size: calc(18px * var(--font-scale-factor)) !important;
   filter: saturate(var(--page-saturation)) brightness(var(--page-brightness));
   transition: filter 0.2s ease, font-size 0.2s ease;
 }
@@ -72,105 +72,238 @@ body {
 }
 
 /* =========================================================
-   MODO ALTO CONTRASTE (ROXO PROFUNDO)
+   MODO ESCURO / ALTO CONTRASTE PREMIUM (SLATE & VIOLET)
    ========================================================= */
-body.high-contrast {
-  background-color: #120924 !important;
-  color: #f3e8ff !important;
+body.dark-mode,
+body.high-contrast,
+html.dark-mode body {
+  background-color: #0b0f19 !important;
+  color: #f1f5f9 !important;
 }
 
-body.high-contrast header,
-body.high-contrast .home-header {
-  background-color: #1b0c33 !important;
-  border-bottom: 1px solid #3b1566 !important;
-}
-
-body.high-contrast header .logo,
-body.high-contrast header nav ul li {
-  color: #ffffff !important;
-}
-
+/* Zera TODOS os fundos brancos, claros e gradientes (corrige o bloco de Insights!) */
+body.dark-mode .bg-white,
+body.high-contrast .bg-white,
+body.dark-mode .bg-slate-50,
+body.high-contrast .bg-slate-50,
+body.dark-mode .bg-slate-100,
+body.high-contrast .bg-slate-100,
+body.dark-mode .bg-purple-50,
+body.high-contrast .bg-purple-50,
+body.dark-mode .bg-indigo-50,
+body.high-contrast .bg-indigo-50,
+body.dark-mode [class*="bg-white"],
+body.high-contrast [class*="bg-white"],
+body.dark-mode [class*="bg-slate-50"],
+body.high-contrast [class*="bg-slate-50"],
+body.dark-mode [class*="bg-purple-50"],
+body.high-contrast [class*="bg-purple-50"],
+body.dark-mode [class*="bg-indigo-50"],
+body.high-contrast [class*="bg-indigo-50"],
+body.dark-mode [class*="from-indigo-50"],
+body.high-contrast [class*="from-indigo-50"],
+body.dark-mode [class*="from-purple-50"],
+body.high-contrast [class*="from-purple-50"],
+body.dark-mode [class*="to-white"],
+body.high-contrast [class*="to-white"],
+body.dark-mode .card,
 body.high-contrast .card,
-body.high-contrast main .bg-white,
-body.high-contrast table,
-body.high-contrast tbody {
-  background-color: #1e0d36 !important;
-  border-color: #3b1768 !important;
-  color: #f3e8ff !important;
+body.dark-mode .action-card,
+body.high-contrast .action-card,
+body.dark-mode .menu-card,
+body.high-contrast .menu-card,
+body.dark-mode .dashboard-card,
+body.high-contrast .dashboard-card,
+body.dark-mode .stat-card,
+body.high-contrast .stat-card,
+body.dark-mode .panel,
+body.high-contrast .panel,
+body.dark-mode .box,
+body.high-contrast .box,
+body.dark-mode main section,
+body.high-contrast main section,
+body.dark-mode main article,
+body.high-contrast main article {
+  background: #131a2a !important;
+  background-color: #131a2a !important;
+  background-image: none !important;
+  border: 1px solid #243049 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45) !important;
+  color: #f1f5f9 !important;
 }
 
-body.high-contrast thead,
-body.high-contrast tr {
-  background-color: #2a0e4f !important;
-  color: #ffffff !important;
+/* Sub-cards internos (ex: cartões dentro de Insights de Inclusão) */
+body.dark-mode section div[class*="rounded-2xl"],
+body.high-contrast section div[class*="rounded-2xl"],
+body.dark-mode section div[class*="rounded-xl"],
+body.high-contrast section div[class*="rounded-xl"],
+body.dark-mode .bg-white .bg-white,
+body.high-contrast .bg-white .bg-white {
+  background: #0d121d !important;
+  background-color: #0d121d !important;
+  border-color: #2e3b59 !important;
 }
 
-body.high-contrast th {
-  color: #facc15 !important;
+/* Mantém o banner principal do topo elegante com degradê moderno */
+body.dark-mode main > div:first-child[class*="bg-gradient"],
+body.high-contrast main > div:first-child[class*="bg-gradient"],
+body.dark-mode header[class*="bg-gradient"],
+body.high-contrast header[class*="bg-gradient"] {
+  background: linear-gradient(135deg, #312e81 0%, #4c1d95 55%, #1e1b4b 100%) !important;
+  border: 1px solid #4338ca !important;
 }
 
-body.high-contrast td {
-  color: #f3e8ff !important;
-  border-color: #3b1768 !important;
+/* Hover elegante nos cartões clicáveis */
+body.dark-mode main a[class*="rounded"]:hover,
+body.high-contrast main a[class*="rounded"]:hover,
+body.dark-mode .card:hover,
+body.high-contrast .card:hover,
+body.dark-mode .action-card:hover,
+body.high-contrast .action-card:hover {
+  background-color: #1a2338 !important;
+  border-color: #7c3aed !important;
+  transform: translateY(-2px);
 }
 
-body.high-contrast .banner {
-  background: linear-gradient(135deg, #2a0e4f 0%, #4c1d95 100%) !important;
-  color: #ffffff !important;
-  border: 1px solid #6d28d9 !important;
-}
-
+/* Títulos e textos principais em branco nítido */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode strong,
+body.dark-mode .text-slate-800,
+body.dark-mode .text-slate-900,
+body.dark-mode .text-purple-950,
+body.dark-mode .text-purple-900,
+body.dark-mode .text-indigo-950,
+body.dark-mode .text-indigo-900,
 body.high-contrast h1,
 body.high-contrast h2,
 body.high-contrast h3,
-body.high-contrast .text-purple-900,
+body.high-contrast h4,
+body.high-contrast strong,
+body.high-contrast .text-slate-800,
 body.high-contrast .text-slate-900,
-body.high-contrast .text-slate-800 {
-  color: #ffffff !important;
+body.high-contrast .text-purple-950,
+body.high-contrast .text-purple-900,
+body.high-contrast .text-indigo-950,
+body.high-contrast .text-indigo-900 {
+  color: #f8fafc !important;
 }
 
+/* Descrições e textos secundários em cinza-azulado suave (excelente leitura) */
+body.dark-mode p,
+body.dark-mode .text-slate-500,
+body.dark-mode .text-slate-600,
+body.dark-mode .text-slate-700,
 body.high-contrast p,
-body.high-contrast label,
-body.high-contrast span,
-body.high-contrast .text-slate-600,
 body.high-contrast .text-slate-500,
+body.high-contrast .text-slate-600,
 body.high-contrast .text-slate-700 {
-  color: #d8b4fe !important;
+  color: #94a3b8 !important;
 }
 
-body.high-contrast input[type="text"],
-body.high-contrast input[type="email"],
-body.high-contrast input[type="password"],
-body.high-contrast input[type="number"],
-body.high-contrast textarea,
-body.high-contrast select {
-  background-color: #130724 !important;
-  border: 1px solid #4c1d95 !important;
-  color: #ffffff !important;
+body.dark-mode .text-slate-400,
+body.high-contrast .text-slate-400 {
+  color: #cbd5e1 !important;
+}
+
+/* Badges / Etiquetas modernas */
+body.dark-mode .bg-emerald-50,
+body.dark-mode .bg-emerald-100,
+body.high-contrast .bg-emerald-50,
+body.high-contrast .bg-emerald-100 {
+  background-color: rgba(16, 185, 129, 0.16) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(52, 211, 153, 0.35) !important;
+}
+
+body.dark-mode .bg-purple-100,
+body.dark-mode .bg-indigo-100,
+body.high-contrast .bg-purple-100,
+body.high-contrast .bg-indigo-100 {
+  background-color: rgba(139, 92, 246, 0.18) !important;
+  color: #c4b5fd !important;
+  border: 1px solid rgba(167, 139, 250, 0.35) !important;
+}
+
+body.dark-mode .bg-amber-50,
+body.dark-mode .bg-amber-100,
+body.high-contrast .bg-amber-50,
+body.high-contrast .bg-amber-100 {
+  background-color: rgba(245, 158, 11, 0.16) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(251, 191, 36, 0.35) !important;
+}
+
+body.dark-mode .bg-rose-50,
+body.dark-mode .bg-rose-100,
+body.high-contrast .bg-rose-50,
+body.high-contrast .bg-rose-100 {
+  background-color: rgba(244, 63, 94, 0.16) !important;
+  color: #fb7185 !important;
+  border: 1px solid rgba(251, 113, 133, 0.35) !important;
+}
+
+/* Inputs, Selects e Tabelas */
+body.dark-mode select,
+body.dark-mode input,
+body.dark-mode textarea,
+body.high-contrast select,
+body.high-contrast input,
+body.high-contrast textarea {
+  background-color: #0d121d !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+}
+
+body.dark-mode thead,
+body.high-contrast thead {
+  background-color: #0d121d !important;
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode th,
+body.dark-mode td,
+body.high-contrast th,
+body.high-contrast td {
+  border-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode tr:hover,
+body.high-contrast tr:hover {
+  background-color: #1a2338 !important;
 }
 
 /* GAVETA NO MODO ESCURO */
+body.dark-mode #settings-drawer,
 body.high-contrast #settings-drawer {
-  background-color: #1b0c33 !important;
-  color: #f3e8ff !important;
-  border-left: 1px solid #3b1768 !important;
+  background-color: #131a2a !important;
+  color: #f1f5f9 !important;
+  border-left: 1px solid #243049 !important;
 }
 
+body.dark-mode #settings-drawer h2,
+body.dark-mode #settings-drawer label,
+body.dark-mode #settings-drawer span,
 body.high-contrast #settings-drawer h2,
 body.high-contrast #settings-drawer label,
 body.high-contrast #settings-drawer span {
-  color: #ffffff !important;
+  color: #f8fafc !important;
 }
 
+body.dark-mode #settings-drawer .bg-slate-50,
 body.high-contrast #settings-drawer .bg-slate-50 {
-  background-color: #130724 !important;
-  border-color: #3b1768 !important;
+  background-color: #0d121d !important;
+  border-color: #243049 !important;
 }
 
+body.dark-mode #settings-drawer button,
 body.high-contrast #settings-drawer button {
-  background-color: #2a0e4f !important;
-  color: #ffffff !important;
-  border-color: #4c1d95 !important;
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
 }
 
 /* =========================================================
@@ -232,4 +365,33 @@ body.high-contrast #settings-drawer button {
 
 .user-dropdown li.logout-item:hover {
   background: #fef2f2;
+}
+
+/* Dropdown do usuário no modo escuro */
+body.dark-mode .user-dropdown,
+body.high-contrast .user-dropdown {
+  background: #131a2a !important;
+  border-color: #243049 !important;
+}
+
+body.dark-mode .user-dropdown li,
+body.high-contrast .user-dropdown li {
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode .user-dropdown li:hover,
+body.high-contrast .user-dropdown li:hover {
+  background: #1e293b !important;
+  color: #c4b5fd !important;
+}
+
+body.dark-mode .user-dropdown li.logout-item,
+body.high-contrast .user-dropdown li.logout-item {
+  color: #fb7185 !important;
+  border-top-color: #243049 !important;
+}
+
+body.dark-mode .user-dropdown li.logout-item:hover,
+body.high-contrast .user-dropdown li.logout-item:hover {
+  background: rgba(244, 63, 94, 0.15) !important;
 }
