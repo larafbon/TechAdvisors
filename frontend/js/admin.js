@@ -25,6 +25,11 @@ function normalizarTurno(turno) {
   return turno || 'Manhã';
 }
 
+function normalizarStatusProf(status) {
+  const s = (status || '').toString().trim().toLowerCase();
+  return s === 'inativo' ? 'inativo' : 'ativo';
+}
+
 // Retorna todos os IDs de turmas de um aluno (combinando id_turma do banco + turmas extras)
 function getTurmasIdsDoAluno(aluno) {
   const ids = new Set();
@@ -58,10 +63,9 @@ function normalizarProfessor(raw) {
     adminMeta.professores[id]?.disciplina ||
     '';
 
-  const status =
-    adminMeta.professores[id]?.status ||
-    raw.status ||
-    'ativo';
+  const status = normalizarStatusProf(
+    adminMeta.professores[id]?.status || raw.status || 'ativo'
+  );
 
   return {
     id_professor: id,
@@ -118,13 +122,11 @@ async function carregarDadosDoBanco() {
 
     const mapProfs = new Map();
 
-    // 1. Prioridade máxima: professores reais retornados de GET /professores
     if (Array.isArray(rawProfs)) {
       rawProfs.map(normalizarProfessor).forEach(p => {
         if (p.id_professor) mapProfs.set(p.id_professor, p);
       });
     } else {
-      // Fallback caso o servidor ainda não tenha sido reiniciado
       (adminMeta.listaProfessoresCache || []).forEach(p => {
         const norm = normalizarProfessor(p);
         if (norm.id_professor && !mapProfs.has(norm.id_professor)) {
@@ -615,7 +617,7 @@ async function removerAluno(idAluno) {
 }
 
 // ==========================================
-// PROFESSORES (BANCO DE DADOS + VER/EDITAR + VÍNCULO COM TURMAS)
+// PROFESSORES (BANCO DE DADOS + VER/EDITAR + VÍNCULO/DESVÍNCULO)
 // ==========================================
 function renderProfessores() {
   const grid = document.getElementById('grid-profs');
@@ -645,11 +647,9 @@ function renderProfessores() {
     const idProf = Number(p.id_professor);
     const nomeProf = p.nome || `Professor #${idProf}`;
     const meta = adminMeta.professores[idProf] || {};
-    const turmasVinculadas = turmas.filter(
-      t => Number(t.id_professor) === idProf || (meta.turmasIds || []).includes(t.id_turma)
-    );
+    const turmasVinculadas = turmas.filter(t => Number(t.id_professor) === idProf);
     const disciplina = p.disciplina || meta.disciplina || (turmasVinculadas[0]?.disciplina) || 'Corpo Docente';
-    const statusProf = meta.status || p.status || 'ativo';
+    const statusProf = normalizarStatusProf(meta.status || p.status || 'ativo');
 
     const nomesTurmas = turmasVinculadas.length > 0
       ? turmasVinculadas.map(t => t.nome_turma).join(', ')
@@ -691,11 +691,11 @@ function abrirModalEditarProfessor(idProf) {
 
   const meta = adminMeta.professores[idProf] || {};
   const turmasVinculadasIds = turmas
-    .filter(t => Number(t.id_professor) === Number(idProf) || (meta.turmasIds || []).includes(t.id_turma))
+    .filter(t => Number(t.id_professor) === Number(idProf))
     .map(t => Number(t.id_turma));
 
   const disciplinaAtual = prof.disciplina || meta.disciplina || (turmas.find(t => Number(t.id_professor) === Number(idProf))?.disciplina) || 'Corpo Docente';
-  const statusAtual = meta.status || prof.status || 'ativo';
+  const statusAtual = normalizarStatusProf(meta.status || prof.status || 'ativo');
 
   document.getElementById('edit-prof-id').value = idProf;
   document.getElementById('edit-prof-codigo').value = `PROF-${String(idProf).padStart(3, '0')}`;
@@ -722,53 +722,47 @@ async function atualizarProfessor(e) {
   const nome = document.getElementById('edit-prof-nome').value.trim();
   const email = document.getElementById('edit-prof-email').value.trim();
   const disciplina = document.getElementById('edit-prof-disciplina').value.trim();
-  const status = document.getElementById('edit-prof-status').value;
+  const statusSelect = document.getElementById('edit-prof-status').value;
+  const status = normalizarStatusProf(statusSelect || profOriginal.status || 'ativo');
 
   const turmasSelecionadas = Array.from(document.querySelectorAll('input[name="edit-prof-turma-check"]:checked'))
     .map(cb => parseInt(cb.value, 10));
 
-  const payload = {
+  adminMeta.professores[idProf] = {
+    ...(adminMeta.professores[idProf] || {}),
     nome,
     email,
-    senha: profOriginal.senha || '12345678',
-    status
+    disciplina,
+    status,
+    turmasIds: turmasSelecionadas
   };
 
+  if (Array.isArray(adminMeta.listaProfessoresCache)) {
+    const idx = adminMeta.listaProfessoresCache.findIndex(p => Number(p.id_professor) === idProf);
+    if (idx !== -1) {
+      adminMeta.listaProfessoresCache[idx] = { ...adminMeta.listaProfessoresCache[idx], nome, email, disciplina, status };
+    }
+  }
+  saveMeta();
+
   try {
+    // Atualiza vínculos e desvínculos das turmas primeiro
+    await sincronizarTurmasDoProfessor(idProf, turmasSelecionadas);
+
+    // Atualiza dados cadastrais do professor
     const res = await fetch(`${API_URL}/professores/${idProf}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        nome,
+        email,
+        senha: profOriginal.senha || '12345678',
+        status
+      })
     });
 
     if (!res.ok && res.status !== 404 && res.status !== 405) {
-      const err = await res.json().catch(() => ({}));
-      const msgErro = Array.isArray(err.detail)
-        ? err.detail.map(d => `${d.loc?.slice(-1)[0] || 'Campo'}: ${d.msg}`).join('\n')
-        : (err.detail || 'Verifique os dados informados.');
-      alert(`Erro ao atualizar professor:\n${msgErro}`);
-      return;
-    }
-
-    adminMeta.professores[idProf] = {
-      ...(adminMeta.professores[idProf] || {}),
-      nome,
-      email,
-      disciplina,
-      status,
-      turmasIds: turmasSelecionadas
-    };
-
-    if (Array.isArray(adminMeta.listaProfessoresCache)) {
-      const idx = adminMeta.listaProfessoresCache.findIndex(p => Number(p.id_professor) === idProf);
-      if (idx !== -1) {
-        adminMeta.listaProfessoresCache[idx] = { ...adminMeta.listaProfessoresCache[idx], nome, email, disciplina, status };
-      }
-    }
-    saveMeta();
-
-    for (const idTurma of turmasSelecionadas) {
-      await vincularTurmaNoBanco(idTurma, idProf);
+      console.warn('Aviso ao atualizar dados do professor no banco:', res.status);
     }
 
     await carregarDadosDoBanco();
@@ -809,16 +803,14 @@ async function salvarProfessor(e) {
 
     const novoProf = await res.json();
     const idNovo = Number(novoProf.id_professor || novoProf.id || Date.now());
-    const profObj = { id_professor: idNovo, nome, email, disciplina };
+    const profObj = { id_professor: idNovo, nome, email, disciplina, status: 'ativo' };
 
     adminMeta.professores[idNovo] = { nome, email, disciplina, status: 'ativo', turmasIds: turmasSelecionadas };
     if (!adminMeta.listaProfessoresCache) adminMeta.listaProfessoresCache = [];
     adminMeta.listaProfessoresCache.push(profObj);
     saveMeta();
 
-    for (const idTurma of turmasSelecionadas) {
-      await vincularTurmaNoBanco(idTurma, idNovo);
-    }
+    await sincronizarTurmasDoProfessor(idNovo, turmasSelecionadas);
 
     await carregarDadosDoBanco();
     e.target.reset();
@@ -831,7 +823,6 @@ async function salvarProfessor(e) {
 
 function abrirModalVincularTurmas(idProf) {
   const prof = professores.find(p => Number(p.id_professor) === Number(idProf));
-  const meta = adminMeta.professores[idProf] || {};
   const titulo = document.getElementById('modal-vincular-prof-titulo');
   const inputId = document.getElementById('vincular-prof-id');
   const container = document.getElementById('lista-checkboxes-vincular-turmas');
@@ -842,7 +833,7 @@ function abrirModalVincularTurmas(idProf) {
   if (container) {
     container.innerHTML = turmas.length
       ? turmas.map(t => {
-          const jaVinculada = Number(t.id_professor) === Number(idProf) || (meta.turmasIds || []).includes(t.id_turma);
+          const jaVinculada = Number(t.id_professor) === Number(idProf);
           return `
             <label class="flex items-center justify-between p-1.5 rounded hover:bg-purple-500/10 cursor-pointer">
               <div class="flex items-center gap-2">
@@ -869,24 +860,56 @@ async function confirmarVinculoTurmasProf(e) {
   adminMeta.professores[idProf].turmasIds = selecionadas;
   saveMeta();
 
-  for (const idTurma of selecionadas) {
-    await vincularTurmaNoBanco(idTurma, idProf);
-  }
+  await sincronizarTurmasDoProfessor(idProf, selecionadas);
 
   await carregarDadosDoBanco();
   closeModal('modal-vincular-turmas-prof');
 }
 
+async function sincronizarTurmasDoProfessor(idProf, turmasSelecionadas) {
+  // 1. Vincula as turmas marcadas
+  for (const idTurma of turmasSelecionadas) {
+    await vincularTurmaNoBanco(idTurma, idProf);
+  }
+
+  // 2. Desvincula as turmas que pertenciam a este professor e foram desmarcadas
+  const turmasParaDesvincular = turmas.filter(
+    t => Number(t.id_professor) === Number(idProf) && !turmasSelecionadas.includes(Number(t.id_turma))
+  );
+
+  for (const t of turmasParaDesvincular) {
+    await vincularTurmaNoBanco(t.id_turma, null);
+  }
+}
+
 async function vincularTurmaNoBanco(idTurma, idProf) {
   const turmaObj = turmas.find(t => Number(t.id_turma) === Number(idTurma));
   if (!turmaObj) return;
-  turmaObj.id_professor = idProf;
 
-  await fetch(`${API_URL}/turmas/${idTurma}`, {
+  if (idProf !== null) {
+    Object.keys(adminMeta.professores).forEach(key => {
+      if (Number(key) !== Number(idProf) && Array.isArray(adminMeta.professores[key]?.turmasIds)) {
+        adminMeta.professores[key].turmasIds = adminMeta.professores[key].turmasIds.filter(
+          id => Number(id) !== Number(idTurma)
+        );
+      }
+    });
+    saveMeta();
+  }
+
+  const res = await fetch(`${API_URL}/turmas/${idTurma}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...turmaObj, id_professor: idProf })
-  }).catch(() => {});
+    body: JSON.stringify({ id_professor: idProf })
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    alert(`Não foi possível atualizar a turma no banco: ${err.detail || 'Erro desconhecido.'}`);
+    return;
+  }
+
+  turmaObj.id_professor = idProf;
 }
 
 async function removerProfessor(idProfessor) {
