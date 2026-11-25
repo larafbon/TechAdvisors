@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techadvisors - Dashboard</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/resumo.js" defer></script>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🧩</span>
+            <span>Tech<br>Advisors</span>
+        </div>
+        <p class="subtitle">Seu aprendizado,<br>do seu jeito.</p>
+
+        <nav class="menu">
+            <a href="index.html"><span class="menu-icon">🏠</span> Home</a>
+            <a href="chatbot.html"><span class="menu-icon">🤖</span> Chatbot</a>
+            <a href="dashboard-ia.html" class="active"><span class="menu-icon">📊</span> Dashboard</a>
+            <a href="resumo.html"><span class="menu-icon">📋</span> Progresso</a>
+        </nav>
+
+        <div class="side-card">
+            <div class="heart">💜🧩💙</div>
+            <p>Feito para você,<br>respeitando seu ritmo.</p>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <a href="index.html" class="back-button">← Voltar para Home</a>
+            <div class="topbar-actions">
+                <button class="calm-button" id="calmButton">🌿 Modo calmo</button>
+                <button class="round-button" id="themeButton" title="Alternar contraste">☼</button>
+            </div>
+        </header>
+
+        <p><a href="chatbot.html" class="btn-navegacao">💬 Abrir chat de dados</a></p>
+
+        <div class="graficos-section" style="margin-top: 20px;">
+            <div class="grafico-card">
+                <h3>Respostas por Dia</h3>
+                <div class="canvas-container">
+                    <canvas id="graficoRespostas"></canvas>
+                </div>
+            </div>
+
+            <div class="grafico-card">
+                <h3>Nota Média por Dia</h3>
+                <div class="canvas-container">
+                    <canvas id="graficoMediaNotas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            ♡ Você não está sozinho(a). Respeite seu tempo, celebre suas conquistas e siga no seu ritmo. 💜
+        </footer>
+    </main>
+</div>
+</body>
+</html>

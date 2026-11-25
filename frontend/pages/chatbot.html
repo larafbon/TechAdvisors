@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techadvisors - Chatbot</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="../js/resumo.js" defer></script>
+    <script src="../js/chat.js" defer></script>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🧩</span>
+            <span>Tech<br>Advisors</span>
+        </div>
+        <p class="subtitle">Seu aprendizado,<br>do seu jeito.</p>
+
+        <nav class="menu">
+            <a href="index.html"><span class="menu-icon">🏠</span> Home</a>
+            <a href="chatbot.html" class="active"><span class="menu-icon">🤖</span> Chatbot</a>
+            <a href="dashboard-ia.html"><span class="menu-icon">📊</span> Dashboard</a>
+            <a href="resumo.html"><span class="menu-icon">📋</span> Progresso</a>
+        </nav>
+
+        <div class="side-card">
+            <div class="heart">💜🧩💙</div>
+            <p>Feito para você,<br>respeitando seu ritmo.</p>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <a href="index.html" class="back-button">← Voltar para Home</a>
+            <div class="topbar-actions">
+                <button class="calm-button" id="calmButton">🌿 Modo calmo</button>
+                <button class="round-button" id="themeButton" title="Alternar contraste">☼</button>
+            </div>
+        </header>
+
+        <section class="assistant">
+            <div class="person-area">
+                <div class="person">👩🏻‍🏫</div>
+            </div>
+            <div class="assistant-info">
+                <span class="tag">Assistente Educacional • IA</span>
+                <h1>Olá! Eu sou sua assistente de estudos.</h1>
+                <p class="description">Estou aqui para te ajudar a aprender no seu ritmo, consultar indicadores do banco de dados e explicar os resultados com acolhimento.</p>
+                <div class="features">
+                    <div class="feature"><span>🧠</span><p>Respeito<br>seu ritmo</p></div>
+                    <div class="feature"><span>🧩</span><p>Apoio para TDAH,<br>autismo e outros</p></div>
+                    <div class="feature"><span>⭐</span><p>Aprendizado<br>acessível e inclusivo</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chalkboard">
+            <span class="decoration bulb">💡</span>
+            <span class="decoration puzzle">🧩</span>
+            <span class="decoration chalk-heart">♡</span>
+            <span class="decoration star">☆</span>
+
+            <form class="search-box" id="chat-form">
+                <span class="search-icon">⌕</span>
+                <label for="chat-pergunta" class="sr-only">Escolha uma pergunta</label>
+                <select id="chat-pergunta" required disabled>
+                    <option value="">Aguardando a API…</option>
+                </select>
+                <button class="send-button" id="chat-enviar" type="submit" disabled aria-label="Enviar pergunta">➤</button>
+            </form>
+        </section>
+
+        <p id="chat-status" role="status" class="chat-status-inline"></p>
+
+        <section class="response" id="chat-resposta" aria-live="polite" hidden>
+            <div class="response-avatar">👩🏻‍🏫</div>
+            <div class="response-body">
+                <strong id="chat-enunciado">Pergunta</strong>
+
+                <h3 class="response-subtitulo">Resultado do Banco de Dados</h3>
+                <ul id="chat-dados" class="response-lista"></ul>
+
+                <h3 class="response-subtitulo">Explicação da IA</h3>
+                <p id="chat-explicacao" class="response-explicacao"></p>
+
+                <p id="chat-aviso" class="chat-aviso" hidden></p>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <button class="quick-card" data-question="Qual é o resumo geral das respostas?"><span class="quick-icon">ⓘ</span><p>Resumo<br>geral</p></button>
+            <button class="quick-card" data-question="Qual é a nota média dos alunos?"><span class="quick-icon">▦</span><p>Nota média<br>dos alunos</p></button>
+            <button class="quick-card" data-question="Quais recursos de acessibilidade são mais usados?"><span class="quick-icon">🎯</span><p>Recursos mais<br>usados</p></button>
+            <button class="quick-card" data-question="Como está o desempenho por tipo de deficiência?"><span class="quick-icon">💜</span><p>Desempenho por<br>deficiência</p></button>
+        </section>
+
+        <footer>
+            ♡ Você não está sozinho(a). Respeite seu tempo, celebre suas conquistas e siga no seu ritmo. 💜
+        </footer>
+    </main>
+</div>
+</body>
+</html>

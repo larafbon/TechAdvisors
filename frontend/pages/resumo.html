@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techadvisors - Resumo</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="../js/resumo.js" defer></script>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🧩</span>
+            <span>Tech<br>Advisors</span>
+        </div>
+        <p class="subtitle">Seu aprendizado,<br>do seu jeito.</p>
+
+        <nav class="menu">
+            <a href="index.html"><span class="menu-icon">🏠</span> Home</a>
+            <a href="chatbot.html"><span class="menu-icon">🤖</span> Chatbot</a>
+            <a href="dashboard-ia.html"><span class="menu-icon">📊</span> Dashboard</a>
+            <a href="resumo.html" class="active"><span class="menu-icon">📋</span> Progresso</a>
+        </nav>
+
+        <div class="side-card">
+            <div class="heart">💜🧩💙</div>
+            <p>Feito para você,<br>respeitando seu ritmo.</p>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <a href="index.html" class="back-button">← Voltar para Home</a>
+            <div class="topbar-actions">
+                <button class="calm-button" id="calmButton">🌿 Modo calmo</button>
+                <button class="round-button" id="themeButton" title="Alternar contraste">☼</button>
+            </div>
+        </header>
+
+        <section class="resumo-section" id="resumo">
+            <div class="resumo-header">
+                <div>
+                    <h2>Resumo de Aprendizagem</h2>
+                    <p>Indicadores calculados em tempo real a partir do banco de dados PostgreSQL.</p>
+                </div>
+                <button id="botao-atualizar" type="button">Atualizar dados</button>
+            </div>
+            <p id="atualizacao"></p>
+            <p id="mensagem" hidden></p>
+            <div class="cards">
+                <div class="card"><span>Alunos</span><strong id="total-alunos">—</strong></div>
+                <div class="card"><span>Nota média</span><strong id="nota-media">—</strong></div>
+                <div class="card"><span>Atividades realizadas</span><strong id="total-atividades">—</strong></div>
+                <div class="card"><span>Respostas enviadas</span><strong id="total-respostas">—</strong></div>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Tipo de deficiência</th><th>Alunos</th><th>Nota média</th></tr>
+                </thead>
+                <tbody id="lista-deficiencias"></tbody>
+            </table>
+            <p id="periodo"></p>
+        </section>
+
+        <footer>
+            ♡ Você não está sozinho(a). Respeite seu tempo, celebre suas conquistas e siga no seu ritmo. 💜
+        </footer>
+    </main>
+</div>
+</body>
+</html>
